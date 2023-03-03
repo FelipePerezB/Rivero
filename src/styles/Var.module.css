@@ -1,0 +1,23 @@
+.Var{
+  position: fixed;
+  bottom: 0;
+  z-index: 1000;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: 52px;
+  background-color: white;
+  width: 100%;
+}
+
+.icon, .icon--active{
+  height: 24px;
+  width: 24px;
+  color: black;
+  cursor: pointer;
+}
+
+.icon--active{
+  transform: scale(1.1);
+  color: var(--primary-color);
+}

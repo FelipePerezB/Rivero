@@ -1,0 +1,27 @@
+.container{
+  display: flex;
+  justify-content: center;
+}
+
+.primary, .secondary{
+  cursor: pointer;
+  min-height: 48px;
+  height: auto;
+  width: 300px;
+  background-color: black;
+  border-radius: var(--radius);
+  color: white;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.secondary{
+  background-color: transparent;
+  border: none;
+  color: black;
+  width: max-content;
+}
+
+.primary:hover{
+  color: lightgray;
+}

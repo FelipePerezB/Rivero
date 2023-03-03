@@ -1,0 +1,37 @@
+.navar{
+  color: white;
+  position: fixed;
+  z-index: 1000;
+  top: 0;
+  width: 100%;
+  padding: 0 16px;
+  background-color: var(--primary-color);
+}
+
+.navar ul{
+  height: 3.6rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navar__icon{
+  width: 3rem;
+  color: white;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.navar__icon:hover, .stars:hover{
+  color: lightgray;
+}
+
+.stars{
+  width: 3rem;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 1.2rem;
+}

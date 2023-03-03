@@ -1,0 +1,22 @@
+.options{
+  min-width: max-content;
+  width: 90%;
+  background-color: white;
+  padding: 8px 10px;
+  margin: 16px auto 0;
+  display: flex;
+  justify-content: center;
+  border-radius: var(--radius);
+}
+
+.op, .op--active{
+  cursor: pointer;
+}
+
+.op--active{
+  color: var(--active-letter-color);
+}
+
+.separator{
+  margin: 0 16px;
+}
