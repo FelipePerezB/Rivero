@@ -39,16 +39,16 @@ export default function Statistics() {
           modalState={modalState}
           options={[
             {
-              text: 'Promedio',
-              switchToogleConfig: {
-                setState: setShowAverage,
-                state: showAverage
-              }
+              type: "boolean",
+              text: "Promedio",
+              setState: setShowAverage,
+              state: showAverage,
             },
             {
-              text: 'Mostrar',
-              selectConfig: ['3 ensayos', '6 ensayos', '12 ensayos', 'Todos']
-            }
+              type: "select",
+              text: "Mostrar",
+              selectConfig: ["3 ensayos", "6 ensayos", "12 ensayos", "Todos"],
+            },
           ]}
         />
         <LineChart
@@ -121,7 +121,7 @@ function LineChart({
   return (
     <>
       <Modal
-      key={title+'-sumary'}
+        key={title + "-sumary"}
         title="Resumen"
         modalState={modalState}
         setModalState={setModalState}

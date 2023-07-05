@@ -1,19 +1,19 @@
-import React from "react";
+import React, { ReactNode } from "react";
 import styles from "@styles/Button.module.css";
 
 export default function Button({
-  text,
+  children,
   style = "primary",
   callback,
 }: {
-  text: string;
+  children: ReactNode;
   style?: string;
   callback?: any;
 }) {
   return (
     <div className={styles.container}>
       <button className={styles[style]} onClick={callback}>
-        <span>{text}</span>
+        <span>{children}</span>
       </button>
     </div>
   );

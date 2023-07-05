@@ -1,0 +1,42 @@
+.container{
+  display: flex;
+  justify-content: center;
+}
+
+.primary, .secondary, .tertiary{
+  cursor: pointer;
+  min-height: 40px;
+  height: auto;
+  width: 300px;
+  background-color: black;
+  border-radius: 4px;
+  color: white;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.secondary{
+  min-height: 22px;
+  background-color: transparent;
+  border: none;
+  color: #5066e8;
+  width: max-content;
+}
+
+.tertiary{
+  font-size: 0.8rem;
+  text-align: start;
+  min-height: 30px;
+  background-color: transparent;
+  border: none;
+  color: #5066e8;
+  width: 100%;
+}
+
+.secondary:hover, .tertiary:hover{
+  color: #3e4d9d;
+}
+
+.primary:hover{
+  color: lightgray;
+}

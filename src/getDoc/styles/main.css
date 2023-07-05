@@ -1,0 +1,24 @@
+body{
+  font-family: 'Nunito', monospace;
+  margin: 0;
+  background-color: #edf1f4;
+  /* font-size: 140px; */
+}
+
+*{
+  box-sizing: border-box;
+}
+
+.edit .component{
+  display: block;
+  border-radius: 4px;
+}
+
+.edit .component .component:hover{
+  cursor: pointer;
+  outline: 0.15em solid #5066e8;
+}
+
+.edit .component .component .component:hover{
+  outline: 0.15em dashed #5066e8;
+}

@@ -5,9 +5,9 @@
 
 .primary, .secondary{
   cursor: pointer;
-  min-height: 48px;
+  min-height: 40px;
   height: auto;
-  width: 300px;
+  width: 280px;
   background-color: black;
   border-radius: var(--radius);
   color: white;

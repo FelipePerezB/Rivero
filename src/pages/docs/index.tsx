@@ -1,5 +1,5 @@
 import Layout from "src/layout/Layout";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "@styles/Docs.module.css";
 import {
   faChevronRight,
@@ -12,18 +12,51 @@ import {
   faSquareCheck,
   faEllipsisVertical,
   faGear,
+  faPlus,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
 import Modal from "@components/Modal";
+import ConfigButton from "@components/ConfigButton";
+import { useRouter } from "next/router";
+import axios from "axios";
+import { api } from "src/getDoc/utils/api";
 
 export default function Docs() {
+  const router = useRouter();
   const [state, setState] = useState(true);
+  const [docId, setDocId] = useState();
   const [modalState, setModalState] = useState(false);
   const defaultConfig = {
-    grade: '4° MEDIO',
-    subject: 'Matemáticas'
-  }
+    grade: "4° MEDIO",
+    subject: "Matemáticas",
+  };
+
+  const useEditDoc = async ({Curso, Asignatura, Nombre, Eje}: {
+    Curso: string;
+    Asignatura: string;
+    Nombre: string;
+    Eje: string
+  }) => {
+    const result = await api.post("docs", {
+      title: Nombre,
+      type: "document",
+      content: "",
+      subjectId: 1,
+      topicId: 1,
+      grades: [
+        {
+          id: 1,
+          grade: Curso
+        }
+      ]
+    });
+    console.log(result);
+    // router.push(`docs/edit/${id}`);
+  };
+
+  const [config, setConfig] = useState(defaultConfig);
+
   return (
     <Layout>
       <section className={styles.info}>
@@ -33,48 +66,42 @@ export default function Docs() {
           <button className={styles.config} onClick={() => setModalState(true)}>
             <FontAwesomeIcon size="lg" icon={faGear} />
           </button>
-            <Modal
-              title="Configuración"
-              setModalState={setModalState}
-              modalState={modalState}
-              options={[
-                {
-                  text: "Resumenes",
-                  switchToogleConfig: {
-                    setState,
-                    state,
-                  },
-                },
-                {
-                  text: "Ejercicios",
-                  switchToogleConfig: {
-                    setState,
-                    state,
-                  },
-                },
-                {
-                  text: "Ensayos",
-                  switchToogleConfig: {
-                    setState,
-                    state,
-                  },
-                },
-                {
-                  text: "Curso",
-                  selectConfig: [
-                    "4° Medio",
-                    "3° Medio",
-                    "2° Medio",
-                    "1° Medio",
-                    "Todos",
-                  ],
-                },
-                {
-                  text: "Asignatura",
-                  selectConfig: ["Matemática", "Todos"],
-                },
-              ]}
-            />
+          <Modal
+            title="Configuración"
+            setModalState={setModalState}
+            modalState={modalState}
+            options={[
+              {
+                type: "boolean",
+                text: "Resumenes",
+                setState,
+                state,
+              },
+              {
+                text: "Ejercicios",
+                setState,
+                state,
+                type: "boolean",
+              },
+              {
+                text: "Ensayos",
+                setState,
+                state,
+                type: "boolean",
+              },
+              {
+                type: "select",
+                text: "Curso",
+                selectConfig: [
+                  "4° Medio",
+                  "3° Medio",
+                  "2° Medio",
+                  "1° Medio",
+                  "Todos",
+                ],
+              },
+            ]}
+          />
         </div>
       </section>
       <ul className={styles.units}>
@@ -94,6 +121,7 @@ export default function Docs() {
           docs={["Proporcion", "Clasificación"]}
         />
       </ul>
+      <ConfigButton callback={useEditDoc} icon={faPlus} />
     </Layout>
   );
 }

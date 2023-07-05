@@ -1,0 +1,113 @@
+.config {
+  position: absolute;
+  font-size: 0.1em;
+  border: 1px solid black;
+  padding: 4px;
+  background-color: white;
+  border-radius: 2px;
+}
+
+.config:hover {
+  cursor: pointer;
+  background-color: rgb(230, 230, 230);
+}
+
+.docs{
+  overflow-x: hidden;
+  display: flex;
+  justify-content: center;
+  padding: 16px 0;
+}
+
+.doc {
+  /* width: 70%;
+  font-size: 1.92vw;
+   */
+  /* width: 450px; */
+  /* font-size: 140px; */
+  /* max-width: 100rem; */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1.5em;
+  font-family: nunito;
+}
+
+.menu-btns {
+  font-size: 0.7rem;
+  border-radius: 4px;
+  overflow: hidden;
+  height: 1.4rem;
+  border: 1px solid black;
+  position: absolute;
+  display: flex;
+}
+
+.config-btn {
+  background-color: black;
+}
+
+.config-btn__icon {
+  color: white;
+  transition: 200ms;
+}
+
+/* .config-btn__icon:hover {
+  transition: 100ms;
+  transform: scale(1.2);
+} */
+
+.config-btn:hover .config-btn__icon{
+  color: lightgray;
+  transition: 100ms;
+  transform: scale(1.2);
+}
+
+.delete-btn:hover .icon{
+  transition: 100ms;
+  transform: scale(1.4);
+  color: #ff6961;
+}
+
+.add-btn:hover .icon{
+  transition: 100ms;
+  transform: scale(1.4);
+  color: #5066e8;
+}
+
+.add-btn,
+.delete-btn {
+  background-color: white;
+}
+
+.menu-btns > * {
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  border-left: 1px solid black;
+  padding: 4px 6px;
+  margin: 0;
+}
+
+.menu-btns *:first-child {
+  border: none;
+}
+
+.menu-btns > *:hover {
+  cursor: pointer;
+}
+
+.icon {
+  transition: 200ms;
+}
+
+/* .menu-btns:hover .icon {
+  transition: 100ms;
+  transform: scale(1.4);
+} */
+
+.config-btn:hover {
+  background-color: rgb(0, 0, 0);
+}

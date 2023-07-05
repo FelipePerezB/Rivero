@@ -5,13 +5,11 @@ import Button from "@components/Button";
 
 export default function Profile() {
   return (
-    <Layout style={'only-nav'}>
+    <Layout style={"only-nav"}>
       <section className={styles["photo__container"]}>
         <div className={styles.hero}></div>
         <div className={styles.photo}></div>
-        <span className={styles.button}>
-          Cambiar foto
-        </span>
+        <span className={styles.button}>Cambiar foto</span>
       </section>
       <form className={styles.form}>
         <label>
@@ -27,11 +25,9 @@ export default function Profile() {
           <input placeholder="Password" className={styles.input} />
         </label>
       </form>
-      <Button
-        text="Guardar cambios"
-        style="primary"
-        callback={() => console.log("AAA")}
-      ></Button>
+      <Button style="primary" callback={() => console.log("AAA")}>
+        Guardar cambios
+      </Button>
     </Layout>
   );
 }

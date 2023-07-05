@@ -1,0 +1,42 @@
+.docs{
+  overflow-x: hidden;
+  display: flex;
+  justify-content: center;
+  padding: 16px 0;
+}
+
+
+.navar{
+  position: fixed;
+  width: 100%;
+  top: 0;
+  left: 0;
+}
+.separator{
+  height: 46px;
+}
+
+.navar ul{
+  margin: 0;
+  padding: 16px;
+  height: 3.5rem;
+  background-color: #5066e8;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+}
+
+.navar li{
+  cursor: pointer;
+  margin: 0;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.options input{
+  width: 100px;
+  border-radius: 4px;
+  height: 1.6rem;
+}

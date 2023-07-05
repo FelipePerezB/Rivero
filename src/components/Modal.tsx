@@ -1,8 +1,12 @@
-import React, { ReactNode, useState } from "react";
+import React, { ReactNode, useEffect, useState } from "react";
 import styles from "@styles/Modal.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClose } from "@fortawesome/free-solid-svg-icons";
 import SwitchToogle from "./SwitchToogle";
+import Button from "./Button";
+import { useRouter } from "next/router";
+
+type types = "select" | "boolean" | "text";
 
 export default function Modal({
   modalState,
@@ -10,20 +14,30 @@ export default function Modal({
   setModalState,
   children,
   title,
+  callback,
 }: {
+  callback?: (data: any) => void;
   modalState: boolean;
+  title: string;
   setModalState: any;
   children?: ReactNode;
-  title: string;
   options?: {
+    type: types;
     text: string;
-    switchToogleConfig?: {
-      setState: any;
-      state: boolean;
-    };
+    setState?: any;
+    state?: boolean;
     selectConfig?: string[];
   }[];
 }) {
+  const router = useRouter();
+  const [values, setValues] = useState({} as any);
+  const addFormData = (data: any) => {
+    const key = Object.keys(data)[0];
+    const value = Object.values(data)[0];
+    values[key] = value;
+    setValues(values);
+  };
+
   return (
     <div key={title} className={styles[`${modalState ? "on" : "off"}`]}>
       <div onClick={() => setModalState(false)} className={styles.blur}></div>
@@ -37,25 +51,23 @@ export default function Modal({
             icon={faClose}
           />
         </div>
-        <ul>
-          {options?.map((op) => {
-            if (op.switchToogleConfig)
-              return (
-                <Op
-                  key={op.text}
-                  text={op.text}
-                  switchToogleOp={{
-                    setState: op.switchToogleConfig.setState,
-                    state: op.switchToogleConfig.state,
-                  }}
-                />
-              );
-            if (op.selectConfig)
-              return (
-                <Op key={op.text} text={op.text} selectOp={op.selectConfig} />
-              );
-          })}
+        <ul className={styles.options}>
+          {options?.map((op, i) => (
+            <Op key={op.type + i} addFormData={addFormData} {...op} />
+          ))}
         </ul>
+        {options && (
+          <Button
+            style="primary"
+            callback={() => {
+              callback && callback(values);
+              const id = "CID82828282";
+              // router.push(`docs/edit/${id}`);
+            }}
+          >
+            Save
+          </Button>
+        )}
         {children}
       </div>
     </div>
@@ -63,34 +75,62 @@ export default function Modal({
 }
 
 function Op({
+  addFormData,
   text,
+  type,
   switchToogleOp,
-  selectOp,
+  selectConfig,
 }: {
+  addFormData: (data: any) => any;
   switchToogleOp?: {
     state: boolean;
     setState: any;
   };
-  selectOp?: string[];
+  type: types;
+  selectConfig?: string[];
   text: string;
 }) {
+  const createFormData = (value: any) => {
+    const data: any = {};
+    data[text] = value;
+    addFormData(data);
+  };
+  const node = {
+    select: (
+      <label>
+        <input
+          onChange={({ target }) => createFormData(target?.value)}
+          list={selectConfig?.join()}
+        />
+        <datalist
+          id={selectConfig?.join()}
+          onChange={({ target }) => console.log(target)}
+          className={styles.modal__select}
+        >
+          {selectConfig?.map((op) => (
+            <option key={op}>{op}</option>
+          ))}
+        </datalist>
+      </label>
+    ),
+    boolean: switchToogleOp && <SwitchToogle state={switchToogleOp.state} />,
+    text: (
+      <input
+        onChange={({ target }) => createFormData(target?.value)}
+        className={styles.op__input}
+      />
+    ),
+  };
   return (
     <li
       key={text}
       onClick={() => {
         switchToogleOp && switchToogleOp.setState(!switchToogleOp.state);
       }}
-      className={styles.op__text}
+      className={styles.op}
     >
-      <p>{text}</p>
-      {switchToogleOp && <SwitchToogle state={switchToogleOp.state} />}
-      {selectOp && (
-        <select className={styles.modal__select}>
-          {selectOp.map((op) => (
-            <option key={op}>{op}</option>
-          ))}
-        </select>
-      )}
+      <span className={styles.op__text}>{text}</span>
+      {node[type]}
     </li>
   );
 }

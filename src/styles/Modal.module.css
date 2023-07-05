@@ -28,11 +28,12 @@
 }
 
 .modal {
+  max-width: 400px;
+  min-width: 256px;
   display: flex;
   flex-direction: column;
   background-color: white;
   border-radius: var(--radius);
-  min-width: 256px;
   width: 70%;
   height: auto;
   padding: 16px;
@@ -58,23 +59,38 @@
   color: #cb2f4e;
 }
 
-.op__text {
-  font-weight: 700;
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding-bottom: 16px;
+}
+
+.op {
   padding: 8px 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.op__text span {
+.op__text {
+  font-weight: 700;
+}
+
+.op__input{
+  width: 50%;
+  max-width: 200px;
+}
+
+/* .op span {
   padding: 8px;
   text-align: center;
   width: 3rem;
   color: white;
   border-radius: var(--radius);
-}
+} */
 
-.modal__select{
+.modal__select {
   padding: 3px;
   border-radius: var(--radius);
   border: 2px solid black;

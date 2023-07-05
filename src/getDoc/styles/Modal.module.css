@@ -1,0 +1,172 @@
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  transform: translate(calc(50vw - 50%), calc(50vh - 50%));
+  z-index: 10000;
+  padding: 20px;
+  width: 70%;
+  max-width: 350px;
+  aspect-ratio: 3 / 5;
+  background-color: white;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 100%;
+  height: 100%;
+  font-size: 1rem;
+  overflow: scroll;
+}
+
+.form {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 0 0 0 8px;
+}
+
+.select {
+  width: 100%;
+  display: inline-block;
+  margin: 8px 0;
+}
+
+.child-input {
+  display: flex;
+  flex-direction: column;
+}
+
+.child-input__add {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  background-color: white;
+  border: lightgray solid 2px;
+  font-size: 0.6rem;
+}
+
+.children {
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 8px 4px 16px;
+}
+
+.child {
+  height: 2.4rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+  box-shadow: 2px 2px 4px lightgray;
+  border-radius: 4px;
+  background-color: white;
+}
+
+.child:hover {
+  background-color: lightgray;
+  cursor: pointer;
+  box-shadow: none;
+}
+
+.delete-child {
+  transition: 200ms;
+}
+
+.delete-child:hover {
+  transition: 100ms;
+  color: #ff6961;
+  transform: scale(1.5);
+}
+
+.subInput {
+  padding: 8px 0 0 12px;
+}
+
+.blur {
+  transition: opacity 0.25s linear;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  opacity: 1;
+  background-color: rgba(128, 128, 128, 0.277);
+  width: 100vw;
+  min-height: 100vh;
+  height: 100%;
+  cursor: pointer;
+}
+
+.form label {
+  display: flex;
+  flex-direction: column;
+}
+
+.cards {
+  width: 100%;
+  padding: 4px;
+  display: flex;
+  overflow-x: scroll;
+  gap: 8px;
+}
+
+.card-container {
+  position: relative;
+}
+
+.card:hover {
+  background-color: lightgray;
+  cursor: pointer;
+}
+
+.card-container:hover .card-options {
+  display: block;
+}
+
+.card {
+  padding: 8px;
+  margin: 8px 0;
+  outline: 1px solid black;
+  border-radius: 4px;
+}
+
+.card-text {
+  display: inline-block;
+  width: max-content;
+}
+
+.card-options {
+  display: none;
+  position: absolute;
+  right: 8px;
+  top: 10px;
+}
+
+.delete{
+  transition: 200ms;
+}
+
+.delete:hover {
+  cursor: pointer;
+  transition: 100ms;
+  color: #ff6961;
+  transform: scale(1.5);
+}
+
+/* .delete:hover{
+  display: block;
+} */
