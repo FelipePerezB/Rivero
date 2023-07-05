@@ -7,5 +7,5 @@ export default function edit() {
   const setComponent = (component: props) => {
     console.log(component);
   };
-  return <Edit callback={setComponent} setDoc={setComponent} />;
+  return <Edit saveDoc={setComponent} setDoc={setComponent} />;
 }

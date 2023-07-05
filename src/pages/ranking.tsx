@@ -2,7 +2,12 @@ import React, { useState } from "react";
 import Layout from "src/layout/Layout";
 import styles from "@styles/Ranking.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faGear, faInfo, faInfoCircle, faStar } from "@fortawesome/free-solid-svg-icons";
+import {
+  faGear,
+  faInfo,
+  faInfoCircle,
+  faStar,
+} from "@fortawesome/free-solid-svg-icons";
 import Modal from "@components/Modal";
 
 export default function Ranking() {
@@ -26,12 +31,17 @@ export default function Ranking() {
   return (
     <Layout>
       <section className={styles.instruccions}>
-        <FontAwesomeIcon icon={faStar} size={'4x'} className={styles.instruccions__icon}/>
+        <FontAwesomeIcon
+          icon={faStar}
+          size={"4x"}
+          className={styles.instruccions__icon}
+        />
         <p>
-          <span>
-          Completa actividades para conseguir estrellas 
-          </span>
-          <FontAwesomeIcon className={styles.instruccions__info__logo} icon={faInfoCircle}/>
+          <span>Completa actividades para conseguir estrellas</span>
+          <FontAwesomeIcon
+            className={styles.instruccions__info__logo}
+            icon={faInfoCircle}
+          />
         </p>
       </section>
       <section>
@@ -50,11 +60,12 @@ function Info({ title }: { title: string }) {
   const [modalState, setModalState] = useState(false);
   return (
     <>
-      <div
-        className={styles.laderboard__info}
-      >
+      <div className={styles.laderboard__info}>
         <h2>{title}</h2>
-        <span onClick={() => setModalState(true)} className={styles.config__icon}>
+        <span
+          onClick={() => setModalState(true)}
+          className={styles.config__icon}
+        >
           <FontAwesomeIcon icon={faGear} />
         </span>
       </div>
@@ -63,10 +74,11 @@ function Info({ title }: { title: string }) {
         modalState={modalState}
         setModalState={setModalState}
         options={[
-          { text: "Top", selectConfig: ["Curso", "Nacional"] },
+          { text: "Top", selectConfig: ["Curso", "Nacional"], type: "select" },
           {
             text: "Mostrar",
             selectConfig: ["Top 10", "Top 20", "Top 100", "Todos"],
+            type: "select",
           },
         ]}
       />
