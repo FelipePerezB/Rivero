@@ -1,0 +1,38 @@
+# Run "npm run codegen" for autogenerate the schema
+
+query GetBasicData(
+  $where: TopicWhereInput!
+  $subjectsWhere2: SubjectWhereInput!
+) {
+  subjects(where: $subjectsWhere2) {
+    id
+    name
+  }
+  topics(where: $where) {
+    id
+    name
+    Doc {
+      title
+      title
+      id
+    }
+  }
+}
+
+query GetSubjectsIds($where: SubjectWhereInput!) {
+  subjects(where: $where) {
+    id
+  }
+}
+
+query GetDoc($docId: Int!) {
+  doc(id: $docId) {
+    content
+  }
+}
+
+mutation CreateDoc($createDocInput: DocCreateInput!){
+  createDoc(createDocInput: $createDocInput) {
+    id
+  }
+}
