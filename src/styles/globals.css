@@ -1,52 +1,56 @@
-:root{
+:root {
   /* COLORS */
-  --primary-color: #5066E8;
-  --active-letter-color: #3066FF;
-  --games-color: #1485D8;
-  --background-color: #EDF1F4;
-  
+  --primary-color: #5066e8;
+  --active-letter-color: #3066ff;
+  --games-color: #1485d8;
+  --background-color: #edf1f4;
+
   /* OTHERS */
-  --radius: 8px;
+  --radius: 4px;
   --shadow: 4px 4px 8px #d3d3d37c;
 }
 
-*{
+* {
   box-sizing: border-box;
-  -webkit-tap-highlight-color: rgba(0,0,0,0);
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
-a{
+a {
   color: black;
   text-decoration: none;
 }
 
-ul, ol{
+ul,
+ol {
   margin: 0;
   padding: 0;
 }
 
-li{
+li {
   list-style: none;
 }
 
-body{
-  font-family: 'nunito';
+body {
+  font-family: "nunito";
   /* font-family: 'Open sans'; */
   background-color: var(--background-color);
   margin: 0;
   overflow-x: hidden;
 }
 
-.edit .component{
+.component {
   display: block;
+}
+
+.edit .component {
   border-radius: 4px;
 }
 
-.edit .component .component:hover{
+.edit .component .component:hover {
   cursor: pointer;
   outline: 0.15em solid #5066e8;
 }
 
-.edit .component .component .component:hover{
+.edit .component .component .component:hover {
   outline: 0.15em dashed #5066e8;
 }

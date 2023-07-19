@@ -1,10 +1,14 @@
-import { components } from "../utils/getComponent";
+import { schemas, uiSchemas } from "../utils/getComponent";
 import React, { useEffect, useRef, useState } from "react";
 import styles from "../styles/Modal.module.css";
 import ModalInput from "../components/ModalInput";
 import { createPortal } from "react-dom";
 import getID from "../utils/getId";
 import Button from "../components/Button";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faClose } from "@fortawesome/free-solid-svg-icons";
+import GetDoc from "../GetDoc";
+import { pdfNodes } from "src/schemas";
 
 type useStateFunc = (data: any) => void;
 export default function Modal({
@@ -21,26 +25,36 @@ export default function Modal({
   setModalState: useStateFunc;
   setModalData: useStateFunc;
 }) {
-  const componentsNames = Object.entries(components).map((e) => e[0]);
+  const componentsNames = Object.keys(schemas).map((e) => e.toLowerCase());
+  const uiComponentsNames = Object.keys(uiSchemas).map((e) => e.toLowerCase());
+
+  const getSchema = () => {
+    const schema = Object.entries(schemas).find(
+      ([name, data]) => name.toLowerCase() === component.toLowerCase()
+    );
+    if (schema) return schema[1] as any;
+  };
   const [currentSchema, setCurrentSchema] = useState("" as any);
   const [componentSchema, setComponentSchema] = useState("" as any);
   const [component, setComponent] = useState("");
   const [values, setValues] = useState({} as any);
 
   useEffect(() => {
-    const $selectComponent = document.getElementById(
-      "select-component"
-    ) as HTMLInputElement;
-    if ($selectComponent) {
-      $selectComponent.value = "";
+    if (!modalState) {
+      const $selectComponent = document.getElementById(
+        "select-component"
+      ) as HTMLInputElement;
+      if ($selectComponent) {
+        $selectComponent.value = "";
+      }
+      setComponent("");
+      setCurrentSchema({});
+      setComponentSchema("");
     }
-    setComponent("");
-    setComponentSchema("");
   }, [modalState]);
 
   const addFormData = (data: any) => {
-    const key = Object.keys(data)[0];
-    const value = Object.values(data)[0];
+    const [key, value] = Object.entries(data)[0];
     values[key] = value;
     setValues(values);
   };
@@ -53,36 +67,39 @@ export default function Modal({
       },
     };
 
-    Object.keys(components[component]?.schema)?.forEach((key) => {
-      let newOp = {} as any;
-      newOp[key] = data[key];
-      Object.assign(newComponent, {
-        ...newComponent,
-        options: {
-          ...newComponent.options,
-          ...newOp,
-        },
+    const schema = getSchema();
+
+    schema &&
+      Object.keys(schema)?.forEach((key) => {
+        let newOp = {} as any;
+        newOp[key] = data[key];
+        Object.assign(newComponent, {
+          ...newComponent,
+          options: {
+            ...newComponent.options,
+            ...newOp,
+          },
+        });
       });
-    });
     setModalData(newComponent);
     setModalState(false);
   };
 
   useEffect(() => {
-    // debugger;
-    if (selectedComponent) {
-      setCurrentSchema(components[selectedComponent.type]?.schema);
+    if (selectedComponent?.options) {
+      const schema = getSchema();
+      schema && setCurrentSchema(schema);
       setComponent(selectedComponent.type);
       setComponentSchema(Object.values(selectedComponent?.options));
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedComponent, currentSchema]);
 
   useEffect(() => {
-    const componentData = Object.entries(components)
-      .find((c) => c[0] === component)
-      ?.at(1) as any;
-    setCurrentSchema(componentData?.schema);
-  }, [component, componentsNames]);
+    const schema = getSchema();
+    schema && setCurrentSchema(schema);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [component]);
 
   if (modalState) {
     return createPortal(
@@ -90,9 +107,18 @@ export default function Modal({
         <div onClick={() => setModalState(false)} className={styles.blur}></div>
         <div className={styles.modal}>
           <div className={styles.container}>
+            <div className={styles.header}>
+              <h2>Crear componente</h2>
+              <FontAwesomeIcon
+                onClick={() => setModalState(false)}
+                className={styles.close__icon}
+                size="xl"
+                icon={faClose}
+              />
+            </div>
             {!selectedComponent && (
-              <>
-                <label>
+              <div className={styles.selectComponent}>
+                {/* <label>
                   <span>Tipo de componente:</span>
                   <input
                     className={styles.select}
@@ -100,7 +126,12 @@ export default function Modal({
                     defaultValue={component}
                     onChange={(event) => {
                       const value = event?.target?.value;
-                      if (componentsNames.includes(value)) setComponent(value);
+                      if (
+                        Object.keys(schemas)
+                          .map((node) => node.toLowerCase())
+                          .includes(value.toLowerCase())
+                      )
+                        setComponent(value);
                     }}
                     list="components"
                   />
@@ -111,8 +142,30 @@ export default function Modal({
                       {component}
                     </option>
                   ))}
-                </datalist>
-              </>
+                </datalist> */}
+                <ul className={styles.nodes}>
+                  {uiComponentsNames.map((component) => (
+                    <li key={component + "-select"}>
+                      <input
+                        value={component.toLowerCase()}
+                        onChange={({ target }) => setComponent(target.value)}
+                        name="AAA"
+                        type={"radio"}
+                        className={styles["radio-btn"]}
+                      />
+                      <span className={styles.node}>
+                        <GetDoc
+                          nodes={pdfNodes}
+                          component={{
+                            type: component.toLowerCase(),
+                            options: {},
+                          }}
+                        />
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             )}
             <form className={styles.form}>
               {currentSchema &&
@@ -123,7 +176,9 @@ export default function Modal({
                       name={name}
                       key={name}
                       type={type as any}
-                      value={componentSchema && componentSchema[i + 1]}
+                      value={
+                        selectedComponent && selectedComponent.options[name]
+                      }
                     />
                   );
                 })}
@@ -136,14 +191,6 @@ export default function Modal({
             >
               <span>Save</span>
             </Button>
-            {/* <button
-              type="button"
-              onClick={() => {
-                createComponent(values);
-              }}
-            >
-              Guardar
-            </button> */}
           </div>
         </div>
       </>,

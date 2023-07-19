@@ -1,8 +1,7 @@
 import ConfigButton from "./components/ConfigButton";
 import Menu from "./components/Menu";
 import changeComponent from "./utils/changeComponent";
-import getComponent from "./utils/getComponent";
-import { isCID } from "./utils/getId";
+import getID, { isCID } from "./utils/getId";
 import React, { useEffect, useState } from "react";
 import styles from "./styles/Edit.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -11,46 +10,149 @@ import {
   faSave,
   faUpload,
 } from "@fortawesome/free-solid-svg-icons";
+import { api } from "./utils/api";
+import { useRouter } from "next/router";
+import GetDoc from "./GetDoc";
 
 type props = { type: string; options: any };
 
-export default function Edit({ setDoc, saveDoc }: { setDoc: (data: props) => void; saveDoc: any }) {
-  const data = {
-    id: "CID812919622",
-    name: "Sistema de ecuaciones",
-    component: {
-      type: "doc",
-      options: {
-        id: "CID812919622",
-        childrens: [
-          {
-            type: "page",
-            options: {
-              id: "CID812819282",
-              childrens: [
-                {
-                  type: "docInfo",
-                  options: {
-                    id: "CID812889282",
-                    title: "SISTEMA DE ECUACIONES",
-                    subtitle: "EJE: ALGEBRA",
-                  },
-                },
-              ],
-            },
-          },
-        ],
-      },
-    },
+export default function Edit({
+  doc,
+  options,
+  saveDoc,
+  nodes,
+}: {
+  nodes: any;
+  options?: {
+    // grade: string;
+    title: string;
+    category: string;
   };
-  // const [doc, setDoc] = useState({} as any);
+  doc?: any;
+  saveDoc: (doc: any) => void;
+}) {
+  // const data = {
+  //   id: "7",
+  //   name: "Sistema de ecuaciones",
+  //   subtitle: "AAAAA",
+  //   component: {
+  //     type: "doc",
+  //     options: {
+  //       id: "CID812919622",
+  //       childrens: [
+  //         {
+  //           type: "page",
+  //           options: {
+  //             id: "CID812819282",
+  //             childrens: [
+  //               {
+  //                 type: "docInfo",
+  //                 options: {
+  //                   id: "CID812889282",
+  //                   title: "SISTEMA DE ECUACIONES",
+  //                   subtitle: "EJE: ALGEBRA",
+  //                 },
+  //               },
+  //             ],
+  //           },
+  //         },
+  //       ],
+  //     },
+  //   },
+  // };
+
+  const [pages, setPage] = useState({
+    type: "doc",
+    options: {
+      id: "CID71632832",
+      childrens: [
+        {
+          type: "page",
+          options: {
+            id: "CID63726726",
+          },
+          childrens: [],
+        },
+      ],
+    },
+  } as any);
+
+  useEffect(() => {
+    if (options?.title) {
+      setPage({
+        type: "doc",
+        options: {
+          id: getID(),
+          title: options?.title,
+          subtitle: options?.category,
+          childrens: [
+            {
+              type: "page",
+              options: {
+                id: getID(),
+                childrens: [
+                  {
+                    type: "docinfo",
+                    options: {
+                      id: getID(),
+                      title: options?.title.toUpperCase(),
+                      subtitle: options?.category.toUpperCase(),
+                    },
+                  },
+                ],
+              },
+            },
+          ],
+        },
+      });
+    } else if (doc) setPage(doc);
+  }, [doc, options]);
+  // useEffect(() => {
+  //   console.log(options);
+  //   if (!doc?.id) {
+  //     const a = {
+  //       id: options?.id,
+  //       name: options?.title,
+  //       category: options?.category,
+  //       component: {
+  //         type: "doc",
+  //         options: {
+  //           id: getID(),
+  //           childrens: [
+  //             {
+  //               type: "page",
+  //               options: {
+  //                 id: getID(),
+  //                 childrens: [
+  //                   {
+  //                     type: "docInfo",
+  //                     options: {
+  //                       id: getID(),
+  //                       title: options?.title.toUpperCase(),
+  //                       subtitle: options?.category.toUpperCase(),
+  //                     },
+  //                   },
+  //                 ],
+  //               },
+  //             },
+  //           ],
+  //         },
+  //       },
+  //     };
+  //     api.put(`docs/8`, {
+  //       content: a,
+  //     });
+  //     console.log(a)
+  //     setPage(a.component);
+  //   }
+  // }, [options]);
+  // const [doc, doc] = useState({} as any);
   const [modalData, setModalData] = useState<any>();
   const [modalType, setModalType] = useState<"add" | "edit" | "" | "addChild">(
     ""
   );
   const [lastElement, setlastElement] = useState<any>();
   const [componente, setComponent] = useState<any>();
-  const [pages, setPage] = useState(data.component as any);
 
   const getNode = (selection?: HTMLElement): HTMLElement | undefined =>
     selection &&
@@ -142,12 +244,6 @@ export default function Edit({ setDoc, saveDoc }: { setDoc: (data: props) => voi
     }
   );
 
-  const addChild = (component: props, newChild: props) => {
-    pages.forEach((element: props) => {
-      changeComponent(element, component, { newChild });
-    });
-    setPage([...pages]);
-  };
   return (
     <>
       <header>
@@ -155,18 +251,16 @@ export default function Edit({ setDoc, saveDoc }: { setDoc: (data: props) => voi
           <ul>
             <li className={styles["doc-info"]}>
               <FontAwesomeIcon icon={faChevronLeft} />
-              <span className={styles["doc-name"]}>{data.name}</span>
+              <span className={styles["doc-name"]}>
+                {options?.title || pages?.options?.title}
+              </span>
             </li>
 
             <li className={styles.options}>
               <FontAwesomeIcon
                 size="xl"
                 icon={faSave}
-                onClick={() => {
-                  saveDoc(pages)
-                  // localStorage.setItem("Doc", JSON.stringify(doc));
-                  // console.log(localStorage.getItem("Doc"));
-                }}
+                onClick={() => saveDoc(pages)}
               />
             </li>
           </ul>
@@ -176,7 +270,7 @@ export default function Edit({ setDoc, saveDoc }: { setDoc: (data: props) => voi
       <main id="doc-container" className={styles.docs}>
         {menuConfig && (
           <Menu
-            addChild={addChild}
+            // addChild={addChild}
             deleteComponentCB={deleteComponentCB}
             setModalType={setModalType}
             modalType={modalType}
@@ -185,9 +279,13 @@ export default function Edit({ setDoc, saveDoc }: { setDoc: (data: props) => voi
           />
           // <></>
         )}
-        <div className={"edit"} onClick={getCoords}>
-          {getComponent(pages?.type, pages?.options)}
-        </div>
+        {pages && (
+          <div className={"edit"} onClick={getCoords}>
+            <GetDoc component={pages} nodes={nodes}/>
+            {/* {getComponent(pages?.type, pages?.options)} */}
+          </div>
+        )}
+
         <ConfigButton setComponent={setPage} component={pages} />
       </main>
     </>

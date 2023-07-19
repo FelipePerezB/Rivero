@@ -66,14 +66,14 @@
 }
 
 .exercises{
-  margin: 8px 0 16px;
+  margin: 0.2em 0 1em;
   width: 100%;
 }
 
 .question{
   font-size: 0.8em;
-  padding-right: 16px;
-  margin: 8px 0 0 0;
+  padding-right: 0.3em;
+  margin: 0 0 0 0;
 }
 
 .question__alternatives{

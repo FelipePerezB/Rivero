@@ -19,7 +19,6 @@ export default function Menu({
   setModalType,
   modalType,
 }: {
-  addChild: (component: props, newChild: props) => void;
   modalType: string;
   coords: { x: number; y: number };
   component?: props;
@@ -27,24 +26,6 @@ export default function Menu({
   setModalType: (type: "add" | "edit" | "addChild") => void;
   deleteComponentCB: (component: any) => void;
 }) {
-  const style = {
-    // p: {
-    //   // position: "absolute",
-    //   // top: coords?.y + "px",
-    //   // left: coords?.x + "px",
-    // },
-    // delete: {
-    //   position: "absolute",
-    //   top: coords?.y + "px",
-    //   left: coords?.x + 45 + "px",
-    // },
-    // add: {
-    //   position: "absolute",
-    //   top: coords?.y + "px",
-    //   left: coords?.x + 65 + "px",
-    // },
-  } as any;
-
   const [modalState, setModalState] = useState(false);
   const openModal = (type: "add" | "edit" | "addChild") => {
     setModalState(true);

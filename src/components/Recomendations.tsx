@@ -5,20 +5,58 @@ import Link from "next/link";
 export default function Recomendations({
   children,
   title,
-  link
+  link,
+  filters,
+  setState
 }: {
   children: ReactNode;
-  title: string;
-  link: string
+  title?: string;
+  link?: string;
+  filters: {
+    text: string;
+    value: string;
+  }[];
+  setState: React.Dispatch<React.SetStateAction<string>>
 }) {
+  const type = link && title ? "row" : "column";
+
+  const handleClick = () => {
+    const { value } = document.querySelector(
+      'input[name="filter"]:checked'
+    ) as HTMLInputElement;
+    setState(value);
+  };
+
   return (
     <>
-      <section>
-        <div className={styles.info}>
-          <h2 className={styles.title}>{title}</h2>
-          <Link href={link} className={styles["see-more"]}>Ver todas</Link>
+      <section className={styles[`${type}`]}>
+        {link && type === "row" && (
+          <div className={styles.info}>
+            <h2 className={styles.title}>{title}</h2>
+            <Link href={link} className={styles["see-more"]}>
+              Ver todas
+            </Link>
+          </div>
+        )}
+        {type === "column" && (
+          <fieldset className={styles.filter}>
+            {filters.map(({ text, value }, i) => (
+              <label key={"filter: " + value}>
+                <input
+                  onChange={handleClick}
+                  defaultChecked={!i}
+                  type="radio"
+                  name="filter"
+                  value={value}
+                />
+                <span>{text}</span>
+              </label>
+            ))}
+          </fieldset>
+        )}
+        <div className={styles.recomendations}>
+          <div className={styles.children}>{children}</div>
         </div>
-        {children}
       </section>
     </>
   );

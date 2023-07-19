@@ -1,9 +1,10 @@
-import React, { ReactNode, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "../styles/Doc.module.css";
 import getComponent from "../utils/getComponent";
 import resize from "../utils/resize";
+import { createPortal } from "react-dom";
 
-export default function Document({
+export default function Doc({
   childrens,
 }: {
   childrens: {

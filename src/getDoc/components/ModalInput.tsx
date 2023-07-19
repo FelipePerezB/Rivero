@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClose } from "@fortawesome/free-solid-svg-icons";
 import Button from "./Button";
 import resize from "../utils/resize";
+import getID from "../utils/getId";
 
 type component = {
   type: string;
@@ -72,6 +73,7 @@ export default function ModalInput({
 
   const StandardInput = ({ name, type }: props) => (
     <input
+      className={styles["standart-input"]}
       defaultValue={value}
       name={name}
       onChange={(event) => createFormData(event?.target?.value)}
@@ -83,6 +85,7 @@ export default function ModalInput({
     <>
       <label>
         <input
+          className={styles["standart-input"]}
           name={options.join()}
           id="select-array"
           defaultValue={value}
@@ -100,7 +103,7 @@ export default function ModalInput({
     </>
   );
 
-  const ChildrensInput = ({ name, type }: props) => {
+  const ChildrensInput = ({ child }: any) => {
     const defaultValue = Array.isArray(value) ? value : [];
     const [modalState, setModalState] = useState(false);
     const [modalData, setModalData] = useState<component>();
@@ -118,6 +121,7 @@ export default function ModalInput({
         setLastChild(modalData);
         setChildren([...children, modalData]);
       }
+      console.log(modalData)
     }, [children, lastChild, modalData]);
 
     useEffect(() => {
@@ -142,6 +146,14 @@ export default function ModalInput({
           <span>Añadir hijo</span>
         </Button>
         <NewCompModal
+          selectedComponent={
+            child && {
+              type: child,
+              options: {
+                id: getID()
+              },
+            }
+          }
           modalState={modalState}
           setModalState={setModalState}
           setModalData={setModalData}
@@ -317,8 +329,8 @@ export default function ModalInput({
     };
     return (
       <input
-      min={0}
-      max={100}
+        min={0}
+        max={100}
         onChange={({ target }) => resizeContainer(target)}
         type="range"
       />

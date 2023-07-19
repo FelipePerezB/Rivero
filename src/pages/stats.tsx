@@ -2,7 +2,11 @@ import React, { useState } from "react";
 import Layout from "src/layout/Layout";
 import styles from "@styles/Stats.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faAddressBook, faGear } from "@fortawesome/free-solid-svg-icons";
+import {
+  faAddressBook,
+  faFileArrowDown,
+  faGear,
+} from "@fortawesome/free-solid-svg-icons";
 import { Line } from "react-chartjs-2";
 import {
   Chart as ChartJS,
@@ -13,10 +17,99 @@ import {
   Tooltip,
 } from "chart.js";
 import Modal from "@components/Modal";
+import CustomModal from "@components/CustomModal";
+import ConfigButton from "@components/ConfigButton";
+import { GetStaticProps, InferGetStaticPropsType } from "next";
+import { api } from "src/getDoc/utils/api";
 
-export default function Statistics() {
+export const getStaticProps: GetStaticProps<{
+  data: any;
+}> = async () => {
+  const { data } = await api.get("scores");
+  if (!data) throw new Error("Failed to request");
+  return {
+    props: {
+      data,
+    },
+    revalidate: 60 * 60 * 24,
+  };
+};
+
+export default function Statistics({
+  data,
+}: InferGetStaticPropsType<typeof getStaticProps>) {
   const [modalState, setModalState] = useState(false);
-  const [showAverage, setShowAverage] = useState(false);
+  const [statsModalData, setStatsModalData] = useState<{
+    color: string;
+    scores: number[];
+  }>();
+
+  const [userId, setUserId] = useState(1);
+
+  const [statsModalState, setStatsModalState] = useState(false);
+  const [num, setNum] = useState<number>(3);
+  const subjects = Object.entries(data);
+  const scores = subjects.map(([name, subjectData]: [string, any]) => {
+    const color = subjectData.color as string;
+    const docs = Object.entries(subjectData.docs).map((doc) => doc[1]);
+    const doc = docs.map((doc) => Object.entries(doc as number[]));
+    const userScores = [] as number[];
+    const avgs = doc.map((scores) => {
+      return Math.round(
+        scores
+          .map(([user, score]) => {
+            if (Number(user) === userId) userScores.push(score);
+            return score;
+          })
+          .reduce((a, b) => a + b) / scores.length
+      );
+    });
+
+    // const avgs = scores.map((score) =>
+    //   Math.round(score.reduce((a, b) => a + b) / score.length)
+    // );
+    // const avgs = sums.map(sum=> sum / sc)
+    // .sort(doc)
+    // const sum = Object.entries(gradeScores)[1].reduce((a, b) => a + b);
+    return {
+      name,
+      color: color as string,
+      avgGrade: avgs,
+      scores: userScores,
+    };
+  });
+
+  // const scores = [
+  //   {
+  //     name: "Matemática",
+  //     color: "#E86675",
+  //     scores: [900, 950, 970, 920, 820, 890, 990, 920, 720, 890],
+  //     avgGrade: [600, 640, 660, 640, 660, 670, 690, 700, 650, 690, 720, 730],
+  //   },
+  //   {
+  //     name: "Matemática 2",
+  //     color: "#8c2c37",
+  //     scores: [920, 720, 890, 990],
+  //     avgGrade: [905, 1000, 900, 800],
+  //   },
+  //   {
+  //     name: "Lenguaje",
+  //     color: "#46D37E",
+  //     scores: [920, 720, 890, 990],
+  //     avgGrade: [905, 1000, 900, 800],
+  //   },
+  //   {
+  //     name: "Ciencias",
+  //     color: "#50a9e8",
+  //     scores: [920, 720, 890, 990],
+  //     avgGrade: [905, 1000, 900, 800],
+  //   },
+  // ];
+
+  const openModal = (data: { color: string; scores: number[] }) => {
+    setStatsModalState(true);
+    setStatsModalData(data);
+  };
 
   ChartJS.register(
     CategoryScale,
@@ -29,139 +122,74 @@ export default function Statistics() {
   return (
     <Layout>
       <section className={styles.container}>
-        <div onClick={() => setModalState(true)} className={styles.options}>
-          <button>Configuración</button>
-          <FontAwesomeIcon icon={faGear} />
-        </div>
-        <Modal
-          title="Configuración"
-          setModalState={setModalState}
-          modalState={modalState}
-          options={[
-            {
-              type: "boolean",
-              text: "Promedio",
-              setState: setShowAverage,
-              state: showAverage,
-            },
-            {
-              type: "select",
-              text: "Mostrar",
-              selectConfig: ["3 ensayos", "6 ensayos", "12 ensayos", "Todos"],
-            },
-          ]}
-        />
-        <LineChart
-          data={[
-            { number: "N° 1", points: 800 },
-            { number: "N° 2", points: 830 },
-            { number: "N° 3", points: 840 },
-          ]}
-          title="Lenguaje"
-          color="#46D37E"
-        />
-        <LineChart
-          data={[
-            { number: "N° 1", points: 800 },
-            { number: "N° 2", points: 830 },
-            { number: "N° 3", points: 820 },
-          ]}
-          title="Matemática M1"
-          color="#E86675"
-        />
-        <LineChart
-          data={[
-            { number: "N° 1", points: 800 },
-            { number: "N° 2", points: 800 },
-            { number: "N° 3", points: 820 },
-          ]}
-          title="Matemática M2"
-          color="#8c2c37"
-        />
-        <LineChart
-          data={[
-            { number: "N° 1", points: 800 },
-            { number: "N° 2", points: 850 },
-            { number: "N° 3", points: 770 },
-          ]}
-          title="Ciencias"
-          color="#50a9e8"
-        />
+        {/* <div onClick={() => setModalState(true)} className={styles.options}>
+          <button>Generar reporte</button>
+          <FontAwesomeIcon icon={faFileArrowDown} />
+        </div> */}
+        {statsModalData?.scores && (
+          <OptionsModal
+            scores={statsModalData?.scores}
+            color={statsModalData?.color}
+            num={num}
+            modalState={statsModalState}
+            setModalState={setStatsModalState}
+          />
+        )}
+        {scores &&
+          scores?.map((data: any, i: number) => (
+            <LineChart openModal={openModal} key={`chart-${i}`} {...data} />
+          ))}
       </section>
+      <ConfigButton
+        modalOptions={[]}
+        callback={() => {}}
+        icon={faFileArrowDown}
+      />
     </Layout>
   );
 }
 
 function LineChart({
-  data,
-  title,
+  scores,
+  name,
   color,
+  avgGrade,
+  openModal,
 }: {
-  data: {
-    number: string;
-    points: number;
-  }[];
-  title: string;
+  openModal: (data: { color: string; scores: number[] }) => void;
+  scores: number[];
+  name: string;
   color: string;
+  avgGrade: number[];
 }) {
   const configData = {
-    labels: data.map((value) => value.number),
+    labels: avgGrade?.map((score, i) => `N°${i + 1}`),
     datasets: [
       {
-        label: title,
-        data: data.map((value) => value.points),
+        label: 'Puntaje',
+        data: scores,
         borderColor: color,
         backgroundColor: color,
+        pointRadius: 4,
+      },
+      {
+        label: "Promedio curso",
+        data: avgGrade,
+        // borderDash: [30, 10],
+        pointRadius: 2.5,
+        backgroundColor: "#001251",
+        borderColor: "#001251",
       },
     ],
   };
 
-  const [modalState, setModalState] = useState(false);
-
   return (
     <>
-      <Modal
-        key={title + "-sumary"}
-        title="Resumen"
-        modalState={modalState}
-        setModalState={setModalState}
-      >
-        <div className={styles.modal__container}>
-          <ul className={styles.sumary}>
-            <li style={{ backgroundColor: color }} className={styles.score}>
-              <span>Primero</span>
-              <span className={styles.number}>750</span>
-            </li>
-            <li style={{ backgroundColor: color }} className={styles.score}>
-              <span>Actual</span>
-              <span className={styles.number}>900</span>
-            </li>
-            <li style={{ backgroundColor: color }} className={styles.score}>
-              <span>Objetivo</span>
-              <span className={styles.number}>950</span>
-            </li>
-          </ul>
-          <ul>
-            <li className={styles.sumary__texts}>
-              <p>Promedio 3 ultimos</p>
-              <span>930</span>
-            </li>
-            <li className={styles.sumary__texts}>
-              <p>Ensayos totales</p>
-              <span>6</span>
-            </li>
-            <li className={styles.sumary__texts}>
-              <p>Puntaje más alto</p>
-              <span>960</span>
-            </li>
-          </ul>
-        </div>
-      </Modal>
       <article>
-        <div className={styles.info} key={title}>
-          <h3>{title}</h3>
+        <div className={styles.info} key={name}>
+          <h3>{name}</h3>
           <FontAwesomeIcon
-            onClick={() => setModalState(true)}
+            onClick={() => openModal({ color, scores })}
             style={{ background: color }}
             className={styles.info__icon}
             icon={faAddressBook}
@@ -174,3 +202,70 @@ function LineChart({
     </>
   );
 }
+const OptionsModal = ({
+  modalState,
+  setModalState,
+  scores,
+  num,
+  color,
+}: {
+  modalState: boolean;
+  setModalState: React.Dispatch<React.SetStateAction<boolean>>;
+  scores: number[];
+  num: number;
+  color: string;
+}) => {
+  const spliceIndex = num <= scores.length ? num : scores.length;
+  const firstScore = scores[0];
+  const reverseScores = scores.reverse();
+  const lastScore = reverseScores[0];
+  const lastScores = reverseScores.slice(0, spliceIndex);
+  const avgLastScores = Math.round(
+    lastScores.reduce((a, b) => a + b) / lastScores.length
+  );
+  const highScore = scores.sort((a, b) => a - b)[scores.length - 1];
+
+  const reportData = [
+    { text: "Primero", value: firstScore },
+    { text: "Actual", value: lastScore },
+    { text: "Objetivo", value: 950 },
+  ];
+
+  const reportTexts = [
+    { text: `Promedio ${spliceIndex} últimos`, value: avgLastScores },
+    { text: `Ensayos totales`, value: scores.length },
+    { text: `Puntaje más alto`, value: highScore },
+  ];
+
+  return (
+    <Modal
+      key={name + "-sumary"}
+      title="Resumen"
+      modalState={modalState}
+      setModalState={setModalState}
+    >
+      <div className={styles.modal__container}>
+        <ul className={styles.sumary}>
+          {reportData.map(({ text, value }) => (
+            <li
+              key={text}
+              style={{ backgroundColor: color }}
+              className={styles.score}
+            >
+              <span>{text}</span>
+              <span className={styles.number}>{value}</span>
+            </li>
+          ))}
+        </ul>
+        <ul>
+          {reportTexts.map(({ text, value }) => (
+            <li key={text} className={styles.sumary__texts}>
+              <p>{text}</p>
+              <span>{value}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </Modal>
+  );
+};

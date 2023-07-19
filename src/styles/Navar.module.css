@@ -5,7 +5,8 @@
   top: 0;
   width: 100%;
   padding: 0 16px;
-  background-color: var(--primary-color);
+  /* background-color: var(--primary-color); */
+  background-color: black;
 }
 
 .navar ul{

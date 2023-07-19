@@ -6,11 +6,14 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGear, faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 import Modal from "./Modal";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
+import CustomModal from "./CustomModal";
 
 export default function ConfigButton({
   icon,
   callback,
+  modalOptions
 }: {
+  modalOptions: any[]
   callback: (data: any) => void;
   icon: IconProp;
 }) {
@@ -35,39 +38,13 @@ export default function ConfigButton({
             icon={icon}
           />
         </button>
-        <Modal
+        <CustomModal
           callback={callback}
           modalState={modalState}
           setModalState={setModalState}
           title="Crear documento"
-          options={[
-            {
-              text: "Curso",
-              type: "select",
-              selectConfig: [
-                "4° Medio",
-                "3° Medio",
-                "2° Medio",
-                "1° Medio",
-                "Todos",
-              ],
-            },
-            {
-              type: "select",
-              text: "Asignatura",
-              selectConfig: ["Matemática", "Otro"],
-            },
-            {
-              type: "select",
-              text: "Eje",
-              selectConfig: ["Geometria", "Algebra", "Otro"],
-            },
-            {
-              type: "text",
-              text: "Nombre",
-            },
-          ]}
-        ></Modal>
+          options={modalOptions}
+        />
       </>,
       document.querySelector("#modal") as HTMLDivElement
     );

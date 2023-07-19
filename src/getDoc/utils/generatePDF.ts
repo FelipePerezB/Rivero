@@ -3,8 +3,10 @@
 import resize from "./resize";
 
 export async function generatePdf() {
+  const $container = document.getElementById("doc-container");
   const $doc = document.getElementById("doc");
-  if ($doc) {
+  if ($doc && $container) {
+    $container.style.width = "max-content";
     $doc.style.width = "450px";
     $doc.style.fontSize = "13px";
     $doc.style.gap = "0";
@@ -26,8 +28,8 @@ export async function generatePdf() {
       .from($doc);
     await pdf.save();
 
-      resize(0.5)
-      $doc.style.gap = "1.4em";
-
+    resize(0.5);
+    $doc.style.gap = "1.4em";
   }
+  return true;
 }

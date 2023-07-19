@@ -28,12 +28,13 @@ export default function Navar({ setVisibility }: { setVisibility: any }) {
             />
           </Link>
         </li>
-        <li>
+        <li></li>
+        {/* <li>
           <Link className={styles.stars} href={"/ranking"}>
               <span>50</span>
               <FontAwesomeIcon icon={faStar}/>
           </Link>
-        </li>
+        </li> */}
       </ul>
     </nav>
   );

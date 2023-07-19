@@ -1,3 +1,24 @@
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 0 12px;
+}
+
+.close__icon {
+  transition: 200ms;
+  cursor: pointer;
+}
+
+.close__icon:hover {
+  transform: scale(1.2);
+  color: #ff6961;
+}
+
+.header h2 {
+  margin: 0;
+}
+
 .modal {
   position: fixed;
   top: 0;
@@ -10,17 +31,17 @@
   aspect-ratio: 3 / 5;
   background-color: white;
   border-radius: 4px;
-  overflow: hidden;
 }
 
 .container {
+  overflow-y: scroll;
+  overflow-x: hidden;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   width: 100%;
   height: 100%;
   font-size: 1rem;
-  overflow: scroll;
 }
 
 .form {
@@ -28,7 +49,7 @@
   display: flex;
   flex-direction: column;
   gap: 12px;
-  margin-bottom: 12px;
+  margin: 12px 0;
 }
 
 .list {
@@ -56,6 +77,75 @@
   background-color: white;
   border: lightgray solid 2px;
   font-size: 0.6rem;
+}
+
+.nodes {
+  display: flex;
+  overflow-x: scroll;
+  padding: 8px;
+  gap: 20px;
+}
+
+.nodes > li {
+  position: relative;
+}
+
+.radio-btn {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.nodes > li {
+  font-size: 0.35em;
+  background-color: white;
+  transition: transform 150ms;
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+}
+
+.node {
+  border-radius: 2px;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 12px;
+  overflow: hidden;
+  transition: transform 200ms;
+}
+
+.radio-btn:checked + .node{
+   background-color: black;
+   color: white; 
+   font-weight: 800;
+   transition: transform 100ms;
+   transform: scale(1.15);
+}
+
+.radio-btn:hover + .node {
+  cursor: pointer;
+  outline: 2px solid black;
+}
+
+/* .standart-input: */
+
+.standart-input{
+  margin: 2px;
+  height: 1.4rem;
+  padding: 0 6px;
+  border: none;
+  outline: 2px solid black;
+  border-radius: 4px;
+}
+
+.standart-input:focus{
+  outline: 2px solid #5066e8;
+  border: none;
 }
 
 .children {
@@ -156,7 +246,7 @@
   top: 10px;
 }
 
-.delete{
+.delete {
   transition: 200ms;
 }
 

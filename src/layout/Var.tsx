@@ -1,8 +1,11 @@
 import {
   faBook,
   faChartSimple,
-  faHome,
-  faStar,
+  faComments,
+  faMap,
+  faSquarePen,
+  faTools,
+  faUserGroup,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
@@ -12,23 +15,36 @@ import { useRouter } from "next/router";
 
 export default function Var({ state }: { state?: "only-nav" }) {
   const router = useRouter();
+
   const icons = [
-    {
-      link: "/",
-      element: faHome,
-    },
+    // {
+    //   link: "/",
+    //   element: faHome,
+    // },
     {
       link: "/docs",
       element: faBook,
     },
+    // {
+    //   link: "/edit",
+    //   element: faSquarePen,
+    // },
     {
-      link: "/ranking",
-      element: faStar,
+      link: 'route',
+      element: faMap
     },
     {
       link: "/stats",
       element: faChartSimple,
     },
+    // {
+    //   link: "/tools",
+    //   element: faTools,
+    // }
+    // {
+    //   link: "/community",
+    //   element: faUserGroup,
+    // },
   ];
 
   return (

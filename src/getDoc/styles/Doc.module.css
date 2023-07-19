@@ -12,27 +12,6 @@
   background-color: rgb(230, 230, 230);
 }
 
-.docs{
-  overflow-x: hidden;
-  display: flex;
-  justify-content: center;
-  padding: 16px 0;
-}
-
-.doc {
-  /* width: 70%;
-  font-size: 1.92vw;
-   */
-  /* width: 450px; */
-  /* font-size: 140px; */
-  /* max-width: 100rem; */
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 1.5em;
-  font-family: nunito;
-}
-
 .menu-btns {
   font-size: 0.7rem;
   border-radius: 4px;

@@ -22,7 +22,7 @@ export default function Page({
       >
         {/* {isFirstPage && <DocInfo/>} */}
         {/* {children} */}
-        {childrens.map(({ type, options }: any) => (
+        {childrens?.map(({ type, options }: any) => (
           <>{getComponent(type, options)}</>
         ))}
       </div>

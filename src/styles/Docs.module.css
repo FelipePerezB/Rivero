@@ -10,13 +10,11 @@
   width: max-content;
   align-items: center;
   gap: 12px;
-  cursor: pointer;
   font-size: 3rem;
   margin: 1rem;
 }
 
 .subject {
-  cursor: default;
   background-color: #e86675;
   color: white;
   border-radius: var(--radius);
@@ -42,6 +40,22 @@
   color: white;
   border: none;
   border-radius: var(--radius);
+}
+.config__icon{
+  transition: 300ms;
+}
+
+.config:hover .config__icon{
+  color: lightgray;
+  transition: 200ms;
+  transform: scale(1.2);
+}
+
+.circle{
+  border: 3px solid #e86675;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
 }
 
 .sumary__texts{
@@ -118,7 +132,7 @@
 .docs {
   display: flex;
   flex-direction: column;
-  padding: 16px 0;
+  padding: 8px 0;
   border-top: 1px solid lightgray;
 }
 
@@ -137,13 +151,13 @@
 }
 
 .options {
-  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 16px;
 }
 
 .icon {
-  height: 16px;
-  width: 16px;
-  padding: 8px;
+  font-size: 20px;
 }
 
 .icon:hover {

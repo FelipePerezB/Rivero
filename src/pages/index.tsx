@@ -1,6 +1,7 @@
 import Recomendations from "@components/Recomendations";
 import Layout from "src/layout/Layout";
 import styles from "@styles/Home.module.css";
+import { useState } from "react";
 
 export default function Home() {
   const stats = [
@@ -25,15 +26,17 @@ export default function Home() {
     { title: "Productos notables" },
     { title: "Teorema de tales" },
   ];
+
+  // const [state, setState] = useState()
   return (
     <>
       <Layout>
-        <Recomendations title="Ultimos puntajes" link="/stats">
+        {/* <Recomendations  setState={} filters={[]} title="Ultimos puntajes" link="/stats">
           <Scores scores={stats} />
         </Recomendations>
         <Recomendations title="Últimas guías" link="/docs">
           <Docs docs={docs} />
-        </Recomendations>
+        </Recomendations> */}
       </Layout>
     </>
   );

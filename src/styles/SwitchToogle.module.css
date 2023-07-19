@@ -27,9 +27,13 @@
 }
 
 .switch-toogle-false > div {
-  left: 0;
+  transition: 350ms;
+  transform: translateX(-50%);
+  /* left: 0; */
 }
 
 .switch-toogle-true > div {
-  right: 0;
+  transition: 200ms;
+  transform: translateX(150%);
+  /* right: 0; */
 }

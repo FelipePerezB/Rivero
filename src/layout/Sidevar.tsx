@@ -55,8 +55,8 @@ export default function Sidevar({
                 text="Cerrar sesión"
               />
             </div>
-            <div onClick={()=>setVisibility(false)}>
-              <Option text="Cerrar menu" icon={faClose}/>
+            <div onClick={() => setVisibility(false)}>
+              <Option text="Cerrar menu" icon={faClose} />
             </div>
           </section>
         </article>
@@ -64,6 +64,8 @@ export default function Sidevar({
     </>
   );
 }
+
+const createFormData = () => {};
 
 function Option({
   iconColor,
@@ -96,7 +98,7 @@ function Option({
         <span>{text}</span>
       </div>
       {link && <FontAwesomeIcon icon={faChevronRight} />}
-      {toogle && <SwitchToogle state={toogle.state} />}
+      {toogle && <SwitchToogle createFormData={createFormData} />}
     </li>
   );
   return <>{link ? <Link href={link}>{node}</Link> : node}</>;
