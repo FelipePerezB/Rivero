@@ -1,3 +1,5 @@
+/* @import "mafs/core.css"; */
+
 :root {
   /* COLORS */
   --primary-color: #5066e8;
@@ -8,7 +10,11 @@
   /* OTHERS */
   --radius: 4px;
   --shadow: 4px 4px 8px #d3d3d37c;
+
+  /* GRAPH */
+  /* --mafs-fg: black !important */
 }
+
 
 * {
   box-sizing: border-box;
@@ -53,4 +59,141 @@ body {
 
 .edit .component .component .component:hover {
   outline: 0.15em dashed #5066e8;
+}
+
+
+
+
+
+.MafsView {
+  display: block;
+  background: var(--mafs-bg);
+  overflow: hidden;
+  border-radius: 0px;
+  -webkit-user-select: none;
+  user-select: none;
+  font-family: inherit;
+  font-variant-numeric: tabular-nums;
+  touch-action: none;
+  /* border: 2px dashed black; */
+  /* border: 1px solid rgba(124, 124, 124, 0.111); */
+
+  /* margin: auto; */
+
+  --mafs-bg: white;
+  --mafs-fg: black;
+
+  --mafs-origin-color: var(--mafs-fg);
+  /* --mafs-line-color: #555; */
+  --grid-line-subdivision-color: rgba(183, 183, 183, 0.111);
+
+  --mafs-red: #f11d0e;
+  --mafs-orange: #f14e0e;
+  --mafs-yellow: #ffe44a;
+  --mafs-green: #15e272;
+  --mafs-blue: #58a6ff;
+  --mafs-indigo: #7c58ff;
+  --mafs-violet: #ae58ff;
+  --mafs-pink: #ee00ab;
+}
+
+.MafsView text {
+  font-size: 0.6em;
+  /* transform: translate(-10%); */
+  /* margin: 1em; */
+  fill: var(--mafs-fg);
+  cursor: default;
+}
+
+.MafsView path {
+  stroke: var(--mafs-fg);
+  
+}
+
+.MafsView:focus-visible {
+  border-radius: 5px;
+  outline: 3px solid #58a6ff;
+}
+
+@supports not selector(:focus-visible) {
+  .MafsView:focus {
+    border-radius: 5px;
+    outline: 3px solid #58a6ff;
+  }
+}
+
+/* .mafs-shadow {
+  paint-order: stroke;
+  stroke-width: 3px;
+  stroke: var(--mafs-bg);
+  stroke-opacity: 0.75;
+  stroke-linejoin: round;
+} */
+
+.mafs-movable-point {
+  cursor: grab;
+  touch-action: none;
+}
+
+.mafs-movable-point-dragging {
+  cursor: grabbing;
+}
+
+.mafs-movable-point:focus {
+  outline: 0;
+}
+
+.mafs-movable-point * {
+  fill: none;
+  stroke: none;
+}
+
+.mafs-movable-point-hitbox {
+  fill: transparent;
+}
+
+.MafsView line{
+  stroke-width: 0.1em;
+}
+
+.mafs-movable-point-focus {
+  stroke: var(--movable-point-color);
+  stroke-width: 2;
+  stroke-opacity: 0;
+  fill: none;
+  transition: stroke-opacity 0.2s ease;
+}
+
+.mafs-movable-point-ring {
+  fill: var(--movable-point-color);
+  fill-opacity: 0.25;
+  stroke: none;
+  transition: r 0.2s ease;
+}
+
+.mafs-movable-point-point {
+  fill: var(--movable-point-color);
+  transition: r 0.2s ease;
+}
+
+/* Hover */
+
+.mafs-movable-point:hover .mafs-movable-point-point,
+.mafs-movable-point:focus-visible .mafs-movable-point-point {
+  r: calc(var(--movable-point-ring-size) - 2px);
+}
+
+.mafs-movable-point:hover .mafs-movable-point-ring,
+.mafs-movable-point:focus-visible .mafs-movable-point-ring {
+  r: calc(var(--movable-point-ring-size) + 3px);
+}
+
+.mafs-movable-point.mafs-movable-point-dragging .mafs-movable-point-ring {
+  r: var(--movable-point-ring-size);
+}
+
+/* Focus */
+
+.mafs-movable-point:focus-visible .mafs-movable-point-focus {
+  stroke-opacity: 1;
 }

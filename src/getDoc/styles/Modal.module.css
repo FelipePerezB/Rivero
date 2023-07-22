@@ -49,7 +49,6 @@
   display: flex;
   flex-direction: column;
   gap: 12px;
-  margin: 12px 0;
 }
 
 .list {
@@ -84,6 +83,7 @@
   overflow-x: scroll;
   padding: 8px;
   gap: 20px;
+  margin-bottom: 12px;
 }
 
 .nodes > li {
@@ -121,6 +121,7 @@
 
 .radio-btn:checked + .node{
    background-color: black;
+   stroke: white;
    color: white; 
    font-weight: 800;
    transition: transform 100ms;

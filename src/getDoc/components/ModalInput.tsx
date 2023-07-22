@@ -121,7 +121,6 @@ export default function ModalInput({
         setLastChild(modalData);
         setChildren([...children, modalData]);
       }
-      console.log(modalData)
     }, [children, lastChild, modalData]);
 
     useEffect(() => {

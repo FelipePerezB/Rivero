@@ -3,11 +3,9 @@ import styles from "../styles/Doc.module.css";
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faClose,
-  faGear,
-  faPlus,
-} from "@fortawesome/free-solid-svg-icons";
+import { faClose, faGear, faPlus } from "@fortawesome/free-solid-svg-icons";
+import { schemas } from "../utils/getComponent";
+import getID from "../utils/getId";
 
 type props = { type: string; options: any };
 
@@ -17,22 +15,43 @@ export default function Menu({
   setModalData,
   component,
   setModalType,
-  modalType,
 }: {
-  modalType: string;
   coords: { x: number; y: number };
   component?: props;
   setModalData: any;
-  setModalType: (type: "add" | "edit" | "addChild") => void;
+  setModalType: any;
   deleteComponentCB: (component: any) => void;
 }) {
+  const [selectedComponent, setSelectedComponent] = useState<
+    props | undefined
+  >();
   const [modalState, setModalState] = useState(false);
-  const openModal = (type: "add" | "edit" | "addChild") => {
-    setModalState(true);
-    setModalType(type);
+  const [menuState, setMenuState] = useState(true);
+
+  const getSchema = (type: string) => {
+    const schema = Object.entries(schemas).find(
+      ([name, data]) => name.toLowerCase() === type.toLowerCase()
+    );
+    if (schema) return schema[1] as any;
   };
 
-  const [menuState, setMenuState] = useState(true);
+  const openModal = (type: "edit" | "addChild") => {
+    setModalType(type)
+    if (type === "edit") setSelectedComponent(component);
+    else if (type === "addChild") {
+      const schema = component?.type && getSchema(component?.type);
+      if (typeof schema.childrens === "string") setSelectedComponent(undefined);
+      else {
+        setSelectedComponent({
+          type: schema.childrens.child,
+          options: {
+            id: getID(),
+          },
+        });
+      }
+    }
+    setModalState(true);
+  };
 
   useEffect(() => {
     setMenuState(true);
@@ -44,8 +63,6 @@ export default function Menu({
       clearTimeout(timeout);
     };
   }, [coords]);
-
-  // console.log
 
   if (coords?.x && coords?.y) {
     return createPortal(
@@ -59,46 +76,40 @@ export default function Menu({
               onClick={() => openModal("edit")}
               id="menu"
               className={styles["config-btn"]}
-              // style={{ background: "black" }}
-              // className={styles.config}
             >
-              {/* <span> */}
-              <FontAwesomeIcon className={styles["config-btn__icon"]} icon={faGear} />
-              {/* </span> */}
-              {/* <span>Configurar</span> */}
+              <FontAwesomeIcon
+                className={styles["config-btn__icon"]}
+                icon={faGear}
+              />
             </p>
             {component && (
               <p
-                // style={{ background: "white" }}
                 onClick={() => deleteComponentCB(component)}
-                // style={style.delete}
                 className={styles["delete-btn"]}
               >
-                <FontAwesomeIcon  className={styles["icon"]} icon={faClose} />
-                {/* <span>Eliminar</span> */}
+                <FontAwesomeIcon className={styles["icon"]} icon={faClose} />
               </p>
             )}
             {component?.options?.childrens && (
               <p
-                // style={{ background: "white" }}
                 onClick={() => openModal("addChild")}
-                // style={{background: "#5066e8"}}
                 className={styles["add-btn"]}
               >
-                <FontAwesomeIcon icon={faPlus}  className={styles["icon"]}/>
-                {/* <span>Añadir</span> */}
+                <FontAwesomeIcon icon={faPlus} className={styles["icon"]} />
               </p>
             )}
           </div>
         )}
-        <NewCompModal
-          setModalData={setModalData}
-          modalState={modalState}
-          setModalState={setModalState}
-          selectedComponent={modalType === "edit" ? component : undefined}
-        />
+        {modalState && (
+          <NewCompModal
+            setModalData={setModalData}
+            modalState={modalState}
+            setModalState={setModalState}
+            selectedComponent={selectedComponent}
+          />
+        )}
       </>,
       document.querySelector("#modal") as HTMLDivElement
     );
-  } else return <></>
+  } else return <></>;
 }

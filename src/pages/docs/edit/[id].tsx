@@ -18,7 +18,8 @@ export default function EditPage() {
     const getData = async () => {
       let content;
       try {
-        const res = await api.get(`docs/$P{query.id}`);
+        throw new Error("A")
+        const res = await api.get(`docs/${query.id}`);
         content = res.data.content;
       } catch (error) {
         const stringifyData = localStorage.getItem(`${title}`);

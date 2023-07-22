@@ -155,7 +155,7 @@ export default function Docs({
           icon={faPlus}
         />
       </Layout>
-      {typeof download === "number" && <GetPDF id={download} />}
+      {/* {typeof download === "number" && <GetPDF id={download} />} */}
     </>
   );
 }
@@ -209,13 +209,13 @@ function Unit({
                 <span>{title}</span>
               </Link>
               <div className={styles.options}>
-                <FontAwesomeIcon
+                {/* <FontAwesomeIcon
                   onClick={() => {
                     router.push(`docs/check/${id}`);
                   }}
                   className={styles.icon}
                   icon={faCircleCheck}
-                />
+                /> */}
                 {/* <FontAwesomeIcon
                   className={styles.icon}
                   icon={faCircleDown}

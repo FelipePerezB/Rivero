@@ -86,11 +86,13 @@ export default function Modal({
   };
 
   useEffect(() => {
+    // setCurrentSchema({})
     if (selectedComponent?.options) {
       const schema = getSchema();
       schema && setCurrentSchema(schema);
       setComponent(selectedComponent.type);
       setComponentSchema(Object.values(selectedComponent?.options));
+    } else{
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedComponent, currentSchema]);

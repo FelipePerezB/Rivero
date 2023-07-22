@@ -1,7 +1,6 @@
 import Title from "./pdf/Title";
 import Columns from "./pdf/Columns";
 import SLE from "./pdf/SLE";
-import LineChart from "./pdf/LineChart";
 import Div from "./pdf/Div";
 import Exercises from "./pdf/Exercises";
 import Equality from "./pdf/Equality";
@@ -20,6 +19,7 @@ import WebQuestion from './web/Question'
 import WebExercises from './web/Exercises'
 import WebTitle from './web/Title'
 import Paragraph from "./pdf/Paragraph";
+import LineChart from "./pdf/Mafs";
 
 export const pdfNodes = [
   Div,

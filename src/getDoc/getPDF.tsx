@@ -1,9 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
-import getComponent from "./utils/getComponent";
 import { generatePdf } from "./utils/generatePDF";
 import { api } from "./utils/api";
 import { useQuery } from "@apollo/client";
 import { GetDocDocument } from "src/gql/graphql";
+import GetDoc from "./GetDoc";
+import { pdfNodes } from "src/schemas";
 
 export default function GetPDF({ id }: { id: number }) {
   const [doc, setDoc] = useState<{ type: string; options: any }>();
@@ -24,6 +25,6 @@ export default function GetPDF({ id }: { id: number }) {
     setDoc(undefined);
   }, [doc]);
 
-  if (doc) return <>{getComponent(doc.type, doc.options)};</>;
+  if (doc) return <GetDoc component={doc} nodes={pdfNodes}/>;
   else return <></>;
 }

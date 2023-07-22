@@ -38,8 +38,45 @@
   display: flex;
   flex-direction: column;
   gap: 8px;
-  border-bottom: 2px solid rgb(234, 234, 234);
+  border-bottom: 2px solid lightgray;
   margin-bottom: 16px;
+}
+
+.btns{
+  position: sticky;
+  top: 10px;
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}
+
+.btns .download{
+  color: white;
+  background-color: black;
+}
+
+.btns button{
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: 16px;
+  transition: 300ms;
+  background-color: white;
+  margin-bottom: 8px;
+}
+
+.btns button:hover{
+  transform: scale(1.08);
+  transition: 200ms;
+  background-color: lightgray;
+}
+
+.btns .download:hover{
+  background-color: black;
+  color: lightgray;
 }
 
 

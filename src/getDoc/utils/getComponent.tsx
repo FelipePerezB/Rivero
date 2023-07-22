@@ -1,97 +1,6 @@
-import React from "react";
-import styles from "../styles/reportTemplate.module.css";
-import Title from "../nodes/Title";
-import Columns from "../nodes/Columns";
-import SLE from "../nodes/SLE";
-import LineChart from "../nodes/LineChart";
-import Div from "../nodes/Div";
-import Exercises from "../nodes/Exercises";
-import Equality from "../nodes/Equality";
-import Fraction from "../nodes/Fraction";
-import DocInfo from "../nodes/DocInfo";
-import Question from "../nodes/Question";
-import Page from "../nodes/Page";
-import Doc from "../nodes/Document";
 import { generatePdf } from "./generatePDF";
-import Paragraph from "src/schemas/pdf/Paragraph";
 
-// const nodes = [
-//   Div,
-//   Title,
-//   Columns,
-//   SLE,
-//   LineChart,
-//   Equality,
-//   Fraction,
-//   DocInfo,
-//   Page,
-//   Question,
-//   Exercises,
-//   Doc,
-//   Paragraph
-// ];
-
-export const schemas: any = {
-  Div: {
-    childrens: "children",
-  },
-  Title: {
-    text: "text",
-    size: {
-      type: "options",
-      options: ["h1", "h2", "h3"],
-    },
-  },
-  Paragraph: {
-    text: "text",
-  },
-  Columns: {
-    gap: { type: "options", options: ["16px", "32px"] },
-    childrens: "children",
-  },
-  LineChart: {
-    size: { type: "options", options: ["medium", "small"] },
-    ecuations: {
-      type: "subInputsArray",
-      n: "number",
-      m: "number",
-    },
-    datasets: {
-      type: "subInputsArray",
-      coords: "text",
-      label: "text",
-    },
-  },
-  Exercises: {
-    childrens: {
-      type: "children",
-      child: "question"
-    },
-    startsIn: "number",
-    isAnEvaluation: "boolean",
-  },
-  Equality: {
-    exception: {
-      type: "subInputs",
-      sign: "text",
-      index: "number",
-    },
-    withBorder: "boolean",
-    childrens: "children",
-    sign: "text",
-  },
-  Fraction: {
-    numerator: "text",
-    denominator: "text",
-  },
-  SLE: {
-    ec1: "text",
-    ec2: "text",
-  },
-  DocInfo: {
-    title: "text",
-    subtitle: "text",
-  },
+export const childrenSchenas = {
   Question: {
     question: "text",
     alternatives: "text",
@@ -100,25 +9,8 @@ export const schemas: any = {
   Page: {
     childrens: "children",
   },
-  Doc: {
-    title: "text",
-    subtitle: "text",
-    childrens: {
-      type: "children",
-      child: "page"
-    },
-    resize: {
-      type: "range",
-      text: "Zoom",
-      callback: generatePdf,
-    },
-    download: {
-      type: "callback",
-      text: "Descargar PDF",
-      callback: generatePdf,
-    },
-  },
 };
+
 export const uiSchemas: any = {
   Div: {
     childrens: "children",
@@ -142,7 +34,10 @@ export const uiSchemas: any = {
     ec2: "text",
   },
   Exercises: {
-    childrens: "children",
+    childrens: {
+      type: "children",
+      child: "question",
+    },
     startsIn: "number",
     isAnEvaluation: "boolean",
   },
@@ -160,7 +55,40 @@ export const uiSchemas: any = {
     numerator: "text",
     denominator: "text",
   },
+  LineChart: {
+    size: { type: "options", options: ["xs", "s", "m", "l"] },
+    rangeX: "text",
+    rangeY: "text",
+    ecuations: {
+      type: "subInputsArray",
+      ecuation: "text",
+    },
+  },
 };
+
+export const schemas: any = {
+  ...uiSchemas,
+  ...childrenSchenas,
+  Doc: {
+    title: "text",
+    subtitle: "text",
+    childrens: {
+      type: "children",
+      child: "page",
+    },
+    resize: {
+      type: "range",
+      text: "Zoom",
+      callback: generatePdf,
+    },
+    download: {
+      type: "callback",
+      text: "Descargar PDF",
+      callback: generatePdf,
+    },
+  },
+};
+
 
 // const comps: any = {};
 
@@ -177,135 +105,135 @@ export const uiSchemas: any = {
 
 // console.log(components)
 
-  // export const components = {
-  //   div: {
-  //     schema: {
-  //       childrens: "children",
-  //     },
-  //     node: (options: any) => <Div {...options} />,
-  //   },
-  //   title: {
-  //     schema: {
-  //       text: "text",
-  //       size: {
-  //         type: "options",
-  //         options: ["h1", "h2", "h3"],
-  //       },
-  //     },
-  //     node: (options: { text: string; size: string; id: string }) => (
-  //       <Title {...options} />
-  //     ),
-  //   },
-  //   paragraph: {
-  //     schema: {
-  //       text: "text",
-  //     },
-  //     node: (options: any) => (
-  //       <p className={styles.paragrah} {...options}>
-  //         {options.text}
-  //       </p>
-  //     ),
-  //   },
-  //   columns: {
-  //     schema: {
-  //       gap: { type: "options", options: ["16px", "32px"] },
-  //       childrens: "children",
-  //     },
-  //     node: (options: any) => <Columns {...options}></Columns>,
-  //   },
-  //   SLE: {
-  //     node: (options: { ec1: string; ec2: string; id: string }) => (
-  //       <SLE {...options} />
-  //     ),
-  //     schema: {
-  //       ec1: "text",
-  //       ec2: "text",
-  //     },
-  //   },
-  //   lineChart: {
-  //     node: (options: any) => <LineChart {...options} />,
-  //     schema: {
-  //       size: { type: "options", options: ["medium", "small"] },
-  //       ecuations: {
-  //         type: "subInputsArray",
-  //         n: "number",
-  //         m: "number",
-  //       },
-  //       datasets: {
-  //         type: "subInputsArray",
-  //         coords: "text",
-  //         label: "text",
-  //       },
-  //     },
-  //   },
-  //   exercises: {
-  //     node: (options: any) => <Exercises {...options} />,
-  //     schema: {
-  //       childrens: "children",
-  //       startsIn: "number",
-  //       isAnEvaluation: "boolean",
-  //     },
-  //   },
-  //   equality: {
-  //     node: (options: any) => <Equality {...options} />,
-  //     schema: {
-  //       exception: {
-  //         type: "subInputs",
-  //         sign: "text",
-  //         index: "number",
-  //       },
-  //       withBorder: "boolean",
-  //       childrens: "children",
-  //       sign: "text",
-  //     },
-  //   },
-  //   fraction: {
-  //     node: (options: any) => <Fraction {...options} />,
-  //     schema: {
-  //       numerator: "text",
-  //       denominator: "text",
-  //     },
-  //   },
-  //   docInfo: {
-  //     node: (options: any) => <DocInfo {...options} />,
-  //     schema: {
-  //       title: "text",
-  //       subtitle: "text",
-  //     },
-  //   },
-  //   question: {
-  //     node: (options: any) => <Question {...options} />,
-  //     schema: {
-  //       question: "text",
-  //       alternatives: "text",
-  //       child: "children",
-  //     },
-  //   },
-  //   page: {
-  //     node: (options: any) => <Page {...options} />,
-  //     schema: {
-  //       childrens: "children",
-  //     },
-  //   },
-  //   doc: {
-  //     node: (options: any) => <Document {...options} />,
-  //     schema: {
-  //       title: "text",
-  //       subtitle: "text",
-  //       childrens: "children",
-  //       resize: {
-  //         type: "range",
-  //         text: "Zoom",
-  //         callback: generatePdf,
-  //       },
-  //       download: {
-  //         type: "callback",
-  //         text: "Descargar PDF",
-  //         callback: generatePdf,
-  //       },
-  //     },
-  //   },
-  // } as any;
+// export const components = {
+//   div: {
+//     schema: {
+//       childrens: "children",
+//     },
+//     node: (options: any) => <Div {...options} />,
+//   },
+//   title: {
+//     schema: {
+//       text: "text",
+//       size: {
+//         type: "options",
+//         options: ["h1", "h2", "h3"],
+//       },
+//     },
+//     node: (options: { text: string; size: string; id: string }) => (
+//       <Title {...options} />
+//     ),
+//   },
+//   paragraph: {
+//     schema: {
+//       text: "text",
+//     },
+//     node: (options: any) => (
+//       <p className={styles.paragrah} {...options}>
+//         {options.text}
+//       </p>
+//     ),
+//   },
+//   columns: {
+//     schema: {
+//       gap: { type: "options", options: ["16px", "32px"] },
+//       childrens: "children",
+//     },
+//     node: (options: any) => <Columns {...options}></Columns>,
+//   },
+//   SLE: {
+//     node: (options: { ec1: string; ec2: string; id: string }) => (
+//       <SLE {...options} />
+//     ),
+//     schema: {
+//       ec1: "text",
+//       ec2: "text",
+//     },
+//   },
+//   lineChart: {
+//     node: (options: any) => <LineChart {...options} />,
+//     schema: {
+//       size: { type: "options", options: ["medium", "small"] },
+//       ecuations: {
+//         type: "subInputsArray",
+//         n: "number",
+//         m: "number",
+//       },
+//       datasets: {
+//         type: "subInputsArray",
+//         coords: "text",
+//         label: "text",
+//       },
+//     },
+//   },
+//   exercises: {
+//     node: (options: any) => <Exercises {...options} />,
+//     schema: {
+//       childrens: "children",
+//       startsIn: "number",
+//       isAnEvaluation: "boolean",
+//     },
+//   },
+//   equality: {
+//     node: (options: any) => <Equality {...options} />,
+//     schema: {
+//       exception: {
+//         type: "subInputs",
+//         sign: "text",
+//         index: "number",
+//       },
+//       withBorder: "boolean",
+//       childrens: "children",
+//       sign: "text",
+//     },
+//   },
+//   fraction: {
+//     node: (options: any) => <Fraction {...options} />,
+//     schema: {
+//       numerator: "text",
+//       denominator: "text",
+//     },
+//   },
+//   docInfo: {
+//     node: (options: any) => <DocInfo {...options} />,
+//     schema: {
+//       title: "text",
+//       subtitle: "text",
+//     },
+//   },
+//   question: {
+//     node: (options: any) => <Question {...options} />,
+//     schema: {
+//       question: "text",
+//       alternatives: "text",
+//       child: "children",
+//     },
+//   },
+//   page: {
+//     node: (options: any) => <Page {...options} />,
+//     schema: {
+//       childrens: "children",
+//     },
+//   },
+//   doc: {
+//     node: (options: any) => <Document {...options} />,
+//     schema: {
+//       title: "text",
+//       subtitle: "text",
+//       childrens: "children",
+//       resize: {
+//         type: "range",
+//         text: "Zoom",
+//         callback: generatePdf,
+//       },
+//       download: {
+//         type: "callback",
+//         text: "Descargar PDF",
+//         callback: generatePdf,
+//       },
+//     },
+//   },
+// } as any;
 
 // export default function getComponent(component: string, options: any) {
 //   return components[component.toLowerCase()]?.node(options);

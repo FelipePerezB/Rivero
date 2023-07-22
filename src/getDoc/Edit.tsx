@@ -13,6 +13,7 @@ import {
 import { api } from "./utils/api";
 import { useRouter } from "next/router";
 import GetDoc from "./GetDoc";
+import Echart from "src/schemas/pdf/Echart";
 
 type props = { type: string; options: any };
 
@@ -270,10 +271,8 @@ export default function Edit({
       <main id="doc-container" className={styles.docs}>
         {menuConfig && (
           <Menu
-            // addChild={addChild}
-            deleteComponentCB={deleteComponentCB}
             setModalType={setModalType}
-            modalType={modalType}
+            deleteComponentCB={deleteComponentCB}
             setModalData={setModalData}
             {...menuConfig}
           />
@@ -281,11 +280,9 @@ export default function Edit({
         )}
         {pages && (
           <div className={"edit"} onClick={getCoords}>
-            <GetDoc component={pages} nodes={nodes}/>
-            {/* {getComponent(pages?.type, pages?.options)} */}
+            <GetDoc component={pages} nodes={nodes} />
           </div>
         )}
-
         <ConfigButton setComponent={setPage} component={pages} />
       </main>
     </>

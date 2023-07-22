@@ -14,10 +14,10 @@ export default function Document() {
         component: any;
       }
     | undefined
-  >(undefined);
-  useEffect(() => {
-    const { title, topic } = query;
-    const getData = async () => {
+    >(undefined);
+    useEffect(() => {
+      const { title, topic } = query;
+      const getData = async () => {
       let content;
       try {
         const res = await api.get(`docs/${query.id}`);
@@ -28,6 +28,7 @@ export default function Document() {
           content = JSON.parse(stringifyData);
         }
       }
+      // console.log(content)
       content && setConfig({ ...config, component: content });
     };
     query.id && getData();

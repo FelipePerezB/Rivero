@@ -3,11 +3,7 @@ import styles from "../styles/Doc.module.css";
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faClose,
-  faGear,
-  faPlus,
-} from "@fortawesome/free-solid-svg-icons";
+import { faClose, faGear, faPlus } from "@fortawesome/free-solid-svg-icons";
 
 type props = { type: string; options: any };
 
@@ -16,42 +12,26 @@ export default function Menu({
   coords,
   setModalData,
   component,
-  setModalType,
-  modalType,
+  // setModalType,
+  // modalType,
 }: {
   addChild: (component: props, newChild: props) => void;
-  modalType: string;
+  // modalType: string;
   coords: { x: number; y: number };
   component?: props;
   setModalData: any;
-  setModalType: (type: "add" | "edit" | "addChild") => void;
+  // setModalType: (type: "add" | "edit" | "addChild") => void;
   deleteComponentCB: (component: any) => void;
 }) {
-  const style = {
-    // p: {
-    //   // position: "absolute",
-    //   // top: coords?.y + "px",
-    //   // left: coords?.x + "px",
-    // },
-    // delete: {
-    //   position: "absolute",
-    //   top: coords?.y + "px",
-    //   left: coords?.x + 45 + "px",
-    // },
-    // add: {
-    //   position: "absolute",
-    //   top: coords?.y + "px",
-    //   left: coords?.x + 65 + "px",
-    // },
-  } as any;
-
+  const [selectedComponent, setSelectedComponent] = useState<props | undefined>(undefined);
   const [modalState, setModalState] = useState(false);
-  const openModal = (type: "add" | "edit" | "addChild") => {
-    setModalState(true);
-    setModalType(type);
-  };
-
   const [menuState, setMenuState] = useState(true);
+
+  const openModal = (type: "add" | "edit" | "addChild") => {
+    if(type === "edit") setSelectedComponent(component)
+    setModalState(true);
+    // setModalType(type);
+  };
 
   useEffect(() => {
     setMenuState(true);
@@ -63,8 +43,6 @@ export default function Menu({
       clearTimeout(timeout);
     };
   }, [coords]);
-
-  // console.log
 
   if (coords?.x && coords?.y) {
     return createPortal(
@@ -78,34 +56,26 @@ export default function Menu({
               onClick={() => openModal("edit")}
               id="menu"
               className={styles["config-btn"]}
-              // style={{ background: "black" }}
-              // className={styles.config}
             >
-              {/* <span> */}
-              <FontAwesomeIcon className={styles["config-btn__icon"]} icon={faGear} />
-              {/* </span> */}
-              {/* <span>Configurar</span> */}
+              <FontAwesomeIcon
+                className={styles["config-btn__icon"]}
+                icon={faGear}
+              />
             </p>
             {component && (
               <p
-                // style={{ background: "white" }}
                 onClick={() => deleteComponentCB(component)}
-                // style={style.delete}
                 className={styles["delete-btn"]}
               >
-                <FontAwesomeIcon  className={styles["icon"]} icon={faClose} />
-                {/* <span>Eliminar</span> */}
+                <FontAwesomeIcon className={styles["icon"]} icon={faClose} />
               </p>
             )}
             {component?.options?.childrens && (
               <p
-                // style={{ background: "white" }}
                 onClick={() => openModal("addChild")}
-                // style={{background: "#5066e8"}}
                 className={styles["add-btn"]}
               >
-                <FontAwesomeIcon icon={faPlus}  className={styles["icon"]}/>
-                {/* <span>Añadir</span> */}
+                <FontAwesomeIcon icon={faPlus} className={styles["icon"]} />
               </p>
             )}
           </div>
@@ -114,7 +84,7 @@ export default function Menu({
           setModalData={setModalData}
           modalState={modalState}
           setModalState={setModalState}
-          selectedComponent={modalType === "edit" ? component : undefined}
+          selectedComponent={selectedComponent}
         />
       </>,
       document.querySelector("#modal") as HTMLDivElement
