@@ -18,7 +18,7 @@ export default function EditPage() {
     const getData = async () => {
       let content;
       try {
-        throw new Error("A")
+        // throw new Error("A")
         const res = await api.get(`docs/${query.id}`);
         content = res.data.content;
       } catch (error) {
