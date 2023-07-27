@@ -18,8 +18,8 @@ export default function Doc({
     resize(0.5);
   }, []);
   return (
-    <div id="doc-container" className={styles.docs}>
-      <div className={styles.doc} id="doc">
+    <div id="doc-container-pdf" className={styles.docs}>
+      <div className={styles.doc} id="doc-pdf">
         {childrens?.map((component, i) => (
           <GetPdfNode key={'page-' + i} component={component} />
         ))}

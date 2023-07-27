@@ -14,7 +14,7 @@ export default function Layout({
   const [visibility, setVisibility] = useState(false);
   return (
     <div className={styles.layout}>
-      <Navar setVisibility={setVisibility} />
+      {/* <Navar setVisibility={setVisibility} /> */}
       <main className={styles.main}>{children}</main>
       <Var state={style}/>
       <Sidevar visibility={visibility} setVisibility={setVisibility} />

@@ -27,40 +27,6 @@
   transition: transform 0.25s linear;
 }
 
-.profile {
-  color: #001251;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  padding: 16px 8px;
-  border-radius: var(--radius);
-}
-
-.profile:hover {
-  background-color: var(--background-color);
-}
-
-.profile__info {
-  display: flex;
-  flex-direction: column;
-}
-
-.photo {
-  width: 3.4rem;
-  height: 3.4rem;
-  border: 2px solid gray;
-  border-radius: 100%;
-}
-
-.name {
-  font-size: 1.4rem;
-  font-weight: 800;
-}
-
-.role {
-  font-weight: 300;
-}
 
 .options__container{
   height: 100%;

@@ -10,16 +10,17 @@ import Question from "./pdf/Question";
 import Page from "./pdf/Page";
 import Doc from "./pdf/Document";
 
-import WebDoc from './web/Document'
-import WebPage from './web/Page'
-import WebDocInfo from './web/DocInfo'
-import WebDiv from './web/Div'
-import WebColumns from './web/Columns'
-import WebQuestion from './web/Question'
-import WebExercises from './web/Exercises'
-import WebTitle from './web/Title'
+import WebDoc from "./web/Document";
+import WebPage from "./web/Page";
+import WebDocInfo from "./web/DocInfo";
+import WebDiv from "./web/Div";
+import WebColumns from "./web/Columns";
+import WebQuestion from "./web/Question";
+import WebExercises from "./web/Exercises";
+import WebTitle from "./web/Title";
 import Paragraph from "./pdf/Paragraph";
 import LineChart from "./pdf/Mafs";
+import Mafs from "./web/Mafs";
 
 export const pdfNodes = [
   Div,
@@ -34,7 +35,7 @@ export const pdfNodes = [
   Question,
   Exercises,
   Doc,
-  Paragraph
+  Paragraph,
 ];
 
 export const webNodes = [
@@ -43,6 +44,7 @@ export const webNodes = [
   WebDocInfo,
   WebDiv,
   SLE,
+  Mafs,
   WebColumns,
   Equality,
   Fraction,
@@ -50,5 +52,5 @@ export const webNodes = [
   WebQuestion,
   WebExercises,
   Paragraph,
-  WebTitle
-]
+  WebTitle,
+];

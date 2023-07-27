@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import styles from "../styles/reportTemplate.module.css";
 // import getComponent from "../utils/getComponent";
 import Title from "./Title";
@@ -7,6 +7,7 @@ import GetDoc from "src/getDoc/GetDoc";
 import { pdfNodes } from "..";
 import GetPdfNode from ".";
 import getID from "src/getDoc/utils/getId";
+import { ComponentContext } from "../web/Document";
 
 export default function Exercises({
   id = getID(),
@@ -20,7 +21,7 @@ export default function Exercises({
       },
     },
   ],
-  startsIn="1",
+  startsIn = "1",
   isAnEvaluation = false,
 }: {
   isAnEvaluation?: boolean;
@@ -28,7 +29,7 @@ export default function Exercises({
   childrens: {
     type: string;
     options: {
-      id: string
+      id: string;
       question: string;
       alternatives: string;
       child?: {
@@ -40,6 +41,7 @@ export default function Exercises({
   id: string;
 }) {
   const startNumber = startsIn ?? "1";
+
   return (
     <CustomComponent id={id} style={{}}>
       <section className={styles.exercises}>

@@ -3,8 +3,9 @@
 import resize from "./resize";
 
 export async function generatePdf() {
-  const $container = document.getElementById("doc-container");
-  const $doc = document.getElementById("doc");
+  const $container = document.getElementById("doc-container-pdf");
+  const $doc = document.getElementById("doc-pdf");
+  console.log($doc)
   if ($doc && $container) {
     $container.style.width = "max-content";
     $doc.style.width = "450px";

@@ -13,7 +13,6 @@ import {
 import { api } from "./utils/api";
 import { useRouter } from "next/router";
 import GetDoc from "./GetDoc";
-import Echart from "src/schemas/pdf/Echart";
 
 type props = { type: string; options: any };
 

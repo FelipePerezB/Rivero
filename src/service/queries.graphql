@@ -7,6 +7,7 @@ query GetBasicData(
   subjects(where: $subjectsWhere2) {
     id
     name
+    color
   }
   topics(where: $where) {
     id
@@ -16,6 +17,32 @@ query GetBasicData(
       title
       id
     }
+  }
+}
+
+query GetSubjects($where: SubjectWhereInput!) {
+  subjects(where: $where) {
+    name
+  }
+}
+
+query GetUserByEmail($email: String!) {
+  userByEmail(email: $email) {
+    email
+    gradeId
+    id
+    name
+    role
+  }
+}
+
+query LoginUser($user: LoginUserInput!) {
+  login(user: $user) {
+    name
+    email
+    id
+    gradeId
+    role
   }
 }
 
@@ -31,7 +58,7 @@ query GetDoc($docId: Int!) {
   }
 }
 
-mutation CreateDoc($createDocInput: DocCreateInput!){
+mutation CreateDoc($createDocInput: DocCreateInput!) {
   createDoc(createDocInput: $createDocInput) {
     id
   }

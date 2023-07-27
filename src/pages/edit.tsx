@@ -109,7 +109,7 @@ function Docs({ docs }: { docs: { title: string }[] }) {
           </div>
           <div className={styles.info}>
             <span className={styles.info__text}>{doc.title}</span>
-            <FontAwesomeIcon className={styles.icon} icon={faBookmark} />
+            {/* <FontAwesomeIcon className={styles.icon} icon={faBookmark} /> */}
           </div>
         </li>
       ))}

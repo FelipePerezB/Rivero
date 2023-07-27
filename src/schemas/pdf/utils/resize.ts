@@ -1,6 +1,6 @@
 export default function resize(value: number) {
-  const $docs = document.querySelectorAll("#doc");
-  const $containers = document.querySelectorAll("#doc-container");
+  const $docs = document.querySelectorAll("#doc-pdf");
+  const $containers = document.querySelectorAll("#doc-container-pdf");
   if ($containers && $docs) {
     for (let index = 0; index < $docs.length; index++) {
       const $doc = $docs[index] as HTMLElement

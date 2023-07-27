@@ -110,6 +110,23 @@
   width: 100%;
 }
 
+.form-btn{
+  transition: 250ms;
+  cursor: pointer;
+  background-color: white;
+  margin: 8px;
+  outline: 2px solid gray;
+  border: none;
+  border-radius: 8px;
+  padding: 4px 8px;
+}
+
+.form-btn:hover{
+  transition: 200ms;
+  transform: scale(1.1);
+  background-color: rgb(244, 244, 244);
+}
+
 .question {
   padding-right: 16px;
   margin: 8px 0 0 0;
@@ -132,6 +149,10 @@
 
 .alternative-radio:checked + label{
   outline: 3px solid var(--primary-color);
+}
+
+.incorrect-ans .alternative-radio:checked + label{
+  outline: 3px solid #e86675;
 }
 
 .alternative-label{
@@ -165,12 +186,8 @@
   padding-right: 24px;
 }
 
-.small-chart,
-.medium-chart {
-  width: 12em;
-  margin: 0 0 0.5em;
-}
-
-.small-chart {
-  width: 0.6px;
+.linechart{
+  margin: 16px;
+  /* outline: 2px solid rgba(211, 211, 211, 0.563); */
+  border-radius: 4px;
 }

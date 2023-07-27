@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Layout from "src/layout/Layout";
 import styles from "@styles/Stats.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -21,6 +21,8 @@ import CustomModal from "@components/CustomModal";
 import ConfigButton from "@components/ConfigButton";
 import { GetStaticProps, InferGetStaticPropsType } from "next";
 import { api } from "src/getDoc/utils/api";
+// import { getToken } from "next-auth/jwt";
+// import { useSession } from "next-auth/react";
 
 export const getStaticProps: GetStaticProps<{
   data: any;
@@ -44,7 +46,18 @@ export default function Statistics({
     scores: number[];
   }>();
 
-  const [userId, setUserId] = useState(1);
+  // const [userId, setUserId] = useState(0);
+  // const { data: session } = useSession() as unknown as {
+  //   data: {
+  //     user: {
+  //       id?: number;
+  //     };
+  //   };
+  // };
+  // useEffect(() => {
+  //   // session?.user?.id && setUserId(session.user.id);
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [session?.user?.id]);
 
   const [statsModalState, setStatsModalState] = useState(false);
   const [num, setNum] = useState<number>(3);
@@ -58,7 +71,9 @@ export default function Statistics({
       return Math.round(
         scores
           .map(([user, score]) => {
-            if (Number(user) === userId) userScores.push(score);
+            if (Number(user) == 1) {
+              userScores.push(score);
+            }
             return score;
           })
           .reduce((a, b) => a + b) / scores.length
@@ -166,7 +181,7 @@ function LineChart({
     labels: avgGrade?.map((score, i) => `N°${i + 1}`),
     datasets: [
       {
-        label: 'Puntaje',
+        label: "Puntaje",
         data: scores,
         borderColor: color,
         backgroundColor: color,

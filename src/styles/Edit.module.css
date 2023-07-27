@@ -13,12 +13,12 @@
 
 .documents {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
   gap: 32px;
 }
 
 .documents__card {
-  width: 90%;
+  width: 100%;
   margin: auto;
   gap: 16px;
   position: relative;
@@ -36,20 +36,18 @@
 }
 
 .documents__card .content {
-  display: grid;
-  margin: auto;
-  padding: 0px;
+  padding: 0 12px;
   overflow: hidden;
   box-shadow: 4px 4px 8px rgb(205, 205, 205);
   cursor: pointer;
   background-color: white;
   border-radius: var(--radius);
-  height: 180px;
+  height: 200px;
   width: 100%;
 }
 
 .content > * {
-  width: 90%;
+  width: 10%;
   margin: auto;
 }
 
@@ -90,7 +88,6 @@
 
 .info__text {
   font-size: 0.85rem;
-  width: calc(100% - 38px);
   bottom: 12px;
   color: black;
 }

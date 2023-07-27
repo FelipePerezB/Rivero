@@ -1,9 +1,15 @@
 import Recomendations from "@components/Recomendations";
 import Layout from "src/layout/Layout";
 import styles from "@styles/Home.module.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+// import { useSession } from "next-auth/react";
+import { UserButton, useAuth } from "@clerk/nextjs";
+import axios from "axios";
 
 export default function Home() {
+  // const session = useSession();
+  // const { isLoaded, userId, sessionId, getToken } = useAuth();
+  // getToken().then((token)=>console.log(token))
   const stats = [
     {
       color: "#e86675",
@@ -31,6 +37,7 @@ export default function Home() {
   return (
     <>
       <Layout>
+        <UserButton afterSignOutUrl="/" />
         {/* <Recomendations  setState={} filters={[]} title="Ultimos puntajes" link="/stats">
           <Scores scores={stats} />
         </Recomendations>

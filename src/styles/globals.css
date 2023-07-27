@@ -10,11 +10,11 @@
   /* OTHERS */
   --radius: 4px;
   --shadow: 4px 4px 8px #d3d3d37c;
+  --padding: 16px;
 
   /* GRAPH */
   /* --mafs-fg: black !important */
 }
-
 
 * {
   box-sizing: border-box;
@@ -36,9 +36,12 @@ li {
   list-style: none;
 }
 
+button {
+  font-family: "nunito";
+}
+
 body {
   font-family: "nunito";
-  /* font-family: 'Open sans'; */
   background-color: var(--background-color);
   margin: 0;
   overflow-x: hidden;
@@ -60,10 +63,6 @@ body {
 .edit .component .component .component:hover {
   outline: 0.15em dashed #5066e8;
 }
-
-
-
-
 
 .MafsView {
   display: block;
@@ -107,7 +106,6 @@ body {
 
 .MafsView path {
   stroke: var(--mafs-fg);
-  
 }
 
 .MafsView:focus-visible {
@@ -152,7 +150,7 @@ body {
   fill: transparent;
 }
 
-.MafsView line{
+.MafsView line {
   stroke-width: 0.1em;
 }
 

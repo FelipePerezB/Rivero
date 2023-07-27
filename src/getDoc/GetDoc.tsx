@@ -6,9 +6,10 @@ export default function GetDoc({
   nodes,
   component,
 }: {
-  nodes: any[]
+  nodes: any[];
   component: { type: string; options: any };
 }) {
-  const getComponent = createSchema(nodes)
+  const getComponent = createSchema(nodes);
+  
   return <>{getComponent(component?.type, component?.options)}</>;
 }

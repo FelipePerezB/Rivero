@@ -6,25 +6,43 @@ import { GetDocDocument } from "src/gql/graphql";
 import GetDoc from "./GetDoc";
 import { pdfNodes } from "src/schemas";
 
-export default function GetPDF({ id }: { id: number }) {
-  const [doc, setDoc] = useState<{ type: string; options: any }>();
-  const { data, loading } = useQuery(GetDocDocument, {
-    variables: {
-      docId: id,
-    },
+export default function GetPDF({
+  id,
+  content,
+}: {
+  id?: number;
+  content: { childrens: any[] };
+}) {
+  console.log(content);
+  const [doc, setDoc] = useState<{ type: string; options: any } | undefined>({
+    type: "doc",
+    options: content,
   });
+  // const { data, loading } = useQuery(GetDocDocument, {
+  //   variables: {
+  //     docId: id,
+  //   },
+  // });
+  // if (id) {
+  //   if (!data) return <></>;
+  //   setDoc(data.doc.content);
+  // }
+
+  // useEffect(() => {
+  //   if (data) {
+  //   }
+  // }, [data]);
 
   useEffect(() => {
-    if (data) {
-      setDoc(data.doc.content);
-    }
-  }, [data]);
-
-  useEffect(() => {
-    generatePdf();
-    setDoc(undefined);
+    if (doc?.options)
+      (async () => {
+        await generatePdf();
+        const doc = document.getElementById('doc-pdf')
+        console.log(doc)
+        setDoc(undefined);
+      })();
   }, [doc]);
 
-  if (doc) return <GetDoc component={doc} nodes={pdfNodes}/>;
+  if (doc) return <GetDoc component={doc} nodes={pdfNodes} />;
   else return <></>;
 }

@@ -10,7 +10,8 @@
   height: 128px;
   width: 100%;
   position: absolute;
-  background-color: var(--primary-color);
+  background-color: black;
+  /* background-color: var(--primary-color); */
 }
 
 .photo{
@@ -30,7 +31,7 @@
   padding: 0.4rem 0.8rem;
   height: max-content;
   font-weight: 600;
-  transform: translateY(200px);
+  /* transform: translateY(200px); */
 }
 
 
@@ -57,7 +58,7 @@
   flex-direction: column;
   background-color: white;
   border-radius: var(--radius);
-  margin: 0 0 32px;
+  margin: 32px 0;
 }
 
 .form label{

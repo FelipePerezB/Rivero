@@ -1,6 +1,5 @@
 import React, { ReactElement } from "react";
 import styles from "../styles/reportTemplate.module.css";
-import LineChart from "./LineChart";
 import CustomComponent from "./CustomComponent";
 
 export default function Question({

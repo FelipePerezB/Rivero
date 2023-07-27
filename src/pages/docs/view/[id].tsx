@@ -1,9 +1,6 @@
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
-import Edit from "src/getDoc/Edit";
 import { api } from "src/getDoc/utils/api";
-import createSchema from "src/getDoc/utils/createSchema";
-import { pdfNodes, webNodes } from "src/schemas";
 import GetWebNode from "src/schemas/web";
 
 export default function Document() {
@@ -20,6 +17,7 @@ export default function Document() {
       const getData = async () => {
       let content;
       try {
+        throw new Error("AAA")
         const res = await api.get(`docs/${query.id}`);
         content = res.data.content;
       } catch (error) {

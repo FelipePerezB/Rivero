@@ -1,14 +1,15 @@
 export default function resize(value: number) {
-  const $docs = document.querySelectorAll("#doc");
-  const $containers = document.querySelectorAll("#doc-container");
+  const $docs = document.querySelectorAll("#doc-pdf");
+  const $containers = document.querySelectorAll("#doc-container-pdf");
   if ($containers && $docs) {
     for (let index = 0; index < $docs.length; index++) {
-      const $doc = $docs[index] as HTMLElement
-      const $container = $containers[index] as HTMLElement
+      const $doc = $docs[index] as HTMLElement;
+      const $container = $containers[index] as HTMLElement;
       const pixels = 13;
       const docWidth = 450;
       const ratio = pixels / docWidth;
       let componentWith;
+      if (!$container) return;
       $container.style.width = "100%";
 
       if ($container?.clientWidth <= 425) {

@@ -2,9 +2,12 @@ import {
   faBook,
   faChartSimple,
   faComments,
+  faGear,
   faMap,
+  faPerson,
   faSquarePen,
   faTools,
+  faUser,
   faUserGroup,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -12,9 +15,18 @@ import Link from "next/link";
 import React from "react";
 import styles from "@styles/Var.module.css";
 import { useRouter } from "next/router";
+// import { useSession } from "next-auth/react";
 
 export default function Var({ state }: { state?: "only-nav" }) {
   const router = useRouter();
+  // const { data } = useSession() as unknown as {
+  //   data: {
+  //     user: {
+  //       role: "admin" | "student"
+  //     }
+  //   }
+  // };
+
 
   const icons = [
     // {
@@ -25,17 +37,18 @@ export default function Var({ state }: { state?: "only-nav" }) {
       link: "/docs",
       element: faBook,
     },
-    // {
-    //   link: "/edit",
-    //   element: faSquarePen,
-    // },
-    {
-      link: 'route',
-      element: faMap
-    },
     {
       link: "/stats",
       element: faChartSimple,
+    },
+    {
+      link: "/edit",
+      element: faSquarePen,
+      isPremium: true,
+    },
+    {
+      link: "/config",
+      element: faGear,
     },
     // {
     //   link: "/tools",
@@ -49,21 +62,28 @@ export default function Var({ state }: { state?: "only-nav" }) {
 
   return (
     <>
-      {state!=='only-nav' && (
+      {state !== "only-nav" && (
         <ul className={styles.Var}>
-          {icons.map((icon, i) => {      
-            const link = '/' + router.pathname.split('/').at(1)
-            const isActive = link === icon.link;
-            return (
-              <li key={icon.link + i}>
-                <Link href={icon.link} passHref>
-                  <FontAwesomeIcon
-                    icon={icon.element}
-                    className={isActive ? styles["icon--active"] : styles.icon}
-                  />
-                </Link>
-              </li>
-            );
+          {icons.map((icon, i) => {
+            if (
+              !icon?.isPremium 
+              // data?.user?.role === "admin"
+            ) {
+              const link = "/" + router.pathname.split("/").at(1);
+              const isActive = link === icon.link;
+              return (
+                <li key={icon.link + i}>
+                  <Link href={icon.link} passHref>
+                    <FontAwesomeIcon
+                      icon={icon.element}
+                      className={
+                        isActive ? styles["icon--active"] : styles.icon
+                      }
+                    />
+                  </Link>
+                </li>
+              );
+            }
           })}
         </ul>
       )}

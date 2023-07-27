@@ -1,10 +1,10 @@
-import React from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, {
+  useState,
+} from "react";
 import styles from "../styles/web.module.css";
-// import getComponent from "../utils/getComponent";
-
 import CustomComponent from "./CustomComponent";
 import GetWebNode from ".";
-
 export default function Exercises({
   id,
   childrens,
@@ -18,6 +18,7 @@ export default function Exercises({
     options: {
       question: string;
       alternatives: string;
+      expectedAns: string;
       children?: {
         type: string;
         options: any;
@@ -26,10 +27,11 @@ export default function Exercises({
   }[];
   id: string;
 }) {
+  const [check, setCheck] = useState(false);
   const startNumber = startsIn ?? "1";
   return (
     <CustomComponent id={id} style={{}}>
-      <section className={styles.exercises}>
+      <form className={styles.exercises}>
         {!isAnEvaluation && startNumber === "1" && (
           <h1 className={styles.subtitle}>{"PRÁCTICA"}</h1>
         )}
@@ -40,12 +42,20 @@ export default function Exercises({
               key={id + number}
               component={{
                 type: component.type,
-                options: { ...component.options, number },
+                options: {
+                  ...component.options,
+                  number,
+                  check,
+                  setCheck,
+                },
               }}
             />
           );
         })}
-      </section>
+        <button className={styles["form-btn"]} onClick={() => setCheck(true)} type="button">
+          Revisar
+        </button>
+      </form>
     </CustomComponent>
   );
 }

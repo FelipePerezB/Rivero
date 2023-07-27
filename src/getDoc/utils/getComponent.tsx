@@ -4,6 +4,7 @@ export const childrenSchenas = {
   Question: {
     question: "text",
     alternatives: "text",
+    expectedAns: "text",
     child: "children",
   },
   Page: {
