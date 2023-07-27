@@ -7,37 +7,44 @@ import {
   faGear,
   faPlus,
   faCircle,
-  faCircleCheck,
-  faCircleDown,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
 import Modal from "@components/Modal";
 import ConfigButton from "@components/ConfigButton";
-import { NextRouter, Router, useRouter } from "next/router";
-import { api } from "src/getDoc/utils/api";
-import GetPDF from "src/getDoc/getPDF";
+import { NextRouter, useRouter } from "next/router";
 import { client } from "src/service/client";
-import { gql, useQuery } from "@apollo/client";
 import {
   GetBasicDataDocument,
   GetBasicDataQuery,
-  LoginUserDocument,
+  GetSubjectsDocument,
 } from "src/gql/graphql";
 import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from "next";
 // import { GetGradesDocument } from "src/gql/graphql";
 
-// export const getStaticPaths: GetStaticPaths = () => {
+// export const getStaticPaths: GetStaticPaths = async () => {
+//   const { data, error } = await client.query({
+//     query: GetSubjectsDocument,
+//     variables: {
+//       where: {},
+//     },
+//     fetchPolicy: "network-only",
+//   });
+//   if (!data || error) throw new Error("Failed to request");
 //   return {
-//     paths: [{ params: { path: "a" } }],
-//     fallback: false,
+//     paths: data.subjects.map((subject) => ({
+//       params: {
+//         path: subject.name,
+//         subject: subject.name,
+//       },
+//     })),
+//     fallback: true,
 //   };
 // };
 
 // export const getStaticProps: GetStaticProps<{
 //   data: GetBasicDataQuery;
 // }> = async (context) => {
-//   console.log(context)
 //   const { data, error } = await client.query({
 //     query: GetBasicDataDocument,
 //     variables: {
@@ -46,7 +53,11 @@ import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from "next";
 //           equals: 1,
 //         },
 //       },
-//       subjectsWhere2: {},
+//       subjectsWhere2: {
+//         name: {
+//           equals: context?.params?.subject as string,
+//         },
+//       },
 //     },
 //     fetchPolicy: "network-only",
 //   });
@@ -60,19 +71,88 @@ import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from "next";
 //   };
 // };
 
+// export default function Docs({
+//   data: { subjects, topics },
+// }: InferGetStaticPropsType<typeof getStaticProps>) {
 export default function Docs() {
   const { subjects, topics } = {
-    subjects: [{ name: "math", color: "#FFFA" }],
-    topics: [{ name: "geo", Doc: [{ title: "AAA" }] }],
+    subjects: [
+      {
+        name: "matemática",
+        color: "#e86675",
+        id: 2,
+      },
+      {
+        name: "lenguaje",
+        color: "#46d37e",
+        id: 1,
+      },
+    ],
+    topics: [
+      {
+        id: "1",
+        name: "Álgebra",
+        Doc: [
+          {
+            id: 1,
+            title: "Productos notables",
+          },
+          {
+            id: 2,
+            title: "Sistema de ecuaciones",
+          },
+          {
+            id: 3,
+            title: "Función cuadratica",
+          },
+          {
+            id: 4,
+            title: "Proporcionalidad",
+          },
+          {
+            id: 5,
+            title: "Inecuaciones",
+          },
+        ],
+      },
+      {
+        id: "2",
+        name: "Geometría",
+        Doc: [
+          {
+            id: 1,
+            title: "Cuerpos geometricos",
+          },
+          {
+            id: 2,
+            title: "Figuras geoemtricas",
+          },
+          {
+            id: 3,
+            title: "Área y perímetro",
+          },
+          {
+            id: 4,
+            title: "Volumen",
+          },
+          {
+            id: 5,
+            title: "Teorema de pitagoras",
+          },
+        ],
+      },
+    ],
   };
   const router = useRouter();
   const [download, setDownload] = useState<number | undefined>();
   const [state, setState] = useState(true);
   const [modalState, setModalState] = useState(false);
-  const defaultConfig = {
-    grade: "4° MEDIO",
-    subject: "Matemáticas",
-  };
+  const { subject } = {subject: "Matemática"};
+  const subjectData = subjects.find((sub) => sub.name === subject);
+  // const defaultConfig = {
+  //   grade: "4° MEDIO",
+  //   subject: "Matemáticas",
+  // };
 
   // console.log(topics);
 
@@ -80,9 +160,14 @@ export default function Docs() {
     <>
       <Layout>
         <section className={styles.info}>
-          <h2 className={styles.grade}>{defaultConfig.grade}</h2>
+          <h2 className={styles.grade}>{"4° MEDIO"}</h2>
           <div className={styles.info__buttons}>
-            <span className={styles.subject}>{defaultConfig.subject}</span>
+            <span
+              style={{ background: subjectData?.color }}
+              className={styles.subject}
+            >
+              {subject}
+            </span>
             <button
               className={styles.config}
               onClick={() => setModalState(true)}
@@ -133,19 +218,19 @@ export default function Docs() {
         </section>
         <ul className={styles.units}>
           {topics &&
-            topics.map(({ name, Doc }) => (
-              <>
+            topics.map(({ name, Doc }, i) => (
+              <div key={name + i}>
                 {!!Doc?.length && (
                   <Unit
+                    color={subjectData?.color as string}
                     setDownload={setDownload}
                     router={router}
                     text={name}
-                    key={name}
                     icon={faCircle}
                     docs={Doc as any}
                   />
                 )}
-              </>
+              </div>
             ))}
         </ul>
         <ConfigButton
@@ -177,8 +262,10 @@ function Unit({
   router,
   setDownload,
   text,
+  color,
   docs,
 }: {
+  color: string;
   setDownload: React.Dispatch<React.SetStateAction<number | undefined>>;
   router: NextRouter;
   text: string;
@@ -199,7 +286,7 @@ function Unit({
         <div className={styles["card__info"]}>
           <div
             style={{
-              border: `4px solid ${"#E86675"}`,
+              border: `4px solid ${color}`,
             }}
             className={styles.circle}
           ></div>
@@ -218,7 +305,7 @@ function Unit({
         {docs?.map(({ title, id }, i) => {
           return (
             <li key={title + id} className={styles.doc}>
-              <Link href={`docs/${id}`}>
+              <Link href={`docs/view/${id}`}>
                 <span>{title}</span>
               </Link>
             </li>

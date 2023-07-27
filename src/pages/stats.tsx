@@ -24,27 +24,76 @@ import { api } from "src/getDoc/utils/api";
 // import { getToken } from "next-auth/jwt";
 // import { useSession } from "next-auth/react";
 
-export const getStaticProps: GetStaticProps<{
-  data: any;
-}> = async () => {
-  const { data } = await api.get("scores");
-  if (!data) throw new Error("Failed to request");
-  return {
-    props: {
-      data,
-    },
-    revalidate: 60 * 60 * 24,
-  };
-};
+// export const getStaticProps: GetStaticProps<{
+//   data: any;
+// }> = async () => {
+//   const { data } = await api.get("scores");
+//   if (!data) throw new Error("Failed to request");
+//   return {
+//     props: {
+//       data,
+//     },
+//     revalidate: 60 * 60 * 24,
+//   };
+// };
 
-export default function Statistics({
-  data,
-}: InferGetStaticPropsType<typeof getStaticProps>) {
+// export default function Statistics({
+//   data,
+// }: InferGetStaticPropsType<typeof getStaticProps>) {
+export default function Statistics() {
   const [modalState, setModalState] = useState(false);
   const [statsModalData, setStatsModalData] = useState<{
     color: string;
     scores: number[];
   }>();
+
+  const data = {
+    Matemática: {
+      docs: {
+        "ENSAYO N°1": {
+          "1": 900,
+          "2": 800,
+          "3": 750,
+        },
+        "ENSAYO N°2": {
+          "1": 850,
+          "2": 870,
+          "3": 810,
+        },
+        "ENSAYO N°3": {
+          "1": 880,
+          "2": 810,
+          "3": 890,
+        },
+      },
+      color: "#e86675",
+    },
+    Lenguaje: {
+      docs: {
+        "ENSAYO N°1": {
+          "1": 560,
+          "2": 600,
+          "3": 590,
+        },
+        "ENSAYO N°2": {
+          "1": 700,
+          "2": 650,
+          "3": 600,
+        },
+        "ENSAYO N°3": {
+          "1": 750,
+          "2": 700,
+          "3": 690,
+        },
+        "ENSAYO N°4": {
+          "1": 750,
+          "2": 730,
+          "3": 650,
+        },
+      },
+      color: "#46d37e",
+    },
+  };
 
   // const [userId, setUserId] = useState(0);
   // const { data: session } = useSession() as unknown as {

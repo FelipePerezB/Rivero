@@ -22,9 +22,9 @@ export default function Config() {
         <Option
           head={
             <div className={styles["profile__info"]}>
-              <span className={styles.name}>{"session?.user?.name"}</span>
+              <span className={styles.name}>{"Felipe Pérez"}</span>
               <span className={styles.role}>
-                {"session?.user?.role.toUpperCase()"}
+                {"ADMIN"}
               </span>
             </div>
           }
@@ -34,7 +34,7 @@ export default function Config() {
               <span>Nombre</span>
               <input
                 readOnly
-                defaultValue={"session?.user?.name" as string | undefined}
+                defaultValue={"Felipe Pérez" as string | undefined}
                 className={styles.input}
               />
             </label>
@@ -42,7 +42,7 @@ export default function Config() {
               <span>Email</span>
               <input
                 readOnly
-                defaultValue={"session?.user?.email" as string | undefined}
+                defaultValue={"felipe.perez@colegiopucon.com" as string | undefined}
                 className={styles.input}
               />
             </label>
@@ -106,6 +106,7 @@ const Option = ({
     if (!parentRef.current?.style || !headRef.current?.clientHeight) return;
     if (isOpen) return;
     parentRef.current.style.height = `calc(${headRef.current.clientHeight}px + calc(var(--padding)) `;
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [headRef.current?.clientHeight]);
 
   return (
