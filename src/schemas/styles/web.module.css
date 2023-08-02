@@ -1,7 +1,7 @@
 .docs{
   display: flex;
   justify-content: center;
-  width: 100%;
+  width: 100vw;
   min-height: 100vh;
   background-color: white;
 }
@@ -29,7 +29,7 @@
   font-family: "Nunito", sans-serif;
   font-weight: 700;
   margin: 0;
-  font-size: 1.3em;
+  font-size: 1.4em;
 }
 
 .doc-info {
@@ -38,7 +38,7 @@
   display: flex;
   flex-direction: column;
   gap: 8px;
-  border-bottom: 2px solid lightgray;
+  border-bottom: 2px solid gray;
   margin-bottom: 16px;
 }
 
@@ -48,6 +48,7 @@
   display: flex;
   justify-content: center;
   gap: 12px;
+  margin-bottom: 8px;
 }
 
 .btns .download{
@@ -79,12 +80,15 @@
   color: lightgray;
 }
 
+.page{
+  border-bottom: 2px solid gray;
+}
 
 .paragrah {
   text-align: justify;
   font-weight: 500;
   text-indent: 1.2em;
-  font-size: 1.2rem;
+  font-size: 0.9em;
   margin-bottom: 0.1em;
   margin-top: 0;
 }
@@ -97,14 +101,20 @@
   margin-top: 0;
 }
 
+
 .separator,
 .separator-center {
-  margin: 0.2em 0;
+  /* margin: 0.2em 0; */
+  padding: 16px;
   display: flex;
   justify-content: space-between;
-  gap: 1em;
+  gap: 20px;
 }
 
+.separator-center{
+  align-items: center;
+  gap: 48px;
+}
 .exercises {
   margin: 8px 0 16px;
   width: 100%;
@@ -136,7 +146,7 @@
 .alternative{
   height: 2.4rem;
   position: relative;
-  width: 500px;
+  max-width: 500px;
 }
 
 .alternative-radio{
@@ -171,11 +181,12 @@
 }
 
 .question__alternatives {
+  width: 100%;
   list-style: none;
   display: flex;
   flex-direction: column;
   gap: 8px;
-  padding: 0 0 0 14px;
+  padding: 0 20px;
 }
 
 .question__alternatives li {
@@ -183,11 +194,23 @@
 }
 
 .question__image {
-  padding-right: 24px;
+  
+  /* padding-right: 24px; */
+  transform: scale(1.5);
 }
 
 .linechart{
   margin: 16px;
   /* outline: 2px solid rgba(211, 211, 211, 0.563); */
   border-radius: 4px;
+}
+
+@media(max-width: 600px){
+  .separator{
+    flex-direction: column;
+  }
+
+  .separator-center{
+    flex-direction: column-reverse;
+  }
 }

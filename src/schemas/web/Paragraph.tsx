@@ -1,6 +1,6 @@
 import React from "react";
 import CustomComponent from "./CustomComponent";
-import styles from "../styles/reportTemplate.module.css";
+import styles from "../styles/web.module.css";
 import getID from "src/getDoc/utils/getId";
 
 export default function Paragraph({
@@ -10,8 +10,10 @@ export default function Paragraph({
   id: string;
   text: string;
 }) {
+
+  
   return (
-    <CustomComponent id={id} style={{ width: "100%", height: "min-content" }}>
+    <CustomComponent id={id} style={{width: "100%", height: "min-content"}}>
       <p className={styles.paragrah}>{text}</p>
     </CustomComponent>
   );

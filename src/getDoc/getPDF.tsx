@@ -13,7 +13,6 @@ export default function GetPDF({
   id?: number;
   content: { childrens: any[] };
 }) {
-  console.log(content);
   const [doc, setDoc] = useState<{ type: string; options: any } | undefined>({
     type: "doc",
     options: content,
@@ -38,7 +37,6 @@ export default function GetPDF({
       (async () => {
         await generatePdf();
         const doc = document.getElementById('doc-pdf')
-        console.log(doc)
         setDoc(undefined);
       })();
   }, [doc]);

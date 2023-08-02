@@ -5,18 +5,17 @@ import resize from "./resize";
 export async function generatePdf() {
   const $container = document.getElementById("doc-container-pdf");
   const $doc = document.getElementById("doc-pdf");
-  console.log($doc)
   if ($doc && $container) {
     $container.style.width = "max-content";
     $doc.style.width = "450px";
     $doc.style.fontSize = "13px";
     $doc.style.gap = "0";
-
+    const title = $doc.querySelector('#doc-title')?.innerHTML
     const data = await import("html2pdf.js" as any);
     const html2pdf = data.default;
     const pdf = html2pdf()
       .set({
-        filename: "Sistema de ecuaciones.pdf",
+        filename: typeof title === "string" ? title.toLowerCase() : "Documento sin titulo",
         html2canvas: {
           scale: 4, // A mayor escala, mejores gráficos, pero más peso
           letterRendering: true,

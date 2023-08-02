@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "../styles/reportTemplate.module.css";
+import styles from "../styles/web.module.css";
 import CustomComponent from "./CustomComponent";
 import GetPdfNode from ".";
 import GetWebNode from ".";

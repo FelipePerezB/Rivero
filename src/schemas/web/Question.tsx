@@ -3,13 +3,14 @@ import React, { ReactElement, useContext, useEffect, useState } from "react";
 import styles from "../styles/web.module.css";
 import CustomComponent from "./CustomComponent";
 import { ComponentContext, useContextState } from "./Document";
+import GetWebNode from ".";
 
 export default function Question({
   id,
   number,
   question,
   alternatives,
-  children,
+  childrens,
   setCheck,
   check,
   expectedAns,
@@ -22,7 +23,10 @@ export default function Question({
   number: number;
   question: string;
   alternatives: string;
-  children?: ReactElement;
+  childrens?: {
+    type: string;
+    options: any;
+  }[];
 }) {
   const [answer, setAnswer] = useState();
   const [classname, setClassname] = useState("");
@@ -44,7 +48,7 @@ export default function Question({
         <p className={styles.question}>
           {number}.- {question}
         </p>
-        <div className={styles["separator-center"]}>
+        <li className={styles["separator-center"]}>
           <ol className={styles["question__alternatives"]}>
             {alternatives.split(",").map((alternative, i) => {
               const letter = {
@@ -72,7 +76,7 @@ export default function Question({
                   />
                   <label
                     style={
-                      classname === "correct-ans" && letter[i] === expectedAns
+                      classname && letter[i] === expectedAns
                         ? {
                             outline: "3px solid #46d37e",
                           }
@@ -87,8 +91,12 @@ export default function Question({
               );
             })}
           </ol>
-          <div className={styles["question__image"]}>{children}</div>
-        </div>
+          {childrens?.length && (
+            <div className={styles["question__image"]}>
+              <GetWebNode key={id + "-child"} component={childrens[0]} />
+            </div>
+          )}
+        </li>
       </article>
     </CustomComponent>
   );

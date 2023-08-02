@@ -20,37 +20,37 @@ import WebExercises from "./web/Exercises";
 import WebTitle from "./web/Title";
 import Paragraph from "./pdf/Paragraph";
 import LineChart from "./pdf/Mafs";
+import WebParagraph from "./web/Paragraph";
 import Mafs from "./web/Mafs";
 
-export const pdfNodes = [
-  Div,
-  Title,
-  Columns,
-  SLE,
-  LineChart,
-  Equality,
-  Fraction,
-  DocInfo,
-  Page,
-  Question,
-  Exercises,
-  Doc,
-  Paragraph,
-];
+export const pdfNodes = {
+  Div: Div,
+  Title: Title,
+  Columns: Columns,
+  SLE: SLE,
+  LineChart: LineChart,
+  Equality: Equality,
+  Fraction: Fraction,
+  DocInfo: DocInfo,
+  Page: Page,
+  Question: Question,
+  Exercises: Exercises,
+  Doc: Doc,
+  Paragraph: Paragraph,
+};
 
-export const webNodes = [
-  WebDoc,
-  WebPage,
-  WebDocInfo,
-  WebDiv,
-  SLE,
-  Mafs,
-  WebColumns,
-  Equality,
-  Fraction,
-  LineChart,
-  WebQuestion,
-  WebExercises,
-  Paragraph,
-  WebTitle,
-];
+export const webNodes = {
+  Doc: WebDoc,
+  Page: WebPage,
+  DocInfo: WebDocInfo,
+  Div: WebDiv,
+  SLE: SLE,
+  LineChart: Mafs,
+  Columns: WebColumns,
+  Equality: Equality,
+  Fraction: Fraction,
+  Question: WebQuestion,
+  Exercises: WebExercises,
+  Paragraph: WebParagraph,
+  Title: WebTitle,
+};

@@ -12,6 +12,13 @@
   font-family: nunito;
 }
 
+.div {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+}
+
 .title {
   font-family: "Nunito", sans-serif;
   font-weight: 800;
@@ -26,12 +33,11 @@
   font-size: 1em;
   text-align: center;
   margin: 0;
-  margin-bottom: 0.1em;
+  margin-bottom: 0.4em;
 }
 
 .page {
-  display: "flex";
-  flex-direction: "column";
+  position: relative;
   aspect-ratio: 210 / 297;
   border-radius: 0.1em;
   width: 100%;
@@ -42,26 +48,44 @@
   overflow: hidden;
 }
 
+.page__content {
+  display: "flex";
+  padding: 0.2em;
+  flex-direction: "column";
+  page-break-after: always;
+  overflow: hidden;
+  gap: 0.8em;
+  border-top: 0.2em solid black;
+  padding-top: 0.8em;
+}
+
+.page__number{
+  font-size: 0.8em;
+  position: absolute;
+  bottom: 1.4em;
+  right: 2em;
+}
+
 .page:hover {
   box-shadow: 0px 0px 24px rgb(171, 171, 171);
 }
 
 .doc-info {
-  margin: 0.4em 0 0.8em;
-  padding: 1.6em 0.2em 1.1em;
-  border-top: 0.2em solid black;
+  margin: 0 0 0.8em;
+  padding: 0.6em 0.2em 1.1em;
+  /* border-top: 0.2em solid black; */
   border-bottom: 0.2em solid black;
   display: flex;
   flex-direction: column;
 }
 
 .paragrah {
+  /* display: block; */
   text-align: justify;
   font-weight: 500;
   text-indent: 1.2em;
   font-size: 0.8em;
-  margin-bottom: 0.1em;
-  margin-top: 0;
+  margin: 0;
 }
 
 .text {
@@ -74,7 +98,8 @@
 
 .separator,
 .separator-center {
-  margin: 0.2em 0;
+  /* margin: 1em 0; */
+  padding: 0.8em;
   display: flex;
   justify-content: space-between;
   gap: 1em;

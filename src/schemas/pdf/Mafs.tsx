@@ -27,7 +27,7 @@ export default function LineChart({
   const heights = {
     xs: "6em",
     s: "10em",
-    m: "15em",
+    m: "12em",
     l: "20em",
   };
   useEffect(() => {
@@ -53,7 +53,7 @@ export default function LineChart({
   }, [size]);
 
   return (
-    <CustomComponent id={id} style={{ width: "max-content" }}>
+    <CustomComponent id={id} style={{ width: "max-content" , margin: "auto"}}>
       <div
         style={{ width: heights[size], height: heights[size] }}
         className={styles.linechart}

@@ -5,7 +5,7 @@ export const childrenSchenas = {
     question: "text",
     alternatives: "text",
     expectedAns: "text",
-    child: "children",
+    childrens: "child",
   },
   Page: {
     childrens: "children",
@@ -80,7 +80,6 @@ export const schemas: any = {
     resize: {
       type: "range",
       text: "Zoom",
-      callback: generatePdf,
     },
     download: {
       type: "callback",

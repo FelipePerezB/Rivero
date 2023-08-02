@@ -1,19 +1,23 @@
 import React, { ReactElement } from "react";
 import styles from "../styles/reportTemplate.module.css";
 import CustomComponent from "./CustomComponent";
+import GetPdfNode from ".";
 
 export default function Question({
   id,
   number,
   question,
   alternatives,
-  children,
+  childrens,
 }: {
   id: string;
   number: number;
   question: string;
   alternatives: string;
-  children?: ReactElement;
+  childrens?: {
+    type: string;
+    options: any;
+  }[];
 }) {
   return (
     <CustomComponent key={id} id={id} style={{}}>
@@ -39,7 +43,12 @@ export default function Question({
               );
             })}
           </ol>
-          <div className={styles["question__image"]}>{children}</div>
+          {childrens?.length && (
+            <div className={styles["question__image"]}>
+              <GetPdfNode key={id + "-child"} component={childrens[0]} />
+            </div>
+            // <div className={styles["question__image"]}>{children}</div>
+          )}
         </div>
       </article>
     </CustomComponent>

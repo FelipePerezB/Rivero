@@ -35,6 +35,9 @@ export default function Exercises({
         {!isAnEvaluation && startNumber === "1" && (
           <h1 className={styles.subtitle}>{"PRÁCTICA"}</h1>
         )}
+        {isAnEvaluation && startNumber === "1" && (
+          <h1 className={styles.subtitle}>{"EVALUACIÓN"}</h1>
+        )}
         {childrens?.map((component, i) => {
           const number = i + 1 + (Number(startNumber) - 1);
           return (

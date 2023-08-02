@@ -5,9 +5,13 @@ import { authMiddleware } from "@clerk/nextjs";
 // See https://clerk.com/docs/nextjs/middleware for more information about configuring your middleware
 export default authMiddleware({
   // publicRoutes:['/'],
-  ignoredRoutes:['/', '/docs/edit/2', '/docs/view/6']
+  ignoredRoutes: ["/", "/docs/edit/2", "/docs/view/6"],
 });
 
 export const config = {
-  matcher: ["/((?!.*\\..*|_next).*)", "/", "/(api|trpc)(.*)"],
+  matcher: ["/"],
+  // matcher: ["/((?!.*\\..*|_next).*)", "/", "/(api|trpc)(.*)"],
 };
+
+// -2x + y  = 3
+// y = 3x + 3

@@ -17,8 +17,8 @@ export default function DocInfo({
   return (
     <CustomComponent id={id} style={{}}>
         <section className={styles["doc-info"]}>
-          <h1 className={styles.title}>{title}</h1>
-          <h2 className={styles.subtitle}>{subtitle}</h2>
+          <h1 id="doc-title" className={styles.title}>{title?.toUpperCase()}</h1>
+          <h2 className={styles.subtitle}>{subtitle?.toUpperCase()}</h2>
         </section>
     </CustomComponent>
   );

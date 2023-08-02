@@ -17,7 +17,7 @@ export default function Document() {
       const getData = async () => {
       let content;
       try {
-        // throw new Error("AAA")
+        throw new Error("AAA")
         const res = await api.get(`docs/${query.id}`);
         content = res.data.content;
       } catch (error) {

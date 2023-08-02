@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 // import { isArray } from "chart.js/dist/helpers/helpers.core";
 import React, { useEffect, useRef, useState } from "react";
 import styles from "../styles/Modal.module.css";
@@ -9,8 +10,8 @@ import resize from "../utils/resize";
 import getID from "../utils/getId";
 
 type component = {
-  type: string;
-  options:
+  type?: string;
+  options?:
     | {
         id: string;
       }
@@ -29,7 +30,7 @@ export default function ModalInput({
   addFormData,
 }: {
   name: string;
-  value?: string;
+  value?: any;
   type: string | any;
   addFormData: (data: any) => void;
 }) {
@@ -109,7 +110,6 @@ export default function ModalInput({
     const [modalData, setModalData] = useState<component>();
     const [lastChild, setLastChild] = useState<component>();
     const [children, setChildren] = useState<component[]>(defaultValue);
-
     const deleteChild = (id: string) => {
       const index = children.findIndex((comp) => comp?.options?.id === id);
       children.splice(index, 1);
@@ -131,14 +131,17 @@ export default function ModalInput({
       <>
         {children[0] && (
           <div className={styles["children"]}>
-            {children?.map(({ type, options }) => (
-              <Child
-                options={options}
-                deleteChildCb={deleteChild}
-                type={type}
-                key={options.id}
-              />
-            ))}
+            {children?.map(({ type, options }) => {
+              if (!type) return;
+              return (
+                <Child
+                  options={options}
+                  deleteChildCb={deleteChild}
+                  type={type}
+                  key={options.id}
+                />
+              );
+            })}
           </div>
         )}
         <Button style="secondary" onClick={() => setModalState(true)}>
@@ -149,7 +152,7 @@ export default function ModalInput({
             child && {
               type: child,
               options: {
-                id: getID()
+                id: getID(),
               },
             }
           }
@@ -161,20 +164,21 @@ export default function ModalInput({
     );
   };
   const ChildInput = () => {
-    const defaultValue = Array.isArray(value) ? value : [];
+    const defaultValue = value ?? [];
     const [modalState, setModalState] = useState(false);
-    const [modalData, setModalData] = useState<component>();
-
+    const [modalData, setModalData] = useState<component>(defaultValue);
+    
     useEffect(() => {
-      if (modalData) {
-        createFormData(modalData);
+      console.log(modalData)
+      if (modalData?.type) {
+        createFormData([modalData]);
       }
     }, [modalData]);
 
     return (
       <>
         <article className={styles["child-input"]}>
-          {modalData && (
+          {modalData?.type && (
             <Child
               options={modalData.options}
               type={modalData.type}
@@ -182,8 +186,9 @@ export default function ModalInput({
             />
           )}
         </article>
+
         <Button style="secondary" onClick={() => setModalState(true)}>
-          <span>Añadir hijo</span>
+          <span> {!defaultValue?.options ? "Añadir" : "Reemplazar"}</span>
         </Button>
         {/* <button type="button" className={styles["children-input__add"]}>
         </button> */}

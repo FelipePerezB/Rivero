@@ -18,11 +18,12 @@ export default function EditPage() {
     const getData = async () => {
       let content;
       try {
-        // throw new Error("A")
+        throw new Error("A")
         const res = await api.get(`docs/${query.id}`);
         content = res.data.content;
       } catch (error) {
-        const stringifyData = localStorage.getItem(`${title}`);
+        const stringifyData =localStorage.getItem(`${title}`);
+        console.log(stringifyData)
         if (stringifyData) {
           content = JSON.parse(stringifyData);
         }
@@ -70,7 +71,8 @@ export default function EditPage() {
               },
             },
           });
-          if (data?.createDoc?.id) router.push(`/docs/edit/${data.createDoc.id}`);
+          // if (data?.createDoc?.id) router.push(`/docs/edit/${data.createDoc.id}`);
+
         } catch (error) {
           localStorage.setItem(`${title}`, JSON.stringify(doc));
         }

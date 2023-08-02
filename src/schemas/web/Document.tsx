@@ -13,8 +13,12 @@ export type useContextState = {
 
 export const ComponentContext = createContext({});
 export default function Doc({
+  title,
+  subtitle,
   childrens,
 }: {
+  title: string;
+  subtitle: string;
   childrens: {
     type: string;
     options: any;
@@ -22,13 +26,12 @@ export default function Doc({
 }) {
   const defaultState = {
     answers: {},
-    doc: { childrens },
+    doc: { childrens, title, subtitle },
     expectedAns: {},
   };
 
   const useInitialState = (): useContextState => {
     const [state, setState] = useState(defaultState);
-    console.log(state);
     return { state, setState };
   };
   const initialState = useInitialState();
@@ -38,7 +41,19 @@ export default function Doc({
       <div id="doc-container" className={styles.docs}>
         <div className={styles.doc} id="doc">
           {childrens?.map((component, i) => {
-            return <GetWebNode key={"page-" + i} component={component} />;
+            return (
+              <GetWebNode
+                key={"page-" + i}
+                component={{
+                  type: component.type,
+                  options: {
+                    ...component.options,
+                    docInfo: { title, subtitle },
+                    number: i + 1,
+                  },
+                }}
+              />
+            );
           })}
         </div>
       </div>
