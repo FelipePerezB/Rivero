@@ -73,14 +73,6 @@ function Info({ title }: { title: string }) {
         title="Configuración"
         modalState={modalState}
         setModalState={setModalState}
-        options={[
-          { text: "Top", selectConfig: ["Curso", "Nacional"], type: "select" },
-          {
-            text: "Mostrar",
-            selectConfig: ["Top 10", "Top 20", "Top 100", "Todos"],
-            type: "select",
-          },
-        ]}
       />
     </>
   );

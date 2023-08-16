@@ -16,18 +16,26 @@ export default function DocInfo({
   title,
   subtitle,
   id,
+  docId,
 }: {
   title: string;
   subtitle: string;
   id: string;
+  docId: number;
 }) {
-  const { state } = useContext(ComponentContext) as useContextState;
+  const {
+    state: { doc },
+  } = useContext(ComponentContext) as useContextState;
   const router = useRouter();
   const [pageId, setPageId] = useState<string>();
   useEffect(() => {
     setPageId(router.query?.id as string);
   }, [router.query]);
   const [download, setDownload] = useState<number | undefined>();
+
+  const saveDoc = () => {
+    localStorage.setItem(`doc-${docId}`, JSON.stringify(doc));
+  };
 
   return (
     <>
@@ -48,13 +56,13 @@ export default function DocInfo({
             <span>Revisar</span>
             <FontAwesomeIcon icon={faCircleCheck} />
           </button>
-          <button>
+          <button onClick={saveDoc}>
             <span>Guardar</span>
             <FontAwesomeIcon icon={faSave} />
           </button>
         </section>
       </CustomComponent>
-      {download && <GetPDF content={state.doc} />}
+      {download && <GetPDF content={{ children: doc.options.children }} />}
       {/* {typeof download === "number" && <GetPDF content={state.doc} />} */}
     </>
   );

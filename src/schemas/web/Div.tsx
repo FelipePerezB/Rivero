@@ -4,28 +4,21 @@ import GetWebNode from ".";
 import styles from '../styles/web.module.css'
 
 export default function Div({
-  childrens,
+  children,
   gap = "0px",
   id,
 }: {
   gap?: string;
-  childrens: {
+  children: {
     type: string;
     options: any;
   }[];
   id: string;
 }) {
-  const style =
-    gap &&
-    ({
-      display: "grid",
-      gap: gap,
-    } as any)
-    
   return (
     <CustomComponent id={id} style={{}}> 
-      <div style={style} className={styles.div}>
-      {childrens.map((component, i) => (
+      <div className={styles.div}>
+      {children.map((component, i) => (
           <GetWebNode key={id + i} component={component} />
         ))}
       </div>

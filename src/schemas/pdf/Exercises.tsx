@@ -11,7 +11,7 @@ import { ComponentContext } from "../web/Document";
 
 export default function Exercises({
   id = getID(),
-  childrens = [
+  children = [
     {
       type: "question",
       options: {
@@ -26,7 +26,7 @@ export default function Exercises({
 }: {
   isAnEvaluation?: boolean;
   startsIn?: string;
-  childrens: {
+  children: {
     type: string;
     options: {
       id: string;
@@ -51,7 +51,7 @@ export default function Exercises({
         {isAnEvaluation && startNumber === "1" && (
           <h1 className={styles.subtitle}>{"EVALUACIÓN"}</h1>
         )}
-        {childrens?.map((component, i) => {
+        {children?.map((component, i) => {
           const number = i + 1 + (Number(startNumber) - 1);
           return (
             <GetPdfNode

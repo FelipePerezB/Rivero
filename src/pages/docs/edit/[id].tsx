@@ -14,21 +14,24 @@ export default function EditPage() {
   const { query } = router;
   const [config, setConfig] = useState({});
   useEffect(() => {
-    const { title, topic } = query
+    const { title, topic } = query;
     const getData = async () => {
       let content;
       try {
-        throw new Error("A")
+        throw new Error("A");
         const res = await api.get(`docs/${query.id}`);
         content = res.data.content;
       } catch (error) {
-        const stringifyData =localStorage.getItem(`${title}`);
-        console.log(stringifyData)
+        const stringifyData = localStorage.getItem(`doc-${query.id}`);
         if (stringifyData) {
           content = JSON.parse(stringifyData);
         }
       }
-      content && setConfig({ ...config, doc: content });
+      content &&
+        setConfig({
+          ...config,
+          doc: content,
+        });
     };
     query.id && query.id !== "N" && getData();
     if (query.id === "N") {
@@ -45,11 +48,12 @@ export default function EditPage() {
 
   const saveDoc = (doc: any) => {
     const { title, topic } = query as {
-      title: string,
-      topic: string
-    }
+      title: string;
+      topic: string;
+    };
     if (query.id === "N") {
       const createDoc = async () => {
+        localStorage.setItem(`${title}`, JSON.stringify(doc));
         try {
           const { data } = await client.mutate({
             mutation: CreateDocDocument,
@@ -72,20 +76,20 @@ export default function EditPage() {
             },
           });
           // if (data?.createDoc?.id) router.push(`/docs/edit/${data.createDoc.id}`);
-
         } catch (error) {
-          localStorage.setItem(`${title}`, JSON.stringify(doc));
+          console.error(error);
         }
       };
       createDoc();
     } else if (query.id) {
       const updateDoc = async () => {
+        localStorage.setItem(`doc-${query.id}`, JSON.stringify(doc));
         try {
           const res = await api.put(`docs/${query.id}`, {
             content: doc,
           });
         } catch (error) {
-          localStorage.setItem(`${title}`, JSON.stringify(doc));
+          console.error(error);
         }
       };
       updateDoc();

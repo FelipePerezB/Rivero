@@ -5,6 +5,9 @@
 }
 
 .main{
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
   padding: 16px;
   height: 100%;
   max-width: 26rem;

@@ -10,7 +10,7 @@ export default function Question({
   number,
   question,
   alternatives,
-  childrens,
+  children,
   setCheck,
   check,
   expectedAns,
@@ -23,7 +23,7 @@ export default function Question({
   number: number;
   question: string;
   alternatives: string;
-  childrens?: {
+  children?: {
     type: string;
     options: any;
   }[];
@@ -35,13 +35,9 @@ export default function Question({
     if (!check) return;
     const name = answer === expectedAns ? "correct-ans" : "incorrect-ans";
     setClassname(name);
-    // setResult(answer === expectedAns);
     setCheck(false);
   }, [check]);
 
-  // const setAnswer = (alternative: string) => {
-  //   addAnswer({ number, alternative });
-  // };
   return (
     <CustomComponent key={id} id={id} style={{}}>
       <article className={styles[classname]}>
@@ -68,8 +64,6 @@ export default function Question({
                   key={alternative + i}
                 >
                   <input
-                    // onChange={}
-
                     className={styles["alternative-radio"]}
                     type="radio"
                     name={"alternative" + id}
@@ -91,9 +85,9 @@ export default function Question({
               );
             })}
           </ol>
-          {childrens?.length && (
+          {children?.length && (
             <div className={styles["question__image"]}>
-              <GetWebNode key={id + "-child"} component={childrens[0]} />
+              <GetWebNode key={id + "-child"} component={children[0]} />
             </div>
           )}
         </li>

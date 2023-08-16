@@ -11,7 +11,7 @@ export default function GetPDF({
   content,
 }: {
   id?: number;
-  content: { childrens: any[] };
+  content: { children: any[] };
 }) {
   const [doc, setDoc] = useState<{ type: string; options: any } | undefined>({
     type: "doc",

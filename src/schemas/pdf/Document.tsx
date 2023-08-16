@@ -6,11 +6,11 @@ import GetPdfNode from ".";
 export default function Doc({
   title,
   subtitle,
-  childrens,
+  children,
 }: {
   title: string;
   subtitle: string;
-  childrens: {
+  children: {
     type: string;
     options: any;
   }[];
@@ -34,7 +34,7 @@ export default function Doc({
   return (
     <div id="doc-container-pdf" className={styles.docs}>
       <div className={styles.doc} id="doc-pdf">
-        {childrens?.map((component, i) => (
+        {children?.map((component, i) => (
           <GetPdfNode
             key={"page-" + i}
             component={{

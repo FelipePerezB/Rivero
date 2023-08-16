@@ -7,7 +7,8 @@
   cursor: pointer;
   min-height: 40px;
   height: auto;
-  width: 280px;
+  width: 100%;
+  max-width: 280px;
   background-color: black;
   border-radius: var(--radius);
   color: white;

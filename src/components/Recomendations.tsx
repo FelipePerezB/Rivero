@@ -12,19 +12,20 @@ export default function Recomendations({
   children: ReactNode;
   title?: string;
   link?: string;
-  filters: {
+  filters?: {
     text: string;
     value: string;
   }[];
-  setState: React.Dispatch<React.SetStateAction<string>>
+  setState?: React.Dispatch<React.SetStateAction<string>>
 }) {
   const type = link && title ? "row" : "column";
+
 
   const handleClick = () => {
     const { value } = document.querySelector(
       'input[name="filter"]:checked'
     ) as HTMLInputElement;
-    setState(value);
+   setState && setState(value);
   };
 
   return (
@@ -40,7 +41,7 @@ export default function Recomendations({
         )}
         {type === "column" && (
           <fieldset className={styles.filter}>
-            {filters.map(({ text, value }, i) => (
+            {filters?.map(({ text, value }, i) => (
               <label key={"filter: " + value}>
                 <input
                   onChange={handleClick}

@@ -1,13 +1,6 @@
 import Layout from "src/layout/Layout";
-import React, { useEffect, useState } from "react";
+import React, { use, useEffect, useState } from "react";
 import styles from "@styles/Docs.module.css";
-import {
-  IconDefinition,
-  faChevronUp,
-  faGear,
-  faPlus,
-  faCircle,
-} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
 import Modal from "@components/Modal";
@@ -20,6 +13,11 @@ import {
   GetSubjectsDocument,
 } from "src/gql/graphql";
 import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from "next";
+import Card from "@components/Card";
+import Options from "@components/Options";
+import Recomendations from "@components/Recomendations";
+import GetDoc from "src/getDoc/GetDoc";
+import { pdfNodes } from "src/schemas";
 // import { GetGradesDocument } from "src/gql/graphql";
 
 // export const getStaticPaths: GetStaticPaths = async () => {
@@ -76,6 +74,162 @@ import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from "next";
 // }: InferGetStaticPropsType<typeof getStaticProps>) {
 export default function Docs() {
   const { subjects, topics } = {
+    topics: [
+      {
+        id: "1",
+        name: "Álgebra",
+        subtopics: [
+          {
+            id: 1,
+            title: "Funciones",
+            docs: [
+              {
+                id: 1,
+                title: "Concepto de función",
+              },
+              {
+                id: 2,
+                title: "Función Cuadrática",
+              },
+              {
+                id: 3,
+                title: "Modelos lineales",
+              },
+              {
+                id: 4,
+                title: "Traslación de funciones",
+              },
+            ],
+          },
+          {
+            id: 2,
+            title: "Polinomios",
+            docs: [
+              {
+                id: 1,
+                title: "Productos notables",
+              },
+              {
+                id: 2,
+                title: "Factorización",
+              },
+              {
+                id: 3,
+                title: "¿Qué son los polinomios?",
+              },
+            ],
+          },
+          {
+            id: 2,
+            title: "Ecuaciones",
+            docs: [
+              {
+                id: 1,
+                title: "Concepto de ecuación",
+              },
+              {
+                id: 2,
+                title: "Proporcionalidad",
+              },
+              {
+                id: 3,
+                title: "Inecuaciones",
+              },
+            ],
+          },
+        ],
+      },
+      {
+        id: "2",
+        name: "Geometría",
+        subtopics: [
+          {
+            id: 1,
+            title: "Figuras geometricas",
+            docs: [
+              {
+                id: 1,
+                title: "Área y perímetro",
+              },
+              {
+                id: 2,
+                title: "Triángulos",
+              },
+              {
+                id: 2,
+                title: "Circulos",
+              },
+            ],
+          },
+          {
+            id: 2,
+            title: "Cuerpos geometrícos",
+            docs: [
+              {
+                id: 1,
+                title: "Cuerpos rectos",
+              },
+              {
+                id: 2,
+                title: "Cuerpos redondos",
+              },
+            ],
+          },
+        ],
+      },
+      {
+        id: "3",
+        name: "Estadística",
+        subtopics: [
+          {
+            id: 1,
+            title: "Representar datos",
+            docs: [
+              {
+                id: 1,
+                title: "Tablas de frecuencia",
+              },
+              {
+                id: 2,
+                title: "Gráficos",
+              },
+            ],
+          },
+          {
+            id: 2,
+            title: "Medidas",
+            docs: [
+              {
+                id: 1,
+                title: "Cuartiles",
+              },
+              {
+                id: 2,
+                title: "Posición",
+              },
+              {
+                id: 3,
+                title: "Tendencia central",
+              },
+            ],
+          },
+          {
+            id: 2,
+            title: "Probabilidad",
+            docs: [
+              {
+                id: 1,
+                title: "Probabilidad compuesta",
+              },
+              {
+                id: 2,
+                title: "Probabilidad clasica",
+              },
+            ],
+          },
+        ],
+      },
+    ],
     subjects: [
       {
         name: "matemática",
@@ -88,230 +242,54 @@ export default function Docs() {
         id: 1,
       },
     ],
-    topics: [
-      {
-        id: "1",
-        name: "Álgebra",
-        Doc: [
-          {
-            id: 1,
-            title: "Productos notables",
-          },
-          {
-            id: 2,
-            title: "Sistema de ecuaciones",
-          },
-          {
-            id: 3,
-            title: "Función cuadratica",
-          },
-          {
-            id: 4,
-            title: "Proporcionalidad",
-          },
-          {
-            id: 5,
-            title: "Inecuaciones",
-          },
-        ],
-      },
-      {
-        id: "2",
-        name: "Geometría",
-        Doc: [
-          {
-            id: 1,
-            title: "Cuerpos geometricos",
-          },
-          {
-            id: 2,
-            title: "Figuras geoemtricas",
-          },
-          {
-            id: 3,
-            title: "Área y perímetro",
-          },
-          {
-            id: 4,
-            title: "Volumen",
-          },
-          {
-            id: 5,
-            title: "Teorema de pitagoras",
-          },
-        ],
-      },
-    ],
   };
+
   const router = useRouter();
   const [download, setDownload] = useState<number | undefined>();
   const [state, setState] = useState(true);
   const [modalState, setModalState] = useState(false);
-  const { subject } = router.query;
+  const { subject } = router.query as {
+    subject: string;
+  };
+  const [topic, setTopic] = useState("Álgebra");
   const subjectData = subjects.find((sub) => sub.name === subject);
-  // const defaultConfig = {
-  //   grade: "4° MEDIO",
-  //   subject: "Matemáticas",
-  // };
-
-  // console.log(topics);
 
   return (
     <>
       <Layout>
-        <section className={styles.info}>
-          <h2 className={styles.grade}>{"4° MEDIO"}</h2>
-          <div className={styles.info__buttons}>
-            <span
-              style={{ background: subjectData?.color }}
-              className={styles.subject}
-            >
-              {subject}
-            </span>
-            <button
-              className={styles.config}
-              onClick={() => setModalState(true)}
-            >
-              <FontAwesomeIcon
-                className={styles["config__icon"]}
-                size="lg"
-                icon={faGear}
-              />
-            </button>
-            <Modal
-              title="Configuración"
-              setModalState={setModalState}
-              modalState={modalState}
-              options={[
-                {
-                  type: "boolean",
-                  text: "Resumenes",
-                  setState,
-                  state,
-                },
-                {
-                  text: "Ejercicios",
-                  setState,
-                  state,
-                  type: "boolean",
-                },
-                {
-                  text: "Ensayos",
-                  setState,
-                  state,
-                  type: "boolean",
-                },
-                {
-                  type: "select",
-                  text: "Curso",
-                },
-                {
-                  type: "select",
-                  text: "Asignatura",
-                  selectConfig: subjects?.map(
-                    ({ name }: { name: string }) => name
-                  ),
-                },
-              ]}
-            />
-          </div>
-        </section>
+        <Link href={"/docs"}>
+          <h1 className={styles.grade}>{subject}</h1>
+        </Link>
+        <Options
+          options={["Álgebra", "Geometría", "Estadística"]}
+          state={topic}
+          setState={setTopic}
+        ></Options>
         <ul className={styles.units}>
           {topics &&
-            topics.map(({ name, Doc }, i) => (
-              <div key={name + i}>
-                {!!Doc?.length && (
-                  <Unit
-                    color={subjectData?.color as string}
-                    setDownload={setDownload}
-                    router={router}
-                    text={name}
-                    icon={faCircle}
-                    docs={Doc as any}
-                  />
-                )}
-              </div>
-            ))}
+            topics.map(({ name, subtopics }, i) => {
+              if (name !== topic) return;
+              return subtopics.map(({ docs, title }) => (
+                <div key={name + "-doc"}>
+                  <Card head={<span>{title}</span>}>
+                    <ul className={styles.docs}>
+                      {docs &&
+                        docs.map(({ title, id }) => {
+                          return (
+                            <Link key={title + id} href={`view/${id}`}>
+                              <li className={styles.doc}>
+                                <span>{title}</span>
+                              </li>
+                            </Link>
+                          );
+                        })}
+                    </ul>
+                  </Card>
+                </div>
+              ));
+            })}
         </ul>
-        <ConfigButton
-          modalOptions={[
-            {
-              type: "select",
-              text: "Eje",
-              selectConfig: topics.map(({ name }: { name: string }) => name),
-            },
-            {
-              type: "text",
-              text: "Nombre",
-            },
-          ]}
-          callback={({ Eje, Nombre }) => {
-            const topic = topics.find(({ name }) => name === Eje);
-            const url = `docs/edit/N?topic=${topic?.name}&title=${Nombre}`;
-            router.push(url);
-          }}
-          icon={faPlus}
-        />
       </Layout>
-      {/* {typeof download === "number" && <GetPDF id={download} />} */}
     </>
-  );
-}
-
-function Unit({
-  router,
-  setDownload,
-  text,
-  color,
-  docs,
-}: {
-  color: string;
-  setDownload: React.Dispatch<React.SetStateAction<number | undefined>>;
-  router: NextRouter;
-  text: string;
-  icon: IconDefinition;
-  docs: { title: string; id: number }[];
-}) {
-  const [state, setState] = useState(false);
-  const changeVisibility = () => setState(!state);
-  return (
-    <li
-      key={text}
-      className={styles.unit}
-      style={{
-        height: state ? `${(docs.length + 1) * 58 + 26}px` : "64px",
-      }}
-    >
-      <div className={styles["unit__card"]} onClick={changeVisibility}>
-        <div className={styles["card__info"]}>
-          <div
-            style={{
-              border: `4px solid ${color}`,
-            }}
-            className={styles.circle}
-          ></div>
-          <span>{text}</span>
-        </div>
-        <FontAwesomeIcon
-          style={{
-            transition: "0.3s ease-in",
-          }}
-          className={styles["unit-card__chevron"]}
-          rotation={state ? 180 : 90}
-          icon={faChevronUp}
-        />
-      </div>
-      <ul className={styles.docs}>
-        {docs?.map(({ title, id }, i) => {
-          return (
-            <li key={title + id} className={styles.doc}>
-              <Link href={`view/${id}`}>
-                <span>{title}</span>
-              </Link>
-            </li>
-          );
-        })}
-      </ul>
-    </li>
   );
 }

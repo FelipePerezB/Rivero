@@ -9,7 +9,7 @@ import getID from "src/getDoc/utils/getId";
 export default function Page({
   id,
   number,
-  childrens,
+  children,
   index,
   docInfo,
 }: {
@@ -20,7 +20,7 @@ export default function Page({
   };
   id: string;
   index: number;
-  childrens: {
+  children: {
     options: any;
     type: string;
   }[];
@@ -38,7 +38,7 @@ export default function Page({
               key={id + "-doc-info"}
             />
           )}
-          {childrens?.map((component, i) => (
+          {children?.map((component, i) => (
             <GetPdfNode component={component} key={id + i} />
           ))}
           <span className={styles["page__number"]}>{number}</span>

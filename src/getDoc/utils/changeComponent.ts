@@ -10,17 +10,17 @@ export default function changeComponent(
 ) {
   if (component.options?.id === data.options?.id) {
     if(config?.newChild){
-      component.options.childrens.push(config.newChild)
+      component.options.children.push(config.newChild)
     }
     component.options = data.options;
     return;
   } else {
-    component?.options?.childrens?.forEach((child: props, i: number) => {
+    component?.options?.children?.forEach((child: props, i: number) => {
       if (child?.options?.id === data.options?.id) {
         if(config?.newChild){
-          child.options.childrens.push(config.newChild)
+          child.options.children.push(config.newChild)
         } else if(config?.delete){
-          component.options.childrens.splice(i, 1)
+          component.options.children.splice(i, 1)
         } 
         child.options = data.options;
         return;

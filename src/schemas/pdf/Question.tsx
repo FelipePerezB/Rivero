@@ -8,13 +8,13 @@ export default function Question({
   number,
   question,
   alternatives,
-  childrens,
+  children,
 }: {
   id: string;
   number: number;
   question: string;
   alternatives: string;
-  childrens?: {
+  children?: {
     type: string;
     options: any;
   }[];
@@ -43,9 +43,9 @@ export default function Question({
               );
             })}
           </ol>
-          {childrens?.length && (
+          {children?.length && (
             <div className={styles["question__image"]}>
-              <GetPdfNode key={id + "-child"} component={childrens[0]} />
+              <GetPdfNode key={id + "-child"} component={children[0]} />
             </div>
             // <div className={styles["question__image"]}>{children}</div>
           )}

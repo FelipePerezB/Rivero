@@ -1,4 +1,5 @@
-.docs{
+.docs {
+  font-size: 1.2rem;
   display: flex;
   justify-content: center;
   width: 100vw;
@@ -6,13 +7,15 @@
   background-color: white;
 }
 
-.doc{
+.doc {
   width: 100%;
-  padding: 12px 20px ;
   max-width: 700px;
 }
 
 .page {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
   width: 100%;
   padding: 20px;
 }
@@ -34,7 +37,7 @@
 
 .doc-info {
   width: 100%;
-  padding: 20px 0;
+  padding: 0 0 20px;
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -42,7 +45,7 @@
   margin-bottom: 16px;
 }
 
-.btns{
+.btns {
   position: sticky;
   top: 10px;
   display: flex;
@@ -51,36 +54,38 @@
   margin-bottom: 8px;
 }
 
-.btns .download{
+.btns .download {
   color: white;
-  background-color: black;
+  background-color: var(--primary-color);
 }
 
-.btns button{
+.btns button {
   cursor: pointer;
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 8px;
   padding: 8px 12px;
-  border-radius: 16px;
-  transition: 300ms;
+  border-radius: 12px;
+  transition: background-color 300ms;
   background-color: white;
-  margin-bottom: 8px;
+  outline: 2px solid gray;
+  border: none;
 }
 
-.btns button:hover{
-  transform: scale(1.08);
-  transition: 200ms;
+.btns button:hover {
+  transition: background-color 200ms;
+  transform: scale(0.95);
+  outline: 2px solid black;
   background-color: lightgray;
 }
 
-.btns .download:hover{
+.btns .download:hover {
   background-color: black;
   color: lightgray;
 }
 
-.page{
+.page {
   border-bottom: 2px solid gray;
 }
 
@@ -101,55 +106,55 @@
   margin-top: 0;
 }
 
+.div {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
 
 .separator,
 .separator-center {
-  /* margin: 0.2em 0; */
-  padding: 16px;
+  padding: 2px;
   display: flex;
   justify-content: space-between;
   gap: 20px;
 }
 
-.separator-center{
+.separator-center {
   align-items: center;
-  gap: 48px;
-}
-.exercises {
-  margin: 8px 0 16px;
-  width: 100%;
+  flex-direction: column-reverse;
 }
 
-.form-btn{
+.form-btn {
   transition: 250ms;
   cursor: pointer;
-  background-color: white;
-  margin: 8px;
-  outline: 2px solid gray;
+  background-color: var(--primary-color);
+  margin: 20px 8px 8px;
+  color: white;
+  /* outline: 2px solid gray; */
   border: none;
   border-radius: 8px;
-  padding: 4px 8px;
+  padding: 6px 14px;
 }
 
-.form-btn:hover{
+.form-btn:hover {
   transition: 200ms;
-  transform: scale(1.1);
-  background-color: rgb(244, 244, 244);
+  transform: scale(0.95);
 }
 
 .question {
   padding-right: 16px;
-  margin: 8px 0 0 0;
-  padding: 8px 0;
+  margin: 0;
+  padding: 16px 0;
 }
 
-.alternative{
+.alternative {
   height: 2.4rem;
   position: relative;
   max-width: 500px;
 }
 
-.alternative-radio{
+.alternative-radio {
   opacity: 0;
   position: absolute;
   cursor: pointer;
@@ -157,15 +162,15 @@
   height: 100%;
 }
 
-.alternative-radio:checked + label{
+.alternative-radio:checked + label {
   outline: 3px solid var(--primary-color);
 }
 
-.incorrect-ans .alternative-radio:checked + label{
-  outline: 3px solid #e86675;
+.incorrect-ans .alternative-radio:checked + label {
+  outline: 2px solid var(--primary-color);
 }
 
-.alternative-label{
+.alternative-label {
   padding: 8px;
   display: flex;
   align-items: center;
@@ -176,7 +181,8 @@
   height: 100%;
 }
 
-.alternative-label:hover, .alternative-radio:hover + .alternative-label{
+.alternative-label:hover,
+.alternative-radio:hover + .alternative-label {
   background-color: rgb(236, 236, 236);
 }
 
@@ -194,23 +200,21 @@
 }
 
 .question__image {
-  
-  /* padding-right: 24px; */
+  margin: 12px 0;
   transform: scale(1.5);
 }
 
-.linechart{
+.linechart {
   margin: 16px;
-  /* outline: 2px solid rgba(211, 211, 211, 0.563); */
   border-radius: 4px;
 }
 
-@media(max-width: 600px){
-  .separator{
+@media (max-width: 600px) {
+  .separator {
     flex-direction: column;
   }
 
-  .separator-center{
+  .separator-center {
     flex-direction: column-reverse;
   }
 }

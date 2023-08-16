@@ -6,7 +6,15 @@ export type useContextState = {
   setState: (data: any) => void;
   state: {
     answers: any;
-    doc: { childrens: any[] };
+    doc: {
+      type: string;
+      options: {
+        children: any[];
+        title: string;
+        subtitle: string;
+        docId: number;
+      };
+    };
     expectedAns: any;
   };
 };
@@ -14,19 +22,21 @@ export type useContextState = {
 export const ComponentContext = createContext({});
 export default function Doc({
   title,
+  docId,
   subtitle,
-  childrens,
+  children,
 }: {
+  docId: number;
   title: string;
   subtitle: string;
-  childrens: {
+  children: {
     type: string;
     options: any;
   }[];
 }) {
   const defaultState = {
     answers: {},
-    doc: { childrens, title, subtitle },
+    doc: { type: "doc", options: { children, title, subtitle, docId } },
     expectedAns: {},
   };
 
@@ -40,7 +50,7 @@ export default function Doc({
     <ComponentContext.Provider value={initialState}>
       <div id="doc-container" className={styles.docs}>
         <div className={styles.doc} id="doc">
-          {childrens?.map((component, i) => {
+          {children?.map((component, i) => {
             return (
               <GetWebNode
                 key={"page-" + i}
@@ -48,7 +58,7 @@ export default function Doc({
                   type: component.type,
                   options: {
                     ...component.options,
-                    docInfo: { title, subtitle },
+                    docInfo: { title, subtitle, docId },
                     number: i + 1,
                   },
                 }}

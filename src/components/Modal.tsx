@@ -1,9 +1,9 @@
-import React, { ReactNode } from "react";
+import React, { ReactNode, useState } from "react";
 import styles from "@styles/Modal.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClose } from "@fortawesome/free-solid-svg-icons";
-
-type types = "select" | "boolean" | "text";
+import Button from "./Button";
+import ModalInput from "src/getDoc/components/ModalInput";
 
 export default function Modal({
   modalState,
@@ -11,18 +11,10 @@ export default function Modal({
   children,
   title,
 }: {
-  callback?: (data: any) => void;
   modalState: boolean;
   title: string;
   setModalState: any;
   children?: ReactNode;
-  options?: {
-    type: types;
-    text: string;
-    setState?: any;
-    state?: boolean;
-    selectConfig?: string[];
-  }[];
 }) {
   return (
     <div key={title} className={styles[`${modalState ? "on" : "off"}`]}>
@@ -42,3 +34,46 @@ export default function Modal({
     </div>
   );
 }
+
+export const FormModal = (params: {
+  modalState: boolean;
+  title: string;
+  setModalState: any;
+  children?: ReactNode;
+  schema: {}[];
+  setData: (value: any) => void;
+}) => {
+  const [values, setValues] = useState({} as any);
+
+  const addFormData = (data: any) => {
+    const [key, value] = Object.entries(data)[0];
+    values[key] = value;
+    setValues(values);
+  };
+
+  return (
+    <Modal {...params}>
+      <div className={styles["form-modal"]}>
+        <div className={styles.children}>
+          {params.children}
+          <form className={styles.form}>
+            {params?.schema &&
+              params.schema.map((schema) =>
+                Object.entries(schema).map(([name, type]) => {
+                  return (
+                    <ModalInput
+                      addFormData={addFormData}
+                      key={name}
+                      name={name}
+                      type={type}
+                    />
+                  );
+                })
+              )}
+          </form>
+        </div>
+        <Button callback={() => params.setData(values)}>Create</Button>
+      </div>
+    </Modal>
+  );
+};

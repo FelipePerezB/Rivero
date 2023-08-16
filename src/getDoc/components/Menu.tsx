@@ -40,10 +40,10 @@ export default function Menu({
     if (type === "edit") setSelectedComponent(component);
     else if (type === "addChild") {
       const schema = component?.type && getSchema(component?.type);
-      if (typeof schema.childrens === "string") setSelectedComponent(undefined);
+      if (typeof schema.children === "string") setSelectedComponent(undefined);
       else {
         setSelectedComponent({
-          type: schema.childrens.child,
+          type: schema.children.child,
           options: {
             id: getID(),
           },
@@ -90,7 +90,7 @@ export default function Menu({
                 <FontAwesomeIcon className={styles["icon"]} icon={faClose} />
               </p>
             )}
-            {component?.options?.childrens && (
+            {component?.options?.children && (
               <p
                 onClick={() => openModal("addChild")}
                 className={styles["add-btn"]}

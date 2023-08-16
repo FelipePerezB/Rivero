@@ -120,31 +120,6 @@ export default function Modal({
             </div>
             {!selectedComponent && (
               <div className={styles.selectComponent}>
-                {/* <label>
-                  <span>Tipo de componente:</span>
-                  <input
-                    className={styles.select}
-                    id="select-component"
-                    defaultValue={component}
-                    onChange={(event) => {
-                      const value = event?.target?.value;
-                      if (
-                        Object.keys(schemas)
-                          .map((node) => node.toLowerCase())
-                          .includes(value.toLowerCase())
-                      )
-                        setComponent(value);
-                    }}
-                    list="components"
-                  />
-                </label>
-                <datalist id="components">
-                  {componentsNames.map((component) => (
-                    <option key={component} value={component}>
-                      {component}
-                    </option>
-                  ))}
-                </datalist> */}
                 <ul className={styles.nodes}>
                   {uiComponentsNames.map((component) => (
                     <li key={component + "-select"}>

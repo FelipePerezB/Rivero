@@ -31,47 +31,17 @@ export default function Edit({
   doc?: any;
   saveDoc: (doc: any) => void;
 }) {
-  // const data = {
-  //   id: "7",
-  //   name: "Sistema de ecuaciones",
-  //   subtitle: "AAAAA",
-  //   component: {
-  //     type: "doc",
-  //     options: {
-  //       id: "CID812919622",
-  //       childrens: [
-  //         {
-  //           type: "page",
-  //           options: {
-  //             id: "CID812819282",
-  //             childrens: [
-  //               {
-  //                 type: "docInfo",
-  //                 options: {
-  //                   id: "CID812889282",
-  //                   title: "SISTEMA DE ECUACIONES",
-  //                   subtitle: "EJE: ALGEBRA",
-  //                 },
-  //               },
-  //             ],
-  //           },
-  //         },
-  //       ],
-  //     },
-  //   },
-  // };
-
   const [pages, setPage] = useState({
     type: "doc",
     options: {
       id: "CID71632832",
-      childrens: [
+      children: [
         {
           type: "page",
           options: {
             id: "CID63726726",
           },
-          childrens: [],
+          children: [],
         },
       ],
     },
@@ -85,12 +55,12 @@ export default function Edit({
           id: getID(),
           title: options?.title,
           subtitle: options?.category,
-          childrens: [
+          children: [
             {
               type: "page",
               options: {
                 id: getID(),
-                childrens: [
+                children: [
                   {
                     type: "docinfo",
                     options: {
@@ -118,12 +88,12 @@ export default function Edit({
   //         type: "doc",
   //         options: {
   //           id: getID(),
-  //           childrens: [
+  //           children: [
   //             {
   //               type: "page",
   //               options: {
   //                 id: getID(),
-  //                 childrens: [
+  //                 children: [
   //                   {
   //                     type: "docInfo",
   //                     options: {
@@ -165,7 +135,7 @@ export default function Edit({
     if (JSONComponent.options?.id === expectedID) {
       return JSONComponent;
     }
-    JSONComponent.options?.childrens?.forEach((e: props) => {
+    JSONComponent.options?.children?.forEach((e: props) => {
       const lowLvlCompo = getLowLvlComp(e, expectedID);
       if (lowLvlCompo) {
         component = lowLvlCompo;
@@ -194,7 +164,7 @@ export default function Edit({
     let component: props;
 
     component =
-      node && (getJSONComponent(pages?.options?.childrens, node) as any);
+      node && (getJSONComponent(pages?.options?.children, node) as any);
     setComponent(component);
 
     setMenuConfig({

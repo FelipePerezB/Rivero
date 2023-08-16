@@ -1,3 +1,10 @@
+.input{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 2px;
+}
+
 .header {
   display: flex;
   align-items: center;
@@ -142,6 +149,7 @@
   border: none;
   outline: 2px solid black;
   border-radius: 4px;
+  width: 100%;
 }
 
 .standart-input:focus{

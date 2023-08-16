@@ -1,4 +1,4 @@
-.options{
+.cards{
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -26,7 +26,8 @@
 } */
 
 .profile {
-  cursor: pointer;
+  padding: 16px;
+  /* cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -34,7 +35,7 @@
   padding: 2px 0 18px;
   margin: 0 0 10px;
   border-radius: var(--radius);
-  border-bottom: 2px solid var(--background-color);
+  border-bottom: 2px solid var(--background-color); */
 }
 
 /* .profile:hover {

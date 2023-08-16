@@ -46,12 +46,12 @@ export default function Docs() {
       type: "doc",
       options: {
         id: "CID812919622",
-        childrens: [
+        children: [
           {
             type: "page",
             options: {
               id: "CID812819282",
-              childrens: [
+              children: [
                 {
                   type: "docInfo",
                   options: {
@@ -75,12 +75,12 @@ export default function Docs() {
       type: "doc",
       options: {
         id: "CID812919622",
-        childrens: [
+        children: [
           {
             type: "page",
             options: {
               id: "CID812819282",
-              childrens: [
+              children: [
                 {
                   type: "docInfo",
                   options: {

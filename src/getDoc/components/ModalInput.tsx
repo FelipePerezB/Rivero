@@ -104,7 +104,7 @@ export default function ModalInput({
     </>
   );
 
-  const ChildrensInput = ({ child }: any) => {
+  const ChildrenInput = ({ child }: any) => {
     const defaultValue = Array.isArray(value) ? value : [];
     const [modalState, setModalState] = useState(false);
     const [modalData, setModalData] = useState<component>();
@@ -169,7 +169,6 @@ export default function ModalInput({
     const [modalData, setModalData] = useState<component>(defaultValue);
     
     useEffect(() => {
-      console.log(modalData)
       if (modalData?.type) {
         createFormData([modalData]);
       }
@@ -190,8 +189,6 @@ export default function ModalInput({
         <Button style="secondary" onClick={() => setModalState(true)}>
           <span> {!defaultValue?.options ? "Añadir" : "Reemplazar"}</span>
         </Button>
-        {/* <button type="button" className={styles["children-input__add"]}>
-        </button> */}
         <NewCompModal
           modalState={modalState}
           setModalState={setModalState}
@@ -344,7 +341,7 @@ export default function ModalInput({
   const inputTypes: any = {
     text: (props: any) => <StandardInput {...props} />,
     number: (props: any) => <StandardInput {...props} />,
-    children: (props: any) => <ChildrensInput {...props} />,
+    children: (props: any) => <ChildrenInput {...props} />,
     boolean: (props: any) => <BooleanInput {...props} />,
     options: (props: any) => <OptionsInput {...props} />,
     subInputs: (props: any) => <SubInputs {...props} />,
@@ -368,7 +365,7 @@ export default function ModalInput({
   };
 
   return (
-    <label htmlFor={name} key={name}>
+    <label className={styles.input} htmlFor={name} key={name}>
       <span>{capFirst(name)}:</span>
       {getInput()}
     </label>

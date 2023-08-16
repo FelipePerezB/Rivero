@@ -25,7 +25,7 @@ export default function LineChart({
     y: { lines: number };
   }>();
   const heights = {
-    xs: "6em",
+    xs: "7em",
     s: "10em",
     m: "15em",
     l: "20em",
@@ -50,7 +50,7 @@ export default function LineChart({
         x: { lines: Number((range / linesNum).toFixed(0)) },
         y: { lines: Number((range / linesNum).toFixed(0)) },
       });
-  }, [size]);
+  }, [size, divRef.current?.clientHeight]);
 
   return (
     <CustomComponent id={id} style={{ width: "max-content", margin: '0 auto'}}>

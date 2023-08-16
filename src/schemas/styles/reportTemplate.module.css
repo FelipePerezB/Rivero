@@ -33,7 +33,6 @@
   font-size: 1em;
   text-align: center;
   margin: 0;
-  margin-bottom: 0.4em;
 }
 
 .page {
@@ -49,13 +48,13 @@
 }
 
 .page__content {
-  display: "flex";
+  height: 100%;
+  display: flex;
   padding: 0.2em;
-  flex-direction: "column";
-  page-break-after: always;
+  flex-direction: column;
   overflow: hidden;
   gap: 0.8em;
-  border-top: 0.2em solid black;
+  border-top: 0.16em solid black;
   padding-top: 0.8em;
 }
 
@@ -71,10 +70,8 @@
 }
 
 .doc-info {
-  margin: 0 0 0.8em;
-  padding: 0.6em 0.2em 1.1em;
-  /* border-top: 0.2em solid black; */
-  border-bottom: 0.2em solid black;
+  padding: 0.6em 0.2em;
+  border-bottom: 0.16em solid black;
   display: flex;
   flex-direction: column;
 }
@@ -99,15 +96,10 @@
 .separator,
 .separator-center {
   /* margin: 1em 0; */
-  padding: 0.8em;
+  padding: 0.2em;
   display: flex;
   justify-content: space-between;
   gap: 1em;
-}
-
-.exercises {
-  margin: 0.5em 0 1em;
-  width: 100%;
 }
 
 .question {

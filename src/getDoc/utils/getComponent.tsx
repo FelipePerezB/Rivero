@@ -1,20 +1,20 @@
 import { generatePdf } from "./generatePDF";
 
-export const childrenSchenas = {
+export const childrenchenas = {
   Question: {
     question: "text",
     alternatives: "text",
     expectedAns: "text",
-    childrens: "child",
+    children: "child",
   },
   Page: {
-    childrens: "children",
+    children: "children",
   },
 };
 
 export const uiSchemas: any = {
   Div: {
-    childrens: "children",
+    children: "children",
   },
   Title: {
     text: "text",
@@ -28,14 +28,14 @@ export const uiSchemas: any = {
   },
   Columns: {
     gap: { type: "options", options: ["16px", "32px"] },
-    childrens: "children",
+    children: "children",
   },
   SLE: {
     ec1: "text",
     ec2: "text",
   },
   Exercises: {
-    childrens: {
+    children: {
       type: "children",
       child: "question",
     },
@@ -49,7 +49,7 @@ export const uiSchemas: any = {
       index: "number",
     },
     withBorder: "boolean",
-    childrens: "children",
+    children: "children",
     sign: "text",
   },
   Fraction: {
@@ -69,11 +69,12 @@ export const uiSchemas: any = {
 
 export const schemas: any = {
   ...uiSchemas,
-  ...childrenSchenas,
+  ...childrenchenas,
   Doc: {
+    id: "text",
     title: "text",
     subtitle: "text",
-    childrens: {
+    children: {
       type: "children",
       child: "page",
     },
@@ -88,7 +89,6 @@ export const schemas: any = {
     },
   },
 };
-
 
 // const comps: any = {};
 
@@ -108,7 +108,7 @@ export const schemas: any = {
 // export const components = {
 //   div: {
 //     schema: {
-//       childrens: "children",
+//       children: "children",
 //     },
 //     node: (options: any) => <Div {...options} />,
 //   },
@@ -137,7 +137,7 @@ export const schemas: any = {
 //   columns: {
 //     schema: {
 //       gap: { type: "options", options: ["16px", "32px"] },
-//       childrens: "children",
+//       children: "children",
 //     },
 //     node: (options: any) => <Columns {...options}></Columns>,
 //   },
@@ -169,7 +169,7 @@ export const schemas: any = {
 //   exercises: {
 //     node: (options: any) => <Exercises {...options} />,
 //     schema: {
-//       childrens: "children",
+//       children: "children",
 //       startsIn: "number",
 //       isAnEvaluation: "boolean",
 //     },
@@ -183,7 +183,7 @@ export const schemas: any = {
 //         index: "number",
 //       },
 //       withBorder: "boolean",
-//       childrens: "children",
+//       children: "children",
 //       sign: "text",
 //     },
 //   },
@@ -212,7 +212,7 @@ export const schemas: any = {
 //   page: {
 //     node: (options: any) => <Page {...options} />,
 //     schema: {
-//       childrens: "children",
+//       children: "children",
 //     },
 //   },
 //   doc: {
@@ -220,7 +220,7 @@ export const schemas: any = {
 //     schema: {
 //       title: "text",
 //       subtitle: "text",
-//       childrens: "children",
+//       children: "children",
 //       resize: {
 //         type: "range",
 //         text: "Zoom",

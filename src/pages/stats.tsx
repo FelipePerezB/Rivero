@@ -205,8 +205,6 @@ export default function Statistics() {
           ))}
       </section>
       <ConfigButton
-        modalOptions={[]}
-        callback={() => {}}
         icon={faFileArrowDown}
       />
     </Layout>

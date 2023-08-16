@@ -28,6 +28,7 @@
 }
 
 .modal {
+  aspect-ratio: 2 / 3;
   max-width: 400px;
   min-width: 256px;
   display: flex;
@@ -77,21 +78,29 @@
   font-weight: 700;
 }
 
-.op__input{
+.op__input {
   width: 50%;
   max-width: 200px;
 }
-
-/* .op span {
-  padding: 8px;
-  text-align: center;
-  width: 3rem;
-  color: white;
-  border-radius: var(--radius);
-} */
 
 .modal__select {
   padding: 3px;
   border-radius: var(--radius);
   border: 2px solid black;
+}
+
+.form-modal{
+  display: grid;
+  height: 100%;
+  grid-template-rows: 1fr max-content;
+}
+
+.children{
+  height: 100%;
+}
+
+.form{
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }

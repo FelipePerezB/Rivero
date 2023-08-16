@@ -7,7 +7,7 @@ import styles from "../styles/reportTemplate.module.css";
 import getID from "src/getDoc/utils/getId";
 
 export default function Div({
-  childrens = [
+  children = [
     {
       type: "title",
       options: {
@@ -21,7 +21,7 @@ export default function Div({
   id = getID(),
 }: {
   gap?: string;
-  childrens: {
+  children: {
     type: string;
     options: any;
   }[];
@@ -37,7 +37,7 @@ export default function Div({
   return (
     <CustomComponent id={id} style={{}}>
       <div className={styles.div}>
-        {childrens.map((component, i) => (
+        {children.map((component, i) => (
           <GetPdfNode key={id + i} component={component} />
         ))}
       </div>

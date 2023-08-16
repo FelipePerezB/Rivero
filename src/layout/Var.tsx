@@ -27,7 +27,6 @@ export default function Var({ state }: { state?: "only-nav" }) {
   //   }
   // };
 
-
   const icons = [
     // {
     //   link: "/",
@@ -44,7 +43,7 @@ export default function Var({ state }: { state?: "only-nav" }) {
     {
       link: "/edit",
       element: faSquarePen,
-      isPremium: true,
+      // isPremium: true,
     },
     {
       link: "/config",
@@ -65,25 +64,18 @@ export default function Var({ state }: { state?: "only-nav" }) {
       {state !== "only-nav" && (
         <ul className={styles.Var}>
           {icons.map((icon, i) => {
-            if (
-              !icon?.isPremium 
-              // data?.user?.role === "admin"
-            ) {
-              const link = "/" + router.pathname.split("/").at(1);
-              const isActive = link === icon.link;
-              return (
-                <li key={icon.link + i}>
-                  <Link href={icon.link} passHref>
-                    <FontAwesomeIcon
-                      icon={icon.element}
-                      className={
-                        isActive ? styles["icon--active"] : styles.icon
-                      }
-                    />
-                  </Link>
-                </li>
-              );
-            }
+            const link = "/" + router.pathname.split("/").at(1);
+            const isActive = link === icon.link;
+            return (
+              <li key={icon.link + i}>
+                <Link href={icon.link} passHref>
+                  <FontAwesomeIcon
+                    icon={icon.element}
+                    className={isActive ? styles["icon--active"] : styles.icon}
+                  />
+                </Link>
+              </li>
+            );
           })}
         </ul>
       )}

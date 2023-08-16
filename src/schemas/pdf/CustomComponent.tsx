@@ -1,4 +1,5 @@
 import React, { ReactNode } from "react";
+import getID from "src/getDoc/utils/getId";
 // import styles from "@/styles/Home.module.css"
 
 export default function CustomComponent({
@@ -10,6 +11,7 @@ export default function CustomComponent({
   id: string;
   style: any,
 }) {
+  // const id = getID()
   return (
     <span key={id} className={"component"} style={style} id={id}>
       {children}

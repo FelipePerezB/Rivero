@@ -4,17 +4,19 @@ import { createPortal } from "react-dom";
 // import NewCompModal from "../containers/NewCompModal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGear, faPlusCircle } from "@fortawesome/free-solid-svg-icons";
-import Modal from "./Modal";
+import Modal, { FormModal } from "./Modal";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import CustomModal from "./CustomModal";
 
 export default function ConfigButton({
+  schema = [],
+  setData,
   icon,
   callback,
-  modalOptions
 }: {
-  modalOptions: any[]
-  callback: (data: any) => void;
+  callback?: () => any;
+  schema?: {}[];
+  setData?: (value: any) => void;
   icon: IconProp;
 }) {
   const [loaded, setLoaded] = useState<any>();
@@ -29,22 +31,26 @@ export default function ConfigButton({
       <>
         <button
           className={styles["config-button"]}
-          onClick={() => setModalState(true)}
+          onClick={() => {
+            callback && callback();
+            schema && setData && setModalState(true);
+          }}
         >
           <FontAwesomeIcon
-            onClick={() => setModalState(true)}
             color="white"
             className={styles["config-button__icon"]}
             icon={icon}
           />
         </button>
-        <CustomModal
-          callback={callback}
-          modalState={modalState}
-          setModalState={setModalState}
-          title="Crear documento"
-          options={modalOptions}
-        />
+        {schema && setData && (
+          <FormModal
+            setData={setData}
+            schema={schema}
+            modalState={modalState}
+            setModalState={setModalState}
+            title="Crear documento"
+          />
+        )}
       </>,
       document.querySelector("#modal") as HTMLDivElement
     );

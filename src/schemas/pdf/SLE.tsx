@@ -34,7 +34,7 @@ export default function SLE({
       style={{
         width: "max-content",
         height: "max-content",
-        margin: "auto"
+        margin: "0 auto"
       }}
     >
       <div style={styles.SLE}>

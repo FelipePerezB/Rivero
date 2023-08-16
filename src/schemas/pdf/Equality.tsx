@@ -8,7 +8,7 @@ import getID from "src/getDoc/utils/getId";
 export default function Equality({
   exception,
   withBorder = false,
-  childrens = [
+  children = [
     {
       type: "fraction",
       options: {
@@ -34,7 +34,7 @@ export default function Equality({
     index: number;
   };
   withBorder?: boolean;
-  childrens: {
+  children: {
     type: string;
     options: any;
   }[];
@@ -56,12 +56,12 @@ export default function Equality({
   return (
     <CustomComponent id={id} style={{}}>
       <div style={styles.equality}>
-        {childrens.map((component, i) => (
+        {children.map((component, i) => (
           <>
             <span key={component.type + "text"}>
               <GetPdfNode key={id + i} component={component} />
             </span>
-            {exception?.index != i && i + 1 < childrens.length && (
+            {exception?.index != i && i + 1 < children.length && (
               <span key={component.type + "sign"}>{sign}</span>
             )}
             {exception?.index == i && (

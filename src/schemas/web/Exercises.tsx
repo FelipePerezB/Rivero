@@ -7,13 +7,13 @@ import CustomComponent from "./CustomComponent";
 import GetWebNode from ".";
 export default function Exercises({
   id,
-  childrens,
+  children,
   startsIn,
   isAnEvaluation = false,
 }: {
   isAnEvaluation?: boolean;
   startsIn?: string;
-  childrens: {
+  children: {
     type: string;
     options: {
       question: string;
@@ -38,7 +38,7 @@ export default function Exercises({
         {isAnEvaluation && startNumber === "1" && (
           <h1 className={styles.subtitle}>{"EVALUACIÓN"}</h1>
         )}
-        {childrens?.map((component, i) => {
+        {children?.map((component, i) => {
           const number = i + 1 + (Number(startNumber) - 1);
           return (
             <GetWebNode

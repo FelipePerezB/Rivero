@@ -15,20 +15,21 @@ export default function Options({
   };
   return (
     <div className={styles.options}>
-      {options.map((option) => {
-        const isActive = state === option;
-
-        return (
-          <div onClick={() => clickHandler(option)} key={option}>
-            <span className={styles[isActive ? "op--active" : "op"]}>
-              {option}
-            </span>
-            {options.indexOf(option) < options.length - 1 && (
-              <span className={styles.separator}>|</span>
-            )}
-          </div>
-        );
-      })}
+      <ul>
+        {options.map((option) => {
+          const isActive = state === option;
+          return (
+            <li onClick={() => clickHandler(option)} key={option}>
+              <span className={styles[isActive ? "op--active" : "op"]}>
+                {option}
+              </span>
+              {options.indexOf(option) < options.length - 1 && (
+                <span className={styles.separator}>|</span>
+              )}
+            </li>
+          );
+        })}
+      </ul>
     </div>
   );
 }

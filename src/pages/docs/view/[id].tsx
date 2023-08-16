@@ -11,23 +11,27 @@ export default function Document() {
         component: any;
       }
     | undefined
-    >(undefined);
-    useEffect(() => {
-      const { title, topic } = query;
-      const getData = async () => {
+  >(undefined);
+  useEffect(() => {
+    const { title, topic, id } = query;
+    const getData = async () => {
       let content;
       try {
-        throw new Error("AAA")
+        throw new Error("AAA");
         const res = await api.get(`docs/${query.id}`);
         content = res.data.content;
       } catch (error) {
-        const stringifyData = localStorage.getItem(`${title}`);
+        const stringifyData = localStorage.getItem(`doc-${id}`);
         if (stringifyData) {
           content = JSON.parse(stringifyData);
         }
       }
-      // console.log(content)
-      content && setConfig({ ...config, component: content });
+
+      content &&
+        setConfig({
+          ...config,
+          component: content,
+        });
     };
     query.id && getData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -37,12 +41,12 @@ export default function Document() {
     type: "doc",
     options: {
       id: "CID71632832",
-      childrens: [
+      children: [
         {
           type: "page",
           options: {
             id: "CID63726726",
-            childrens: [
+            children: [
               {
                 type: "docInfo",
                 options: {
@@ -55,12 +59,12 @@ export default function Document() {
                 type: "div",
                 options: {
                   id: "CID812839282",
-                  childrens: [
+                  children: [
                     {
                       type: "exercises",
                       options: {
                         id: "CID570859070",
-                        childrens: [
+                        children: [
                           {
                             type: "question",
                             options: {

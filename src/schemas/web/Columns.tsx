@@ -7,12 +7,12 @@ import GetWebNode from ".";
 export default function Columns({
   gap,
   margin,
-  childrens,
+  children,
   id,
 }: {
   gap?: string;
   margin?: string;
-  childrens: {
+  children: {
     type: string;
     options: any;
   }[];
@@ -21,7 +21,7 @@ export default function Columns({
   return (
     <CustomComponent id={id} style={{}}>
       <section id={id} style={{ gap, margin }} className={styles.separator}>
-        {childrens.map((component, i) => (
+        {children.map((component, i) => (
           <GetWebNode key={id + i} component={component} />
         ))}
       </section>

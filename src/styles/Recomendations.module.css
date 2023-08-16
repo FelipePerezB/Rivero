@@ -24,14 +24,14 @@
   margin: 8px 0;
 }
 
-.children{
+.children {
   justify-content: center;
 }
 
 .row .children {
   width: max-content;
   display: flex;
-  padding: 0 0 8px 8px;
+  padding: 8px;
   gap: 16px;
   overflow-x: scroll;
 }

@@ -31,6 +31,7 @@ export default function LineChart({
     l: "20em",
   };
   useEffect(() => {
+    console.log(divRef.current?.clientHeight)
     divRef.current && setHeight(divRef.current?.clientHeight);
 
     let linesNum;
@@ -50,7 +51,7 @@ export default function LineChart({
         x: { lines: Number((range / linesNum).toFixed(0)) },
         y: { lines: Number((range / linesNum).toFixed(0)) },
       });
-  }, [size]);
+  }, [size, divRef.current?.clientHeight]);
 
   return (
     <CustomComponent id={id} style={{ width: "max-content" , margin: "auto"}}>

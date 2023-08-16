@@ -6,7 +6,7 @@ import getID from "src/getDoc/utils/getId";
 
 export default function WebPage({
   id,
-  childrens,
+  children,
   index,
   number,
   docInfo,
@@ -15,10 +15,11 @@ export default function WebPage({
   docInfo?: {
     title: string;
     subtitle: string;
+    docId: number
   };
   id: string;
   index: number;
-  childrens: {
+  children: {
     options: any;
     type: string;
   }[];
@@ -35,7 +36,7 @@ export default function WebPage({
             key={id + "-doc-info"}
           />
         )}
-        {childrens?.map((component, i) => {
+        {children?.map((component, i) => {
           return <GetWebNode component={component} key={id + i} />;
         })}
       </div>
