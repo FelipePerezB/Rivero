@@ -77,6 +77,7 @@ export default function Edit({
       });
     } else if (doc) setPage(doc);
   }, [doc, options]);
+
   // useEffect(() => {
   //   console.log(options);
   //   if (!doc?.id) {

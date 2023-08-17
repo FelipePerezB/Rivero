@@ -4,10 +4,11 @@ import React, { useEffect, useRef, useState } from "react";
 import styles from "../styles/Modal.module.css";
 import NewCompModal from "../containers/NewCompModal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faClose } from "@fortawesome/free-solid-svg-icons";
+import { faBold, faClose, faItalic } from "@fortawesome/free-solid-svg-icons";
 import Button from "./Button";
 import resize from "../utils/resize";
 import getID from "../utils/getId";
+import GetNodeByString from "./GetNodeByString";
 
 type component = {
   type?: string;
@@ -73,13 +74,15 @@ export default function ModalInput({
   };
 
   const StandardInput = ({ name, type }: props) => (
-    <input
-      className={styles["standart-input"]}
-      defaultValue={value}
-      name={name}
-      onChange={(event) => createFormData(event?.target?.value)}
-      type={type as unknown as "string" | "number"}
-    />
+    <>
+      <input
+        className={styles["standart-input"]}
+        defaultValue={value}
+        name={name}
+        onChange={(event) => createFormData(event?.target?.value)}
+        type={type as unknown as "string" | "number"}
+      />
+    </>
   );
 
   const OptionsInput = ({ options }: any) => (
@@ -350,8 +353,72 @@ export default function ModalInput({
     );
   };
 
+  const DescriptionInput = () => {
+    const [content, setContent] = useState(value as string);
+    const parentRef = useRef<HTMLDivElement>(null);
+    useEffect(() => {
+      console.log(content);
+      createFormData(content);
+    }, [content]);
+
+    useEffect(() => {
+      if (!parentRef.current) return;
+      parentRef.current.innerHTML = content;
+    }, [content]);
+
+    useEffect(() => {
+      if (!parentRef?.current) return;
+      parentRef.current.addEventListener("keydown", () => {
+        if (!parentRef?.current) return;
+        createFormData(parentRef?.current?.innerHTML);
+      });
+    }, [parentRef]);
+
+    const select = () => {
+      const selection = window.getSelection();
+      if (!selection?.anchorOffset) return;
+      const { anchorNode, anchorOffset, focusOffset } = selection;
+      const node = anchorNode as any;
+      if (!node.data) return;
+      const data = node?.data.split("") as string[];
+      const length = focusOffset - anchorOffset;
+      const originalData = data.splice(anchorOffset, length).join("");
+      // const newText = data;
+      // newText[
+      //   anchorOffset
+      // ] = `<span style="font-weight: 900">${newText[anchorOffset]}`;
+      // newText[focusOffset - 1] = `${newText[focusOffset - 1]}</span>`;
+      // console.log(newText.join(""));
+      setContent(
+        content.replace(
+          originalData,
+          `<span style="font-weight: 900">${originalData}</span>`
+        )
+      );
+    };
+
+    return (
+      <div>
+        <div
+          contentEditable={true}
+          className={styles.parent}
+          ref={parentRef}
+        ></div>
+        <div className={styles.btns}>
+          <button className={styles["bold-btn"]} type="button" onClick={select}>
+            <FontAwesomeIcon icon={faBold} />
+          </button>
+          <button className={styles["bold-btn"]} type="button" onClick={select}>
+            <FontAwesomeIcon icon={faItalic} />
+          </button>
+        </div>
+      </div>
+    );
+  };
+
   const inputTypes: any = {
     text: (props: any) => <StandardInput {...props} />,
+    description: (props: any) => <DescriptionInput {...props} />,
     number: (props: any) => <StandardInput {...props} />,
     children: (props: any) => <ChildrenInput {...props} />,
     boolean: (props: any) => <BooleanInput {...props} />,

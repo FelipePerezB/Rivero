@@ -1,4 +1,23 @@
-.input{
+.parent {
+  border: black 2px solid;
+  border-radius: var(--radius);
+  margin: 8px 0;
+  padding: 8px;
+}
+
+.btns{
+  display: flex;
+  gap: 8px;
+}
+
+.bold-btn {
+  opacity: 1;
+  cursor: pointer;
+  background: none;
+  border-radius: var(--radius);
+}
+
+.input {
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -126,13 +145,13 @@
   transition: transform 200ms;
 }
 
-.radio-btn:checked + .node{
-   background-color: black;
-   stroke: white;
-   color: white; 
-   font-weight: 800;
-   transition: transform 100ms;
-   transform: scale(1.15);
+.radio-btn:checked + .node {
+  background-color: black;
+  stroke: white;
+  color: white;
+  font-weight: 800;
+  transition: transform 100ms;
+  transform: scale(1.15);
 }
 
 .radio-btn:hover + .node {
@@ -142,7 +161,7 @@
 
 /* .standart-input: */
 
-.standart-input{
+.standart-input {
   margin: 2px;
   height: 1.4rem;
   padding: 0 6px;
@@ -152,7 +171,7 @@
   width: 100%;
 }
 
-.standart-input:focus{
+.standart-input:focus {
   outline: 2px solid #5066e8;
   border: none;
 }
@@ -310,7 +329,7 @@
   /* right: 0; */
 }
 
-.boleean{
+.boleean {
   display: flex;
   gap: 8px;
 }

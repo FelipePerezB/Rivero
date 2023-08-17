@@ -26,7 +26,7 @@ export const uiSchemas: any = {
     },
   },
   Paragraph: {
-    text: "text",
+    text: "description",
     ident: "boolean",
     fontSize: "text",
   },

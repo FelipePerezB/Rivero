@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import CustomComponent from "./CustomComponent";
 import styles from "../styles/reportTemplate.module.css";
 import getID from "src/getDoc/utils/getId";
+import GetNodeByString from "src/getDoc/components/GetNodeByString";
 
 export default function Paragraph({
   id = getID(),
@@ -14,20 +15,23 @@ export default function Paragraph({
   id: string;
   text: string;
 }) {
+  const paragraphRef = useRef<HTMLParagraphElement>(null);
+
+  useEffect(() => {
+    if (!paragraphRef.current) return;
+    paragraphRef.current.innerHTML = text;
+  }, [text]);
+
   return (
-    <CustomComponent
-      id={id}
-      style={{ width: "min-content%", height: "min-content" }}
-    >
+    <CustomComponent id={id} style={{ height: "min-content" }}>
       <p
+        ref={paragraphRef}
         style={{
           textIndent: ident ? "1.2rem" : "0",
           fontSize: fontSize + "em",
         }}
         className={styles.paragrah}
-      >
-        {text}
-      </p>
+      ></p>
     </CustomComponent>
   );
 }

@@ -1,3 +1,7 @@
+.parent #bold{
+  font-weight: 800;
+}
+
 .docs {
   display: flex;
   justify-content: center;
