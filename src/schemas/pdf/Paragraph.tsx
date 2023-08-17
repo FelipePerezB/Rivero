@@ -9,15 +9,21 @@ export default function Paragraph({
   ident = false,
   text = "Paragraph: Lo rem ipsum do sit. Amet consectetur adipisicing.",
 }: {
-  fontSize: string,
+  fontSize: string;
   ident: boolean;
   id: string;
   text: string;
 }) {
   return (
-    <CustomComponent id={id} style={{ width: "max-content", height: "min-content" }}>
+    <CustomComponent
+      id={id}
+      style={{ width: "min-content%", height: "min-content" }}
+    >
       <p
-        style={{ textIndent: ident ? "1.2rem" : "0", fontSize: fontSize + "em"}}
+        style={{
+          textIndent: ident ? "1.2rem" : "0",
+          fontSize: fontSize + "em",
+        }}
         className={styles.paragrah}
       >
         {text}
