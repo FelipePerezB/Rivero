@@ -31,7 +31,6 @@ export default function LineChart({
     l: "20em",
   };
   useEffect(() => {
-    console.log(divRef.current?.clientHeight)
     divRef.current && setHeight(divRef.current?.clientHeight);
 
     let linesNum;

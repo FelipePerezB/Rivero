@@ -43,18 +43,19 @@ export default function Equality({
 }) {
   const styles = {
     equality: {
-      border: withBorder ? "1px solid black" : "none",
-      borderRadius: "2px",
-      padding: withBorder ? "6px" : "0",
+      outline: withBorder ? "0.1em solid black" : "none",
+      borderRadius: "var(--radius)",
+      padding: withBorder ? "0.2em 0.5em" : "0",
       justifyContent: "center",
       fontSize: "1em",
       display: "flex",
       alignItems: "center",
-      gap: "0.4em",
+      gap: "0.8em",
+      fontWeight: withBorder ? 700 : 500
     },
   };
   return (
-    <CustomComponent id={id} style={{}}>
+    <CustomComponent id={id} style={{width: "max-content", margin: "0 auto"}}>
       <div style={styles.equality}>
         {children.map((component, i) => (
           <>

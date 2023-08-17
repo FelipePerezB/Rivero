@@ -167,7 +167,7 @@ export default function ModalInput({
     const defaultValue = value ?? [];
     const [modalState, setModalState] = useState(false);
     const [modalData, setModalData] = useState<component>(defaultValue);
-    
+
     useEffect(() => {
       if (modalData?.type) {
         createFormData([modalData]);
@@ -206,7 +206,19 @@ export default function ModalInput({
     const handleToogle = () => {
       setState(!state);
     };
-    return <div onClick={handleToogle}>{String(state)}</div>;
+    return (
+      <span className={styles.boleean}>
+        <button
+          type="button"
+          onClick={handleToogle}
+          className={styles["switch-toogle-" + state]}
+        >
+          <div></div>
+        </button>
+        <span>{String(state)}</span>
+      </span>
+    );
+    // return <div onClick={handleToogle}>{String(state)}</div>;
   };
 
   const SubInputs = ({ name, ...inputs }: any) => {

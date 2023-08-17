@@ -58,7 +58,6 @@ export default function Docs() {
       const doc = key?.includes("doc-") && localStorage.getItem(key);
       if (doc) {
         const jsonDoc = JSON.parse(doc);
-        console.log(jsonDoc);
         const newDoc = {
           ...jsonDoc,
           options: {

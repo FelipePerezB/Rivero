@@ -12,59 +12,16 @@ export default function Title({
   text: string;
   size?: string;
 }) {
-  // const styles = {
-  //   h1: {
-  //     width: "max-content",
-  //     fontWeight: "700",
-  //     fontSize: "1.8em",
-  //     textAlign: "center",
-  //     margin: "0.1em",
-  //   },
-  //   h2: {
-  //     width: "max-content",
-  //     fontWeight: "800",
-  //     fontSize: "1em",
-  //     textAlign: "center",
-  //     margin: "0",
-  //     marginBottom: "0.4em",
-  //   },
-  //   h3: {
-  //     width: "max-content",
-  //     fontWeight: "700",
-  //     fontSize: "0.9em",
-  //     margin: "0.2em 0",
-  //   },
-  // } as any;
-  const node = (
-    <>
-      {size === "h1" && <h1 className={styles.title}>{text}</h1>}
-      {size === "h2" && <h2 className={styles.subtitle}>{text}</h2>}
-      {size === "h3" && <h3 className={styles.h3}>{text}</h3>}
-    </>
-  );
-
   return (
     <>
-      {id ? (
-        <CustomComponent
-          id={id}
-          style={
-            size !== "h3"
-              ? {
-                  width: "max-content",
-                  margin: "0 auto",
-                }
-              : {
-                  width: "max-content",
-                  margin: "0",
-                }
-          }
-        >
-          {node}
-        </CustomComponent>
-      ) : (
-        { node }
-      )}
+      <CustomComponent
+        id={id}
+        style={{ width: "max-content", margin: size !== "h3" ? "0 auto" : "0" }}
+      >
+        {size === "h1" && <h1 className={styles.title}>{text}</h1>}
+        {size === "h2" && <h2 className={styles.subtitle}>{text}</h2>}
+        {size === "h3" && <h3 className={styles.h3}>{text}</h3>}
+      </CustomComponent>
     </>
   );
 }

@@ -14,7 +14,9 @@ export const childrenchenas = {
 
 export const uiSchemas: any = {
   Div: {
+    direction: { type: "options", options: ["column", "row"] },
     children: "children",
+    gap: "text"
   },
   Title: {
     text: "text",
@@ -25,6 +27,8 @@ export const uiSchemas: any = {
   },
   Paragraph: {
     text: "text",
+    ident: "boolean",
+    fontSize: "text",
   },
   Columns: {
     gap: { type: "options", options: ["16px", "32px"] },

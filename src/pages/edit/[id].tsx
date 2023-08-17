@@ -14,7 +14,6 @@ export default function NewDoc() {
   const [doc, setDoc] = useState({} as any);
   useEffect(() => {
     if (!id) return;
-    console.log(id);
     const storageDoc = localStorage.getItem(docName);
     if (storageDoc) setDoc(JSON.parse(storageDoc));
     else {
@@ -38,11 +37,9 @@ export default function NewDoc() {
       // localStorage.setItem(docName, JSON.stringify(template));
     }
   }, [id]);
-  console.log(doc);
 
   const saveDoc = (document: any) => {
     localStorage.setItem(docName, JSON.stringify(document));
-    console.log(localStorage.getItem(docName));
   };
   // return <></>;
   return doc?.options?.children && <Edit nodes={pdfNodes} saveDoc={saveDoc} doc={doc} />;

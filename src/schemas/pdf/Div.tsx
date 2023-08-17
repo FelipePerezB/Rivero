@@ -2,11 +2,13 @@ import React, { ReactElement } from "react";
 import CustomComponent from "./CustomComponent";
 import GetDoc from "src/getDoc/GetDoc";
 import { pdfNodes } from "..";
-import GetPdfNode from "."
+import GetPdfNode from ".";
 import styles from "../styles/reportTemplate.module.css";
 import getID from "src/getDoc/utils/getId";
 
 export default function Div({
+  direction = "column",
+  gap = "0.5",
   children = [
     {
       type: "title",
@@ -17,26 +19,22 @@ export default function Div({
       },
     },
   ],
-  gap = "0px",
   id = getID(),
 }: {
-  gap?: string;
+  direction: "column" | "row";
+  gap: string;
   children: {
     type: string;
     options: any;
   }[];
   id: string;
 }) {
-  // const styles = gap
-  //   ? {
-  //       display: "flex",
-  //       gap: gap,
-  //     }
-  //   : {display: "flex", flexDirection: "column", "",
-  // };
   return (
     <CustomComponent id={id} style={{}}>
-      <div className={styles.div}>
+      <div
+        style={{ flexDirection: direction, gap: gap + "em" }}
+        className={styles.div}
+      >
         {children.map((component, i) => (
           <GetPdfNode key={id + i} component={component} />
         ))}

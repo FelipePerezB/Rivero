@@ -1,5 +1,5 @@
 .documents__card {
-  width: 170px;
+  width: 140px;
   margin: auto;
   gap: 16px;
   position: relative;
@@ -23,7 +23,7 @@
   cursor: pointer;
   background-color: white;
   border-radius: var(--radius);
-  height: 200px;
+  height: 160px;
   width: 100%;
 }
 
@@ -43,6 +43,7 @@
 }
 
 .documents__card .info {
+  font-size: 0.7rem;
   display: flex;
   justify-content: flex-start;
   align-items: flex-start;
