@@ -6,6 +6,6 @@ import {
 } from "@apollo/client";
 
 export const client = new ApolloClient({
-  uri: "https://rivero-server.vercel.app/graphql",
+  uri: "https://rivero-backend.vercel.app/graphql",
   cache: new InMemoryCache(),
 });

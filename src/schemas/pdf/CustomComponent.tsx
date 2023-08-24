@@ -13,8 +13,8 @@ export default function CustomComponent({
 }) {
   // const id = getID()
   return (
-    <span key={id} className={"component"} style={style} id={id}>
+    <div key={id} className={"component"} style={style} id={id}>
       {children}
-    </span>
+    </div>
   );
 }

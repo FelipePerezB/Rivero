@@ -52,8 +52,16 @@ export default function LineChart({
       });
   }, [size, divRef.current?.clientHeight]);
 
+  const colors = {
+    0: "var(--mafs-blue)",
+    1: "var(--mafs-violet)",
+    2: "var(--mafs-green)",
+    3: "var(--mafs-red)",
+    4: "var(--mafs-yellow)",
+  } as any;
+
   return (
-    <CustomComponent id={id} style={{ width: "max-content", margin: '0 auto'}}>
+    <CustomComponent id={id} style={{ width: "max-content", margin: "0 auto" }}>
       <div
         style={{ width: heights[size], height: heights[size] }}
         className={styles.linechart}
@@ -79,11 +87,13 @@ export default function LineChart({
               yAxis={lines.y}
               subdivisions={1.001}
             />
-            {ecuations.map(({ ecuation }) => {
+            {ecuations.map(({ ecuation }, i) => {
               const ec = `(x) => ${ecuation}`;
+
+              const n = parseInt(String(i / 5)) * -5 + i;
               return (
                 <Plot.OfX
-                  color="#rgb(28, 28, 28)"
+                  color={colors[n]}
                   key={ec}
                   weight={height / 75}
                   y={eval(ec)}

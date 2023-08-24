@@ -1,10 +1,11 @@
-import React, { ReactElement, ReactNode } from "react";
+import React, { ReactElement, ReactNode, useEffect } from "react";
 import styles from "../styles/reportTemplate.module.css";
 import CustomComponent from "./CustomComponent";
 import GetDoc from "src/getDoc/GetDoc";
 import { pdfNodes } from "..";
 import GetPdfNode from ".";
 import getID from "src/getDoc/utils/getId";
+import DocInfo from "./DocInfo";
 
 export default function Page({
   id,
@@ -30,12 +31,10 @@ export default function Page({
       <div id={"page-" + index} className={styles.page}>
         <div className={styles["page__content"]}>
           {number === 1 && (
-            <GetPdfNode
-              component={{
-                type: "DocInfo",
-                options: { id: getID(), ...docInfo },
-              }}
-              key={id + "-doc-info"}
+            <DocInfo
+              subtitle={docInfo?.subtitle}
+              title={docInfo?.title}
+              id="_"
             />
           )}
           {children?.map((component, i) => (

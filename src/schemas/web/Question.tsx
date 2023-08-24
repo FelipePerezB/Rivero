@@ -1,8 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { ReactElement, useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "../styles/web.module.css";
 import CustomComponent from "./CustomComponent";
-import { ComponentContext, useContextState } from "./Document";
 import GetWebNode from ".";
 
 export default function Question({

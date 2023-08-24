@@ -8,11 +8,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faChevronLeft,
   faSave,
-  faUpload,
+  faShare,
 } from "@fortawesome/free-solid-svg-icons";
-import { api } from "./utils/api";
-import { useRouter } from "next/router";
 import GetDoc from "./GetDoc";
+import { useRouter } from "next/router";
+import Modal from "./containers/NewCompModal";
+import { FormModal } from "@components/Modal";
 
 type props = { type: string; options: any };
 
@@ -24,13 +25,13 @@ export default function Edit({
 }: {
   nodes: any;
   options?: {
-    // grade: string;
     title: string;
     category: string;
   };
   doc?: any;
   saveDoc: (doc: any) => void;
 }) {
+  const router = useRouter();
   const [pages, setPage] = useState({
     type: "doc",
     options: {
@@ -48,76 +49,9 @@ export default function Edit({
   } as any);
 
   useEffect(() => {
-    if (options?.title) {
-      setPage({
-        type: "doc",
-        options: {
-          id: getID(),
-          title: options?.title,
-          subtitle: options?.category,
-          children: [
-            {
-              type: "page",
-              options: {
-                id: getID(),
-                children: [
-                  {
-                    type: "docinfo",
-                    options: {
-                      id: getID(),
-                      title: options?.title.toUpperCase(),
-                      subtitle: options?.category.toUpperCase(),
-                    },
-                  },
-                ],
-              },
-            },
-          ],
-        },
-      });
-    } else if (doc) setPage(doc);
+    doc && setPage(doc);
   }, [doc, options]);
 
-  // useEffect(() => {
-  //   console.log(options);
-  //   if (!doc?.id) {
-  //     const a = {
-  //       id: options?.id,
-  //       name: options?.title,
-  //       category: options?.category,
-  //       component: {
-  //         type: "doc",
-  //         options: {
-  //           id: getID(),
-  //           children: [
-  //             {
-  //               type: "page",
-  //               options: {
-  //                 id: getID(),
-  //                 children: [
-  //                   {
-  //                     type: "docInfo",
-  //                     options: {
-  //                       id: getID(),
-  //                       title: options?.title.toUpperCase(),
-  //                       subtitle: options?.category.toUpperCase(),
-  //                     },
-  //                   },
-  //                 ],
-  //               },
-  //             },
-  //           ],
-  //         },
-  //       },
-  //     };
-  //     api.put(`docs/8`, {
-  //       content: a,
-  //     });
-  //     console.log(a)
-  //     setPage(a.component);
-  //   }
-  // }, [options]);
-  // const [doc, doc] = useState({} as any);
   const [modalData, setModalData] = useState<any>();
   const [modalType, setModalType] = useState<"add" | "edit" | "" | "addChild">(
     ""
@@ -215,24 +149,52 @@ export default function Edit({
     }
   );
 
+  const [shareModalState, setShareModalState] = useState(false);
+  const [shareModalData, setShareModalData] = useState({});
+
+  useEffect(() => {
+    console.log(shareModalState);
+  }, [shareModalState]);
+
   return (
     <>
       <header>
         <nav className={styles.navar}>
           <ul>
             <li className={styles["doc-info"]}>
-              <FontAwesomeIcon icon={faChevronLeft} />
+              <FontAwesomeIcon
+                onClick={() => {
+                  router.back();
+                }}
+                icon={faChevronLeft}
+              />
               <span className={styles["doc-name"]}>
                 {options?.title || pages?.options?.title}
               </span>
             </li>
 
             <li className={styles.options}>
-              <FontAwesomeIcon
-                size="xl"
-                icon={faSave}
-                onClick={() => saveDoc(pages)}
-              />
+              <span>
+                <FontAwesomeIcon
+                  size="lg"
+                  icon={faSave}
+                  onClick={() => saveDoc(pages)}
+                />
+              </span>
+              <span>
+                <FontAwesomeIcon
+                  onClick={() => setShareModalState(true)}
+                  size="lg"
+                  icon={faShare}
+                />
+                <FormModal
+                  setModalState={setShareModalState}
+                  modalState={shareModalState}
+                  schema={[{ texto: "text" }]}
+                  title="Publicar documento"
+                  setData={setShareModalData}
+                />
+              </span>
             </li>
           </ul>
         </nav>
@@ -246,7 +208,6 @@ export default function Edit({
             setModalData={setModalData}
             {...menuConfig}
           />
-          // <></>
         )}
         {pages && (
           <div className={"edit"} onClick={getCoords}>

@@ -15,19 +15,6 @@ export default function Doc({
     options: any;
   }[];
 }) {
-  // const [docInfo, setDocInfo] = useState({
-  //   title,
-  //   subtitle,
-  // });
-
-  // useEffect(() => {
-  //   if (!subtitle || !title) return;
-  //   setDocInfo({
-  //     title,
-  //     subtitle,
-  //   });
-  // }, [title, subtitle]);
-
   useEffect(() => {
     resize(0.5);
   }, []);

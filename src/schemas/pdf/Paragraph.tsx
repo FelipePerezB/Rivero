@@ -6,32 +6,31 @@ import GetNodeByString from "src/getDoc/components/GetNodeByString";
 
 export default function Paragraph({
   id = getID(),
-  fontSize = "0.8",
-  ident = false,
+  indent = false,
   text = "Paragraph: Lo rem ipsum do sit. Amet consectetur adipisicing.",
 }: {
-  fontSize: string;
-  ident: boolean;
-  id: string;
+  indent?: boolean;
+  id?: string;
   text: string;
 }) {
-  const paragraphRef = useRef<HTMLParagraphElement>(null);
+  const paragraphRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (!paragraphRef.current) return;
+    if (!paragraphRef.current || !text) return;
     paragraphRef.current.innerHTML = text;
   }, [text]);
 
   return (
     <CustomComponent id={id} style={{ height: "min-content" }}>
-      <p
+      <div
         ref={paragraphRef}
         style={{
-          textIndent: ident ? "1.2rem" : "0",
-          fontSize: fontSize + "em",
+          textIndent: indent ? "1.2rem" : "0",
         }}
         className={styles.paragrah}
-      ></p>
+      >
+        {text}
+      </div>
     </CustomComponent>
   );
 }

@@ -1,20 +1,38 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import CustomComponent from "./CustomComponent";
 import styles from "../styles/web.module.css";
 import getID from "src/getDoc/utils/getId";
+import GetNodeByString from "src/getDoc/components/GetNodeByString";
 
 export default function Paragraph({
   id = getID(),
+  // fontSize = "0.8",
+  indent = false,
   text = "Paragraph: Lo rem ipsum do sit. Amet consectetur adipisicing.",
 }: {
+  fontSize: string;
+  indent: boolean;
   id: string;
   text: string;
 }) {
+  const paragraphRef = useRef<HTMLParagraphElement>(null);
 
-  
+  useEffect(() => {
+    if (!paragraphRef.current || !text) return;
+    paragraphRef.current.innerHTML = text;
+  }, [text]);
+
   return (
-    <CustomComponent id={id} style={{width: "100%", height: "min-content"}}>
-      <p className={styles.paragrah}>{text}</p>
+    <CustomComponent id={id} style={{ height: "min-content" }}>
+      <p
+        ref={paragraphRef}
+        style={{
+          textIndent: indent ? "1.2rem" : "0",
+        }}
+        className={styles.paragrah}
+      >
+        {text}
+      </p>
     </CustomComponent>
   );
 }

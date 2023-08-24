@@ -2,8 +2,9 @@
 
 :root {
   /* COLORS */
-  --primary-color: #5066e8;
-  --active-letter-color: #3066ff;
+  --primary-color: #216AD9;
+  /* --primary-color: #5066e8; */
+  --active-letter-color: #214aba;
   --games-color: #1485d8;
   --background-color: #edf1f4;
 
@@ -23,13 +24,24 @@
 
 a {
   color: black;
+  width: max-content;
   text-decoration: none;
 }
 
 h1{
-  margin: 0;
-  padding: 0;
+  width: fit-content;
+  margin: 8px 0 0;
 }
+/* 
+h1{
+  background: white;
+  width: max-content;
+  box-shadow: var(--shadow);
+  border-radius: var(--radius);
+  padding: 4px 8px;
+  font-size: 1.8rem;
+  margin: 0 auto;
+} */
 
 ul,
 ol {
@@ -79,10 +91,6 @@ body {
   font-family: inherit;
   font-variant-numeric: tabular-nums;
   touch-action: none;
-  /* border: 2px dashed black; */
-  /* border: 1px solid rgba(124, 124, 124, 0.111); */
-
-  /* margin: auto; */
 
   --mafs-bg: white;
   --mafs-fg: black;

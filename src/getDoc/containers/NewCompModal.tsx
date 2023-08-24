@@ -92,7 +92,7 @@ export default function Modal({
       schema && setCurrentSchema(schema);
       setComponent(selectedComponent.type);
       setComponentSchema(Object.values(selectedComponent?.options));
-    } else{
+    } else {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedComponent, currentSchema]);
@@ -108,67 +108,70 @@ export default function Modal({
       <>
         <div onClick={() => setModalState(false)} className={styles.blur}></div>
         <div className={styles.modal}>
-          <div className={styles.container}>
-            <div className={styles.header}>
-              <h2>Crear componente</h2>
-              <FontAwesomeIcon
-                onClick={() => setModalState(false)}
-                className={styles.close__icon}
-                size="xl"
-                icon={faClose}
-              />
-            </div>
-            {!selectedComponent && (
-              <div className={styles.selectComponent}>
-                <ul className={styles.nodes}>
-                  {uiComponentsNames.map((component) => (
-                    <li key={component + "-select"}>
-                      <input
-                        value={component.toLowerCase()}
-                        onChange={({ target }) => setComponent(target.value)}
-                        name="AAA"
-                        type={"radio"}
-                        className={styles["radio-btn"]}
-                      />
-                      <span className={styles.node}>
-                        <GetDoc
-                          nodes={pdfNodes}
-                          component={{
-                            type: component.toLowerCase(),
-                            options: {},
-                          }}
-                        />
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
-            <form className={styles.form}>
-              {currentSchema &&
-                Object.entries(currentSchema).map(([name, type], i) => {
-                  return (
-                    <ModalInput
-                      addFormData={addFormData}
-                      name={name}
-                      key={name}
-                      type={type as any}
-                      value={
-                        selectedComponent && selectedComponent.options[name]
-                      }
-                    />
-                  );
-                })}
-            </form>
-            <Button
-              style="primary"
-              onClick={() => {
-                createComponent(values);
-              }}
-            >
-              <span>Save</span>
-            </Button>
+          <div className={styles.header}>
+            <h2>Crear componente</h2>
+            <FontAwesomeIcon
+              onClick={() => setModalState(false)}
+              className={styles.close__icon}
+              size="xl"
+              icon={faClose}
+            />
           </div>
+          {/* <div className={styles.content}> */}
+            <div className={styles.container}>
+              {!selectedComponent && (
+                <div className={styles.selectComponent}>
+                  <ul className={styles.nodes}>
+                    {uiComponentsNames.map((component) => (
+                      <li key={component + "-select"}>
+                        <input
+                          value={component.toLowerCase()}
+                          onChange={({ target }) => setComponent(target.value)}
+                          name="AAA"
+                          type={"radio"}
+                          className={styles["radio-btn"]}
+                        />
+                        <span className={styles.node}>
+                          <GetDoc
+                            nodes={pdfNodes}
+                            component={{
+                              type: component.toLowerCase(),
+                              options: {},
+                            }}
+                          />
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+              <form className={styles.form}>
+                {currentSchema &&
+                  Object.entries(currentSchema).map(([name, type], i) => {
+                    return (
+                      <ModalInput
+                        values={values}
+                        addFormData={addFormData}
+                        name={name}
+                        key={name}
+                        type={type as any}
+                        value={
+                          selectedComponent && selectedComponent.options[name]
+                        }
+                      />
+                    );
+                  })}
+              </form>
+            </div>
+          {/* </div> */}
+          <Button
+            style="primary"
+            onClick={() => {
+              createComponent(values);
+            }}
+          >
+            <span>Save</span>
+          </Button>
         </div>
       </>,
       document.querySelector("#modal") as HTMLDivElement

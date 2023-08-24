@@ -2,6 +2,7 @@ import React, { ReactElement } from "react";
 import styles from "../styles/reportTemplate.module.css";
 import CustomComponent from "./CustomComponent";
 import GetPdfNode from ".";
+import Paragraph from "./Paragraph";
 
 export default function Question({
   id,
@@ -22,9 +23,10 @@ export default function Question({
   return (
     <CustomComponent key={id} id={id} style={{}}>
       <article className={styles["question-container"]}>
-        <p className={styles.question}>
-          {number}.- {question}
-        </p>
+        <div className={styles.question}>
+          <span className={styles['question__number']}>{number}.-</span>
+          <Paragraph text={question} id="_"/>
+        </div>
         <div className={styles["separator-center"]}>
           <ol className={styles["question__alternatives"]}>
             {alternatives.split(",").map((alternative, i) => {

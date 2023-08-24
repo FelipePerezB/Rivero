@@ -2,7 +2,7 @@ import { generatePdf } from "./generatePDF";
 
 export const childrenchenas = {
   Question: {
-    question: "text",
+    question: "description",
     alternatives: "text",
     expectedAns: "text",
     children: "child",
@@ -16,7 +16,7 @@ export const uiSchemas: any = {
   Div: {
     direction: { type: "options", options: ["column", "row"] },
     children: "children",
-    gap: "text"
+    gap: "text",
   },
   Title: {
     text: "text",
@@ -27,8 +27,10 @@ export const uiSchemas: any = {
   },
   Paragraph: {
     text: "description",
-    ident: "boolean",
-    fontSize: "text",
+    indent: {
+      private: true,
+      type: "boolean",
+    },
   },
   Columns: {
     gap: { type: "options", options: ["16px", "32px"] },

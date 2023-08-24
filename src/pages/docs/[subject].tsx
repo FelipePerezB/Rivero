@@ -1,294 +1,140 @@
 import Layout from "src/layout/Layout";
-import React, { use, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "@styles/Docs.module.css";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
-import Modal from "@components/Modal";
-import ConfigButton from "@components/ConfigButton";
-import { NextRouter, useRouter } from "next/router";
 import { client } from "src/service/client";
 import {
-  GetBasicDataDocument,
-  GetBasicDataQuery,
-  GetSubjectsDocument,
+  GetSubjectDocument,
+  GetSubjectQuery,
+  GetSubjectsPathsDocument,
 } from "src/gql/graphql";
 import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from "next";
-import Card from "@components/Card";
+import Card, { SimpleCard } from "@components/Card";
 import Options from "@components/Options";
-import Recomendations from "@components/Recomendations";
-import GetDoc from "src/getDoc/GetDoc";
-import { pdfNodes } from "src/schemas";
-// import { GetGradesDocument } from "src/gql/graphql";
+import { CompletedProgress } from "@components/ProgressVar";
+import Button from "@components/Button";
+import { capFirst } from "src/utils/capFirst";
 
-// export const getStaticPaths: GetStaticPaths = async () => {
-//   const { data, error } = await client.query({
-//     query: GetSubjectsDocument,
-//     variables: {
-//       where: {},
-//     },
-//     fetchPolicy: "network-only",
-//   });
-//   if (!data || error) throw new Error("Failed to request");
-//   return {
-//     paths: data.subjects.map((subject) => ({
-//       params: {
-//         path: subject.name,
-//         subject: subject.name,
-//       },
-//     })),
-//     fallback: true,
-//   };
-// };
-
-// export const getStaticProps: GetStaticProps<{
-//   data: GetBasicDataQuery;
-// }> = async (context) => {
-//   const { data, error } = await client.query({
-//     query: GetBasicDataDocument,
-//     variables: {
-//       where: {
-//         subjectId: {
-//           equals: 1,
-//         },
-//       },
-//       subjectsWhere2: {
-//         name: {
-//           equals: context?.params?.subject as string,
-//         },
-//       },
-//     },
-//     fetchPolicy: "network-only",
-//   });
-
-//   if (!data || error) throw new Error("Failed to request");
-//   return {
-//     props: {
-//       data,
-//     },
-//     revalidate: 60 * 60 * 24,
-//   };
-// };
-
-// export default function Docs({
-//   data: { subjects, topics },
-// }: InferGetStaticPropsType<typeof getStaticProps>) {
-export default function Docs() {
-  const { subjects, topics } = {
-    topics: [
-      {
-        id: "1",
-        name: "Álgebra",
-        subtopics: [
-          {
-            id: 1,
-            title: "Funciones",
-            docs: [
-              {
-                id: 1,
-                title: "Concepto de función",
-              },
-              {
-                id: 2,
-                title: "Función Cuadrática",
-              },
-              {
-                id: 3,
-                title: "Modelos lineales",
-              },
-              {
-                id: 4,
-                title: "Traslación de funciones",
-              },
-            ],
-          },
-          {
-            id: 2,
-            title: "Polinomios",
-            docs: [
-              {
-                id: 1,
-                title: "Productos notables",
-              },
-              {
-                id: 2,
-                title: "Factorización",
-              },
-              {
-                id: 3,
-                title: "¿Qué son los polinomios?",
-              },
-            ],
-          },
-          {
-            id: 2,
-            title: "Ecuaciones",
-            docs: [
-              {
-                id: 1,
-                title: "Concepto de ecuación",
-              },
-              {
-                id: 2,
-                title: "Proporcionalidad",
-              },
-              {
-                id: 3,
-                title: "Inecuaciones",
-              },
-            ],
-          },
-        ],
+export const getStaticPaths: GetStaticPaths = async () => {
+  const { data, error } = await client.query({
+    query: GetSubjectsPathsDocument,
+    fetchPolicy: "network-only",
+  });
+  if (!data || error) throw new Error("Failed to request");
+  return {
+    paths: data.subjects.map((subject) => ({
+      params: {
+        path: subject.id,
+        subject: subject.id,
       },
-      {
-        id: "2",
-        name: "Geometría",
-        subtopics: [
-          {
-            id: 1,
-            title: "Figuras geometricas",
-            docs: [
-              {
-                id: 1,
-                title: "Área y perímetro",
-              },
-              {
-                id: 2,
-                title: "Triángulos",
-              },
-              {
-                id: 2,
-                title: "Circulos",
-              },
-            ],
-          },
-          {
-            id: 2,
-            title: "Cuerpos geometrícos",
-            docs: [
-              {
-                id: 1,
-                title: "Cuerpos rectos",
-              },
-              {
-                id: 2,
-                title: "Cuerpos redondos",
-              },
-            ],
-          },
-        ],
-      },
-      {
-        id: "3",
-        name: "Estadística",
-        subtopics: [
-          {
-            id: 1,
-            title: "Representar datos",
-            docs: [
-              {
-                id: 1,
-                title: "Tablas de frecuencia",
-              },
-              {
-                id: 2,
-                title: "Gráficos",
-              },
-            ],
-          },
-          {
-            id: 2,
-            title: "Medidas",
-            docs: [
-              {
-                id: 1,
-                title: "Cuartiles",
-              },
-              {
-                id: 2,
-                title: "Posición",
-              },
-              {
-                id: 3,
-                title: "Tendencia central",
-              },
-            ],
-          },
-          {
-            id: 2,
-            title: "Probabilidad",
-            docs: [
-              {
-                id: 1,
-                title: "Probabilidad compuesta",
-              },
-              {
-                id: 2,
-                title: "Probabilidad clasica",
-              },
-            ],
-          },
-        ],
-      },
-    ],
-    subjects: [
-      {
-        name: "matemática",
-        color: "#e86675",
-        id: 2,
-      },
-      {
-        name: "lenguaje",
-        color: "#46d37e",
-        id: 1,
-      },
-    ],
+    })),
+    fallback: true,
   };
+};
 
-  const router = useRouter();
-  const [download, setDownload] = useState<number | undefined>();
-  const [state, setState] = useState(true);
-  const [modalState, setModalState] = useState(false);
-  const { subject } = router.query as {
-    subject: string;
+export const getStaticProps: GetStaticProps<{
+  data: GetSubjectQuery;
+}> = async (context) => {
+  const id = context?.params?.subject as string;
+  const { data, error } = await client.query({
+    query: GetSubjectDocument,
+    variables: {
+      subjectId: Number(id),
+    },
+    fetchPolicy: "network-only",
+  });
+  if (!data || error) throw new Error("Failed to request");
+  return {
+    props: {
+      data,
+    },
+    revalidate: 60 * 60 * 24,
   };
-  const [topic, setTopic] = useState("Álgebra");
-  const subjectData = subjects.find((sub) => sub.name === subject);
+};
+
+export default function Docs({
+  data: { subject },
+}: InferGetStaticPropsType<typeof getStaticProps>) {
+  const topics = subject.Topics;
+  const topicsNames = topics
+    ?.filter(({ Subtopics }) => Subtopics && Subtopics.length > 0)
+    ?.map(({ name }) => capFirst(name));
+  const [topicName, setTopicName] = useState(topicsNames?.at(0));
+  const [stats, setStats] = useState({} as any);
+  const topic = topics?.find(
+    ({ name }) => name?.toLowerCase() === topicName?.toLowerCase()
+  );
+
+  const color = subject?.color;
+  const docs = topic?._count.Docs ?? 0;
+
+  useEffect(() => {
+    const strStats = localStorage.getItem("subjects-stats");
+    if (!strStats) return;
+    setStats(JSON.parse(strStats));
+  }, []);
+
+  const getProgress = (): number => {
+    const subjectStats = stats[subject.name];
+    if (!subjectStats) return 0;
+    const topicStats = subjectStats[topicName as string] as
+      | string[]
+      | undefined;
+    if (!topicStats) return 0;
+    if (!docs) return 0;
+
+    let completedDocs = topicStats.length;
+    const progress =
+      completedDocs > 0 ? Number(((100 * completedDocs) / docs).toFixed(1)) : 0;
+    return progress;
+  };
 
   return (
     <>
       <Layout>
         <Link href={"/docs"}>
-          <h1 className={styles.grade}>{subject}</h1>
+          <h1 className={styles.grade}>{capFirst(subject.name)}</h1>
         </Link>
         <Options
-          options={["Álgebra", "Geometría", "Estadística"]}
-          state={topic}
-          setState={setTopic}
+          options={topicsNames as string[]}
+          state={topicName as string}
+          color={color}
+          setState={setTopicName}
         ></Options>
+        {docs > 0 && stats && (
+          <SimpleCard>
+            <div className={styles["stats"]}>
+              <CompletedProgress
+                size="lg"
+                color={color}
+                progress={getProgress()}
+              />
+              <span className={styles.count}>{docs} documentos</span>
+            </div>
+          </SimpleCard>
+        )}
         <ul className={styles.units}>
-          {topics &&
-            topics.map(({ name, subtopics }, i) => {
-              if (name !== topic) return;
-              return subtopics.map(({ docs, title }) => (
-                <div key={name + "-doc"}>
-                  <Card head={<span>{title}</span>}>
-                    <ul className={styles.docs}>
-                      {docs &&
-                        docs.map(({ title, id }) => {
-                          return (
-                            <Link key={title + id} href={`view/${id}`}>
-                              <li className={styles.doc}>
-                                <span>{title}</span>
-                              </li>
-                            </Link>
-                          );
-                        })}
-                    </ul>
-                  </Card>
-                </div>
-              ));
-            })}
+          {topic?.Subtopics &&
+            topic.Subtopics?.map(({ Docs, name }) => (
+              <div key={name + "-doc"}>
+                <Card head={<span>{capFirst(name)}</span>}>
+                  <ul className={styles.docs}>
+                    {Docs &&
+                      Docs.map(({ title, id }) => {
+                        return (
+                          <Link key={title + id} href={`view/${id}`}>
+                            <li className={styles.doc}>
+                              <span>{title}</span>
+                            </li>
+                          </Link>
+                        );
+                      })}
+                  </ul>
+                </Card>
+              </div>
+            ))}
         </ul>
+        <Button style="small-active">Practicar</Button>
       </Layout>
     </>
   );

@@ -1,14 +1,11 @@
 import React, { useEffect, useState } from "react";
 import styles from "@styles/Edit.module.css";
 import Layout from "src/layout/Layout";
-import {
-  faPlus,
-} from "@fortawesome/free-solid-svg-icons";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import ConfigButton from "@components/ConfigButton";
 import { useRouter } from "next/router";
 import DocCard from "@components/DocCard";
 import Link from "next/link";
-
 
 export default function EditPage() {
   const router = useRouter();
@@ -17,7 +14,6 @@ export default function EditPage() {
     let result = "";
     const characters =
       "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-    console.log(characters.length);
     for (let i = 0; i < length; i++) {
       result += characters.charAt(
         Math.floor(Math.random() * characters.length)
@@ -44,34 +40,37 @@ export default function EditPage() {
         const isSaved = savedDocs
           .map((doc) => doc.options.id)
           .includes(newDoc.options.id);
-        if (isSaved) return;;
+        if (isSaved) return;
         savedDocs.push(newDoc);
         setSavedDocs([...savedDocs]);
       }
     }
   }, []);
 
+  const [filteredDocs, setFilteredDocs] = useState(savedDocs);
+  const data = [...savedDocs]
+
   // console.log(savedDocs)
   return (
     <Layout>
-      <h1>Documents</h1>
-      {/* <label className={styles["search-container"]}>
+      <h1>Documentos</h1>
+      <label className={styles["search-container"]}>
         <input
-          onChange={({ target }) => {
+          onChange={({ target }) => {;
             setFilteredDocs(
-              data.filter(({ component }) =>
-                component.options.title
-                  .toUpperCase()
-                  .includes(target.value.toUpperCase())
+              data?.filter((component) =>
+                component?.options?.title
+                  ?.toUpperCase()
+                  ?.includes(target.value.toUpperCase())
               )
             );
           }}
           className={styles.search}
           placeholder="Búsqueda..."
         />
-      </label> */}
+      </label>
       <ul className={styles.documents}>
-        {savedDocs.map((doc) => (
+        {filteredDocs.map((doc) => (
           <>
             {doc?.options?.title && (
               <Link

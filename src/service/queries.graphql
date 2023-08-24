@@ -1,30 +1,67 @@
 # Run "npm run codegen" for autogenerate the schema
 
-query GetBasicData(
-  $where: TopicWhereInput!
-  $subjectsWhere2: SubjectWhereInput!
-) {
-  subjects(where: $subjectsWhere2) {
-    id
-    name
+query GetSubjects {
+  subjects {
     color
-  }
-  topics(where: $where) {
-    id
     name
-    Doc {
-      title
-      title
-      id
+    id
+    _count {
+      Docs
+    }
+    Topics {
+      name
     }
   }
 }
 
-query GetSubjects($where: SubjectWhereInput!) {
-  subjects(where: $where) {
-    name
+query GetSubjectsPaths {
+  subjects {
+    id
   }
 }
+
+query GetSubject($subjectId: Int!) {
+  subject(id: $subjectId) {
+    name
+    color
+    Topics {
+      id
+      name
+      _count {
+        Docs
+      }
+      Subtopics {
+        name
+        Docs {
+          id
+          title
+        }
+      }
+    }
+  }
+}
+
+# query GetAllDataSubjects {
+#   subjects {
+#     id
+#     name
+#     color
+#     Topics {
+#       _count {
+#         Docs
+#       }
+#       id
+#       name
+#       Subtopics {
+#         name
+#         Docs {
+#           id
+#           title
+#         }
+#       }
+#     }
+#   }
+# }
 
 query GetUserByEmail($email: String!) {
   userByEmail(email: $email) {
@@ -46,11 +83,11 @@ query LoginUser($user: LoginUserInput!) {
   }
 }
 
-query GetSubjectsIds($where: SubjectWhereInput!) {
-  subjects(where: $where) {
-    id
-  }
-}
+# query GetSubjectsIds($where: SubjectWhereInput!) {
+#   subjects(where: $where) {
+#     id
+#   }
+# }
 
 query GetDoc($docId: Int!) {
   doc(id: $docId) {

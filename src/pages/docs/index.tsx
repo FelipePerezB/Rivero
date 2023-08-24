@@ -1,56 +1,38 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import Layout from "src/layout/Layout";
 import React, { useEffect, useState } from "react";
 import styles from "@styles/Docs.module.css";
-import { NextRouter, useRouter } from "next/router";
 import { NavigateCard } from "@components/Card";
 import Recomendations from "@components/Recomendations";
-import GetDoc from "src/getDoc/GetDoc";
-import { pdfNodes } from "src/schemas";
 import Link from "next/link";
 import DocCard from "@components/DocCard";
+import { CompletedProgress } from "@components/ProgressVar";
+import { GetStaticProps, InferGetStaticPropsType } from "next";
+import { client } from "src/service/client";
+import { GetSubjectsDocument, GetSubjectsQuery } from "src/gql/graphql";
+import { capFirst } from "src/utils/capFirst";
 
-export default function Docs() {
-  const { subjects } = {
-    subjects: [
-      {
-        name: "Mátemática",
-        color: "#e86675",
-        id: 2,
-        progress: 60,
-        topics: ["Álgebra", "Números", "Geometría", "Estadística"],
-        count: 52,
-      },
-      {
-        progress: 41,
-        name: "Lenguaje",
-        color: "#46d37e",
-        id: 1,
-        topics: ["Inferir", "Evaluar", "Localizar", "Léxico"],
-        count: 16,
-      },
-      {
-        progress: 80,
-        name: "Historia",
-        color: "black",
-        id: 1,
-        topics: [
-          "Siglo IX Chile",
-          "Siglo IX Mundo",
-          "Primera Mitad Siglo XX",
-          "Léxico",
-        ],
-        count: 16,
-      },
-    ],
+export const getStaticProps: GetStaticProps<{
+  data: GetSubjectsQuery;
+}> = async () => {
+  const { data, error } = await client.query({
+    query: GetSubjectsDocument,
+    fetchPolicy: "network-only",
+  });
+  if (!data || error) throw new Error("Failed to request");
+  return {
+    props: {
+      data,
+    },
+    revalidate: 60 * 60 * 24,
   };
-  const router = useRouter();
-  const [download, setDownload] = useState<number | undefined>();
-  const [state, setState] = useState(true);
-  const [modalState, setModalState] = useState(false);
-  const { subject } = { subject: "Matemática" };
-  const subjectData = subjects.find((sub) => sub.name === subject);
+};
 
+export default function Docs({
+  data: { subjects },
+}: InferGetStaticPropsType<typeof getStaticProps>) {
   const [savedDocs, setSavedDocs] = useState<any[]>([]);
+  const [stats, setStats] = useState({} as any);
 
   useEffect(() => {
     for (let index = 0; index < localStorage.length; index++) {
@@ -65,76 +47,87 @@ export default function Docs() {
             children: [jsonDoc.options.children[0]],
           },
         };
-        setSavedDocs([...savedDocs, newDoc]);
+        const isSaved = savedDocs
+          .map((doc) => doc.options.id)
+          .includes(newDoc.options.id);
+        if (isSaved) return;
+        savedDocs.push(newDoc);
+        setSavedDocs([...savedDocs]);
       }
     }
   }, []);
 
-  const ProgressVar = ({
-    progress,
-    color = "var(--primary-color)",
-  }: {
-    progress: number;
-    color?: string;
-  }) => {
-    return (
-      <div className={styles["progress-container"]}>
-        <div
-          style={{ width: `${progress}%`, background: color }}
-          className={styles.progress}
-        ></div>
-      </div>
-    );
-  };
-  const CompletedProgress = ({
-    progress,
-    color = "var(--primary-color)",
-  }: {
-    progress: number;
-    color?: string;
-  }) => {
-    return (
-      <span className={styles["completed-progress"]}>
-        <ProgressVar color={color} progress={progress} />
-        {progress}%
-      </span>
-    );
+  useEffect(() => {
+    const strStats = localStorage.getItem("subjects-stats");
+    if (!strStats) return;
+    setStats(JSON.parse(strStats));
+  }, []);
+
+  const getProgress = (stats: any, count: number): number => {
+    if (!stats) return 0;
+    let completedDocs = 0;
+    for (const topic in stats) {
+      const docs = stats[topic] as string[];
+      completedDocs += docs.length;
+    }
+    const progress =
+      completedDocs > 0
+        ? Number(((100 * completedDocs) / count).toFixed(1))
+        : 0;
+    return progress;
   };
 
   return (
     <>
       <Layout>
-        <h1>{"Asignaturas"}</h1>
+        <h1>Asignaturas</h1>
         <ul className={styles.units}>
-          {subjects.map(({ name, count, topics, progress, color }, i) => (
-            <NavigateCard key={name + i} link={`docs/${name}`}>
-              <div className={styles.card}>
-                <section>
-                  <h2>{name}</h2>
-                  <ul className={styles.topics}>
-                    {topics &&
-                      topics.map((topic) => (
-                        <li key={topic + "-key"}>{topic}</li>
-                      ))}
-                  </ul>
-                </section>
-                <CompletedProgress color={color} progress={progress} />
-                <p className={styles.count}>{count} documentos</p>
-              </div>
-            </NavigateCard>
-          ))}
+          {subjects.map(({ name, Topics, color, _count, id }, i) => {
+            if (!(_count.Docs > 0)) return;
+            const subjectStats = stats[name] as { subject: string };
+            const count = _count.Docs;
+            return (
+              count >= 0 && (
+                <div key={name + i} className={styles["card"]}>
+                  <NavigateCard link={`docs/${id}`}>
+                    <div className={styles.content}>
+                      <section>
+                        <h2>{capFirst(name)}</h2>
+                        <ul className={styles.topics}>
+                          {Topics?.map((topic) => (
+                            <li key={topic?.name + "-key"}>{`${capFirst(
+                              topic?.name
+                            )}`}</li>
+                          ))}
+                        </ul>
+                      </section>
+                      <div className={styles["progress-container"]}>
+                        <CompletedProgress
+                          color={color}
+                          progress={getProgress(subjectStats, count)}
+                        />
+                      </div>
+                      <p className={styles.count}>{count} documentos</p>
+                    </div>
+                  </NavigateCard>
+                </div>
+              )
+            );
+          })}
         </ul>
         <Recomendations title="Guardados" link="/">
-          <ul className={styles.documents}>
-            {savedDocs.map((doc) => (
-              <Link
-                key={doc.options.title + "-save-doc"}
-                href={"/docs/view/" + doc.options.docId}
-              >
-                <DocCard doc={doc} />
-              </Link>
-            ))}
-          </ul>
+          {savedDocs.map((doc, i) => (
+            <>
+              {i !== 0 && (
+                <Link
+                  key={doc.options.title + "-save-doc"}
+                  href={"/docs/view/" + doc.options.docId}
+                >
+                  <DocCard doc={doc} />
+                </Link>
+              )}
+            </>
+          ))}
         </Recomendations>
       </Layout>
     </>

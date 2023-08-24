@@ -52,21 +52,51 @@ export default function Statistics() {
       docs: {
         "ENSAYO N°1": {
           "1": 900,
-          "2": 800,
+          "2": 780,
           "3": 750,
         },
         "ENSAYO N°2": {
           "1": 850,
-          "2": 870,
+          "2": 840,
           "3": 810,
         },
         "ENSAYO N°3": {
           "1": 880,
-          "2": 810,
-          "3": 890,
+          "2": 860,
+          "3": 850,
+        },
+        "ENSAYO N°4": {
+          "1": 900,
+          "2": 820,
+          "3": 900,
         },
       },
       color: "#e86675",
+    },
+    Ciencias: {
+      docs: {
+        "ENSAYO N°1": {
+          "1": 900,
+          "2": 850,
+          "3": 800,
+        },
+        "ENSAYO N°2": {
+          "1": 910,
+          "2": 970,
+          "3": 810,
+        },
+        "ENSAYO N°3": {
+          "1": 910,
+          "2": 870,
+          "3": 830,
+        },
+        "ENSAYO N°4": {
+          "1": 940,
+          "2": 890,
+          "3": 870,
+        },
+      },
+      color: "#5479F7",
     },
     Lenguaje: {
       docs: {
@@ -185,6 +215,7 @@ export default function Statistics() {
 
   return (
     <Layout>
+      <h1>Estadísticas</h1>
       <section className={styles.container}>
         {/* <div onClick={() => setModalState(true)} className={styles.options}>
           <button>Generar reporte</button>

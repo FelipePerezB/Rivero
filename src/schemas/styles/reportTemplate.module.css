@@ -5,7 +5,7 @@
 .docs {
   display: flex;
   justify-content: center;
-  padding: 16px 0;
+  padding: 1em 0;
 }
 
 .doc {
@@ -25,11 +25,12 @@
 }
 
 .title {
+  width: max-content;
   font-family: "Nunito", sans-serif;
   font-weight: 800;
   font-size: 2em;
   text-align: center;
-  margin: 0;
+  margin: 0 auto;
 }
 
 .subtitle {
@@ -38,6 +39,7 @@
   font-size: 1em;
   text-align: center;
   margin: 0;
+  padding: 0;
 }
 
 .h3{
@@ -52,7 +54,7 @@
   width: 100%;
   page-break-after: always;
   padding: 2.5em;
-  box-shadow: 0px 0px 14px lightgray;
+  box-shadow: 0px 0px 1em lightgray;
   background-color: white;
   overflow: hidden;
 }
@@ -112,10 +114,22 @@
   gap: 1em;
 }
 
+.exercises{
+  display: flex;
+  flex-direction: column;
+  gap: 0.2em;
+}
+
 .question {
-  font-size: 0.8em;
-  padding-right: 0.8em;
+  display: flex;
+  gap: 0.1em;
+  font-size: 1em;
+  align-items: first baseline;
   margin: 0.2em 0 0 0;
+}
+
+.question__number{
+  font-size: 0.8em;
 }
 
 .question__alternatives {
@@ -158,13 +172,4 @@
   height: 0.1em;
   background-color: black;
   border-radius: 100%;
-}
-
-.line {
-  /* transform: translate(-50%, -50%); */
-  /* pointer-events: none; */
-  /* position: absolute; */
-  /* top: -.2em;
-  left: 0.4em; */
-  stroke: inherit;
 }

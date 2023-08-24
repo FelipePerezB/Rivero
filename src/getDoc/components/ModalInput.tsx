@@ -4,7 +4,14 @@ import React, { useEffect, useRef, useState } from "react";
 import styles from "../styles/Modal.module.css";
 import NewCompModal from "../containers/NewCompModal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBold, faClose, faItalic } from "@fortawesome/free-solid-svg-icons";
+import {
+  faBold,
+  faChevronDown,
+  faChevronUp,
+  faClose,
+  faIndent,
+  faItalic,
+} from "@fortawesome/free-solid-svg-icons";
 import Button from "./Button";
 import resize from "../utils/resize";
 import getID from "../utils/getId";
@@ -27,11 +34,13 @@ type props = {
 export default function ModalInput({
   type,
   value,
+  values,
   name,
   addFormData,
 }: {
   name: string;
   value?: any;
+  values?: any;
   type: string | any;
   addFormData: (data: any) => void;
 }) {
@@ -354,11 +363,10 @@ export default function ModalInput({
   };
 
   const DescriptionInput = () => {
-    const [content, setContent] = useState(value as string);
+    const [content, setContent] = useState<string>(value ?? ("" as string));
     const parentRef = useRef<HTMLDivElement>(null);
     useEffect(() => {
-      console.log(content);
-      createFormData(content);
+      content && createFormData(content);
     }, [content]);
 
     useEffect(() => {
@@ -372,28 +380,56 @@ export default function ModalInput({
         if (!parentRef?.current) return;
         createFormData(parentRef?.current?.innerHTML);
       });
-    }, [parentRef]);
+      parentRef.current.addEventListener("click", () => {
+        if (!parentRef?.current) return;
+        setContent(parentRef?.current?.innerHTML);
+      });
+    }, []);
 
-    const select = () => {
+    const select = (style: string) => {
       const selection = window.getSelection();
       if (!selection?.anchorOffset) return;
       const { anchorNode, anchorOffset, focusOffset } = selection;
       const node = anchorNode as any;
       if (!node.data) return;
       const data = node?.data.split("") as string[];
-      const length = focusOffset - anchorOffset;
-      const originalData = data.splice(anchorOffset, length).join("");
-      // const newText = data;
-      // newText[
-      //   anchorOffset
-      // ] = `<span style="font-weight: 900">${newText[anchorOffset]}`;
-      // newText[focusOffset - 1] = `${newText[focusOffset - 1]}</span>`;
-      // console.log(newText.join(""));
-      setContent(
-        content.replace(
-          originalData,
-          `<span style="font-weight: 900">${originalData}</span>`
-        )
+      length = focusOffset - anchorOffset;
+
+      if (length < 1) {
+        const originalData = data.splice(0, anchorOffset).join("");
+
+        setContent(
+          content.length > 1
+            ? content.replace(
+                originalData,
+                `<span style="${style}">${originalData}</span>`
+              )
+            : `<span style="${style}">${originalData}</span>`
+        );
+      } else {
+        const originalData = data.splice(anchorOffset, length).join("");
+
+        setContent(
+          content.replace(
+            originalData,
+            `<span style="${style}">${originalData}</span>`
+          )
+        );
+      }
+    };
+
+    const [indentBtnClass, setIndentBtnClass] = useState(
+      values?.indent ? styles["btn--active"] : styles["bold-btn"]
+    );
+
+    const bold = () => select("font-weight: 900");
+    const italic = () => select("font-style: italic");
+    const increase = () => select("font-size: 1.4em");
+    const decrease = () => select("font-size: 0.8em");
+    const indent = () => {
+      addFormData({ indent: !values.indent });
+      setIndentBtnClass(
+        values?.indent ? styles["btn--active"] : styles["bold-btn"]
       );
     };
 
@@ -401,16 +437,42 @@ export default function ModalInput({
       <div>
         <div
           contentEditable={true}
+          style={{textIndent: (values?.indent) && "2em"}}
           className={styles.parent}
           ref={parentRef}
         ></div>
         <div className={styles.btns}>
-          <button className={styles["bold-btn"]} type="button" onClick={select}>
-            <FontAwesomeIcon icon={faBold} />
-          </button>
-          <button className={styles["bold-btn"]} type="button" onClick={select}>
-            <FontAwesomeIcon icon={faItalic} />
-          </button>
+          <div>
+            <button className={styles["bold-btn"]} type="button" onClick={bold}>
+              <FontAwesomeIcon icon={faBold} />
+            </button>
+            <button
+              className={styles["bold-btn"]}
+              type="button"
+              onClick={italic}
+            >
+              <FontAwesomeIcon icon={faItalic} />
+            </button>
+            <button
+              className={styles["bold-btn"]}
+              type="button"
+              onClick={increase}
+            >
+              <FontAwesomeIcon icon={faChevronUp} />
+            </button>
+            <button
+              className={styles["bold-btn"]}
+              type="button"
+              onClick={decrease}
+            >
+              <FontAwesomeIcon icon={faChevronDown} />
+            </button>
+          </div>
+          <div>
+            <button onClick={indent} className={indentBtnClass} type="button">
+              <FontAwesomeIcon icon={faIndent} />
+            </button>
+          </div>
         </div>
       </div>
     );
@@ -442,11 +504,14 @@ export default function ModalInput({
     }
     return inputTypes[type](props);
   };
-
   return (
-    <label className={styles.input} htmlFor={name} key={name}>
-      <span>{capFirst(name)}:</span>
-      {getInput()}
-    </label>
+    <>
+      {!type?.private && (
+        <label className={styles.input} htmlFor={name} key={name}>
+          <span>{capFirst(name)}:</span>
+          {getInput()}
+        </label>
+      )}
+    </>
   );
 }

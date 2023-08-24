@@ -1,13 +1,8 @@
-import React, { useContext, useEffect } from "react";
+import React, { useEffect } from "react";
 import styles from "../styles/reportTemplate.module.css";
-// import getComponent from "../utils/getComponent";
-import Title from "./Title";
 import CustomComponent from "./CustomComponent";
-import GetDoc from "src/getDoc/GetDoc";
-import { pdfNodes } from "..";
 import GetPdfNode from ".";
 import getID from "src/getDoc/utils/getId";
-import { ComponentContext } from "../web/Document";
 
 export default function Exercises({
   id = getID(),
@@ -41,7 +36,6 @@ export default function Exercises({
   id: string;
 }) {
   const startNumber = startsIn ?? "1";
-
   return (
     <CustomComponent id={id} style={{}}>
       <section className={styles.exercises}>

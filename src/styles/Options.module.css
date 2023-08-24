@@ -1,24 +1,32 @@
 .options{
-  background-color: white;
-  max-width: 90%;
-  margin: 20px auto;
+  /* background-color: white; */
+  width: 100%;
+  display: flex;
+  overflow-x: scroll;
+  margin: 0 auto;
   border-radius: var(--radius);
 }
 
 .options ul{
-  overflow-x: scroll;
-  padding: 12px;
   display: flex;
+  gap: 16px;
   justify-content: center;
+}
+
+.op{
+  background-color: white;
 }
 
 .op,
 .op--active {
+  display: inline-block;
+  padding: 6px 10px;
+  border-radius: var(--radius);
   cursor: pointer;
 }
 
 .op--active {
-  color: var(--active-letter-color);
+  color: white;
 }
 
 .separator {

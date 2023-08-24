@@ -1,46 +1,32 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useRef, useState } from "react";
 import { generatePdf } from "./utils/generatePDF";
-import { api } from "./utils/api";
-import { useQuery } from "@apollo/client";
-import { GetDocDocument } from "src/gql/graphql";
 import GetDoc from "./GetDoc";
 import { pdfNodes } from "src/schemas";
 
 export default function GetPDF({
-  id,
-  content,
+  setDoc,
+  doc,
 }: {
-  id?: number;
-  content: { children: any[] };
+  setDoc: (data: any) => void;
+  doc: {
+    type: string;
+    options: {
+      children: any[];
+      title: string;
+      subtitle: string;
+      id: string;
+    };
+  };
 }) {
-  const [doc, setDoc] = useState<{ type: string; options: any } | undefined>({
-    type: "doc",
-    options: content,
-  });
-  // const { data, loading } = useQuery(GetDocDocument, {
-  //   variables: {
-  //     docId: id,
-  //   },
-  // });
-  // if (id) {
-  //   if (!data) return <></>;
-  //   setDoc(data.doc.content);
-  // }
-
-  // useEffect(() => {
-  //   if (data) {
-  //   }
-  // }, [data]);
-
   useEffect(() => {
     if (doc?.options)
       (async () => {
         await generatePdf();
-        const doc = document.getElementById('doc-pdf')
         setDoc(undefined);
       })();
   }, [doc]);
 
-  if (doc) return <GetDoc component={doc} nodes={pdfNodes} />;
+  if (doc) return <GetDoc component={{ ...doc }} nodes={pdfNodes} />;
   else return <></>;
 }

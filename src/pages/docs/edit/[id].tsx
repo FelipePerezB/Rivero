@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import Edit from "src/getDoc/Edit";
 import { api } from "src/getDoc/utils/api";
-import { CreateDocDocument } from "src/gql/graphql";
+import { CreateDocDocument, DocTypes, Privacity } from "src/gql/graphql";
 import { pdfNodes } from "src/schemas";
 import { client } from "src/service/client";
 
@@ -59,19 +59,24 @@ export default function EditPage() {
             mutation: CreateDocDocument,
             variables: {
               createDocInput: {
-                topic: {
+                Topic: {
                   connect: {
                     name: topic,
                   },
                 },
-                type: "doc",
+                type: DocTypes.Notes,
                 title,
                 content: doc,
-                author: {
+                Author: {
                   connect: {
                     id: 1,
                   },
                 },
+                Subject: {
+                  create: undefined
+                },
+                externalId: "HUHQUIHH(",
+                privacity: Privacity.Private
               },
             },
           });

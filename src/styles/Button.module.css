@@ -1,9 +1,9 @@
-.container{
+.primary{
   display: flex;
   justify-content: center;
 }
 
-.primary, .secondary{
+.primary button, .secondary button{
   cursor: pointer;
   min-height: 40px;
   height: auto;
@@ -16,7 +16,7 @@
   font-weight: 600;
 }
 
-.secondary{
+.secondary button{
   background-color: transparent;
   border: none;
   color: black;
@@ -25,4 +25,25 @@
 
 .primary:hover{
   color: lightgray;
+}
+
+.small-active{
+  width: max-content;
+}
+
+.small-active button{
+  font-size: 1rem;
+  background-color: black;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: var(--radius);
+}
+
+.primary, .secondary, .small-active{
+ transition: 150ms;
+}
+.primary:hover, .secondary:hover, .small-active:hover{
+  transition: 100ms;
+ transform: scale(0.90);
 }

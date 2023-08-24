@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClose } from "@fortawesome/free-solid-svg-icons";
 import Button from "./Button";
 import ModalInput from "src/getDoc/components/ModalInput";
+import { createPortal } from "react-dom";
 
 export default function Modal({
   modalState,
@@ -16,29 +17,35 @@ export default function Modal({
   setModalState: any;
   children?: ReactNode;
 }) {
-  return (
-    <div key={title} className={styles[`${modalState ? "on" : "off"}`]}>
-      <div onClick={() => setModalState(false)} className={styles.blur}></div>
-      <div className={styles.modal}>
-        <div className={styles.header}>
-          <h2>{title}</h2>
-          <FontAwesomeIcon
-            onClick={() => setModalState(false)}
-            className={styles.close__icon}
-            size="xl"
-            icon={faClose}
-          />
+  return modalState ? (
+    createPortal(
+      <div key={title} className={styles[`${modalState ? "on" : "off"}`]}>
+        <div onClick={() => setModalState(false)} className={styles.blur}></div>
+        <div className={styles.modal}>
+          <div className={styles.header}>
+            <h2>{title}</h2>
+            <span onClick={() => setModalState(false)}>
+              <FontAwesomeIcon
+                className={styles.close__icon}
+                size="xl"
+                icon={faClose}
+              />
+            </span>
+          </div>
+          {children}
         </div>
-        {children}
-      </div>
-    </div>
+      </div>,
+      document.querySelector("#modal") as HTMLDivElement
+    )
+  ) : (
+    <></>
   );
 }
 
 export const FormModal = (params: {
   modalState: boolean;
   title: string;
-  setModalState: any;
+  setModalState: (data: boolean) => void;
   children?: ReactNode;
   schema: {}[];
   setData: (value: any) => void;

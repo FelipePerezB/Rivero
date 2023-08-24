@@ -25,11 +25,17 @@
 .navar ul{
   margin: 0;
   padding: 16px;
-  height: 3.5rem;
-  background-color: #5066e8;
-  color: white;
+  height: 64px;
+  border-bottom: 1px solid lightgray;
+  background-color: white;
   display: flex;
   justify-content: space-between;
+}
+
+.doc-name{
+  cursor: text;
+  font-size: 1.2rem;
+  font-weight: 500;
 }
 
 .navar li{
@@ -41,8 +47,18 @@
   gap: 12px;
 }
 
-.options input{
+.options span{
+  padding: 10px;
+  border-radius: 50%;
+  aspect-ratio: 1;
+}
+
+.options span:hover{
+  background-color: rgb(240, 240, 240);
+}
+
+/* .options input{
   width: 100px;
   border-radius: 4px;
   height: 1.6rem;
-}
+} */

@@ -5,7 +5,9 @@ export default function Options({
   options,
   state,
   setState,
+  color = "black"
 }: {
+  color?: string;
   options: string[];
   state: string;
   setState: any;
@@ -17,15 +19,14 @@ export default function Options({
     <div className={styles.options}>
       <ul>
         {options.map((option) => {
-          const isActive = state === option;
+          const isActive = state?.toLowerCase() === option?.toLowerCase();
           return (
             <li onClick={() => clickHandler(option)} key={option}>
-              <span className={styles[isActive ? "op--active" : "op"]}>
+              <span style={{
+                background: isActive ? color : "white"
+              }} className={styles[isActive ? "op--active" : "op"]}>
                 {option}
               </span>
-              {options.indexOf(option) < options.length - 1 && (
-                <span className={styles.separator}>|</span>
-              )}
             </li>
           );
         })}

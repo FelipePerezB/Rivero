@@ -9,8 +9,8 @@ export default function DocInfo({
   subtitle = "SUBTITLE",
   id = getID(),
 }: {
-  title: string;
-  subtitle: string;
+  title?: string;
+  subtitle?: string;
   id: string;
 }) {
 

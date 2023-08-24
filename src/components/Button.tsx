@@ -11,8 +11,8 @@ export default function Button({
   callback?: any;
 }) {
   return (
-    <div className={styles.container}>
-      <button className={styles[style]} onClick={callback}>
+    <div  className={styles[style]}>
+      <button onClick={callback}>
         <span>{children}</span>
       </button>
     </div>
