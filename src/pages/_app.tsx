@@ -9,7 +9,7 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <ApolloProvider client={client}>
       {/* <AuthProvider session={pageProps.session}> */}
-      <ClerkProvider {...pageProps}>
+      <ClerkProvider afterSignUpUrl={"https://rivero.vercel.app/"}  {...pageProps}>
         <Component {...pageProps} />
       </ClerkProvider>
       {/* </AuthProvider> */}
