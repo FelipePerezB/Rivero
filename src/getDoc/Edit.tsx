@@ -278,7 +278,7 @@ export default function Edit({
               <FormModal
                 buttonName="Publicar"
                 onSubmit={(data) => {
-                  if (!pages.options.externalId) return;
+                  if (!pages?.options?.externalId) return;
                   if (pages?.options?.id) {
                     const dbId = pages.options.id;
                     updateDoc({
@@ -297,7 +297,7 @@ export default function Edit({
                 setModalState={setShareModalState}
                 modalState={shareModalState}
                 values={{
-                  topic: pages.options.subtitle,
+                  topic: pages?.options?.subtitle,
                 }}
                 schema={
                   switchState

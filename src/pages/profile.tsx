@@ -34,7 +34,7 @@ export default function Profile() {
         </label> */}
       </form>
       {/* <span className={styles.button}>Cambiar contraseña</span> */}
-      <Button style="primary" callback={() => console.log("AAA")}>
+      <Button style="primary" onClick={() => console.log("AAA")}>
         Guardar cambios
       </Button>
     </Layout>

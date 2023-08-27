@@ -20,12 +20,13 @@ export const getStaticPaths: GetStaticPaths = async () => {
     query: GetSubjectsPathsDocument,
     fetchPolicy: "network-only",
   });
-  if (!data || error) throw new Error("Failed to request");
+  if (!data?.subjects || error) throw new Error("Failed to request");
+  console.log(data);
   return {
-    paths: data.subjects.map((subject) => ({
+    paths: data.subjects?.map((subject) => ({
       params: {
-        path: subject.id,
-        subject: subject.id,
+        path: subject?.id,
+        subject: subject?.id,
       },
     })),
     fallback: true,
@@ -36,6 +37,7 @@ export const getStaticProps: GetStaticProps<{
   data: GetSubjectQuery;
 }> = async (context) => {
   const id = context?.params?.subject as string;
+  if (!id) throw new Error("Failed to request");
   const { data, error } = await client.query({
     query: GetSubjectDocument,
     variables: {
@@ -53,9 +55,10 @@ export const getStaticProps: GetStaticProps<{
 };
 
 export default function Docs({
-  data: { subject },
+  data,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
-  const topics = subject.Topics;
+  const subject = data?.subject;
+  const topics = subject?.Topics;
   const topicsNames = topics
     ?.filter(({ Subtopics }) => Subtopics && Subtopics.length > 0)
     ?.map(({ name }) => capFirst(name));
@@ -75,7 +78,7 @@ export default function Docs({
   }, []);
 
   const getProgress = (): number => {
-    const subjectStats = stats[subject.name];
+    const subjectStats = stats[subject?.name];
     if (!subjectStats) return 0;
     const topicStats = subjectStats[topicName as string] as
       | string[]
@@ -93,7 +96,7 @@ export default function Docs({
     <>
       <Layout>
         <Link href={"/docs"}>
-          <h1 className={styles.grade}>{capFirst(subject.name)}</h1>
+          <h1 className={styles.grade}>{capFirst(subject?.name)}</h1>
         </Link>
         <Options
           options={topicsNames as string[]}
@@ -122,7 +125,10 @@ export default function Docs({
                     {Docs &&
                       Docs.map(({ title, externalId }) => {
                         return (
-                          <Link key={title + externalId} href={`view/${externalId}`}>
+                          <Link
+                            key={title + externalId}
+                            href={`view/${externalId}`}
+                          >
                             <li className={styles.doc}>
                               <span>{title}</span>
                             </li>

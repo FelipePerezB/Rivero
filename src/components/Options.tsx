@@ -18,7 +18,7 @@ export default function Options({
   return (
     <div className={styles.options}>
       <ul>
-        {options.map((option) => {
+        {options?.map((option) => {
           const isActive = state?.toLowerCase() === option?.toLowerCase();
           return (
             <li onClick={() => clickHandler(option)} key={option}>
