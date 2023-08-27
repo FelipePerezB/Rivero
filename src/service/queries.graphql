@@ -33,7 +33,7 @@ query GetSubject($subjectId: Int!) {
       Subtopics {
         name
         Docs {
-          id
+          externalId
           title
         }
       }
@@ -89,9 +89,30 @@ query LoginUser($user: LoginUserInput!) {
 #   }
 # }
 
-query GetDoc($docId: Int!) {
-  doc(id: $docId) {
+mutation UpdateDoc($updateDocId: Float!, $updateDocInput: DocUpdateInput!){
+  updateDoc(id: $updateDocId, updateDocInput: $updateDocInput) {
+    id
+  }
+}
+
+
+query GetDoc($where: DocWhereUniqueInput!) {
+  doc(where: $where) {
     content
+    title
+    privacity
+    externalId
+    id
+    type
+    Subject {
+      name
+    }
+    Topic {
+      name
+    }
+    Subtopic {
+      name
+    }
   }
 }
 

@@ -4,15 +4,15 @@ import styles from "@styles/Button.module.css";
 export default function Button({
   children,
   style = "primary",
-  callback,
+  onClick,
 }: {
   children: ReactNode;
-  style?: string;
-  callback?: any;
+  style?: "primary" | "secundary"  | "small-active";
+  onClick?: any;
 }) {
   return (
     <div  className={styles[style]}>
-      <button onClick={callback}>
+      <button type="button" onClick={onClick}>
         <span>{children}</span>
       </button>
     </div>

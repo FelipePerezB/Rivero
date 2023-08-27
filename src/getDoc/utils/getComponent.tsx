@@ -19,11 +19,11 @@ export const uiSchemas: any = {
     gap: "text",
   },
   Title: {
-    text: "text",
     size: {
       type: "options",
       options: ["h1", "h2", "h3"],
     },
+    text: "text",
   },
   Paragraph: {
     text: "description",
@@ -77,9 +77,14 @@ export const schemas: any = {
   ...uiSchemas,
   ...childrenchenas,
   Doc: {
-    id: "text",
+    privacity: { type: "options", options: ["public", "private"]},
+    id: { type: "text", private: true },
+    externalId: { type: "text", private: true },
+    type: { type: "text", private: true },
+    subtopic: { type: "text", private: true },
     title: "text",
     subtitle: "text",
+    subject: { type: "text", private: true },
     children: {
       type: "children",
       child: "page",

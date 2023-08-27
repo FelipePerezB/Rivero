@@ -1,5 +1,4 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-// import { isArray } from "chart.js/dist/helpers/helpers.core";
 import React, { useEffect, useRef, useState } from "react";
 import styles from "../styles/Modal.module.css";
 import NewCompModal from "../containers/NewCompModal";
@@ -12,10 +11,15 @@ import {
   faIndent,
   faItalic,
 } from "@fortawesome/free-solid-svg-icons";
-import Button from "./Button";
+// import Button from "./Button";
 import resize from "../utils/resize";
 import getID from "../utils/getId";
-import GetNodeByString from "./GetNodeByString";
+import OptionsInput from "../../components/inputs/OptionsInput/OptionsInput";
+import StandardInput from "../../components/inputs/StandardInput/StandardInput";
+import ChildrenInput from "../../components/inputs/ChildrenInput/ChildrenInput";
+import Button from "@components/Button";
+import SwitchToogle from "@components/SwitchToogle";
+import SwitchInput from "@components/inputs/SwitchInput/SwitchInput";
 
 type component = {
   type?: string;
@@ -24,11 +28,6 @@ type component = {
         id: string;
       }
     | any;
-};
-
-type props = {
-  name: string;
-  type: any;
 };
 
 export default function ModalInput({
@@ -64,117 +63,93 @@ export default function ModalInput({
           icon={faClose}
           onClick={() => deleteChildCb(options?.id)}
         />
-        // <span >-</span>
       )}
     </div>
   );
 
-  const createFormData = (value: any) => {
+  const createFormData = (newValue: any) => {
+    if (!newValue) return;
     const data: any = {};
-    data[name] = value;
+    data[name] = newValue;
     addFormData(data);
   };
 
-  if (value) createFormData(value);
+  // useEffect(() => {
+  //   if (value) createFormData(value);
+  // }, []);
 
   const capFirst = (text: string) => {
     const [first, ...other] = text.split("");
     return first[0].toLocaleUpperCase() + other.join("");
   };
 
-  const StandardInput = ({ name, type }: props) => (
-    <>
-      <input
-        className={styles["standart-input"]}
-        defaultValue={value}
-        name={name}
-        onChange={(event) => createFormData(event?.target?.value)}
-        type={type as unknown as "string" | "number"}
-      />
-    </>
-  );
+  // const ChildrenInput = ({ child }: any) => {
+  //   const defaultValue = Array.isArray(value) ? value : [];
+  //   const [modalState, setModalState] = useState(false);
+  //   const [modalData, setModalData] = useState<component>();
+  //   const [lastChild, setLastChild] = useState<component>();
+  //   const [children, setChildren] = useState<component[]>(defaultValue);
+  //   const deleteChild = (id: string) => {
+  //     const index = children.findIndex((comp) => comp?.options?.id === id);
+  //     children.splice(index, 1);
+  //     setChildren([...children]);
+  //   };
 
-  const OptionsInput = ({ options }: any) => (
-    <>
-      <label>
-        <input
-          className={styles["standart-input"]}
-          name={options.join()}
-          id="select-array"
-          defaultValue={value}
-          onChange={(event) => createFormData(event?.target?.value)}
-          list={options.join()}
-        />
-      </label>
-      <datalist id={options.join()}>
-        {options.map((value: string) => (
-          <option key={value} value={value}>
-            {value}
-          </option>
-        ))}
-      </datalist>
-    </>
-  );
+  //   useEffect(() => {
+  //     addFormData(value);
+  //   }, []);
 
-  const ChildrenInput = ({ child }: any) => {
-    const defaultValue = Array.isArray(value) ? value : [];
-    const [modalState, setModalState] = useState(false);
-    const [modalData, setModalData] = useState<component>();
-    const [lastChild, setLastChild] = useState<component>();
-    const [children, setChildren] = useState<component[]>(defaultValue);
-    const deleteChild = (id: string) => {
-      const index = children.findIndex((comp) => comp?.options?.id === id);
-      children.splice(index, 1);
-      setChildren([...children]);
-    };
+  //   useEffect(() => {
+  //     if (
+  //       modalData &&
+  //       modalData.options &&
+  //       lastChild?.options?.id !== modalData?.options?.id
+  //     ) {
+  //       setChildren([...children, { ...modalData }]);
+  //       setLastChild(modalData);
+  //     }
+  //   }, [children, lastChild, modalData]);
 
-    useEffect(() => {
-      if (modalData && lastChild?.options?.id !== modalData?.options?.id) {
-        setLastChild(modalData);
-        setChildren([...children, modalData]);
-      }
-    }, [children, lastChild, modalData]);
+  //   // useEffect(() => {
+  //   //   createFormData([...children]);
+  //   // }, [children]);
 
-    useEffect(() => {
-      createFormData(children);
-    }, [children]);
-
-    return (
-      <>
-        {children[0] && (
-          <div className={styles["children"]}>
-            {children?.map(({ type, options }) => {
-              if (!type) return;
-              return (
-                <Child
-                  options={options}
-                  deleteChildCb={deleteChild}
-                  type={type}
-                  key={options.id}
-                />
-              );
-            })}
-          </div>
-        )}
-        <Button style="secondary" onClick={() => setModalState(true)}>
-          <span>Añadir hijo</span>
-        </Button>
-        <NewCompModal
-          selectedComponent={
-            child && {
-              type: child,
-              options: {
-                id: getID(),
-              },
-            }
-          }
-          modalState={modalState}
-          setModalState={setModalState}
-          setModalData={setModalData}
-        />
-      </>
-    );
-  };
+  //   return (
+  //     <>
+  //       {children[0] && (
+  //         <div className={styles["children"]}>
+  //           {children?.map(({ type, options }) => {
+  //             if (!type) return;
+  //             return (
+  //               <Child
+  //                 options={options}
+  //                 deleteChildCb={deleteChild}
+  //                 type={type}
+  //                 key={options.id}
+  //               />
+  //             );
+  //           })}
+  //         </div>
+  //       )}
+  //       <Button style="secondary" onClick={() => setModalState(true)}>
+  //         <span>Añadir hijo</span>
+  //       </Button>
+  //       <NewCompModal
+  //         selectedComponent={
+  //           child && {
+  //             type: child,
+  //             options: {
+  //               id: getID(),
+  //             },
+  //           }
+  //         }
+  //         modalState={modalState}
+  //         setModalState={setModalState}
+  //         setModalData={setModalData}
+  //       />
+  //     </>
+  //   );
+  // };
   const ChildInput = () => {
     const defaultValue = value ?? [];
     const [modalState, setModalState] = useState(false);
@@ -198,7 +173,7 @@ export default function ModalInput({
           )}
         </article>
 
-        <Button style="secondary" onClick={() => setModalState(true)}>
+        <Button style="secundary" onClick={() => setModalState(true)}>
           <span> {!defaultValue?.options ? "Añadir" : "Reemplazar"}</span>
         </Button>
         <NewCompModal
@@ -210,28 +185,27 @@ export default function ModalInput({
     );
   };
 
-  const BooleanInput = () => {
-    const [state, setState] = useState(value || false);
-    useEffect(() => {
-      createFormData(state);
-    }, [state]);
-    const handleToogle = () => {
-      setState(!state);
-    };
-    return (
-      <span className={styles.boleean}>
-        <button
-          type="button"
-          onClick={handleToogle}
-          className={styles["switch-toogle-" + state]}
-        >
-          <div></div>
-        </button>
-        <span>{String(state)}</span>
-      </span>
-    );
-    // return <div onClick={handleToogle}>{String(state)}</div>;
-  };
+  // const BooleanInput = () => {
+  //   const [state, setState] = useState(value || false);
+  //   useEffect(() => {
+  //     createFormData(state);
+  //   }, [state]);
+  //   const handleToogle = () => {
+  //     setState(!state);
+  //   };
+  //   return (
+  //     <span className={styles.boleean}>
+  //       <button
+  //         type="button"
+  //         onClick={handleToogle}
+  //         className={styles["switch-toogle-" + state]}
+  //       >
+  //         <div></div>
+  //       </button>
+  //       <span>{String(state)}</span>
+  //     </span>
+  //   );
+  // };
 
   const SubInputs = ({ name, ...inputs }: any) => {
     const types = Object.entries(inputs);
@@ -323,7 +297,7 @@ export default function ModalInput({
           })}
         </div>
         <Button
-          style="tertiary"
+          style="small-active"
           onClick={() => {
             setElements([...elements, { ...objectValues }]);
           }}
@@ -341,8 +315,9 @@ export default function ModalInput({
     callback: () => any;
     text: string;
   }) => {
+    console.log(callback.name);
     return (
-      <Button style="secondary" onClick={callback}>
+      <Button style="small-active" onClick={callback}>
         <span>{text}</span>
       </Button>
     );
@@ -353,12 +328,15 @@ export default function ModalInput({
       resize(Number(value) / 100);
     };
     return (
-      <input
-        min={0}
-        max={100}
-        onChange={({ target }) => resizeContainer(target)}
-        type="range"
-      />
+      <label className={styles.range}>
+        <span>{capFirst(name)}</span>
+        <input
+          min={0}
+          max={100}
+          onChange={({ target }) => resizeContainer(target)}
+          type="range"
+        />
+      </label>
     );
   };
 
@@ -427,7 +405,7 @@ export default function ModalInput({
     const increase = () => select("font-size: 1.4em");
     const decrease = () => select("font-size: 0.8em");
     const indent = () => {
-      addFormData({ indent: !values.indent });
+      addFormData({ indent: !values?.indent });
       setIndentBtnClass(
         values?.indent ? styles["btn--active"] : styles["bold-btn"]
       );
@@ -437,7 +415,7 @@ export default function ModalInput({
       <div>
         <div
           contentEditable={true}
-          style={{textIndent: (values?.indent) && "2em"}}
+          style={{ textIndent: values?.indent && "2em" }}
           className={styles.parent}
           ref={parentRef}
         ></div>
@@ -479,12 +457,36 @@ export default function ModalInput({
   };
 
   const inputTypes: any = {
-    text: (props: any) => <StandardInput {...props} />,
+    text: ({ name }: { name: string }) => (
+      <StandardInput
+        value={value}
+        name={name}
+        onChange={addFormData}
+        type="text"
+      />
+    ),
+    number: ({ name }: { name: string }) => (
+      <StandardInput name={name} onChange={addFormData} type="number" />
+    ),
     description: (props: any) => <DescriptionInput {...props} />,
-    number: (props: any) => <StandardInput {...props} />,
-    children: (props: any) => <ChildrenInput {...props} />,
-    boolean: (props: any) => <BooleanInput {...props} />,
-    options: (props: any) => <OptionsInput {...props} />,
+    children: (props: any) => (
+      <ChildrenInput
+        name={name}
+        value={value}
+        onChange={addFormData}
+        {...props}
+      />
+    ),
+    // children: (props: any) => <ChildrenInput {...props} />,
+    boolean: (props: any) => <SwitchInput onChange={addFormData} {...props} />,
+    options: ({ options }: { options: string[] }) => (
+      <OptionsInput
+        name={name}
+        value={value}
+        onChange={addFormData}
+        options={options}
+      />
+    ),
     subInputs: (props: any) => <SubInputs {...props} />,
     subInputsArray: (props: any) => <SubInputsArray {...props} />,
     child: (props: any) => <ChildInput {...props} />,
@@ -508,7 +510,7 @@ export default function ModalInput({
     <>
       {!type?.private && (
         <label className={styles.input} htmlFor={name} key={name}>
-          <span>{capFirst(name)}:</span>
+          {/* <span>{capFirst(name)}:</span> */}
           {getInput()}
         </label>
       )}

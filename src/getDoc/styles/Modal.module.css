@@ -1,3 +1,7 @@
+.select-component{
+  display: flex;
+  width: 100%;
+}
 #indent {
   width: 100%;
   height: 32px;
@@ -337,47 +341,11 @@
   display: block;
 } */
 
-.switch-toogle-false,
-.switch-toogle-true {
-  position: relative;
+
+
+.range{
+  width: 100%;
+  flex-direction: column;
   display: flex;
-  align-items: flex-start;
-  height: 22px;
-  width: 48px;
-  background-color: #e2e8f0;
-  border: 4px solid #e2e8f0;
-  border-radius: 16px;
-  cursor: pointer;
-}
-
-.switch-toogle-true {
-  background-color: var(--primary-color);
-  border: 4px solid var(--primary-color);
-}
-
-.switch-toogle-false > div,
-.switch-toogle-true > div {
-  position: absolute;
-  top: 0;
-  height: 100%;
-  aspect-ratio: 1/1;
-  background-color: white;
-  border-radius: 100%;
-}
-
-.switch-toogle-false > div {
-  transition: 350ms;
-  transform: translateX(-50%);
-  /* left: 0; */
-}
-
-.switch-toogle-true > div {
-  transition: 200ms;
-  transform: translateX(150%);
-  /* right: 0; */
-}
-
-.boleean {
-  display: flex;
-  gap: 8px;
+  margin: 8px 0;
 }

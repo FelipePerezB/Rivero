@@ -1,14 +1,12 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { schemas, uiSchemas } from "../utils/getComponent";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "../styles/Modal.module.css";
-import ModalInput from "../components/ModalInput";
-import { createPortal } from "react-dom";
 import getID from "../utils/getId";
-import Button from "../components/Button";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faClose } from "@fortawesome/free-solid-svg-icons";
 import GetDoc from "../GetDoc";
 import { pdfNodes } from "src/schemas";
+import { FormModal } from "@components/Modal";
+import { capFirst } from "src/utils/capFirst";
 
 type useStateFunc = (data: any) => void;
 export default function Modal({
@@ -35,30 +33,9 @@ export default function Modal({
     if (schema) return schema[1] as any;
   };
   const [currentSchema, setCurrentSchema] = useState("" as any);
-  const [componentSchema, setComponentSchema] = useState("" as any);
   const [component, setComponent] = useState("");
+  const [modalName, setModalName] = useState("");
   const [values, setValues] = useState({} as any);
-
-  useEffect(() => {
-    if (!modalState) {
-      const $selectComponent = document.getElementById(
-        "select-component"
-      ) as HTMLInputElement;
-      if ($selectComponent) {
-        $selectComponent.value = "";
-      }
-      setComponent("");
-      setCurrentSchema({});
-      setComponentSchema("");
-    }
-  }, [modalState]);
-
-  const addFormData = (data: any) => {
-    const [key, value] = Object.entries(data)[0];
-    values[key] = value;
-    setValues(values);
-  };
-
   const createComponent = (data: any) => {
     let newComponent = {
       type: component,
@@ -66,9 +43,7 @@ export default function Modal({
         id: selectedComponent ? selectedComponent?.options?.id : getID(),
       },
     };
-
     const schema = getSchema();
-
     schema &&
       Object.keys(schema)?.forEach((key) => {
         let newOp = {} as any;
@@ -86,95 +61,71 @@ export default function Modal({
   };
 
   useEffect(() => {
-    // setCurrentSchema({})
     if (selectedComponent?.options) {
       const schema = getSchema();
       schema && setCurrentSchema(schema);
       setComponent(selectedComponent.type);
-      setComponentSchema(Object.values(selectedComponent?.options));
+      console.log()
     } else {
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedComponent, currentSchema]);
 
   useEffect(() => {
     const schema = getSchema();
     schema && setCurrentSchema(schema);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [component]);
+  // const name = (component) ? `Modificar ${component}` : "Crear componente" 
 
-  if (modalState) {
-    return createPortal(
-      <>
-        <div onClick={() => setModalState(false)} className={styles.blur}></div>
-        <div className={styles.modal}>
-          <div className={styles.header}>
-            <h2>Crear componente</h2>
-            <FontAwesomeIcon
-              onClick={() => setModalState(false)}
-              className={styles.close__icon}
-              size="xl"
-              icon={faClose}
-            />
-          </div>
-          {/* <div className={styles.content}> */}
-            <div className={styles.container}>
-              {!selectedComponent && (
-                <div className={styles.selectComponent}>
-                  <ul className={styles.nodes}>
-                    {uiComponentsNames.map((component) => (
-                      <li key={component + "-select"}>
-                        <input
-                          value={component.toLowerCase()}
-                          onChange={({ target }) => setComponent(target.value)}
-                          name="AAA"
-                          type={"radio"}
-                          className={styles["radio-btn"]}
-                        />
-                        <span className={styles.node}>
-                          <GetDoc
-                            nodes={pdfNodes}
-                            component={{
-                              type: component.toLowerCase(),
-                              options: {},
-                            }}
-                          />
-                        </span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-              <form className={styles.form}>
-                {currentSchema &&
-                  Object.entries(currentSchema).map(([name, type], i) => {
-                    return (
-                      <ModalInput
-                        values={values}
-                        addFormData={addFormData}
-                        name={name}
-                        key={name}
-                        type={type as any}
-                        value={
-                          selectedComponent && selectedComponent.options[name]
-                        }
-                      />
-                    );
-                  })}
-              </form>
-            </div>
-          {/* </div> */}
-          <Button
-            style="primary"
-            onClick={() => {
-              createComponent(values);
-            }}
-          >
-            <span>Save</span>
-          </Button>
+  useEffect(() => {
+    if (typeof values !== "object") return;
+    if (JSON.stringify(values) === "{}") return;
+    createComponent({ ...values });
+  }, [values]);
+
+  return (
+    <FormModal
+      title={selectedComponent?.type ? `Modificar ${selectedComponent?.type}` : "Crear componente"}
+      setData={setValues}
+      setModalState={setModalState}
+      modalState={modalState}
+      values={selectedComponent && selectedComponent.options}
+      schema={
+        (currentSchema &&
+          Object.entries(currentSchema).map(([key, value]) => {
+            const obj = {} as any;
+            obj[key] = value;
+            return obj;
+          })) ||
+        null
+      }
+    >
+      {!selectedComponent && (
+        <div className={styles["select-component"]}>
+          <ul className={styles.nodes}>
+            {uiComponentsNames.map((component, i) => (
+              <li key={component + "-select-" + i}>
+                <input
+                  value={component.toLowerCase()}
+                  onChange={({ target }) => setComponent(target.value)}
+                  name="AAA"
+                  type={"radio"}
+                  className={styles["radio-btn"]}
+                />
+                <span className={styles.node}>
+                  <GetDoc
+                    key={component + "-component"}
+                    nodes={pdfNodes}
+                    component={{
+                      type: component.toLowerCase(),
+                      options: {},
+                    }}
+                  />
+                </span>
+              </li>
+            ))}
+          </ul>
         </div>
-      </>,
-      document.querySelector("#modal") as HTMLDivElement
-    );
-  } else return <></>;
+      )}
+    </FormModal>
+  );
 }

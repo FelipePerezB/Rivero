@@ -51,16 +51,16 @@ export default function Equality({
       display: "flex",
       alignItems: "center",
       gap: "0.8em",
-      fontWeight: withBorder ? 700 : 500
+      fontWeight: withBorder ? 700 : 500,
     },
   };
   return (
-    <CustomComponent id={id} style={{width: "max-content", margin: "0 auto"}}>
+    <CustomComponent id={id} style={{ width: "max-content", margin: "0 auto" }}>
       <div style={styles.equality}>
         {children.map((component, i) => (
-          <>
-            <span key={component.type + "text"}>
-              <GetPdfNode key={id + i} component={component} />
+          <div key={component.type + "text"}>
+            <span>
+              <GetPdfNode key={id + `-${i}`} component={component} />
             </span>
             {exception?.index != i && i + 1 < children.length && (
               <span key={component.type + "sign"}>{sign}</span>
@@ -68,7 +68,7 @@ export default function Equality({
             {exception?.index == i && (
               <span key={component.type + "sign"}>{exception.sign}</span>
             )}
-          </>
+          </div>
         ))}
       </div>
     </CustomComponent>

@@ -1,7 +1,5 @@
 import React from "react";
 import styles from "../styles/reportTemplate.module.css";
-import CustomComponent from "./CustomComponent";
-import Title from "./Title";
 import getID from "src/getDoc/utils/getId";
 
 export default function DocInfo({
@@ -13,13 +11,12 @@ export default function DocInfo({
   subtitle?: string;
   id: string;
 }) {
-
   return (
-    <CustomComponent id={id} style={{}}>
-        <section className={styles["doc-info"]}>
-          <h1 id="doc-title" className={styles.title}>{title?.toUpperCase()}</h1>
-          <h2 className={styles.subtitle}>{subtitle?.toUpperCase()}</h2>
-        </section>
-    </CustomComponent>
+    <section className={styles["doc-info"]}>
+      <h1 id="doc-title" className={styles.title}>
+        {title?.toUpperCase()}
+      </h1>
+      <h2 className={styles.subtitle}>{subtitle?.toUpperCase()}</h2>
+    </section>
   );
 }

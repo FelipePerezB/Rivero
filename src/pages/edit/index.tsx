@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 import styles from "@styles/Edit.module.css";
 import Layout from "src/layout/Layout";
@@ -25,8 +26,10 @@ export default function EditPage() {
   const [savedDocs, setSavedDocs] = useState<any[]>([]);
 
   useEffect(() => {
+    const docs = []
     for (let index = 0; index < localStorage.length; index++) {
       const key = localStorage.key(index);
+      console.log(index)
       const doc = key?.includes("doc-") && localStorage.getItem(key);
       if (doc) {
         const jsonDoc = JSON.parse(doc);
@@ -38,13 +41,15 @@ export default function EditPage() {
           },
         };
         const isSaved = savedDocs
-          .map((doc) => doc.options.id)
-          .includes(newDoc.options.id);
+          .map((doc) => doc.options.externalId)
+          .includes(newDoc.options.externalId);
         if (isSaved) return;
-        savedDocs.push(newDoc);
-        setSavedDocs([...savedDocs]);
+        docs.push(newDoc)
+
       }
     }
+    setFilteredDocs([...docs]);
+    // savedDocs.push(docs);
   }, []);
 
   const [filteredDocs, setFilteredDocs] = useState(savedDocs);
@@ -75,7 +80,7 @@ export default function EditPage() {
             {doc?.options?.title && (
               <Link
                 key={doc?.options?.title + "-save-doc"}
-                href={"/edit/" + doc?.options?.id}
+                href={"/edit/" + doc?.options?.externalId}
               >
                 <DocCard doc={doc} />
               </Link>

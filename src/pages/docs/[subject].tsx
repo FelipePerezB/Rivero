@@ -120,9 +120,9 @@ export default function Docs({
                 <Card head={<span>{capFirst(name)}</span>}>
                   <ul className={styles.docs}>
                     {Docs &&
-                      Docs.map(({ title, id }) => {
+                      Docs.map(({ title, externalId }) => {
                         return (
-                          <Link key={title + id} href={`view/${id}`}>
+                          <Link key={title + externalId} href={`view/${externalId}`}>
                             <li className={styles.doc}>
                               <span>{title}</span>
                             </li>

@@ -42,20 +42,30 @@ export default function Modal({
   );
 }
 
+const isEmpty = (obj: any) => {
+  if (typeof obj !== "object") return true;
+  if (JSON.stringify(obj) === "{}") return true;
+  return false;
+};
+
 export const FormModal = (params: {
+  buttonName?: string;
   modalState: boolean;
   title: string;
+  values?: any;
   setModalState: (data: boolean) => void;
   children?: ReactNode;
-  schema: {}[];
+  schema?: {}[];
   setData: (value: any) => void;
+  onSubmit?: (data: any) => void;
 }) => {
-  const [values, setValues] = useState({} as any);
+  const [values, setValues] = useState({});
 
   const addFormData = (data: any) => {
-    const [key, value] = Object.entries(data)[0];
-    values[key] = value;
-    setValues(values);
+    Object.assign(values, data);
+    setValues({ ...values });
+    console.log(values);
+    // debugger
   };
 
   return (
@@ -69,6 +79,12 @@ export const FormModal = (params: {
                 Object.entries(schema).map(([name, type]) => {
                   return (
                     <ModalInput
+                      values={values}
+                      value={
+                        !isEmpty(params?.values)
+                          ? params.values[name]
+                          : undefined
+                      }
                       addFormData={addFormData}
                       key={name}
                       name={name}
@@ -79,7 +95,16 @@ export const FormModal = (params: {
               )}
           </form>
         </div>
-        <Button callback={() => params.setData(values)}>Create</Button>
+        <div className={styles["form-btn"]}>
+          <Button
+            onClick={() => {
+              params.onSubmit && params.onSubmit(values);
+              params.setData(values);
+            }}
+          >
+            {params.buttonName ?? "Guardar"}
+          </Button>
+        </div>
       </div>
     </Modal>
   );

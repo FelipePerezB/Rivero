@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import ConfigButton from "./components/ConfigButton";
 import Menu from "./components/Menu";
 import changeComponent from "./utils/changeComponent";
@@ -12,8 +13,17 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import GetDoc from "./GetDoc";
 import { useRouter } from "next/router";
-import Modal from "./containers/NewCompModal";
 import { FormModal } from "@components/Modal";
+import {
+  CreateDocDocument,
+  DocCreateInput,
+  SubjectCreateNestedOneWithoutDocsInput,
+  SubtopicCreateNestedOneWithoutDocsInput,
+  TopicCreateNestedOneWithoutDocsInput,
+  UpdateDocDocument,
+} from "src/gql/graphql";
+import { useMutation } from "@apollo/client";
+import SwitchInput from "@components/inputs/SwitchInput/SwitchInput";
 
 type props = { type: string; options: any };
 
@@ -32,21 +42,7 @@ export default function Edit({
   saveDoc: (doc: any) => void;
 }) {
   const router = useRouter();
-  const [pages, setPage] = useState({
-    type: "doc",
-    options: {
-      id: "CID71632832",
-      children: [
-        {
-          type: "page",
-          options: {
-            id: "CID63726726",
-          },
-          children: [],
-        },
-      ],
-    },
-  } as any);
+  const [pages, setPage] = useState(doc as any);
 
   useEffect(() => {
     doc && setPage(doc);
@@ -124,7 +120,6 @@ export default function Edit({
         changeComponent(pages, componente, { newChild: modalData });
       }
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [modalData, lastElement, modalType]);
   type JSONComp = {
     options: {
@@ -150,11 +145,107 @@ export default function Edit({
   );
 
   const [shareModalState, setShareModalState] = useState(false);
-  const [shareModalData, setShareModalData] = useState({});
+  const [shareModalData, setShareModalData] = useState(
+    {} as {
+      Privacidad?: "Public" | "Private";
+      Subtopico?: string;
+      Topico?: string;
+    }
+  );
 
-  useEffect(() => {
-    console.log(shareModalState);
-  }, [shareModalState]);
+  const [updateDoc, updateData] = useMutation(UpdateDocDocument, {
+    fetchPolicy: "network-only",
+  });
+
+  const [createDoc, createData] = useMutation(CreateDocDocument, {
+    fetchPolicy: "network-only",
+  });
+
+  const uploadDoc = (data: {
+    subject?: string;
+    topic?: string;
+    subtopic?: string;
+  }) => {
+    const { subject, topic, subtopic } = data;
+    const { privacity, title } = pages.options as {
+      title?: string;
+      subtitle?: string;
+      subject?: string;
+      sutopic?: string;
+      privacity?: string;
+      subtopic?: string;
+    };
+    if (!privacity || !title || !subject || !topic || !subtopic || !switchState)
+      return;
+
+    const Subject = {
+      connect: {
+        name: subject?.toLowerCase(),
+      },
+    } as SubjectCreateNestedOneWithoutDocsInput;
+    const Topic = {
+      connectOrCreate: {
+        where: { name: topic?.toLowerCase() },
+        create: {
+          Subject,
+          name: topic?.toLowerCase(),
+        },
+      },
+    } as TopicCreateNestedOneWithoutDocsInput;
+
+    const Subtopic = {
+      connectOrCreate: {
+        where: { name: subtopic?.toLowerCase() },
+        create: {
+          name: subtopic?.toLocaleLowerCase(),
+          Subject,
+          Topic,
+        },
+      },
+    } as SubtopicCreateNestedOneWithoutDocsInput;
+
+    const newDoc = {
+      ...pages,
+      options: {
+        ...pages.options,
+        subtopic,
+        subject,
+        privacity,
+        type: "NOTES",
+        title,
+        externalId: router.query.id,
+      },
+    };
+    const docData = {
+      privacity: privacity?.toUpperCase(),
+      Subject,
+      Topic,
+      externalId: router.query.id,
+      Subtopic,
+      Author: {
+        connect: {
+          id: 1,
+        },
+      },
+      title,
+      type: "NOTES",
+      content: JSON.stringify(newDoc),
+    } as DocCreateInput;
+
+    createDoc({
+      variables: {
+        createDocInput: docData,
+      },
+    });
+    createData.data?.createDoc.id &&
+      setPage({
+        ...pages,
+        id: createData.data?.createDoc.id,
+      });
+
+    saveDoc(newDoc);
+  };
+  const [switchState, setSwitchState] = useState(false);
 
   return (
     <>
@@ -181,20 +272,53 @@ export default function Edit({
                   onClick={() => saveDoc(pages)}
                 />
               </span>
-              <span>
-                <FontAwesomeIcon
-                  onClick={() => setShareModalState(true)}
-                  size="lg"
-                  icon={faShare}
-                />
-                <FormModal
-                  setModalState={setShareModalState}
-                  modalState={shareModalState}
-                  schema={[{ texto: "text" }]}
-                  title="Publicar documento"
-                  setData={setShareModalData}
-                />
+              <span onClick={() => setShareModalState(true)}>
+                <FontAwesomeIcon size="lg" icon={faShare} />
               </span>
+              <FormModal
+                buttonName="Publicar"
+                onSubmit={(data) => {
+                  if (!pages.options.externalId) return;
+                  if (pages?.options?.id) {
+                    const dbId = pages.options.id;
+                    updateDoc({
+                      variables: {
+                        updateDocId: Number(dbId),
+                        updateDocInput: {
+                          content: {
+                            set: JSON.stringify(pages),
+                          },
+                        },
+                      },
+                    });
+                    return;
+                  } else uploadDoc(data);
+                }}
+                setModalState={setShareModalState}
+                modalState={shareModalState}
+                values={{
+                  topic: pages.options.subtitle,
+                }}
+                schema={
+                  switchState
+                    ? [
+                        { subject: "text" },
+                        { topic: "text" },
+                        { subtopic: "text" },
+                      ]
+                    : []
+                }
+                title="Publicar documento"
+                setData={setShareModalData}
+              >
+                <SwitchInput
+                  onChange={(data) => {
+                    setSwitchState(data.oficial);
+                  }}
+                  value={false}
+                  name="oficial"
+                />
+              </FormModal>
             </li>
           </ul>
         </nav>

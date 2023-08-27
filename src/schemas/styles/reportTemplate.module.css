@@ -13,6 +13,7 @@
   flex-direction: column;
   justify-content: center;
   gap: 1.5em;
+  width: 100%;
   font-family: nunito;
 }
 
@@ -51,7 +52,9 @@
   position: relative;
   aspect-ratio: 210 / 297;
   border-radius: 0.1em;
-  width: 100%;
+  width: 35em;
+  /* width: 0rem; */
+  /* max-width: 50em; */
   page-break-after: always;
   padding: 2.5em;
   box-shadow: 0px 0px 1em lightgray;

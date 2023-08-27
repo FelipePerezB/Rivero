@@ -4,7 +4,7 @@ import getID from "src/getDoc/utils/getId";
 
 export default function CustomComponent({
   children,
-  id,
+  id = getID(),
   style,
 }: {
   children: ReactNode;
@@ -13,7 +13,7 @@ export default function CustomComponent({
 }) {
   // const id = getID()
   return (
-    <div key={id} className={"component"} style={style} id={id}>
+    <div key={`component-${id}`} className={"component"} style={style} id={id}>
       {children}
     </div>
   );

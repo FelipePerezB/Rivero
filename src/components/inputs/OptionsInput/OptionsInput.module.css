@@ -1,0 +1,60 @@
+.options{
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.small-options-input{
+  background-color: white;
+  border-radius: var(--radius);
+  display: flex;;
+  justify-content: space-around;
+  margin: auto;
+  border-radius: var(--radius);
+  overflow: hidden;
+  position: relative;
+  width: max-content;
+  box-shadow: var(--shadow);
+}
+
+.name{
+  display: inline-block;
+  width: 100%;
+  text-align: center;
+}
+
+.main-option{
+  position: absolute;
+  background-color: var(--primary-color);
+  width: 1px;
+  height: 100%;
+}
+
+.small-options-input label{
+  position: relative;
+  height: 100%;
+  display: flex;
+}
+
+.small-options-input__text{
+  transition: 100ms;
+  padding: 8px 12px;
+  width: 100%;
+  height: 100%;
+}
+
+.small-options-input input{
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  position: absolute;
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.small-options-input input:checked + span{
+  transition: 200ms;
+  background-color: var(--primary-color);
+  color: white;
+}

@@ -37,7 +37,7 @@ export default function Var({ state }: { state?: "only-nav" }) {
       element: faBook,
     },
     {
-      link: "/stats",
+      link: "/dashboard",
       element: faChartSimple,
     },
     {

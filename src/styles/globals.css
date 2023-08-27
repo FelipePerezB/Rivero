@@ -32,6 +32,12 @@ h1{
   width: fit-content;
   margin: 8px 0 0;
 }
+
+fieldset{
+  border: none;
+  margin: 0;
+  padding: 0;
+}
 /* 
 h1{
   background: white;

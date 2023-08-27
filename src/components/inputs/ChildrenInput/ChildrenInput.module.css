@@ -1,0 +1,38 @@
+.children {
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  height: max-content;
+  padding: 8px 4px 16px;
+}
+
+.child {
+  padding: 8px;
+  outline: 2px solid black;
+  border-radius: var(--radius);
+  font-size: 0.2em;
+}
+
+.child:hover {
+  background-color: lightgray;
+  cursor: pointer;
+  box-shadow: none;
+}
+
+.delete-child {
+  transition: 200ms;
+}
+
+.delete-child:hover {
+  transition: 100ms;
+  color: #ff6961;
+  transform: scale(1.5);
+}
+
+.title{
+  display: inline-block;
+  width: 100%;
+  text-align: center;
+  margin: 4px 0;
+}
