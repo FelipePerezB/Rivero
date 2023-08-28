@@ -45,53 +45,59 @@ export default async function handler(
       res.status(400).json({});
       return;
     }
+    if (
+      !id ||
+      !username ||
+      !email_addresses[0]?.email_address ||
+      typeof gradeId !== "number" ||
+      typeof schoolId !== "number" ||
+      !role
+    ) {
+      res.status(400).json({});
+      return;
+    }
+
+    const body = {
+      email: email_addresses[0].email_address as string,
+      username,
+      externalId: id,
+      Grade: {
+        connect: {
+          id: gradeId as number,
+        },
+      },
+      role: role as Role,
+      School: {
+        connect: {
+          id: schoolId as number,
+        },
+      },
+    };
 
     if (eventType === "user.created") {
-      if (
-        !id ||
-        !username ||
-        !email_addresses[0]?.email_address ||
-        !gradeId ||
-        !schoolId ||
-        !role
-      ) {
-        res.status(400).json({});
-        return;
-      }
-
       const { data, errors } = await client.mutate({
         mutation: CreateUserDocument,
         variables: {
-          createUserInput: {
-            email: email_addresses[0].email_address,
-            username,
-            externalId: id,
-            Grade: {
-              connect: {
-                id: gradeId as number,
-              },
-            },
-            role: role as Role,
-            School: {
-              connect: {
-                id: schoolId as number,
-              },
-            },
-          },
+          createUserInput: body,
         },
       });
-
-      if (errors || !data) {
-        res.status(400).json(errors);
-        return;
-      }
-      res.status(201).json({ data });
     } else if (eventType === "user.updated") {
-      console.log(evt.data);
       const { data, errors } = await client.mutate({
         mutation: UpdateUserDocument,
         variables: {
-          updateUserInput: {},
+          updateUserInput: {
+            username: {
+              set: username,
+            },
+            Grade: body.Grade,
+            School: body.School,
+            role: {
+              set: body.role,
+            },
+            email: {
+              set: body.email,
+            },
+          },
           where: {
             externalId: id,
           },
@@ -102,12 +108,12 @@ export default async function handler(
         return;
       }
       res.status(201).json({ data });
+      return
     }
   } else if (eventType === "user.deleted") {
     const { id } = evt.data;
     if (!id) {
       res.status(400).json({});
-      id;
       return;
     }
     const { data, errors } = await client.mutate({
@@ -121,7 +127,6 @@ export default async function handler(
 
     if (!data || errors) {
       res.status(400).json({});
-      id;
       return;
     }
     res.status(201).json({ data });
