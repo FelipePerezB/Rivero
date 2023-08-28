@@ -4,7 +4,7 @@ import type { WebhookRequiredHeaders } from "svix";
 import type { WebhookEvent } from "@clerk/nextjs/server";
 import { Webhook } from "svix";
 import { client } from "src/service/client";
-import { CreateUserDocument, Role } from "src/gql/graphql";
+import { CreateUserDocument, RemoveUserDocument, Role } from "src/gql/graphql";
 
 const webhookSecret = process.env.WEBHOOK_SECRET;
 
@@ -28,6 +28,7 @@ export default async function handler(
   }
 
   const eventType = evt.type;
+
   if (eventType === "user.created") {
     const { id, username, email_addresses, public_metadata } = evt.data;
     if (
@@ -37,10 +38,15 @@ export default async function handler(
       !public_metadata.gradeId ||
       !public_metadata.schoolId ||
       !public_metadata.role
-    )
+    ) {
+      res.status(400).json({});
       return;
+    }
     const { gradeId, schoolId, role } = public_metadata;
-    if (!gradeId || !schoolId || !role) return;
+    if (!gradeId || !schoolId || !role) {
+      res.status(400).json({});
+      return;
+    }
     const { data, errors } = await client.mutate({
       mutation: CreateUserDocument,
       variables: {
@@ -62,8 +68,34 @@ export default async function handler(
         },
       },
     });
-    console.log(data, errors);
-    res.status(201).json({});
+    if (errors || !data) {
+      res.status(400).json(errors);
+      return;
+    }
+    res.status(201).json({ data });
+  } else if (eventType === "user.deleted") {
+    const { id } = evt.data;
+    if (!id) {
+      res.status(400).json({});
+      id;
+      return;
+    }
+    const { data, errors } = await client.mutate({
+      mutation: RemoveUserDocument,
+      variables: {
+        where: {
+          externalId: id,
+        },
+      },
+    });
+
+    if (!data || errors) {
+      res.status(400).json({});
+      id;
+      return;
+    }
+    res.status(201).json({ data });
+    return;
   }
 }
 

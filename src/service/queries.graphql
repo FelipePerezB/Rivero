@@ -103,6 +103,12 @@ mutation createUser($createUserInput: UserCreateInput!){
   }
 }
 
+mutation RemoveUser($where: UserWhereUniqueInput!){
+  removeUser(where: $where) {
+    id
+  }
+}
+
 query GetDoc($where: DocWhereUniqueInput!) {
   doc(where: $where) {
     content
