@@ -89,22 +89,30 @@ query GetUserByEmail($email: String!) {
 #   }
 # }
 
-mutation UpdateDoc($updateDocId: Float!, $updateDocInput: DocUpdateInput!){
+mutation UpdateDoc($updateDocId: Float!, $updateDocInput: DocUpdateInput!) {
   updateDoc(id: $updateDocId, updateDocInput: $updateDocInput) {
     id
   }
 }
 
-
-mutation createUser($createUserInput: UserCreateInput!){
+mutation createUser($createUserInput: UserCreateInput!) {
   createUser(createUserInput: $createUserInput) {
     id
     email
   }
 }
 
-mutation RemoveUser($where: UserWhereUniqueInput!){
+mutation RemoveUser($where: UserWhereUniqueInput!) {
   removeUser(where: $where) {
+    id
+  }
+}
+
+mutation UpdateUser(
+  $where: UserWhereUniqueInput!
+  $updateUserInput: UserUpdateInput!
+) {
+  updateUser(where: $where, updateUserInput: $updateUserInput) {
     id
   }
 }
