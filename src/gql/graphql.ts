@@ -853,11 +853,6 @@ export type IntNullableFilter = {
   notIn?: InputMaybe<Array<Scalars['Int']['input']>>;
 };
 
-export type LoginUserInput = {
-  email: Scalars['String']['input'];
-  password: Scalars['String']['input'];
-};
-
 export type Mutation = {
   __typename?: 'Mutation';
   createDoc: Doc;
@@ -1097,7 +1092,6 @@ export type Query = {
   docs: Array<Doc>;
   grade: Grade;
   grades: Array<Grade>;
-  login: User;
   school: School;
   schools: Array<School>;
   score: Score;
@@ -1126,11 +1120,6 @@ export type QueryDocsArgs = {
 
 export type QueryGradeArgs = {
   id: Scalars['Int']['input'];
-};
-
-
-export type QueryLoginArgs = {
-  user: LoginUserInput;
 };
 
 
@@ -2371,15 +2360,13 @@ export type User = {
   _count: UserCount;
   createdAt?: Maybe<Scalars['DateTime']['output']>;
   email: Scalars['String']['output'];
+  externalId: Scalars['String']['output'];
   gradeId: Scalars['Int']['output'];
   id: Scalars['ID']['output'];
-  lastname: Scalars['String']['output'];
-  name: Scalars['String']['output'];
-  nickname: Scalars['String']['output'];
-  password: Scalars['String']['output'];
   role: Role;
   schoolId: Scalars['Int']['output'];
   updateAt?: Maybe<Scalars['DateTime']['output']>;
+  username: Scalars['String']['output'];
 };
 
 export type UserCount = {
@@ -2395,25 +2382,21 @@ export type UserCreateInput = {
   Score?: InputMaybe<ScoreCreateNestedManyWithoutUserInput>;
   createdAt?: InputMaybe<Scalars['DateTime']['input']>;
   email: Scalars['String']['input'];
-  lastname: Scalars['String']['input'];
-  name: Scalars['String']['input'];
-  nickname: Scalars['String']['input'];
-  password: Scalars['String']['input'];
+  externalId: Scalars['String']['input'];
   role: Role;
   updateAt?: InputMaybe<Scalars['DateTime']['input']>;
+  username: Scalars['String']['input'];
 };
 
 export type UserCreateManyGradeInput = {
   createdAt?: InputMaybe<Scalars['DateTime']['input']>;
   email: Scalars['String']['input'];
+  externalId: Scalars['String']['input'];
   id?: InputMaybe<Scalars['Int']['input']>;
-  lastname: Scalars['String']['input'];
-  name: Scalars['String']['input'];
-  nickname: Scalars['String']['input'];
-  password: Scalars['String']['input'];
   role: Role;
   schoolId: Scalars['Int']['input'];
   updateAt?: InputMaybe<Scalars['DateTime']['input']>;
+  username: Scalars['String']['input'];
 };
 
 export type UserCreateManyGradeInputEnvelope = {
@@ -2424,14 +2407,12 @@ export type UserCreateManyGradeInputEnvelope = {
 export type UserCreateManySchoolInput = {
   createdAt?: InputMaybe<Scalars['DateTime']['input']>;
   email: Scalars['String']['input'];
+  externalId: Scalars['String']['input'];
   gradeId: Scalars['Int']['input'];
   id?: InputMaybe<Scalars['Int']['input']>;
-  lastname: Scalars['String']['input'];
-  name: Scalars['String']['input'];
-  nickname: Scalars['String']['input'];
-  password: Scalars['String']['input'];
   role: Role;
   updateAt?: InputMaybe<Scalars['DateTime']['input']>;
+  username: Scalars['String']['input'];
 };
 
 export type UserCreateManySchoolInputEnvelope = {
@@ -2491,12 +2472,10 @@ export type UserCreateWithoutDocInput = {
   Score?: InputMaybe<ScoreCreateNestedManyWithoutUserInput>;
   createdAt?: InputMaybe<Scalars['DateTime']['input']>;
   email: Scalars['String']['input'];
-  lastname: Scalars['String']['input'];
-  name: Scalars['String']['input'];
-  nickname: Scalars['String']['input'];
-  password: Scalars['String']['input'];
+  externalId: Scalars['String']['input'];
   role: Role;
   updateAt?: InputMaybe<Scalars['DateTime']['input']>;
+  username: Scalars['String']['input'];
 };
 
 export type UserCreateWithoutGradeInput = {
@@ -2505,12 +2484,10 @@ export type UserCreateWithoutGradeInput = {
   Score?: InputMaybe<ScoreCreateNestedManyWithoutUserInput>;
   createdAt?: InputMaybe<Scalars['DateTime']['input']>;
   email: Scalars['String']['input'];
-  lastname: Scalars['String']['input'];
-  name: Scalars['String']['input'];
-  nickname: Scalars['String']['input'];
-  password: Scalars['String']['input'];
+  externalId: Scalars['String']['input'];
   role: Role;
   updateAt?: InputMaybe<Scalars['DateTime']['input']>;
+  username: Scalars['String']['input'];
 };
 
 export type UserCreateWithoutSchoolInput = {
@@ -2519,12 +2496,10 @@ export type UserCreateWithoutSchoolInput = {
   Score?: InputMaybe<ScoreCreateNestedManyWithoutUserInput>;
   createdAt?: InputMaybe<Scalars['DateTime']['input']>;
   email: Scalars['String']['input'];
-  lastname: Scalars['String']['input'];
-  name: Scalars['String']['input'];
-  nickname: Scalars['String']['input'];
-  password: Scalars['String']['input'];
+  externalId: Scalars['String']['input'];
   role: Role;
   updateAt?: InputMaybe<Scalars['DateTime']['input']>;
+  username: Scalars['String']['input'];
 };
 
 export type UserCreateWithoutScoreInput = {
@@ -2533,12 +2508,10 @@ export type UserCreateWithoutScoreInput = {
   School: SchoolCreateNestedOneWithoutUsersInput;
   createdAt?: InputMaybe<Scalars['DateTime']['input']>;
   email: Scalars['String']['input'];
-  lastname: Scalars['String']['input'];
-  name: Scalars['String']['input'];
-  nickname: Scalars['String']['input'];
-  password: Scalars['String']['input'];
+  externalId: Scalars['String']['input'];
   role: Role;
   updateAt?: InputMaybe<Scalars['DateTime']['input']>;
+  username: Scalars['String']['input'];
 };
 
 export type UserListRelationFilter = {
@@ -2558,15 +2531,13 @@ export type UserScalarWhereInput = {
   OR?: InputMaybe<Array<UserScalarWhereInput>>;
   createdAt?: InputMaybe<DateTimeNullableFilter>;
   email?: InputMaybe<StringFilter>;
+  externalId?: InputMaybe<StringFilter>;
   gradeId?: InputMaybe<IntFilter>;
   id?: InputMaybe<IntFilter>;
-  lastname?: InputMaybe<StringFilter>;
-  name?: InputMaybe<StringFilter>;
-  nickname?: InputMaybe<StringFilter>;
-  password?: InputMaybe<StringFilter>;
   role?: InputMaybe<EnumRoleFilter>;
   schoolId?: InputMaybe<IntFilter>;
   updateAt?: InputMaybe<DateTimeNullableFilter>;
+  username?: InputMaybe<StringFilter>;
 };
 
 export type UserUpdateInput = {
@@ -2576,23 +2547,19 @@ export type UserUpdateInput = {
   Score?: InputMaybe<ScoreUpdateManyWithoutUserNestedInput>;
   createdAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
   email?: InputMaybe<StringFieldUpdateOperationsInput>;
-  lastname?: InputMaybe<StringFieldUpdateOperationsInput>;
-  name?: InputMaybe<StringFieldUpdateOperationsInput>;
-  nickname?: InputMaybe<StringFieldUpdateOperationsInput>;
-  password?: InputMaybe<StringFieldUpdateOperationsInput>;
+  externalId?: InputMaybe<StringFieldUpdateOperationsInput>;
   role?: InputMaybe<EnumRoleFieldUpdateOperationsInput>;
   updateAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
+  username?: InputMaybe<StringFieldUpdateOperationsInput>;
 };
 
 export type UserUpdateManyMutationInput = {
   createdAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
   email?: InputMaybe<StringFieldUpdateOperationsInput>;
-  lastname?: InputMaybe<StringFieldUpdateOperationsInput>;
-  name?: InputMaybe<StringFieldUpdateOperationsInput>;
-  nickname?: InputMaybe<StringFieldUpdateOperationsInput>;
-  password?: InputMaybe<StringFieldUpdateOperationsInput>;
+  externalId?: InputMaybe<StringFieldUpdateOperationsInput>;
   role?: InputMaybe<EnumRoleFieldUpdateOperationsInput>;
   updateAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
+  username?: InputMaybe<StringFieldUpdateOperationsInput>;
 };
 
 export type UserUpdateManyWithWhereWithoutGradeInput = {
@@ -2675,12 +2642,10 @@ export type UserUpdateWithoutDocInput = {
   Score?: InputMaybe<ScoreUpdateManyWithoutUserNestedInput>;
   createdAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
   email?: InputMaybe<StringFieldUpdateOperationsInput>;
-  lastname?: InputMaybe<StringFieldUpdateOperationsInput>;
-  name?: InputMaybe<StringFieldUpdateOperationsInput>;
-  nickname?: InputMaybe<StringFieldUpdateOperationsInput>;
-  password?: InputMaybe<StringFieldUpdateOperationsInput>;
+  externalId?: InputMaybe<StringFieldUpdateOperationsInput>;
   role?: InputMaybe<EnumRoleFieldUpdateOperationsInput>;
   updateAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
+  username?: InputMaybe<StringFieldUpdateOperationsInput>;
 };
 
 export type UserUpdateWithoutGradeInput = {
@@ -2689,12 +2654,10 @@ export type UserUpdateWithoutGradeInput = {
   Score?: InputMaybe<ScoreUpdateManyWithoutUserNestedInput>;
   createdAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
   email?: InputMaybe<StringFieldUpdateOperationsInput>;
-  lastname?: InputMaybe<StringFieldUpdateOperationsInput>;
-  name?: InputMaybe<StringFieldUpdateOperationsInput>;
-  nickname?: InputMaybe<StringFieldUpdateOperationsInput>;
-  password?: InputMaybe<StringFieldUpdateOperationsInput>;
+  externalId?: InputMaybe<StringFieldUpdateOperationsInput>;
   role?: InputMaybe<EnumRoleFieldUpdateOperationsInput>;
   updateAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
+  username?: InputMaybe<StringFieldUpdateOperationsInput>;
 };
 
 export type UserUpdateWithoutSchoolInput = {
@@ -2703,12 +2666,10 @@ export type UserUpdateWithoutSchoolInput = {
   Score?: InputMaybe<ScoreUpdateManyWithoutUserNestedInput>;
   createdAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
   email?: InputMaybe<StringFieldUpdateOperationsInput>;
-  lastname?: InputMaybe<StringFieldUpdateOperationsInput>;
-  name?: InputMaybe<StringFieldUpdateOperationsInput>;
-  nickname?: InputMaybe<StringFieldUpdateOperationsInput>;
-  password?: InputMaybe<StringFieldUpdateOperationsInput>;
+  externalId?: InputMaybe<StringFieldUpdateOperationsInput>;
   role?: InputMaybe<EnumRoleFieldUpdateOperationsInput>;
   updateAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
+  username?: InputMaybe<StringFieldUpdateOperationsInput>;
 };
 
 export type UserUpdateWithoutScoreInput = {
@@ -2717,12 +2678,10 @@ export type UserUpdateWithoutScoreInput = {
   School?: InputMaybe<SchoolUpdateOneRequiredWithoutUsersNestedInput>;
   createdAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
   email?: InputMaybe<StringFieldUpdateOperationsInput>;
-  lastname?: InputMaybe<StringFieldUpdateOperationsInput>;
-  name?: InputMaybe<StringFieldUpdateOperationsInput>;
-  nickname?: InputMaybe<StringFieldUpdateOperationsInput>;
-  password?: InputMaybe<StringFieldUpdateOperationsInput>;
+  externalId?: InputMaybe<StringFieldUpdateOperationsInput>;
   role?: InputMaybe<EnumRoleFieldUpdateOperationsInput>;
   updateAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
+  username?: InputMaybe<StringFieldUpdateOperationsInput>;
 };
 
 export type UserUpsertWithWhereUniqueWithoutGradeInput = {
@@ -2759,15 +2718,13 @@ export type UserWhereInput = {
   Score?: InputMaybe<ScoreListRelationFilter>;
   createdAt?: InputMaybe<DateTimeNullableFilter>;
   email?: InputMaybe<StringFilter>;
+  externalId?: InputMaybe<StringFilter>;
   gradeId?: InputMaybe<IntFilter>;
   id?: InputMaybe<IntFilter>;
-  lastname?: InputMaybe<StringFilter>;
-  name?: InputMaybe<StringFilter>;
-  nickname?: InputMaybe<StringFilter>;
-  password?: InputMaybe<StringFilter>;
   role?: InputMaybe<EnumRoleFilter>;
   schoolId?: InputMaybe<IntFilter>;
   updateAt?: InputMaybe<DateTimeNullableFilter>;
+  username?: InputMaybe<StringFilter>;
 };
 
 export type UserWhereUniqueInput = {
@@ -2780,15 +2737,13 @@ export type UserWhereUniqueInput = {
   Score?: InputMaybe<ScoreListRelationFilter>;
   createdAt?: InputMaybe<DateTimeNullableFilter>;
   email?: InputMaybe<Scalars['String']['input']>;
+  externalId?: InputMaybe<Scalars['String']['input']>;
   gradeId?: InputMaybe<IntFilter>;
   id?: InputMaybe<Scalars['Int']['input']>;
-  lastname?: InputMaybe<StringFilter>;
-  name?: InputMaybe<StringFilter>;
-  nickname?: InputMaybe<StringFilter>;
-  password?: InputMaybe<StringFilter>;
   role?: InputMaybe<EnumRoleFilter>;
   schoolId?: InputMaybe<IntFilter>;
   updateAt?: InputMaybe<DateTimeNullableFilter>;
+  username?: InputMaybe<StringFilter>;
 };
 
 export type GetSubjectsQueryVariables = Exact<{ [key: string]: never; }>;
@@ -2813,14 +2768,7 @@ export type GetUserByEmailQueryVariables = Exact<{
 }>;
 
 
-export type GetUserByEmailQuery = { __typename?: 'Query', userByEmail: { __typename?: 'User', email: string, gradeId: number, id: string, name: string, role: Role } };
-
-export type LoginUserQueryVariables = Exact<{
-  user: LoginUserInput;
-}>;
-
-
-export type LoginUserQuery = { __typename?: 'Query', login: { __typename?: 'User', name: string, email: string, id: string, gradeId: number, role: Role } };
+export type GetUserByEmailQuery = { __typename?: 'Query', userByEmail: { __typename?: 'User', email: string, gradeId: number, id: string, username: string, role: Role } };
 
 export type UpdateDocMutationVariables = Exact<{
   updateDocId: Scalars['Float']['input'];
@@ -2829,6 +2777,13 @@ export type UpdateDocMutationVariables = Exact<{
 
 
 export type UpdateDocMutation = { __typename?: 'Mutation', updateDoc: { __typename?: 'Doc', id: string } };
+
+export type CreateUserMutationVariables = Exact<{
+  createUserInput: UserCreateInput;
+}>;
+
+
+export type CreateUserMutation = { __typename?: 'Mutation', createUser: { __typename?: 'User', id: string, email: string } };
 
 export type GetDocQueryVariables = Exact<{
   where: DocWhereUniqueInput;
@@ -2848,8 +2803,8 @@ export type CreateDocMutation = { __typename?: 'Mutation', createDoc: { __typena
 export const GetSubjectsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetSubjects"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"subjects"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"color"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"_count"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"Docs"}}]}},{"kind":"Field","name":{"kind":"Name","value":"Topics"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]}}]} as unknown as DocumentNode<GetSubjectsQuery, GetSubjectsQueryVariables>;
 export const GetSubjectsPathsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetSubjectsPaths"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"subjects"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<GetSubjectsPathsQuery, GetSubjectsPathsQueryVariables>;
 export const GetSubjectDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetSubject"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"subjectId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"subject"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"subjectId"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"color"}},{"kind":"Field","name":{"kind":"Name","value":"Topics"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"_count"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"Docs"}}]}},{"kind":"Field","name":{"kind":"Name","value":"Subtopics"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"Docs"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"externalId"}},{"kind":"Field","name":{"kind":"Name","value":"title"}}]}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetSubjectQuery, GetSubjectQueryVariables>;
-export const GetUserByEmailDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetUserByEmail"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"email"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"userByEmail"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"email"},"value":{"kind":"Variable","name":{"kind":"Name","value":"email"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"gradeId"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"role"}}]}}]}}]} as unknown as DocumentNode<GetUserByEmailQuery, GetUserByEmailQueryVariables>;
-export const LoginUserDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"LoginUser"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"user"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"LoginUserInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"login"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"user"},"value":{"kind":"Variable","name":{"kind":"Name","value":"user"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"gradeId"}},{"kind":"Field","name":{"kind":"Name","value":"role"}}]}}]}}]} as unknown as DocumentNode<LoginUserQuery, LoginUserQueryVariables>;
+export const GetUserByEmailDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetUserByEmail"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"email"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"userByEmail"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"email"},"value":{"kind":"Variable","name":{"kind":"Name","value":"email"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"gradeId"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"username"}},{"kind":"Field","name":{"kind":"Name","value":"role"}}]}}]}}]} as unknown as DocumentNode<GetUserByEmailQuery, GetUserByEmailQueryVariables>;
 export const UpdateDocDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateDoc"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"updateDocId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Float"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"updateDocInput"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"DocUpdateInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateDoc"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"updateDocId"}}},{"kind":"Argument","name":{"kind":"Name","value":"updateDocInput"},"value":{"kind":"Variable","name":{"kind":"Name","value":"updateDocInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<UpdateDocMutation, UpdateDocMutationVariables>;
+export const CreateUserDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"createUser"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"createUserInput"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UserCreateInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createUser"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"createUserInput"},"value":{"kind":"Variable","name":{"kind":"Name","value":"createUserInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"email"}}]}}]}}]} as unknown as DocumentNode<CreateUserMutation, CreateUserMutationVariables>;
 export const GetDocDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetDoc"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"DocWhereUniqueInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"doc"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"content"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"privacity"}},{"kind":"Field","name":{"kind":"Name","value":"externalId"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"Subject"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}}]}},{"kind":"Field","name":{"kind":"Name","value":"Topic"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}}]}},{"kind":"Field","name":{"kind":"Name","value":"Subtopic"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]}}]} as unknown as DocumentNode<GetDocQuery, GetDocQueryVariables>;
 export const CreateDocDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateDoc"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"createDocInput"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"DocCreateInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createDoc"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"createDocInput"},"value":{"kind":"Variable","name":{"kind":"Name","value":"createDocInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<CreateDocMutation, CreateDocMutationVariables>;

@@ -68,20 +68,20 @@ query GetUserByEmail($email: String!) {
     email
     gradeId
     id
-    name
+    username
     role
   }
 }
 
-query LoginUser($user: LoginUserInput!) {
-  login(user: $user) {
-    name
-    email
-    id
-    gradeId
-    role
-  }
-}
+# query LoginUser($user: LoginUserInput!) {
+#   login(user: $user) {
+#     username
+#     email
+#     id
+#     gradeId
+#     role
+#   }
+# }
 
 # query GetSubjectsIds($where: SubjectWhereInput!) {
 #   subjects(where: $where) {
@@ -95,6 +95,13 @@ mutation UpdateDoc($updateDocId: Float!, $updateDocInput: DocUpdateInput!){
   }
 }
 
+
+mutation createUser($createUserInput: UserCreateInput!){
+  createUser(createUserInput: $createUserInput) {
+    id
+    email
+  }
+}
 
 query GetDoc($where: DocWhereUniqueInput!) {
   doc(where: $where) {
