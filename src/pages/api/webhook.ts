@@ -49,8 +49,8 @@ export default async function handler(
       !id ||
       !username ||
       !email_addresses[0]?.email_address ||
-      typeof gradeId !== "number" ||
-      typeof schoolId !== "number" ||
+      !gradeId ||
+      !schoolId ||
       !role
     ) {
       res.status(400).json({});
@@ -73,7 +73,6 @@ export default async function handler(
         },
       },
     };
-
     if (eventType === "user.created") {
       const { data, errors } = await client.mutate({
         mutation: CreateUserDocument,
@@ -81,6 +80,12 @@ export default async function handler(
           createUserInput: body,
         },
       });
+      if (errors || !data) {
+        res.status(400).json(errors);
+        return;
+      }
+      res.status(201).json({ data });
+      return;
     } else if (eventType === "user.updated") {
       const { data, errors } = await client.mutate({
         mutation: UpdateUserDocument,
@@ -108,7 +113,7 @@ export default async function handler(
         return;
       }
       res.status(201).json({ data });
-      return
+      return;
     }
   } else if (eventType === "user.deleted") {
     const { id } = evt.data;
