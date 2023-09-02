@@ -94,11 +94,8 @@ export default function Docs({
 
   return (
     <>
-      <Layout>
-        <Link href={"/docs"}>
-          <h1 className={styles.grade}>{capFirst(subject?.name)}</h1>
-        </Link>
-        <Options
+      <Layout title={capFirst(subject?.name)}>
+          <Options
           options={topicsNames as string[]}
           state={topicName as string}
           color={color}

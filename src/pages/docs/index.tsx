@@ -79,9 +79,9 @@ export default function Docs({
 
   return (
     <>
-      <Layout>
-        <h1>Asignaturas</h1>
-        <ul className={styles.units}>
+      <Layout title="Documentos">
+        {/* <ul className={styles.units}> */}
+        <Recomendations title="Asignaturas" link="/">
           {subjects.map(({ name, Topics, color, _count, id }, i) => {
             if (!(_count.Docs > 0)) return;
             const subjectStats = stats[name] as { subject: string };
@@ -114,7 +114,8 @@ export default function Docs({
               )
             );
           })}
-        </ul>
+        </Recomendations>
+        {/* </ul> */}
         <Recomendations title="Guardados" link="/">
           {savedDocs.map((doc, i) => (
             <>

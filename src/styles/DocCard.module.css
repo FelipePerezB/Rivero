@@ -7,7 +7,8 @@
   flex-direction: column;
   overflow: hidden;
   border-radius: var(--radius);
-  outline: 2px solid rgb(228, 228, 228);
+  box-shadow: var(--shadow);
+  /* outline: 2px solid rgb(228, 228, 228); */
   transition: all 350ms;
 }
 

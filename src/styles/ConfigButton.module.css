@@ -4,7 +4,7 @@
   align-items: center;
   width: 3.8rem;
   height: 3.8rem;
-  background: black;
+  background: var(--black);
   padding: 8px;
   border-radius: 50%;
   position: fixed;

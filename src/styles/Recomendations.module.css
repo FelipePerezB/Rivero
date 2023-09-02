@@ -4,8 +4,11 @@
   /* overflow: scroll; */
 }
 
-.column .recomendations {
+/* .column .recomendations {
   padding-top: 50px;
+} */
+.row .recomendations {
+  overflow-x: scroll;
 }
 
 .info {
@@ -25,21 +28,22 @@
 }
 
 .children {
+  display: flex;
   justify-content: center;
+  align-items: center;
 }
 
 .row .children {
   width: max-content;
-  display: flex;
-  padding: 8px;
+  padding: 0 var(--sm-padding) var(--padding);
   gap: 24px;
   overflow-x: scroll;
 }
 
 .column .children {
-  display: flex;
   flex-wrap: wrap;
   gap: 32px;
+
 }
 
 .filter {

@@ -1,33 +1,46 @@
 .navar{
-  color: white;
+  display: flex;
+  justify-content: center;
+}
+
+.navar > div{
+  height: 60px;
+}
+
+.navar h1{
+  font-size: 2rem;
+  color: rgb(40, 40, 40);
+}
+
+.navar ul {
+  background-color: var(--background-color);
+  /* background-color: var(--background-color); */
   position: fixed;
   z-index: 1000;
   top: 0;
   width: 100%;
-  padding: 0 16px;
-  /* background-color: var(--primary-color); */
-  background-color: black;
-}
-
-.navar ul{
-  height: 3.6rem;
+  padding: var(--sm-padding) var(--padding);
+  max-width: 26rem;
+  margin: 0 auto;
+  height: max-content;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.navar__icon{
+.navar__icon {
   width: 3rem;
   color: white;
   font-size: 24px;
   cursor: pointer;
 }
 
-.navar__icon:hover, .stars:hover{
+.navar__icon:hover,
+.stars:hover {
   color: lightgray;
 }
 
-.stars{
+.stars {
   width: 3rem;
   color: white;
   display: flex;
@@ -35,4 +48,9 @@
   justify-content: center;
   gap: 8px;
   font-size: 1.2rem;
+}
+
+.profile {
+  border-radius: 50%;
+  cursor: pointer;
 }

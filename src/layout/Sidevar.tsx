@@ -3,6 +3,7 @@ import styles from "@styles/Sidevar.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faBell,
+  faBlog,
   faChevronRight,
   faClose,
   faDownload,
@@ -16,6 +17,8 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import Link from "next/link";
 import SwitchToogle from "@components/SwitchToogle";
+import { UserButton, useUser } from "@clerk/nextjs";
+import { capFirst } from "src/utils/capFirst";
 // import { signIn, signOut, useSession } from "next-auth/react";
 
 export default function Sidevar({
@@ -25,66 +28,41 @@ export default function Sidevar({
   visibility: boolean;
   setVisibility: any;
 }) {
+  const setDarkMode = (data: any) => {
+    console.log(data);
+  };
   const [state, setState] = useState(false);
-  // const { data, status } = useSession() as unknown as {
-  //   status: "authenticated" | "loading" | "unauthenticated";
-  //   data: {
-  //     user: {
-  //       name: string;
-  //       role: string;
-  //     };
-  //   };
-  // };
+  const { user } = useUser();
   const sidevarState = visibility ? "on" : "off";
   return (
     <>
       <div className={styles[sidevarState]}>
         <div className={styles.blur} onClick={() => setVisibility(false)}></div>
         <article className={styles.sidevar}>
-          {/* {data && ( */}
-          <Link href={"/profile"}>
-            <section className={styles.profile}>
-              {/* <div className={styles.photo}></div> */}
-              <div className={styles["profile__info"]}>
-                {/* <span className={styles.name}>{data.user?.name}</span> */}
-                <span className={styles.role}>
-                  {/* {data.user.role.toUpperCase()} */}
-                </span>
-              </div>
-              <FontAwesomeIcon size="xl" icon={faGear} />
-            </section>
-          </Link>
-          {/* )} */}
-
-          <section className={styles.options__container}>
-            <div className={styles.options}>
-              {/* <Option link={"/"} icon={faShieldDog} text="Privacidad" />
-              <Option link={"/"} icon={faGear} text="Configuración" />
-              <Option
-                toogle={{ setState, state }}
-                icon={faMoon}
-                text="Dark mode"
-              /> */}
-              {/* {data && status === "authenticated" && ( */}
-              <Option
-                iconColor="#CB2F4E"
-                icon={faSignOut}
-                // callback={signOut}
-                text="Cerrar sesión"
-              />
-              {/* )} */}
-              {/* {status === "unauthenticated" && ( */}
-              <Option
-                iconColor="var(--primary-color)"
-                icon={faRightToBracket}
-                text="Iniciar sesión"
-                // callback={signIn}
-              />
-              {/* )} */}
+          <section className={styles.profile}>
+            <UserButton appearance={{ variables: { borderRadius: "2px" } }} />
+            <div className={styles["profile__info"]}>
+              <span className={styles.name}>
+                {(user?.username as string | undefined) &&
+                  capFirst(user?.username as string)}
+              </span>
+              <span className={styles.role}>
+                {(user?.publicMetadata?.role as string | undefined) &&
+                  (user?.publicMetadata?.role as string)}
+              </span>
             </div>
-            {/* <div ownClick={() => setVisibility(false)}>
+          </section>
+          <section className={styles.options__container}>
+            <ul className={styles.options}>
+              <Option link={"/"} icon={faShieldDog} text="Privacidad" />
+              <Option callback={setDarkMode} icon={faMoon} text="Modo oscuro" />
+            </ul>
+            <div
+              className={styles["close-menu"]}
+              onClick={() => setVisibility(false)}
+            >
               <Option text="Cerrar menu" icon={faClose} />
-            </div> */}
+            </div>
           </section>
         </article>
       </div>
@@ -92,10 +70,8 @@ export default function Sidevar({
   );
 }
 
-const createFormData = () => {};
-
 function Option({
-  iconColor,
+  iconColor = "var(--black)",
   link,
   icon,
   text,
@@ -106,7 +82,7 @@ function Option({
   link?: string;
   icon: IconDefinition;
   text: string;
-  callback?: () => any;
+  callback?: (data: any) => void;
   toogle?: {
     state: boolean;
     setState: any;
@@ -116,20 +92,30 @@ function Option({
     <li
       className={styles.option}
       onClick={() => {
-        callback && callback();
+        callback && callback("");
         toogle && toogle.setState(!toogle.state);
       }}
     >
       <div>
         <FontAwesomeIcon
-          style={{ height: "24px", width: "24px", color: iconColor }}
+          style={{ color: iconColor, width: "28px", height: "28px" }}
           icon={icon}
         />
         <span>{text}</span>
       </div>
-      {link && <FontAwesomeIcon icon={faChevronRight} />}
-      {toogle && <SwitchToogle createFormData={createFormData} />}
+      {link && <FontAwesomeIcon color="var(--black)" icon={faChevronRight} />}
+      {callback && <SwitchToogle createFormData={callback} />}
     </li>
   );
-  return <>{link ? <Link href={link}>{node}</Link> : node}</>;
+  return (
+    <>
+      {link ? (
+        <Link style={{ width: "100%" }} href={link}>
+          {node}
+        </Link>
+      ) : (
+        node
+      )}
+    </>
+  );
 }

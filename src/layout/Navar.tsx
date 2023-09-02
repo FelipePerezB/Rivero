@@ -8,33 +8,27 @@ import {
   faStar,
 } from "@fortawesome/free-solid-svg-icons";
 import Link from "next/link";
+import { UserButton, useUser } from "@clerk/nextjs";
 
-export default function Navar({ setVisibility }: { setVisibility: any }) {
+export default function Navar({
+  setVisibility,
+  title,
+}: {
+  setVisibility: any;
+  title?: string;
+}) {
   return (
     <nav className={styles.navar}>
+      <div></div>
       <ul>
+        <li>{title && <h1>{title}</h1>}</li>
         <li
           onClick={() => {
             setVisibility(true);
           }}
         >
-          <FontAwesomeIcon icon={faBars} className={styles["navar__icon"]} />
+          <FontAwesomeIcon color="var(--black)" size="xl" icon={faBars} />
         </li>
-        <li>
-          <Link className={styles.logo} href={"/"}>
-            <FontAwesomeIcon
-              icon={faChartSimple}
-              className={styles["navar__icon"]}
-            />
-          </Link>
-        </li>
-        <li></li>
-        {/* <li>
-          <Link className={styles.stars} href={"/ranking"}>
-              <span>50</span>
-              <FontAwesomeIcon icon={faStar}/>
-          </Link>
-        </li> */}
       </ul>
     </nav>
   );

@@ -5,54 +5,27 @@ import { faPaintbrush, faShieldDog } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
 import SwitchToogle from "@components/SwitchToogle";
-import Card from "@components/Card";
+import Card, { SimpleCard } from "@components/Card";
+import { UserButton, useUser } from "@clerk/nextjs";
+import { capFirst } from "src/utils/capFirst";
 
 export default function Config() {
+  const { user } = useUser();
+  const role = user?.publicMetadata?.role as string;
   return (
     <Layout>
       <article className={styles.cards}>
-        <Card
-          head={
-            <div className={styles["profile__info"]}>
-              <span className={styles.name}>{"Felipe Pérez"}</span>
-              <span className={styles.role}>{"ADMIN"}</span>
-            </div>
-          }
-        >
-          <div className={styles.profile}>
-            <form className={styles.form}>
-              <label>
-                <span>Nombre</span>
-                <input
-                  readOnly
-                  defaultValue={"Felipe Pérez" as string | undefined}
-                  className={styles.input}
-                />
-              </label>
-              <label>
-                <span>Email</span>
-                <input
-                  readOnly
-                  defaultValue={
-                    "felipe.perez@colegiopucon.com" as string | undefined
-                  }
-                  className={styles.input}
-                />
-              </label>
-            </form>
-            <div className={styles.links}>
-              <Link className={styles.link} href={"/"}>
-                <span>Actualizar perfil</span>
-              </Link>
-              <Link className={styles.link} href={"/"}>
-                <span>Cambiar contraseña</span>
-              </Link>
-              <span className={styles["link--active"]} onClick={() => {}}>
-                Cerrar sesión
-              </span>
-            </div>
-          </div>
-        </Card>
+        {user?.username && role && (
+          <>
+            <SimpleCard>
+              <div className={styles["profile__info"]}>
+                <UserButton />
+                <span className={styles.name}>{capFirst(user.username)}</span>
+                <span className={styles.role}>{role?.toUpperCase()}</span>
+              </div>
+            </SimpleCard>
+          </>
+        )}
         <Card
           head={
             <span>
@@ -71,7 +44,9 @@ export default function Config() {
               <FontAwesomeIcon size="lg" icon={faShieldDog} /> Privacidad
             </span>
           }
-        ><></></Card>
+        >
+          <></>
+        </Card>
       </article>
     </Layout>
   );

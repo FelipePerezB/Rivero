@@ -25,6 +25,11 @@
   gap: 14px;
 }
 
+.card{
+  width: 84vw;
+  max-width: 400px;
+}
+
 .card h2 {
   margin: 0;
 }
@@ -38,7 +43,7 @@
 }
 
 .doc:hover {
-  background-color: rgb(241, 241, 241);
+  background-color: var(--card-color-active);
 }
 
 .topics {
@@ -54,10 +59,6 @@
   background-color: white;
   outline: 1px solid lightgray;
   border-radius: var(--radius);
-}
-
-.card:hover .topics li {
-  background-color: rgb(241, 241, 241);
 }
 
 .count {

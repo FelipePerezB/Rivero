@@ -24,6 +24,7 @@ import {
 } from "src/gql/graphql";
 import { useMutation } from "@apollo/client";
 import SwitchInput from "@components/inputs/SwitchInput/SwitchInput";
+import { Toaster } from "react-hot-toast";
 
 type props = { type: string; options: any };
 
@@ -269,7 +270,9 @@ export default function Edit({
                 <FontAwesomeIcon
                   size="lg"
                   icon={faSave}
-                  onClick={() => saveDoc(pages)}
+                  onClick={() => {
+                    saveDoc(pages);
+                  }}
                 />
               </span>
               <span onClick={() => setShareModalState(true)}>
@@ -279,20 +282,7 @@ export default function Edit({
                 buttonName="Publicar"
                 onSubmit={(data) => {
                   if (!pages?.options?.externalId) return;
-                  if (pages?.options?.id) {
-                    const dbId = pages.options.id;
-                    updateDoc({
-                      variables: {
-                        updateDocId: Number(dbId),
-                        updateDocInput: {
-                          content: {
-                            set: JSON.stringify(pages),
-                          },
-                        },
-                      },
-                    });
-                    return;
-                  } else uploadDoc(data);
+          uploadDoc(data);
                 }}
                 setModalState={setShareModalState}
                 modalState={shareModalState}
@@ -339,6 +329,7 @@ export default function Edit({
           </div>
         )}
         <ConfigButton setComponent={setPage} component={pages} />
+        <Toaster/>
       </main>
     </>
   );

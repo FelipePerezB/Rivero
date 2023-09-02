@@ -45,10 +45,10 @@ export default function Var({ state }: { state?: "only-nav" }) {
       element: faSquarePen,
       // isPremium: true,
     },
-    {
-      link: "/config",
-      element: faGear,
-    },
+    // {
+    //   link: "/config",
+    //   element: faGear,
+    // },
     // {
     //   link: "/tools",
     //   element: faTools,

@@ -7,16 +7,18 @@ import Sidevar from "./Sidevar";
 export default function Layout({
   children,
   style,
+  title,
 }: {
   children: ReactNode;
   style?: "only-nav";
+  title?: string;
 }) {
   const [visibility, setVisibility] = useState(false);
   return (
     <div className={styles.layout}>
-      {/* <Navar setVisibility={setVisibility} /> */}
+      <Navar title={title} setVisibility={setVisibility} />
       <main className={styles.main}>{children}</main>
-      <Var state={style}/>
+      <Var state={style} />
       <Sidevar visibility={visibility} setVisibility={setVisibility} />
     </div>
   );

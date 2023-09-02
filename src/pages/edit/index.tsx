@@ -7,6 +7,7 @@ import ConfigButton from "@components/ConfigButton";
 import { useRouter } from "next/router";
 import DocCard from "@components/DocCard";
 import Link from "next/link";
+import Recomendations from "@components/Recomendations";
 
 export default function EditPage() {
   const router = useRouter();
@@ -26,10 +27,10 @@ export default function EditPage() {
   const [savedDocs, setSavedDocs] = useState<any[]>([]);
 
   useEffect(() => {
-    const docs = []
+    const docs = [];
     for (let index = 0; index < localStorage.length; index++) {
       const key = localStorage.key(index);
-      console.log(index)
+      console.log(index);
       const doc = key?.includes("doc-") && localStorage.getItem(key);
       if (doc) {
         const jsonDoc = JSON.parse(doc);
@@ -44,8 +45,7 @@ export default function EditPage() {
           .map((doc) => doc.options.externalId)
           .includes(newDoc.options.externalId);
         if (isSaved) return;
-        docs.push(newDoc)
-
+        docs.push(newDoc);
       }
     }
     setFilteredDocs([...docs]);
@@ -53,15 +53,15 @@ export default function EditPage() {
   }, []);
 
   const [filteredDocs, setFilteredDocs] = useState(savedDocs);
-  const data = [...savedDocs]
+  const data = [...savedDocs];
 
   // console.log(savedDocs)
   return (
-    <Layout>
-      <h1>Documentos</h1>
+    <Layout  title="Editar">
+      {/* <h1>Documentos</h1> */}
       <label className={styles["search-container"]}>
         <input
-          onChange={({ target }) => {;
+          onChange={({ target }) => {
             setFilteredDocs(
               data?.filter((component) =>
                 component?.options?.title
@@ -74,7 +74,8 @@ export default function EditPage() {
           placeholder="Búsqueda..."
         />
       </label>
-      <ul className={styles.documents}>
+      {/* <ul className={styles.documents}> */}
+      <Recomendations>
         {filteredDocs.map((doc) => (
           <>
             {doc?.options?.title && (
@@ -87,7 +88,8 @@ export default function EditPage() {
             )}
           </>
         ))}
-      </ul>
+      </Recomendations>
+      {/* </ul> */}
       <ConfigButton
         callback={() => {
           const newId = makeRandomId(32);
