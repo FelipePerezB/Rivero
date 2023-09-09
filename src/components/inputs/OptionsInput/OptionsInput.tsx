@@ -9,6 +9,9 @@ type props = {
   options: string[];
   onChange: (data: any) => void;
   value?: string;
+  className?: string;
+  dontDefaultCheck?: boolean;
+  tabIndex?: number;
 };
 
 export default function OptionsInput(props: props) {
@@ -18,7 +21,7 @@ export default function OptionsInput(props: props) {
     props.onChange(obj);
   };
 
-  return props.options.length <= 3 ? (
+  return props.options.join("").length <= 6 ? (
     <SmallOptionsInput {...props} onChange={createFormData} />
   ) : (
     <LargeOptionsInput {...props} onChange={createFormData} />
@@ -48,15 +51,18 @@ function LargeOptionsInput(props: props) {
 
 function SmallOptionsInput(props: props) {
   useEffect(() => {
-    props.onChange(props.value ?? props.options[0]);
+    if (!props.dontDefaultCheck) {
+      props.onChange(props.value ?? props.options[0]);
+    }
   }, []);
   return (
-    <article className={styles["options"]}>
+    <article className={`${styles["options"]} ${props?.className}`}>
       <span className={styles.name}>{capFirst(props.name)}</span>
       <fieldset className={styles["small-options-input"]}>
         {props.options.map((option, i) => (
           <label key={option}>
             <input
+              tabIndex={i === 0 ? props.tabIndex : undefined}
               id={option}
               onClick={(event) => {
                 const { value } = event.target as HTMLInputElement;
@@ -64,7 +70,10 @@ function SmallOptionsInput(props: props) {
                 props.onChange(value);
               }}
               value={option}
-              defaultChecked={(!props.value && i === 0) || (option?.toLowerCase() === props.value?.toLowerCase())}
+              defaultChecked={
+                (!props.dontDefaultCheck && !props.value && i === 0) ||
+                option?.toLowerCase() === props.value?.toLowerCase()
+              }
               name={props.name}
               type="radio"
             />

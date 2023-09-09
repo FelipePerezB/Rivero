@@ -84,3 +84,9 @@
   display: flex;
   gap: 16px;
 }
+
+.nav-card{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}

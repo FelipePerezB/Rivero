@@ -9,7 +9,9 @@ export function SimpleCard({
   children,
   data,
   styled = true,
+  className = "",
 }: {
+  className?: string;
   styled?: boolean;
   children?: ReactNode;
   data?: {
@@ -23,7 +25,7 @@ export function SimpleCard({
         styled ? styles["main-info"] : styles["main-info--simple"]
       }`}
     >
-      <div className={styles.content}>
+      <section className={`${styles.content} ${className}`}>
         {children && children}
         {data && (
           <span>
@@ -31,7 +33,7 @@ export function SimpleCard({
             <span className={styles.title}>{data.title}</span>
           </span>
         )}
-      </div>
+      </section>
     </div>
   );
 }
@@ -39,12 +41,14 @@ export function SimpleCard({
 export function NavigateCard({
   children,
   link,
+  width = "max-content",
 }: {
   children: ReactNode;
   link: string;
+  width?: "max-content" | "100%";
 }) {
   return (
-    <Link href={link}>
+    <Link style={{ width }} href={link}>
       <div className={styles["navigate-card"]}>
         <SimpleCard>{children}</SimpleCard>
       </div>

@@ -44,7 +44,7 @@
 .main-info--simple:hover {
   cursor: pointer;
   transition: 200ms;
-  background-color: rgb(240, 240, 240);
+  /* background-color: rgb(232, 232, 232); */
 }
 
 .navigate-card{

@@ -21,7 +21,7 @@ export default function Layout({
       <Navar title={title} setVisibility={setVisibility} />
       <main className={styles.main}>{children}</main>
       <Var state={style} />
-      <Sidevar visibility={visibility} setVisibility={setVisibility} />
+      {/* <Sidevar visibility={visibility} setVisibility={setVisibility} /> */}
     </div>
   );
 }

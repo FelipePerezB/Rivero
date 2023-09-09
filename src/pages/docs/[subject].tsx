@@ -9,11 +9,13 @@ import {
   GetSubjectsPathsDocument,
 } from "src/gql/graphql";
 import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from "next";
-import Card, { SimpleCard } from "@components/Card";
+import Card, { NavigateCard, SimpleCard } from "@components/Card";
 import Options from "@components/Options";
 import { CompletedProgress } from "@components/ProgressVar";
 import Button from "@components/Button";
 import { capFirst } from "src/utils/capFirst";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faChevronRight, faPlus } from "@fortawesome/free-solid-svg-icons";
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const { data, error } = await client.query({
@@ -92,59 +94,61 @@ export default function Docs({
   };
 
   return (
-    <>
-      <Layout title={capFirst(subject?.name)}>
-        <Options
-          options={topicsNames as string[]}
-          state={topicName as string}
-          color={color}
-          // color={"var(--primary-color)"}
-          setState={setTopicName}
-        ></Options>
-        {docs > 0 && stats && (
-          <SimpleCard>
-            <div className={styles["stats"]}>
-              <CompletedProgress
-                size="lg"
-                color={color}
-                progress={getProgress()}
-              />
-              <span className={styles.count}>{docs} documentos</span>
-            </div>
-          </SimpleCard>
-        )}
-        <ul className={styles.units}>
-          {
-            // topic?.Subtopics
-            true &&
-              topic?.Subtopics?.map(({ Docs, name }) => (
-                <div key={name + "-doc"}>
-                  <Card head={<span>{capFirst(name)}</span>}>
-                    <ul className={styles.docs}>
-                      {Docs &&
-                        Docs.map(({ title, externalId }) => {
-                          return (
-                            <Link
-                              key={title + externalId}
-                              href={`view/${externalId}`}
-                            >
-                              <li className={styles.doc}>
-                                <span>{title}</span>
-                              </li>
-                            </Link>
-                          );
-                        })}
-                    </ul>
-                  </Card>
-                </div>
-              ))
-          }
-        </ul>
-        <div className={styles.buttons}>
-          <Button style="small-active">Practicar</Button>
-          <Button style="small">Crear asignatura</Button>
+    <Layout title={capFirst(subject?.name)}>
+      <NavigateCard width="100%" link={`/evaluations/${subject.id}`}>
+        <div className={styles["nav-card"]}>
+          <span>Evaluaciones</span>
+          <FontAwesomeIcon icon={faChevronRight} />
         </div>
-      </Layout>
-    </>
+      </NavigateCard>
+      <Options
+        options={topicsNames as string[]}
+        state={topicName as string}
+        color={color}
+        setState={setTopicName}
+      ></Options>
+      {docs > 0 && stats && (
+        <SimpleCard>
+          <div className={styles["stats"]}>
+            <CompletedProgress
+              size="lg"
+              color={color}
+              progress={getProgress()}
+            />
+            <span className={styles.count}>{docs} documentos</span>
+          </div>
+        </SimpleCard>
+      )}
+      <ul className={styles.units}>
+        {true &&
+          topic?.Subtopics?.map(({ Docs, name }) => (
+            <div key={name + "-doc"}>
+              <Card head={<span>{capFirst(name)}</span>}>
+                <ul className={styles.docs}>
+                  {Docs &&
+                    Docs.map(({ title, externalId }) => {
+                      return (
+                        <Link
+                          key={title + externalId}
+                          href={`view/${externalId}`}
+                        >
+                          <li className={styles.doc}>
+                            <span>{title}</span>
+                          </li>
+                        </Link>
+                      );
+                    })}
+                </ul>
+              </Card>
+            </div>
+          ))}
+      </ul>
+      <div className={styles.buttons}>
+        <Button style="small-active">Practicar</Button>
+        <Button style="small">
+          <span>Crear</span>
+        </Button>
+      </div>
+    </Layout>
   );
 }

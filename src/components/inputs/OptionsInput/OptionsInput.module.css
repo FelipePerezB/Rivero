@@ -9,12 +9,12 @@
   border-radius: var(--radius);
   display: flex;;
   justify-content: space-around;
-  margin: auto;
-  border-radius: var(--radius);
+  margin: 0 auto;
   overflow: hidden;
   position: relative;
   width: max-content;
   box-shadow: var(--shadow);
+  outline: 1px solid rgb(239, 239, 239);
 }
 
 .name{

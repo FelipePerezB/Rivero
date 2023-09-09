@@ -22,6 +22,7 @@ query GetSubjectsPaths {
 
 query GetSubject($subjectId: Int!) {
   subject(id: $subjectId) {
+    id
     name
     color
     Topics {
