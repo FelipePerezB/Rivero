@@ -27,7 +27,6 @@ export default function NewDoc() {
   const docName = `doc-${id}`;
   const [doc, setDoc] = useState({} as any);
   useEffect(() => {
-    console.log("AA")
     const storageDoc = localStorage.getItem(docName);
     if (data) {
       const document = JSON.parse(data.doc.content);
@@ -77,7 +76,7 @@ export default function NewDoc() {
               type: "page",
               options: {
                 id: "CID8728732237",
-                children: [],
+                children: [{ type: "paragraph", options: {} }],
               },
             },
           ],

@@ -3,6 +3,7 @@ import Navar from "./Navar";
 import styles from "@styles/Layout.module.css";
 import Var from "./Var";
 import Sidevar from "./Sidevar";
+import Head from "next/head";
 
 export default function Layout({
   children,
@@ -16,6 +17,7 @@ export default function Layout({
   const [visibility, setVisibility] = useState(false);
   return (
     <div className={styles.layout}>
+      <Head>{title && <title>{`${title} | Rivero`}</title>}</Head>
       <Navar title={title} setVisibility={setVisibility} />
       <main className={styles.main}>{children}</main>
       <Var state={style} />

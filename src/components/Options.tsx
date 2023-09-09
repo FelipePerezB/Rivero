@@ -23,7 +23,7 @@ export default function Options({
           return (
             <li onClick={() => clickHandler(option)} key={option}>
               <span style={{
-                background: isActive ? color : "white"
+                background: isActive ? "var(--primary-color)" : "white"
               }} className={styles[isActive ? "op--active" : "op"]}>
                 {option}
               </span>

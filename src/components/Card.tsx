@@ -78,8 +78,8 @@ export default function Card({
     $chevron.style.transform = `rotate(${isOpen ? "180deg" : "90deg"})`;
 
     isOpen
-      ? (parentRef.current.style.height = `calc(${headRef.current?.clientHeight}px + ${bodyRef.current?.clientHeight}px)`)
-      : (parentRef.current.style.height = `calc(${headRef.current.clientHeight}px)`);
+      ? (parentRef.current.style.height = `calc(${headRef.current?.clientHeight}px + ${bodyRef.current?.clientHeight}px - 1px)`)
+      : (parentRef.current.style.height = `calc(${headRef.current.clientHeight}px - 1px)`);
   }, [isOpen]);
   return (
     <section ref={parentRef} className={styles.option}>

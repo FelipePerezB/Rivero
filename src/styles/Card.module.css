@@ -34,17 +34,17 @@
   background-color: white;
   overflow: hidden;
   transition: height 400ms, transform 200ms;
+  box-shadow: var(--shadow);
 }
 
 .main-info {
   border-radius: var(--radius);
-  box-shadow: var(--shadow);
 }
 
 .main-info--simple:hover {
   cursor: pointer;
   transition: 200ms;
-  background-color: rgb(226, 226, 226);
+  background-color: rgb(240, 240, 240);
 }
 
 .navigate-card{

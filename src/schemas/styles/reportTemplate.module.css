@@ -1,3 +1,13 @@
+.editor{
+  min-height: 300px;
+  height: max-content;
+  max-height: 600px;
+  font-size:0.81em;
+  border: 2px solid lightgray;
+  border-radius: var(--radius);
+  padding: var(--padding);
+}
+
 .parent #bold{
   font-weight: 800;
 }

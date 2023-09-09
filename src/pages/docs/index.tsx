@@ -11,6 +11,7 @@ import { GetStaticProps, InferGetStaticPropsType } from "next";
 import { client } from "src/service/client";
 import { GetSubjectsDocument, GetSubjectsQuery } from "src/gql/graphql";
 import { capFirst } from "src/utils/capFirst";
+import useGetLocalDocs from "src/hooks/useGetLocalDocs";
 
 export const getStaticProps: GetStaticProps<{
   data: GetSubjectsQuery;
@@ -31,32 +32,10 @@ export const getStaticProps: GetStaticProps<{
 export default function Docs({
   data: { subjects },
 }: InferGetStaticPropsType<typeof getStaticProps>) {
-  const [savedDocs, setSavedDocs] = useState<any[]>([]);
   const [stats, setStats] = useState({} as any);
 
-  useEffect(() => {
-    for (let index = 0; index < localStorage.length; index++) {
-      const key = localStorage.key(index);
-      const doc = key?.includes("doc-") && localStorage.getItem(key);
-      if (doc) {
-        const jsonDoc = JSON.parse(doc);
-        const newDoc = {
-          ...jsonDoc,
-          options: {
-            ...jsonDoc.options,
-            children: [jsonDoc.options.children[0]],
-          },
-        };
-        const isSaved = savedDocs
-          .map((doc) => doc.options.id)
-          .includes(newDoc.options.id);
-        if (isSaved) return;
-        savedDocs.push(newDoc);
-        setSavedDocs([...savedDocs]);
-      }
-    }
-  }, []);
-
+  const savedDocs = useGetLocalDocs(5)
+  
   useEffect(() => {
     const strStats = localStorage.getItem("subjects-stats");
     if (!strStats) return;

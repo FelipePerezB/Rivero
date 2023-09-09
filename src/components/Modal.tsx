@@ -64,8 +64,6 @@ export const FormModal = (params: {
   const addFormData = (data: any) => {
     Object.assign(values, data);
     setValues({ ...values });
-    console.log(values);
-    // debugger
   };
 
   return (

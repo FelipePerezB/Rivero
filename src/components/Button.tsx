@@ -7,7 +7,7 @@ export default function Button({
   onClick,
 }: {
   children: ReactNode;
-  style?: "primary" | "secundary"  | "small-active";
+  style?: "primary" | "secundary"  | "small-active" | "small";
   onClick?: any;
 }) {
   return (

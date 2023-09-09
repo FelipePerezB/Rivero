@@ -21,7 +21,6 @@ export const getStaticPaths: GetStaticPaths = async () => {
     fetchPolicy: "network-only",
   });
   if (!data?.subjects || error) throw new Error("Failed to request");
-  console.log(data);
   return {
     paths: data.subjects?.map((subject) => ({
       params: {
@@ -60,7 +59,7 @@ export default function Docs({
   const subject = data?.subject;
   const topics = subject?.Topics;
   const topicsNames = topics
-    ?.filter(({ Subtopics }) => Subtopics && Subtopics.length > 0)
+    ?.filter(({ Subtopics }) => Subtopics)
     ?.map(({ name }) => capFirst(name));
   const [topicName, setTopicName] = useState(topicsNames?.at(0));
   const [stats, setStats] = useState({} as any);
@@ -95,10 +94,11 @@ export default function Docs({
   return (
     <>
       <Layout title={capFirst(subject?.name)}>
-          <Options
+        <Options
           options={topicsNames as string[]}
           state={topicName as string}
           color={color}
+          // color={"var(--primary-color)"}
           setState={setTopicName}
         ></Options>
         {docs > 0 && stats && (
@@ -114,30 +114,36 @@ export default function Docs({
           </SimpleCard>
         )}
         <ul className={styles.units}>
-          {topic?.Subtopics &&
-            topic.Subtopics?.map(({ Docs, name }) => (
-              <div key={name + "-doc"}>
-                <Card head={<span>{capFirst(name)}</span>}>
-                  <ul className={styles.docs}>
-                    {Docs &&
-                      Docs.map(({ title, externalId }) => {
-                        return (
-                          <Link
-                            key={title + externalId}
-                            href={`view/${externalId}`}
-                          >
-                            <li className={styles.doc}>
-                              <span>{title}</span>
-                            </li>
-                          </Link>
-                        );
-                      })}
-                  </ul>
-                </Card>
-              </div>
-            ))}
+          {
+            // topic?.Subtopics
+            true &&
+              topic?.Subtopics?.map(({ Docs, name }) => (
+                <div key={name + "-doc"}>
+                  <Card head={<span>{capFirst(name)}</span>}>
+                    <ul className={styles.docs}>
+                      {Docs &&
+                        Docs.map(({ title, externalId }) => {
+                          return (
+                            <Link
+                              key={title + externalId}
+                              href={`view/${externalId}`}
+                            >
+                              <li className={styles.doc}>
+                                <span>{title}</span>
+                              </li>
+                            </Link>
+                          );
+                        })}
+                    </ul>
+                  </Card>
+                </div>
+              ))
+          }
         </ul>
-        <Button style="small-active">Practicar</Button>
+        <div className={styles.buttons}>
+          <Button style="small-active">Practicar</Button>
+          <Button style="small">Crear asignatura</Button>
+        </div>
       </Layout>
     </>
   );

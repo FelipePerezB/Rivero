@@ -24,27 +24,41 @@
   width: max-content;
 }
 
-.small-active {
+.small-active,
+.small {
   width: max-content;
 }
 
-.small-active button {
+.small-active button,
+.small button {
   cursor: pointer;
-  background-color: black;
-  color: white;
+  background-color: var(--black);
   border: none;
   padding: 6px 12px;
-  border-radius: var(--radius);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow);
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.small-active button{
+  color: white;
+}
+
+.small button {
+  background-color: white;
 }
 
 .primary,
 .secondary,
-.small-active {
+.small-active,
+.small {
   transition: 150ms;
 }
 .primary:hover,
 .secondary:hover,
-.small-active:hover {
+.small-active:hover,
+.small:hover {
   transition: 100ms;
   transform: scale(0.95);
 }

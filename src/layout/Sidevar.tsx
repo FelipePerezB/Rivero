@@ -29,7 +29,7 @@ export default function Sidevar({
   setVisibility: any;
 }) {
   const setDarkMode = (data: any) => {
-    console.log(data);
+    // console.log(data);
   };
   const [state, setState] = useState(false);
   const { user } = useUser();

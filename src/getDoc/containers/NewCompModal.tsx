@@ -65,7 +65,6 @@ export default function Modal({
       const schema = getSchema();
       schema && setCurrentSchema(schema);
       setComponent(selectedComponent.type);
-      console.log()
     } else {
     }
   }, [selectedComponent, currentSchema]);

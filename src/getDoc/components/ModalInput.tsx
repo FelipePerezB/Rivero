@@ -20,6 +20,8 @@ import ChildrenInput from "../../components/inputs/ChildrenInput/ChildrenInput";
 import Button from "@components/Button";
 import SwitchToogle from "@components/SwitchToogle";
 import SwitchInput from "@components/inputs/SwitchInput/SwitchInput";
+import { Editor } from "novel";
+import EditorP from "./novel/Editor";
 
 type component = {
   type?: string;
@@ -315,7 +317,6 @@ export default function ModalInput({
     callback: () => any;
     text: string;
   }) => {
-    console.log(callback.name);
     return (
       <Button style="small-active" onClick={callback}>
         <span>{text}</span>
@@ -468,7 +469,8 @@ export default function ModalInput({
     number: ({ name }: { name: string }) => (
       <StandardInput name={name} onChange={addFormData} type="number" />
     ),
-    description: (props: any) => <DescriptionInput {...props} />,
+    description: (props: any) => <EditorP {...props} value={value} addFormData={addFormData}/>,
+    // description: (props: any) => <DescriptionInput {...props} />,
     children: (props: any) => (
       <ChildrenInput
         name={name}

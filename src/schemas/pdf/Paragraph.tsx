@@ -3,6 +3,8 @@ import CustomComponent from "./CustomComponent";
 import styles from "../styles/reportTemplate.module.css";
 import getID from "src/getDoc/utils/getId";
 import GetNodeByString from "src/getDoc/components/GetNodeByString";
+import EditorP from "src/getDoc/components/novel/Editor";
+// import { Editor } from "novel";
 
 export default function Paragraph({
   id = getID(),
@@ -17,11 +19,12 @@ export default function Paragraph({
 
   useEffect(() => {
     if (!paragraphRef.current || !text) return;
+    console.log(text)
     paragraphRef.current.innerHTML = text;
   }, [text]);
 
   return (
-    <CustomComponent id={id} style={{ height: "min-content" }}>
+    <CustomComponent id={id} style={{ height: "max-content" }}>
       <div
         ref={paragraphRef}
         style={{

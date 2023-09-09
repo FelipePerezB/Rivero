@@ -4,17 +4,15 @@
 }
 
 .navar > div{
-  height: 60px;
+  height: 50px;
 }
 
 .navar h1{
-  font-size: 2rem;
-  color: rgb(40, 40, 40);
+  font-size: 1.6rem;
 }
 
 .navar ul {
   background-color: var(--background-color);
-  /* background-color: var(--background-color); */
   position: fixed;
   z-index: 1000;
   top: 0;
@@ -53,4 +51,28 @@
 .profile {
   border-radius: 50%;
   cursor: pointer;
+}
+
+.options{
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  justify-content: center;
+}
+
+.light{
+  width: 16px;
+  height: 16px;
+  background-color: white;
+  padding: var(--sm-padding);
+  border-radius: 50%;
+}
+
+.title{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-weight: 700;
+  /* color: var(--black); */
 }

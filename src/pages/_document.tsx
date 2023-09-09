@@ -12,7 +12,7 @@ export default function Document() {
         />
         <link
           // href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&family=Open+Sans:ital,wght@0,300;0,500;0,600;0,700;1,500&display=swap"
-          href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;800;900&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;800;900&display=swap"
           rel="stylesheet"
         />
       </Head>
