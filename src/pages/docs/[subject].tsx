@@ -95,7 +95,7 @@ export default function Docs({
 
   return (
     <Layout title={capFirst(subject?.name)}>
-      <NavigateCard width="100%" link={`/evaluations/${subject.id}`}>
+      <NavigateCard width="100%" link={`/evaluations/${subject?.id}`}>
         <div className={styles["nav-card"]}>
           <span>Evaluaciones</span>
           <FontAwesomeIcon icon={faChevronRight} />
