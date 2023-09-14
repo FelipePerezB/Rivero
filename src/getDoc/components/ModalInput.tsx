@@ -175,7 +175,7 @@ export default function ModalInput({
           )}
         </article>
 
-        <Button style="secundary" onClick={() => setModalState(true)}>
+        <Button style="secondary" onClick={() => setModalState(true)}>
           <span> {!defaultValue?.options ? "Añadir" : "Reemplazar"}</span>
         </Button>
         <NewCompModal

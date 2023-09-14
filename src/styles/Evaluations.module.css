@@ -6,8 +6,8 @@
 
 .evaluation__title {
   margin: 0;
-  font-size: 1.2rem;
-  font-weight: 600;
+  font-size: 1rem;
+  font-weight: 500;
 }
 
 .header > div {
@@ -25,7 +25,6 @@
 }
 
 .main-icon {
-  /* background-color: var(--primary-color); */
   background-color: var(--black);
   color: white;
 }

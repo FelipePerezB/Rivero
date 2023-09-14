@@ -1,0 +1,19 @@
+.doc {
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+}
+
+.doc:hover {
+  background-color: var(--card-color-active);
+}
+
+.topic {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  padding-right: var(--padding);
+  align-items: center;
+}

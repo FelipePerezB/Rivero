@@ -3,18 +3,27 @@
   flex-direction: column;
 }
 
+.name{
+  color: var(--black-100);
+}
+
 .standart-input input {
   margin: 2px;
-  height: 1.8rem;
-  padding: 0 6px;
+  padding: var(--sm-padding);
   border: none;
-  outline: 2px solid black;
+  outline: 1px solid lightgray;
+  box-shadow: var(--shadow);
   border-radius: 4px;
   width: 100%;
-  max-width: 300px;
+}
+
+.standart-input input[type=color]{
+  width: 100px;
+  height: 40px;
+  background-color: white;
 }
 
 .standart-input input:focus {
-  outline: 2px solid #5066e8;
+  outline: 2px solid var(--primary-color);
   border: none;
 }

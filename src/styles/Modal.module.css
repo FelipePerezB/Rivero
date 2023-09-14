@@ -30,14 +30,12 @@
 .modal {
   aspect-ratio: 2 / 3;
   max-width: 440px;
-  min-width: 256px;
   display: flex;
   flex-direction: column;
   background-color: white;
-  border-top-left-radius: var(--radius);
-  border-top-right-radius: var(--radius);
-  width: 100%;
-  height: 80%;
+  border-top-left-radius: var(--radius-lg);
+  border-top-right-radius: var(--radius-lg);
+  width: 92%;
   padding: 16px;
   z-index: 10000;
 }
@@ -54,6 +52,8 @@
 
 .header h2 {
   margin: 0;
+  font-size: 1.2rem;
+  font-weight: 800;
 }
 
 .close__icon:hover {
@@ -111,6 +111,13 @@
 
 .form-btn{
   padding-top: var(--padding);
+}
+
+.children{
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  overflow: visible;
 }
 
 @media(min-width: 768px){

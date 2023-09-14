@@ -19,7 +19,6 @@ export default function Recomendations({
   setState?: React.Dispatch<React.SetStateAction<string>>;
 }) {
   const type = link && title ? "row" : "column";
-  // const type = "row"
 
   const handleClick = () => {
     const { value } = document.querySelector(

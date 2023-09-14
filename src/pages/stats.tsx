@@ -16,13 +16,11 @@ import {
   LineElement,
   Tooltip,
 } from "chart.js";
-import Modal from "@components/Modal";
+import Modal from "@components/modals/modal/Modal";
 import CustomModal from "@components/CustomModal";
 import ConfigButton from "@components/ConfigButton";
 import { GetStaticProps, InferGetStaticPropsType } from "next";
 import { api } from "src/getDoc/utils/api";
-// import { getToken } from "next-auth/jwt";
-// import { useSession } from "next-auth/react";
 
 // export const getStaticProps: GetStaticProps<{
 //   data: any;
@@ -235,9 +233,7 @@ export default function Statistics() {
             <LineChart openModal={openModal} key={`chart-${i}`} {...data} />
           ))}
       </section>
-      <ConfigButton
-        icon={faFileArrowDown}
-      />
+      <ConfigButton icon={faFileArrowDown} />
     </Layout>
   );
 }

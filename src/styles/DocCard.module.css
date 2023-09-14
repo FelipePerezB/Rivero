@@ -8,7 +8,7 @@
   overflow: hidden;
   border-radius: var(--radius);
   box-shadow: var(--shadow);
-  /* outline: 2px solid rgb(228, 228, 228); */
+  outline: 1px rgb(235, 235, 235) solid;
   transition: all 350ms;
 }
 
@@ -20,7 +20,6 @@
 .documents__card .content {
   padding: 0 12px;
   overflow: hidden;
-  box-shadow: 4px 4px 8px rgb(205, 205, 205);
   cursor: pointer;
   background-color: white;
   border-radius: var(--radius);

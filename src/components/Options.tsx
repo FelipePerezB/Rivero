@@ -3,33 +3,31 @@ import styles from "@styles/Options.module.css";
 
 export default function Options({
   options,
-  state,
-  setState,
-  color = "black"
+  option,
+  setOption,
 }: {
-  color?: string;
-  options: string[];
-  state: string;
-  setState: any;
+  options?: string[];
+  option?: string;
+  setOption: any;
 }) {
-  const clickHandler = (option: string) => {
-    setState(option);
-  };
-  return (
+  return options && options?.length > 1 ? (
     <div className={styles.options}>
       <ul>
-        {options?.map((option) => {
-          const isActive = state?.toLowerCase() === option?.toLowerCase();
+        {options?.map((opt) => {
+          const isActive = opt?.toLowerCase() === option?.toLowerCase();
           return (
-            <li onClick={() => clickHandler(option)} key={option}>
-              <span style={{
-              }} className={styles[isActive ? "op--active" : "op"]}>
-                {option}
-              </span>
+            <li
+              className={styles[isActive ? "op--active" : "op"]}
+              onClick={() => setOption(opt)}
+              key={opt}
+            >
+              {opt}
             </li>
           );
         })}
       </ul>
     </div>
+  ) : (
+    <></>
   );
 }

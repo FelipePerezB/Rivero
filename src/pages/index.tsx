@@ -2,7 +2,6 @@ import Recomendations from "@components/Recomendations";
 import Layout from "src/layout/Layout";
 import styles from "@styles/Home.module.css";
 import { useEffect, useState } from "react";
-// import { useSession } from "next-auth/react";
 import { UserButton, useAuth } from "@clerk/nextjs";
 import axios from "axios";
 

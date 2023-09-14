@@ -20,10 +20,12 @@ export const CompletedProgress = ({
   progress,
   size = "sm",
   color = "var(--primary-color)",
+  label
 }: {
   size?: "lg" | "sm";
   progress: number;
   color?: string;
+  label?: string
 }) => {
   const text = `${progress}% ${size === "lg" ? "completado" : ""}`
   return (
@@ -32,6 +34,7 @@ export const CompletedProgress = ({
         <ProgressVar color={color} progress={progress} />
         <span>{text}</span>
       </span>
+      {label && <p className={styles.label}>{label}</p>}
     </div>
   );
 };

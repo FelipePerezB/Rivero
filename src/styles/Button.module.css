@@ -1,4 +1,4 @@
-.primary {
+.primary, .secondary {
   display: flex;
   justify-content: center;
 }
@@ -6,21 +6,23 @@
 .primary button,
 .secondary button {
   cursor: pointer;
+  border: none;
   min-height: 40px;
   height: auto;
   width: 100%;
   max-width: 280px;
-  background-color: black;
-  border-radius: var(--radius);
+  background-color: var(--black);
+  border-radius: var(--radius-lg);
   color: white;
-  font-size: 1rem;
+  font-size: 1.1rem;
   font-weight: 600;
 }
 
 .secondary button {
   background-color: transparent;
   border: none;
-  color: black;
+  margin-top: var(--sm-padding);
+  color: var(--black);
   width: max-content;
 }
 
@@ -32,7 +34,7 @@
 .small-active button,
 .small button {
   cursor: pointer;
-  background-color: var(--black);
+  background-color: var(--primary-color);
   border: none;
   padding: 6px 12px;
   border-radius: var(--radius-lg);
@@ -46,6 +48,7 @@
 }
 
 .small button {
+  color: var(--black-100);
   outline: 1px solid rgb(226, 226, 226);
   background-color: white;
 }

@@ -2,10 +2,18 @@
 import { useEffect, useState } from "react";
 
 export default function useGetLocalDocs(number: number = 10) {
-  const [savedDocs, setSavedDocs] = useState<any[]>([]);
+  const [savedDocs, setSavedDocs] = useState<
+    {
+      type: string;
+      options: {
+        docId: number;
+        externalId: number;
+        title: string;
+      };
+    }[]
+  >([]);
   useEffect(() => {
     if (savedDocs?.length) return;
-    console.log(number);
     const docs = [];
     for (
       let index = 0;

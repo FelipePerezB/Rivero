@@ -1,6 +1,6 @@
 import Layout from "src/layout/Layout";
-import React, { useEffect, useState } from "react";
-import styles from "@styles/Docs.module.css";
+import React, { useState } from "react";
+import styles from "@styles/Subjects.module.css";
 import Link from "next/link";
 import { client } from "src/service/client";
 import {
@@ -9,20 +9,124 @@ import {
   GetSubjectsPathsDocument,
 } from "src/gql/graphql";
 import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from "next";
-import Card, { NavigateCard, SimpleCard } from "@components/Card";
 import Options from "@components/Options";
-import { CompletedProgress } from "@components/ProgressVar";
 import Button from "@components/Button";
-import { capFirst } from "src/utils/capFirst";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faChevronRight, faPlus } from "@fortawesome/free-solid-svg-icons";
+import capFirst from "src/utils/capFirst";
+import { Context } from "@apollo/client";
+import ProgressCard from "@components/cards/progressCard/ProgressCard";
+import AccordionCard from "@components/cards/accordionCard/AccordionCard";
+import NavigationCard from "@components/cards/navigationCard/NavigationCard";
+import Buttons from "@components/button/buttons/Buttons";
+import EditButton from "@components/button/editButton/EditButton";
+import updateTopicName from "src/service/querys/topic/updateTopicName";
+import updateSubtopicName from "src/service/querys/subtopic/updateSubtopicName";
+import updateDocName from "src/service/querys/doc/updateDocTitle";
+import removeTopic from "src/service/querys/topic/removeTopic";
+import removeSubtopic from "src/service/querys/subtopic/removeSubtopic";
+import removeDoc from "src/service/querys/doc/removeDoc";
+import createTopic from "src/service/querys/topic/createTopic";
+import createSubtopic from "src/service/querys/subtopic/createSubtopic";
+import createDoc from "src/service/querys/doc/createDoc";
+import { useUser } from "@clerk/nextjs";
+
+export default function Docs({
+  data,
+}: InferGetStaticPropsType<typeof getStaticProps>) {
+  const { user } = useUser();
+  const { id, color, name: subject, Topics: topics } = data?.subject || {};
+  const [editMode, setEditMode] = useState(false);
+
+  const options = topics
+    ?.filter(({ Subtopics }) => Subtopics)
+    ?.map(({ name }) => capFirst(name));
+  const [option, setOption] = useState(options?.at(0));
+
+  const {
+    name: topic,
+    _count,
+    Subtopics,
+    id: topicId,
+  } = topics?.find(
+    ({ name }) => name?.toLowerCase() === option?.toLowerCase()
+  ) || {};
+  const count = _count?.Docs;
+
+  return (
+    <Layout title={capFirst(subject)}>
+      <NavigationCard href={`/evaluations/${id}`}>Evaluaciones</NavigationCard>
+      <Options {...{ option, setOption, options }} />
+
+      <ProgressCard {...{ color, count: count, subject, topic }}>
+        <span>{topic && capFirst(topic)}</span>
+        {topicId && (
+          <EditButton
+            childLabel="subtópico"
+            onUpdate={(name) => updateTopicName(Number(topicId), name)}
+            onRemove={() => removeTopic(Number(topicId))}
+            onCreate={(name) =>
+              createSubtopic(name, Number(id), Number(topicId))
+            }
+            {...{ editMode, size: "xs", value: topic, label: "topico" }}
+          />
+        )}
+      </ProgressCard>
+
+      {Subtopics?.map(({ Docs, name, id: subtpicId }) => (
+        <AccordionCard
+          key={name + "-subtopic"}
+          head={
+            <span className={styles.topic}>
+              {capFirst(name)}
+              {!!user?.id && (
+                <EditButton
+                  childLabel="documento"
+                  onUpdate={(name) => updateSubtopicName(Number(id), name)}
+                  onRemove={() => removeSubtopic(Number(id))}
+                  onCreate={(name) =>
+                    createDoc(
+                      name,
+                      Number(id),
+                      Number(topicId),
+                      Number(subtpicId),
+                      user.id
+                    )
+                  }
+                  {...{ editMode, label: "subtopico", value: name }}
+                />
+              )}
+            </span>
+          }
+        >
+          {Docs?.map(({ title, externalId, id }) => (
+            <div className={styles.doc} key={title + externalId}>
+              <Link href={`view/${externalId}`}>{title}</Link>
+
+              <EditButton
+                onUpdate={(name) => updateDocName(Number(id), name)}
+                onRemove={() => removeDoc(Number(id))}
+                {...{ editMode, label: "documento", value: title }}
+              />
+            </div>
+          ))}
+        </AccordionCard>
+      ))}
+
+      <Buttons>
+        <Button style="small-active">Prácticar</Button>
+        <Button onClick={() => setEditMode(!editMode)} style="small">
+          {!editMode ? "Editar" : "Deshabilitar edición"}
+        </Button>
+      </Buttons>
+    </Layout>
+  );
+}
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const { data, error } = await client.query({
     query: GetSubjectsPathsDocument,
     fetchPolicy: "network-only",
   });
-  if (!data?.subjects || error) throw new Error("Failed to request");
+  if (!data?.subjects || error?.name) throw new Error("Failed to request");
   return {
     paths: data.subjects?.map((subject) => ({
       params: {
@@ -36,119 +140,17 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
 export const getStaticProps: GetStaticProps<{
   data: GetSubjectQuery;
-}> = async (context) => {
-  const id = context?.params?.subject as string;
+}> = async (context: Context) => {
+  const { subject: id } = context?.params;
   if (!id) throw new Error("Failed to request");
   const { data, error } = await client.query({
     query: GetSubjectDocument,
-    variables: {
-      subjectId: Number(id),
-    },
+    variables: { subjectId: Number(id) },
     fetchPolicy: "network-only",
   });
-  if (!data || error) throw new Error("Failed to request");
+  if (!data.subject.color || error?.name) throw new Error("Failed to request");
   return {
-    props: {
-      data,
-    },
+    props: { data },
     revalidate: 60 * 60 * 24,
   };
 };
-
-export default function Docs({
-  data,
-}: InferGetStaticPropsType<typeof getStaticProps>) {
-  const subject = data?.subject;
-  const topics = subject?.Topics;
-  const topicsNames = topics
-    ?.filter(({ Subtopics }) => Subtopics)
-    ?.map(({ name }) => capFirst(name));
-  const [topicName, setTopicName] = useState(topicsNames?.at(0));
-  const [stats, setStats] = useState({} as any);
-  const topic = topics?.find(
-    ({ name }) => name?.toLowerCase() === topicName?.toLowerCase()
-  );
-
-  const color = subject?.color;
-  const docs = topic?._count.Docs ?? 0;
-
-  useEffect(() => {
-    const strStats = localStorage.getItem("subjects-stats");
-    if (!strStats) return;
-    setStats(JSON.parse(strStats));
-  }, []);
-
-  const getProgress = (): number => {
-    const subjectStats = stats[subject?.name];
-    if (!subjectStats) return 0;
-    const topicStats = subjectStats[topicName as string] as
-      | string[]
-      | undefined;
-    if (!topicStats) return 0;
-    if (!docs) return 0;
-
-    let completedDocs = topicStats.length;
-    const progress =
-      completedDocs > 0 ? Number(((100 * completedDocs) / docs).toFixed(1)) : 0;
-    return progress;
-  };
-
-  return (
-    <Layout title={capFirst(subject?.name)}>
-      <NavigateCard width="100%" link={`/evaluations/${subject?.id}`}>
-        <div className={styles["nav-card"]}>
-          <span>Evaluaciones</span>
-          <FontAwesomeIcon icon={faChevronRight} />
-        </div>
-      </NavigateCard>
-      <Options
-        options={topicsNames as string[]}
-        state={topicName as string}
-        color={color}
-        setState={setTopicName}
-      ></Options>
-      {docs > 0 && stats && (
-        <SimpleCard>
-          <div className={styles["stats"]}>
-            <CompletedProgress
-              size="lg"
-              color={color}
-              progress={getProgress()}
-            />
-            <span className={styles.count}>{docs} documentos</span>
-          </div>
-        </SimpleCard>
-      )}
-      <ul className={styles.units}>
-        {true &&
-          topic?.Subtopics?.map(({ Docs, name }) => (
-            <div key={name + "-doc"}>
-              <Card head={<span>{capFirst(name)}</span>}>
-                <ul className={styles.docs}>
-                  {Docs &&
-                    Docs.map(({ title, externalId }) => {
-                      return (
-                        <Link
-                          key={title + externalId}
-                          href={`view/${externalId}`}
-                        >
-                          <li className={styles.doc}>
-                            <span>{title}</span>
-                          </li>
-                        </Link>
-                      );
-                    })}
-                </ul>
-              </Card>
-            </div>
-          ))}
-      </ul>
-      <div className={styles.buttons}>
-        <Button style="small-active">Practicar</Button>
-        <Button style="small">
-          <span>Crear</span>
-        </Button>
-      </div>
-    </Layout>
-  );
-}

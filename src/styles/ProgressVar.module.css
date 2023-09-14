@@ -18,9 +18,15 @@
   gap: 16px;
 }
 
-.lg .completed-progress{
+.lg .completed-progress {
   flex-direction: column-reverse;
   align-items: flex-start;
   justify-content: center;
   gap: 8px;
+}
+
+.label {
+  margin: 12px 0;
+  text-align: right;
+  /* color: var(--black-100); */
 }

@@ -15,7 +15,6 @@ import Link from "next/link";
 import React from "react";
 import styles from "@styles/Var.module.css";
 import { useRouter } from "next/router";
-// import { useSession } from "next-auth/react";
 
 export default function Var({ state }: { state?: "only-nav" }) {
   const router = useRouter();

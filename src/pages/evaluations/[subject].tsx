@@ -1,5 +1,5 @@
-import { SimpleCard } from "@components/Card";
-import { faChartSimple, faPlus } from "@fortawesome/free-solid-svg-icons";
+import Card from "@components/Card";
+import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import Layout from "src/layout/Layout";
@@ -15,7 +15,7 @@ import {
   Legend,
   ChartData,
 } from "chart.js";
-import Link from "next/link";
+import NavigationCard from "@components/cards/navigationCard/NavigationCard";
 
 export default function Evaluations() {
   ChartJS.register(
@@ -61,23 +61,10 @@ export default function Evaluations() {
       <section
         style={{ display: "flex", flexDirection: "column", gap: "12px" }}
       >
-        <SimpleCard>
-          <article className={styles.header}>
-            <h2 className={styles["evaluation__title"]}>Ensayo M1 N°2726</h2>
-            <div>
-              <Link href={"/check/1"}>
-                <FontAwesomeIcon
-                  className={styles["main-icon"]}
-                  icon={faPlus}
-                />
-              </Link>
-              <FontAwesomeIcon icon={faChartSimple} />
-            </div>
-          </article>
-        </SimpleCard>
+        <NavigationCard href="/stats/1">Ensayo M1 N°2726</NavigationCard>
       </section>
       <section>
-        <SimpleCard>
+        <Card>
           <div className={styles.line}>
             <Line
               data={configData}
@@ -94,7 +81,7 @@ export default function Evaluations() {
               }}
             />
           </div>
-        </SimpleCard>
+        </Card>
       </section>
     </Layout>
   );

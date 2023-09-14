@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import styles from "./SwitchInput.module.css";
 import createFormData from "src/utils/createFormData";
-import { capFirst } from "src/utils/capFirst";
+import capFirst from "src/utils/capFirst";
 
 export default function SwitchInput({
   value,

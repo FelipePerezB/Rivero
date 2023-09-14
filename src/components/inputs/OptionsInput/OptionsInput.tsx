@@ -2,7 +2,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import StandardInput from "../StandardInput/StandardInput";
 import styles from "./OptionsInput.module.css";
-import { capFirst } from "src/utils/capFirst";
+import capFirst from "src/utils/capFirst";
 
 type props = {
   name: string;
@@ -21,7 +21,7 @@ export default function OptionsInput(props: props) {
     props.onChange(obj);
   };
 
-  return props.options.join("").length <= 6 ? (
+  return props.options.join("").length <= 30 ? (
     <SmallOptionsInput {...props} onChange={createFormData} />
   ) : (
     <LargeOptionsInput {...props} onChange={createFormData} />

@@ -1,0 +1,14 @@
+.tags {
+  display: flex;
+  gap: 8px;
+  padding: 4px;
+  overflow-x: hidden;
+}
+
+.tags li {
+  padding: 2px 6px;
+  min-width: max-content;
+  background-color: white;
+  outline: 1px solid lightgray;
+  border-radius: var(--radius);
+}

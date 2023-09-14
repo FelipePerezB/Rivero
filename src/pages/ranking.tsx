@@ -8,7 +8,7 @@ import {
   faInfoCircle,
   faStar,
 } from "@fortawesome/free-solid-svg-icons";
-import Modal from "@components/Modal";
+import Modal from "@components/modals/modal/Modal";
 
 export default function Ranking() {
   const users = [

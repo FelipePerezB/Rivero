@@ -1,33 +1,48 @@
-import React from "react";
+import React, { ReactNode } from "react";
 import styles from "@styles/Table.module.css";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEllipsisVertical } from "@fortawesome/free-solid-svg-icons";
 
-export default function Table() {
+interface TableProps {
+  head?: {
+    title?: string;
+    icons?: ReactNode;
+    keys: { name: string; key?: string }[];
+  };
+
+  data?: (ReactNode | string | number)[][];
+  onClick?: (firstCell: string | number) => void;
+}
+
+const Table: React.FC<TableProps> = ({ data, onClick, head }) => {
   return (
-    <article className={styles.table}>
-      <h2>Mátematica</h2>
-      <table className={styles.container}>
+    <article className={styles["table__container"]}>
+      <table className={styles.table}>
+        {head?.title && (
+          <caption>
+            <h2 className={styles.title}>{head.title}</h2>
+            <div className={styles.icons}>{head.icons}</div>
+          </caption>
+        )}
+        <thead>
+          {!!data?.length && (
+            <tr className={styles.head}>
+              {head?.keys.map(({ name, key }, i) => (
+                <th key={"th-" + i}>{name}</th>
+              ))}
+            </tr>
+          )}
+        </thead>
         <tbody>
-          <tr className={styles.head}>
-            <th>Actividad</th>
-            <th>Correctas</th>
-          </tr>
-          <tr>
-            <td>Porcentajes</td>
-            <td>10 / 12</td>
-          </tr>
-          <tr>
-            <td>Proporciones</td>
-            <td>7 / 12</td>
-          </tr>
-          <tr>
-            <td>Productos notables</td>
-            <td>12 / 12</td>
-          </tr>
+          {data?.map((row, rowIndex) => (
+            <tr key={"row-" + rowIndex}>
+              {row.map((cell, cellIndex) => (
+                <td key={`column-${cellIndex}-r${rowIndex} `}>{cell}</td>
+              ))}
+            </tr>
+          ))}
         </tbody>
       </table>
-      <span className={styles['see-more']}>Ver todas</span>
     </article>
   );
-}
+};
+
+export default Table;

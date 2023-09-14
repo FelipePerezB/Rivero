@@ -32,8 +32,10 @@ query GetSubject($subjectId: Int!) {
         Docs
       }
       Subtopics {
+        id
         name
         Docs {
+          id
           externalId
           title
         }
@@ -74,6 +76,55 @@ query GetUserByEmail($email: String!) {
   }
 }
 
+query GetUsers($where: UserWhereInput) {
+  users(where: $where) {
+    username
+    gradeId
+    role
+    email
+  }
+}
+
+query GetSchools {
+  schools {
+    id
+    name
+  }
+}
+
+query GetGrades($where: GradeWhereInput) {
+  grades(where: $where) {
+    id
+    name
+  }
+}
+
+mutation CreateGrade($createGradeInput: GradeCreateInput!) {
+  createGrade(createGradeInput: $createGradeInput) {
+    name
+  }
+}
+
+mutation CreateTopic($createTopicInput: TopicCreateInput!) {
+  createTopic(createTopicInput: $createTopicInput) {
+    name
+    id
+  }
+}
+
+mutation CreateSubtopic($createSubtopicInput: SubtopicCreateInput!) {
+  createSubtopic(createSubtopicInput: $createSubtopicInput) {
+    id
+    name
+  }
+}
+
+mutation CreateDoc($createDocInput: DocCreateInput!) {
+  createDoc(createDocInput: $createDocInput) {
+    id
+  }
+}
+
 # query LoginUser($user: LoginUserInput!) {
 #   login(user: $user) {
 #     username
@@ -93,6 +144,37 @@ query GetUserByEmail($email: String!) {
 mutation UpdateDoc($updateDocId: Float!, $updateDocInput: DocUpdateInput!) {
   updateDoc(id: $updateDocId, updateDocInput: $updateDocInput) {
     id
+  }
+}
+mutation UpdateTopic(
+  $updateTopicId: Float!
+  $updateTopicInput: TopicUpdateInput!
+) {
+  updateTopic(id: $updateTopicId, updateTopicInput: $updateTopicInput) {
+    name
+    id
+  }
+}
+
+mutation UpdateSubtopic(
+  $updateSubtopicId: Float!
+  $updateSubtopicInput: SubtopicUpdateInput!
+) {
+  updateSubtopic(
+    id: $updateSubtopicId
+    updateSubtopicInput: $updateSubtopicInput
+  ) {
+    id
+  }
+}
+
+mutation UpdateGrade(
+  $updateGradeId: Float!
+  $updateGradeInput: GradeUpdateInput!
+) {
+  updateGrade(id: $updateGradeId, updateGradeInput: $updateGradeInput) {
+    id
+    name
   }
 }
 
@@ -138,8 +220,23 @@ query GetDoc($where: DocWhereUniqueInput!) {
   }
 }
 
-mutation CreateDoc($createDocInput: DocCreateInput!) {
-  createDoc(createDocInput: $createDocInput) {
+mutation RemoveDoc($removeDocId: Int!) {
+  removeDoc(id: $removeDocId) {
+    title
+    id
+  }
+}
+
+mutation RemoveTopic($removeTopicId: Int!) {
+  removeTopic(id: $removeTopicId) {
+    id
+    name
+  }
+}
+
+mutation removeSubtopic($removeSubtopicId: Int!) {
+  removeSubtopic(id: $removeSubtopicId) {
+    name
     id
   }
 }

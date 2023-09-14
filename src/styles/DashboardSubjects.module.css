@@ -1,0 +1,14 @@
+.card{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card h3{
+  font-weight: 600;
+}
+
+.icons{
+  display: flex;
+  gap: 20px;
+}

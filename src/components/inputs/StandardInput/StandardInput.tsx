@@ -1,35 +1,30 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { ListTypeNode } from "graphql";
 import styles from "./StandardInput.module.css";
 import React, { useEffect } from "react";
-import { capFirst } from "src/utils/capFirst";
+import capFirst from "src/utils/capFirst";
+import { StandartInputAttrs } from "src/models/StandartInputAttr";
 
 export default function StandardInput({
   value,
   type,
   onChange,
   name,
+  dataKey,
   attrs,
   placeholder,
-}: {
-  attrs?: React.InputHTMLAttributes<[ListTypeNode, ListTypeNode]>;
-  placeholder?: string;
-  value?: string;
-  name: string;
-  onChange: (value: string) => void;
-  type?: React.HTMLInputTypeAttribute | undefined;
-}) {
+}: StandartInputAttrs) {
   useEffect(() => {
     value && createFormData(value);
   }, []);
   const createFormData = (data: string) => {
     const obj = {} as any;
-    obj[name] = data;
-    onChange(obj);
+    if (dataKey) obj[dataKey] = data;
+    else obj[name] = data;
+    onChange && onChange(obj);
   };
   return (
     <label className={styles["standart-input"]}>
-      <span>{capFirst(name)}</span>
+      <span className={styles.name}>{capFirst(name)}</span>
       <input
         {...(attrs as {})}
         placeholder={placeholder}

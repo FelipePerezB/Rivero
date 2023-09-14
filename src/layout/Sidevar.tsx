@@ -18,8 +18,7 @@ import {
 import Link from "next/link";
 import SwitchToogle from "@components/SwitchToogle";
 import { UserButton, useUser } from "@clerk/nextjs";
-import { capFirst } from "src/utils/capFirst";
-// import { signIn, signOut, useSession } from "next-auth/react";
+import capFirst from "src/utils/capFirst";
 
 export default function Sidevar({
   visibility,

@@ -5,7 +5,7 @@ import { faClose } from "@fortawesome/free-solid-svg-icons";
 import SwitchToogle from "./SwitchToogle";
 import Button from "./Button";
 import { useRouter } from "next/router";
-import Modal from "./Modal";
+import Modal from "./modals/modal/Modal";
 
 type types = "select" | "boolean" | "text";
 

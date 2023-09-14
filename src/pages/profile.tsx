@@ -2,7 +2,6 @@ import Layout from "src/layout/Layout";
 import styles from "@styles/Profile.module.css";
 import React from "react";
 import Button from "@components/Button";
-// import { useSession } from "next-auth/react";
 
 export default function Profile() {
   // const { data } = useSession();

@@ -3,11 +3,11 @@ import Layout from "src/layout/Layout";
 import styles from "@styles/Config.module.css";
 import { faPaintbrush, faShieldDog } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import Link from "next/link";
 import SwitchToogle from "@components/SwitchToogle";
-import Card, { SimpleCard } from "@components/Card";
 import { UserButton, useUser } from "@clerk/nextjs";
-import { capFirst } from "src/utils/capFirst";
+import capFirst from "src/utils/capFirst";
+import AccordionCard from "@components/cards/accordionCard/AccordionCard";
+import Card from "@components/Card";
 
 export default function Config() {
   const { user } = useUser();
@@ -16,17 +16,15 @@ export default function Config() {
     <Layout>
       <article className={styles.cards}>
         {user?.username && role && (
-          <>
-            <SimpleCard>
-              <div className={styles["profile__info"]}>
-                <UserButton />
-                <span className={styles.name}>{capFirst(user.username)}</span>
-                <span className={styles.role}>{role?.toUpperCase()}</span>
-              </div>
-            </SimpleCard>
-          </>
+          <Card>
+            <div className={styles["profile__info"]}>
+              <UserButton />
+              <span className={styles.name}>{capFirst(user.username)}</span>
+              <span className={styles.role}>{role?.toUpperCase()}</span>
+            </div>
+          </Card>
         )}
-        <Card
+        <AccordionCard
           head={
             <span>
               <FontAwesomeIcon size="lg" icon={faPaintbrush} /> Apariencia
@@ -37,8 +35,8 @@ export default function Config() {
             <span>Modo oscuro</span>
             <SwitchToogle createFormData={(data) => console.log(data)} />
           </div>
-        </Card>
-        <Card
+        </AccordionCard>
+        <AccordionCard
           head={
             <span>
               <FontAwesomeIcon size="lg" icon={faShieldDog} /> Privacidad
@@ -46,7 +44,7 @@ export default function Config() {
           }
         >
           <></>
-        </Card>
+        </AccordionCard>
       </article>
     </Layout>
   );

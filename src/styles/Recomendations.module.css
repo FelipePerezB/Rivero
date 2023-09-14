@@ -27,7 +27,7 @@
 .title {
   font-weight: 800;
   font-size: 1.4rem;
-  margin: 8px 0;
+  margin: 0 0 8px;
 }
 
 .children {
@@ -41,12 +41,12 @@
   padding: 0 var(--sm-padding) var(--padding);
   gap: 24px;
   overflow-x: scroll;
+  padding: 8px;
 }
 
 .column .children {
   flex-wrap: wrap;
   gap: 32px;
-
 }
 
 .filter {

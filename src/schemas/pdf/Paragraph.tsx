@@ -19,7 +19,6 @@ export default function Paragraph({
 
   useEffect(() => {
     if (!paragraphRef.current || !text) return;
-    console.log(text)
     paragraphRef.current.innerHTML = text;
   }, [text]);
 

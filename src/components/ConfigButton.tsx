@@ -4,7 +4,7 @@ import { createPortal } from "react-dom";
 // import NewCompModal from "../containers/NewCompModal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGear, faPlusCircle } from "@fortawesome/free-solid-svg-icons";
-import Modal, { FormModal } from "./Modal";
+import { FormModal } from "./Modal";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import CustomModal from "./CustomModal";
 

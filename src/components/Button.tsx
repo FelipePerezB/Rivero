@@ -1,17 +1,13 @@
-import React, { ReactNode } from "react";
 import styles from "@styles/Button.module.css";
+import { ButtonAttrs } from "src/models/StandartInputAttr";
 
 export default function Button({
   children,
   style = "primary",
   onClick,
-}: {
-  children: ReactNode;
-  style?: "primary" | "secundary"  | "small-active" | "small";
-  onClick?: any;
-}) {
+}: ButtonAttrs) {
   return (
-    <div  className={styles[style]}>
+    <div className={styles[style]}>
       <button type="button" onClick={onClick}>
         <span>{children}</span>
       </button>

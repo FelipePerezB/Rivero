@@ -6,7 +6,7 @@ import getID from "../utils/getId";
 import GetDoc from "../GetDoc";
 import { pdfNodes } from "src/schemas";
 import { FormModal } from "@components/Modal";
-import { capFirst } from "src/utils/capFirst";
+import capFirst from "src/utils/capFirst";
 
 type useStateFunc = (data: any) => void;
 export default function Modal({

@@ -329,7 +329,6 @@ export default function Edit({
           </div>
         )}
         <ConfigButton setComponent={setPage} component={pages} />
-        <Toaster/>
       </main>
     </>
   );
