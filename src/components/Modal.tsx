@@ -1,10 +1,7 @@
 import React, { ReactNode, useState } from "react";
 import styles from "@styles/Modal.module.css";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faClose } from "@fortawesome/free-solid-svg-icons";
 import Button from "./Button";
 import ModalInput from "src/getDoc/components/ModalInput";
-import { createPortal } from "react-dom";
 import Modal from "@components/modals/modal/Modal";
 
 const isEmpty = (obj: any) => {

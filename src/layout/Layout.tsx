@@ -13,7 +13,7 @@ export default function Layout({
   title,
 }: {
   className?: string;
-  children: ReactNode;
+  children?: ReactNode;
   style?: "only-nav";
   title?: string;
 }) {
@@ -22,7 +22,7 @@ export default function Layout({
     <div className={`${styles.layout} ${className}`}>
       <Head>{title && <title>{`${title} | Rivero`}</title>}</Head>
       <Navar title={title} setVisibility={setVisibility} />
-      <main className={styles.main}>{children}</main>
+      <main className="flex justify-center items-centre flex-col gap-3 p-4 pt-20 mx-auto max-w-md text-slate-800">{children}</main>
       {/* <Var state={style} /> */}
       <Sidevar visibility={visibility} setVisibility={setVisibility} />
       <Toaster/>

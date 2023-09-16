@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { ReactNode, useEffect, useState } from "react";
 import Layout from "src/layout/Layout";
 import styles from "@styles/Community.module.css";
@@ -238,9 +239,9 @@ const BlogPost = ({ title, data }: { title: string; data: any }) => (
     tag="Rivero"
     title={"Novedades"}
   >
-    <div className={styles.image}>
+    {/* <div className={styles.image}>
       <img src="https://uddventures.udd.cl/hubfs/bjapi-uddventures.jpg" />
-    </div>
+    </div> */}
   </Post>
 );
 

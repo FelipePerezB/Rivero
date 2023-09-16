@@ -25,7 +25,7 @@ export default function Form({
       <Options {...{ option, setOption, options }} />
       {inputs?.map((input) => (
         <StandardInput
-          onChange={(data) => setValues({ ...data })}
+          onChange={(data) => setValues((values) => ({ ...values, ...data }))}
           key={input.name + "-input"}
           {...{ ...input }}
         />

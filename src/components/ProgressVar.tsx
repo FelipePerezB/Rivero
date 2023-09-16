@@ -29,7 +29,7 @@ export const CompletedProgress = ({
 }) => {
   const text = `${progress}% ${size === "lg" ? "completado" : ""}`
   return (
-    <div className={styles[size]}>
+    <div className="w-full">
       <span className={styles["completed-progress"]}>
         <ProgressVar color={color} progress={progress} />
         <span>{text}</span>

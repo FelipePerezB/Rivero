@@ -1,5 +1,4 @@
-import React, { ReactNode } from "react";
-import styles from "@styles/Table.module.css";
+import { ReactNode } from "react";
 
 interface TableProps {
   head?: {
@@ -9,35 +8,62 @@ interface TableProps {
   };
 
   data?: (ReactNode | string | number)[][];
-  onClick?: (firstCell: string | number) => void;
+  onClick?: (row: unknown[]) => void;
 }
 
-const Table: React.FC<TableProps> = ({ data, onClick, head }) => {
+const Row = ({
+  children,
+  onClick,
+}: {
+  children: ReactNode | string;
+  onClick?: () => void;
+}) => {
   return (
-    <article className={styles["table__container"]}>
-      <table className={styles.table}>
+    <tr
+      onClick={() => !!onClick && onClick()}
+      className={`w-full flex justify-around  text-center py-1.5 p-2 border-t ${
+        !!onClick ? "cursor-pointer" : ""
+      }`}
+    >
+      {children}
+    </tr>
+  );
+};
+
+const Table: React.FC<TableProps> = ({ data, head, onClick }) => {
+  return (
+    <article>
+      <table className="flex flex-col bg-white overflow-hidden border shadow rounded w-full">
         {head?.title && (
-          <caption>
-            <h2 className={styles.title}>{head.title}</h2>
-            <div className={styles.icons}>{head.icons}</div>
+          <caption className="w-full flex px-2 py-2 justify-between items-center text-xs">
+            <h2 className="text-base font-bold">{head.title}</h2>
+            <div className="flex items-center gap-1">{head.icons}</div>
           </caption>
         )}
-        <thead>
-          {!!data?.length && (
-            <tr className={styles.head}>
+        {!!data?.length && (
+          <thead>
+            <Row>
               {head?.keys.map(({ name, key }, i) => (
                 <th key={"th-" + i}>{name}</th>
               ))}
-            </tr>
-          )}
-        </thead>
-        <tbody>
+            </Row>
+          </thead>
+        )}
+        <tbody className="inline-block w-full max-h-72 overflow-y-scroll">
           {data?.map((row, rowIndex) => (
-            <tr key={"row-" + rowIndex}>
+            <Row
+              key={"row-" + rowIndex}
+              onClick={onClick && (() => !!onClick && onClick(row))}
+            >
               {row.map((cell, cellIndex) => (
-                <td key={`column-${cellIndex}-r${rowIndex} `}>{cell}</td>
+                <td
+                  className="w-full overflow-hidden text-center text-ellipsis whitespace-nowrap"
+                  key={`column-${cellIndex}-r${rowIndex} `}
+                >
+                  {cell}
+                </td>
               ))}
-            </tr>
+            </Row>
           ))}
         </tbody>
       </table>

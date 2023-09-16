@@ -1,6 +1,5 @@
 import Layout from "src/layout/Layout";
 import React, { useState } from "react";
-import styles from "@styles/Subjects.module.css";
 import Link from "next/link";
 import { client } from "src/service/client";
 import {
@@ -14,7 +13,10 @@ import Button from "@components/Button";
 import capFirst from "src/utils/capFirst";
 import { Context } from "@apollo/client";
 import ProgressCard from "@components/cards/progressCard/ProgressCard";
-import AccordionCard from "@components/cards/accordionCard/AccordionCard";
+import AccordionCard, {
+  AccordionChild,
+  AccordionHead,
+} from "@components/cards/accordionCard/AccordionCard";
 import NavigationCard from "@components/cards/navigationCard/NavigationCard";
 import Buttons from "@components/button/buttons/Buttons";
 import EditButton from "@components/button/editButton/EditButton";
@@ -24,7 +26,6 @@ import updateDocName from "src/service/querys/doc/updateDocTitle";
 import removeTopic from "src/service/querys/topic/removeTopic";
 import removeSubtopic from "src/service/querys/subtopic/removeSubtopic";
 import removeDoc from "src/service/querys/doc/removeDoc";
-import createTopic from "src/service/querys/topic/createTopic";
 import createSubtopic from "src/service/querys/subtopic/createSubtopic";
 import createDoc from "src/service/querys/doc/createDoc";
 import { useUser } from "@clerk/nextjs";
@@ -33,6 +34,7 @@ export default function Docs({
   data,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   const { user } = useUser();
+  const role = user?.publicMetadata.role as string | undefined;
   const { id, color, name: subject, Topics: topics } = data?.subject || {};
   const [editMode, setEditMode] = useState(false);
 
@@ -55,30 +57,32 @@ export default function Docs({
     <Layout title={capFirst(subject)}>
       <NavigationCard href={`/evaluations/${id}`}>Evaluaciones</NavigationCard>
       <Options {...{ option, setOption, options }} />
-
       <ProgressCard {...{ color, count: count, subject, topic }}>
-        <span>{topic && capFirst(topic)}</span>
-        {topicId && (
-          <EditButton
-            childLabel="subtópico"
-            onUpdate={(name) => updateTopicName(Number(topicId), name)}
-            onRemove={() => removeTopic(Number(topicId))}
-            onCreate={(name) =>
-              createSubtopic(name, Number(id), Number(topicId))
-            }
-            {...{ editMode, size: "xs", value: topic, label: "topico" }}
-          />
-        )}
+        <div className="flex gap-2 items-center">
+          <span>{topic && capFirst(topic)}</span>
+          {topicId && (
+            <EditButton
+              childLabel="subtópico"
+              onUpdate={(name) => updateTopicName(Number(topicId), name)}
+              onRemove={() => removeTopic(Number(topicId))}
+              onCreate={(name) =>
+                createSubtopic(name, Number(id), Number(topicId))
+              }
+              {...{ editMode, value: topic, label: "topico" }}
+            />
+          )}
+        </div>
       </ProgressCard>
 
       {Subtopics?.map(({ Docs, name, id: subtpicId }) => (
         <AccordionCard
           key={name + "-subtopic"}
           head={
-            <span className={styles.topic}>
+            <AccordionHead>
               {capFirst(name)}
               {!!user?.id && (
                 <EditButton
+                  label="subtopico"
                   childLabel="documento"
                   onUpdate={(name) => updateSubtopicName(Number(id), name)}
                   onRemove={() => removeSubtopic(Number(id))}
@@ -91,31 +95,35 @@ export default function Docs({
                       user.id
                     )
                   }
-                  {...{ editMode, label: "subtopico", value: name }}
+                  {...{ editMode, value: name }}
                 />
               )}
-            </span>
+            </AccordionHead>
           }
         >
           {Docs?.map(({ title, externalId, id }) => (
-            <div className={styles.doc} key={title + externalId}>
-              <Link href={`view/${externalId}`}>{title}</Link>
-
-              <EditButton
-                onUpdate={(name) => updateDocName(Number(id), name)}
-                onRemove={() => removeDoc(Number(id))}
-                {...{ editMode, label: "documento", value: title }}
-              />
-            </div>
+            <AccordionChild key={"accordion-child" + externalId}>
+              <div className="flex justify-between items-center">
+                <Link href={`view/${externalId}`}>{title}</Link>{
+                  editMode &&
+                <EditButton
+                  onUpdate={(name) => updateDocName(Number(id), name)}
+                  onRemove={() => removeDoc(Number(id))}
+                  {...{ editMode, label: "documento", value: title }}
+                />
+                }
+              </div>
+            </AccordionChild>
           ))}
         </AccordionCard>
       ))}
-
       <Buttons>
-        <Button style="small-active">Prácticar</Button>
-        <Button onClick={() => setEditMode(!editMode)} style="small">
-          {!editMode ? "Editar" : "Deshabilitar edición"}
-        </Button>
+        <Button>Prácticar</Button>
+        {role === "ADMIN" && (
+          <Button color="white" onClick={() => setEditMode(!editMode)}>
+            {!editMode ? "Editar" : "Deshabilitar edición"}
+          </Button>
+        )}
       </Buttons>
     </Layout>
   );

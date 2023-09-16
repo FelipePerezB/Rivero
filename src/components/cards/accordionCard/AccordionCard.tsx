@@ -1,7 +1,6 @@
 import { IconDefinition, faChevronUp } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { ReactNode, useEffect, useRef, useState } from "react";
-import styles from "./Accordion.module.css";
 import Card from "@components/Card";
 
 export default function AccordionCard({
@@ -28,29 +27,51 @@ export default function AccordionCard({
     if (!$chevron || !parentRef.current || !headRef.current) return;
 
     $chevron.style.transform = `rotate(${isOpen ? "180deg" : "90deg"})`;
-
+    const bodySize = bodyRef.current?.clientHeight || 0;
     isOpen
-      ? (parentRef.current.style.height = `calc(${headRef.current?.clientHeight}px + ${bodyRef.current?.clientHeight}px - 1px)`)
-      : (parentRef.current.style.height = `calc(${headRef.current.clientHeight}px - 1px)`);
+      ? (parentRef.current.style.height = `calc(${
+          headRef.current?.clientHeight
+        }px + ${bodySize}px - 2px + ${bodySize ? "0.5rem" : ""})`)
+      : (parentRef.current.style.height = `calc(${headRef.current.clientHeight}px - 2px)`);
   }, [isOpen]);
   return (
-    <section ref={parentRef} className={styles.option}>
-      <div ref={headRef} onClick={() => setIsOpen(!isOpen)}>
-        <Card data={headData} styled={false}>
-          <div className={styles.head}>
-            {head}
-            <FontAwesomeIcon
-              id="chevron-icon"
-              className={styles.chevron}
-              icon={faChevronUp}
-            />
+    <Card>
+      <section
+        className="transition-all duration-[400ms] overflow-hidden"
+        ref={parentRef}
+      >
+        <div
+          ref={headRef}
+          className="cursor-pointer flex items-center font-semibold mb-2"
+          onClick={() => setIsOpen(!isOpen)}
+        >
+          {head}
+          <FontAwesomeIcon
+            className="transition-al duration-[400ms]"
+            id="chevron-icon"
+            size="xs"
+            icon={faChevronUp}
+          />
+        </div>
+        {children?.toString() && (
+          <div ref={bodyRef}>
+            <div className="h-0.5 rounded-lg bg-slate-100"></div>
+            {children}
           </div>
-        </Card>
-      </div>
-      <div className={styles.separator}></div>
-      <div className={styles.children} ref={bodyRef}>
-        {children}
-      </div>
-    </section>
+        )}
+      </section>
+    </Card>
+  );
+}
+
+export function AccordionChild({ children }: { children: ReactNode }) {
+  return <div className="rounded-sm hover:bg-slate-50 p-2.5">{children}</div>;
+}
+
+export function AccordionHead({ children }: { children: ReactNode }) {
+  return (
+    <div className="w-full flex justify-between items-center pr-2">
+      {children}
+    </div>
   );
 }

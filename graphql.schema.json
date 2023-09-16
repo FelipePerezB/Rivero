@@ -11309,14 +11309,14 @@
             "description": null,
             "args": [
               {
-                "name": "id",
+                "name": "where",
                 "description": null,
                 "type": {
                   "kind": "NON_NULL",
                   "name": null,
                   "ofType": {
-                    "kind": "SCALAR",
-                    "name": "Int",
+                    "kind": "INPUT_OBJECT",
+                    "name": "UserWhereUniqueInput",
                     "ofType": null
                   }
                 },

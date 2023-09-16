@@ -2,18 +2,16 @@
   transition: opacity 0.25s linear;
   position: fixed;
   top: 0;
-  z-index: 1009;
+  z-index: 49;
   opacity: 1;
   background-color: rgba(128, 128, 128, 0.277);
   width: 100vw;
-  height: 100vh;
+  height: 100dvh;
   cursor: pointer;
 }
 
 .sidevar {
-  font-size: 1.1rem;
-  color: var(--black);
-  overscroll-behavior-y: contain;
+  /* font-size: 1.1rem;  overscroll-behavior-y: contain; */
   display: flex;
   flex-direction: column;
   position: fixed;
@@ -24,11 +22,10 @@
   width: 80vw;
   max-width: 350px;
   min-width: max-content;
-  height: calc(100vh - 40px);
+  height: calc(100dvh - 44px);
   padding: var(--padding);
-  gap: var(--sm-padding);
+  gap: var(--padding);
   border-radius: var(--radius);
-  box-shadow: var(--shadow);
   transition: transform 0.25s linear;
 }
 
@@ -42,7 +39,7 @@
 .options {
   height: 55vh;
   display: flex;
-  overflow-y: scroll;
+  /* overflow-y: scroll; */
   flex-direction: column;
   gap: 4px;
 }
@@ -63,7 +60,7 @@
 
 .profile {
   display: flex;
-  gap: var(--sm-padding);
+  gap: var(--padding);
   align-items: center;
   width: 100%;
   padding: 0 4px var(--padding);
@@ -108,4 +105,11 @@
 
 .option:hover {
   background-color: var(--background-color);
+}
+
+
+.image{
+  width: 2.5rem;
+  border-radius: 50%;
+  /* height: 2rem; */
 }

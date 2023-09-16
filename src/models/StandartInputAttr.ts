@@ -7,12 +7,6 @@ export type StandartInputAttrs = {
   value?: string;
   name: string;
   dataKey?: string;
-  onChange?: (value: {[key: string]: string}) => void;
+  onChange?: (value: { [key: string]: string }) => void;
   type?: React.HTMLInputTypeAttribute | undefined;
-};
-
-export type ButtonAttrs = {
-  children: ReactNode;
-  style?: "primary" | "secondary" | "small-active" | "small";
-  onClick?: any;
 };

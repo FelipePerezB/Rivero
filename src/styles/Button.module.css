@@ -14,7 +14,7 @@
   background-color: var(--black);
   border-radius: var(--radius-lg);
   color: white;
-  font-size: 1.1rem;
+  font-size: 1rem;
   font-weight: 600;
 }
 
@@ -36,11 +36,10 @@
   cursor: pointer;
   background-color: var(--primary-color);
   border: none;
-  padding: 6px 12px;
+  padding: 4px 12px;
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow);
   font-weight: 600;
-  font-size: 1rem;
 }
 
 .small-active button{

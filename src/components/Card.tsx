@@ -1,35 +1,29 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { ReactNode, useEffect, useRef, useState } from "react";
-import styles from "@styles/Card.module.css";
+import { ReactNode } from "react";
 import Link from "next/link";
 
 export default function Card({
   children,
-  data,
-  styled = true,
-  className = "",
   href,
+  className = "",
+  interactive = false,
 }: {
   className?: string;
   styled?: boolean;
   children?: ReactNode;
-  data?: {
-    title: string;
-    icon: ReactNode;
-  };
   href?: string;
+  interactive?: boolean;
 }) {
   const Card = (
-    <div
-      className={`${
-        styled ? styles["main-info"] : styles["main-info--simple"]
+    <section
+      className={`bg-white p-2.5 rounded-sm shadow text-slate-800 border-[1px] border-gray-100 ${
+        interactive
+          ? "cursor-pointer hover:scale-105 hover:bg-gray-50 transition-all duration-300"
+          : ""
       }`}
     >
-      <section className={`${styles.content} ${className}`}>
-        {children && children}
-        {data && <span className={styles.title}>{data.title}</span>}
-      </section>
-    </div>
+      {children}
+    </section>
   );
   return href ? <Link href={href}>{Card}</Link> : Card;
 }

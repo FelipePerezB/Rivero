@@ -11,7 +11,7 @@
   width: 100%;
   background-color: white;
   border-radius: var(--radius);
-  box-shadow: var(--shadow);
+  /* box-shadow: var(--shadow); */
   transition: height 400ms;
 }
 
@@ -24,28 +24,16 @@
 .main-info,
 .main-info--simple {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
+  /* width: 100%; */
   gap: 4px;
   background-color: white;
   padding: var(--padding);
-  border-top-left-radius: var(--radius);
-  border-top-right-radius: var(--radius);
-  margin: 2px;
-  transition: height 400ms, transform 200ms;
+  /* margin: 2px; */
+  /* transition: height 400ms, transform 200ms; */
 }
 
 .main-info {
-  box-shadow: var(--shadow);
+  /* box-shadow: var(--shadow); */
   outline: 1px rgb(235, 235, 235) solid;
   border-radius: var(--radius);
-}
-
-.main-info--simple:hover {
-  cursor: pointer;
-  transition: 200ms;
-}
-
-.content{
-  width: 100%;
 }

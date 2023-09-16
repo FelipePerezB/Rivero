@@ -1,14 +1,5 @@
 .recomendations {
-  padding: 2px 0;
   width: 100%;
-  /* overflow: scroll; */
-}
-
-/* .column .recomendations {
-  padding-top: 50px;
-} */
-.row .recomendations {
-  overflow-x: scroll;
 }
 
 .info {
@@ -27,21 +18,22 @@
 .title {
   font-weight: 800;
   font-size: 1.4rem;
-  margin: 0 0 8px;
+  margin: 0 0 4px;
 }
 
 .children {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 }
+.children > *{
+  width: 100%;
+}
 
 .row .children {
-  width: max-content;
-  padding: 0 var(--sm-padding) var(--padding);
-  gap: 24px;
-  overflow-x: scroll;
-  padding: 8px;
+  gap: calc(var(--padding) + 4px);
+  padding: 4px;
 }
 
 .column .children {

@@ -1,13 +1,18 @@
-import React from "react";
-import styles from "./Tags.module.css";
 import capFirst from "src/utils/capFirst";
 
-export default function Tags({ tags }: { tags: string[] }) {
+const Tag = ({ children }: { children: JSX.Element | string }) => (
+  <li className="border rounded-sm px-1 py-0.5 bg-white text-slate-700 font-light text-sm">
+    {children}
+  </li>
+);
+
+export default function Tags({ tags }: { tags?: string[] }) {
   return (
-    <ul className={styles.tags}>
+    <ul className={"flex gap-2"}>
       {tags?.map((tag, i) => (
-        <li key={tag + "-tag-" + i}>{`${capFirst(tag)}`}</li>
+        <Tag key={tag + "-tag-" + i}>{capFirst(tag)}</Tag>
       ))}
+      {!tags?.length && <Tag>Sin tópicos</Tag>}
     </ul>
   );
 }

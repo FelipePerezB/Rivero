@@ -1,17 +1,17 @@
-import { SizeProp } from "@fortawesome/fontawesome-svg-core";
 import { faPen } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import styles from "./EditButton.module.css";
 import { useState } from "react";
 import Modal from "@components/modals/modal/Modal";
 import Form from "@components/forms/simpleForm/SimpleForm";
-import { ButtonAttrs, StandartInputAttrs } from "src/models/StandartInputAttr";
+import { StandartInputAttrs } from "src/models/StandartInputAttr";
 import { FetchResult } from "@apollo/client";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 import capFirst from "src/utils/capFirst";
+import { useUser } from "@clerk/nextjs";
+import { ButtonAttrs } from "@components/Button";
+import CircleButton from "../circle-button/circle-button";
 
 export default function EditButton({
-  size = "1x",
   editMode,
   onUpdate,
   onRemove,
@@ -19,16 +19,19 @@ export default function EditButton({
   value,
   label,
   childLabel,
+  isPublic = false,
 }: {
   onUpdate: (name: string) => Promise<FetchResult>;
   onRemove?: () => Promise<FetchResult>;
   onCreate?: (name: string) => Promise<FetchResult>;
   label: string;
   value?: string;
-  size?: SizeProp;
   editMode: boolean;
   childLabel?: string;
+  isPublic?: boolean;
 }) {
+  const { user } = useUser();
+  const role = user?.publicMetadata.role as string | undefined;
   const [modalState, setModalState] = useState(false);
   const title = `Editar ${label}`;
   const update = async ({ name }: { name: string }) => {
@@ -45,7 +48,7 @@ export default function EditButton({
     if (!onRemove) return;
     toast.promise(onRemove(), {
       loading: `Eliminando ${label}...`,
-      error: `No se ha podido eliminar el ${label}`,
+      error: `No se ha logrado remover esta ${label}`,
       success: `¡${capFirst(label)} eliminado correctamente!`,
     });
     setModalState(false);
@@ -81,7 +84,7 @@ export default function EditButton({
     buttons: [
       {
         children: "Modificar",
-        style: "small-active",
+        color: "blue",
         onClick: update,
       },
     ] as ButtonAttrs[],
@@ -90,7 +93,7 @@ export default function EditButton({
   onRemove &&
     firstPage.buttons.push({
       children: "Eliminar",
-      style: "small",
+      color: "red",
       onClick: remove,
     });
 
@@ -101,25 +104,30 @@ export default function EditButton({
       title: `Añadir ${childLabel}`,
       inputs: [{ name: `${childLabel}`, dataKey: "name" }],
       buttons: [
-        { children: "Añadir", style: "small-active", onClick: create },
+        { children: "Añadir", color: "blue", onClick: create },
       ] as ButtonAttrs[],
     });
 
   return (
     <>
-      <FontAwesomeIcon
-        onClick={(event) => {
-          event.preventDefault();
-          setModalState(true);
-        }}
-        size={size}
-        style={editMode ? { display: "block" } : { display: "none" }}
-        className={styles["edit-icon"]}
-        icon={faPen}
-      />
-      <Modal {...{ modalState, setModalState, title }}>
-        <Form {...{ data }} />
-      </Modal>
+      {((role === "ADMIN" || isPublic) && editMode) && (
+        <>
+          <CircleButton
+            onClick={(event) => {
+              event.preventDefault();
+              setModalState(true);
+            }}
+          >
+            <FontAwesomeIcon
+              style={editMode ? { display: "block" } : { display: "none" }}
+              icon={faPen}
+            />
+          </CircleButton>
+          <Modal {...{ modalState, setModalState, title }}>
+            <Form {...{ data }} />
+          </Modal>
+        </>
+      )}
     </>
   );
 }

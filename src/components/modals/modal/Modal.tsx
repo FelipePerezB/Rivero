@@ -2,7 +2,6 @@ import { ReactNode, useState } from "react";
 import styles from "@styles/Modal.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClose } from "@fortawesome/free-solid-svg-icons";
-import ModalInput from "src/getDoc/components/ModalInput";
 import { createPortal } from "react-dom";
 
 export default function Modal({

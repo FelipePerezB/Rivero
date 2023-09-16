@@ -39,13 +39,15 @@ export default function ProgressCard({
     return progress;
   };
 
-  return (
-    <Card>
+  return topic ? (
+    <Card className={styles.card}>
       {children && <span className={styles.title}>{children}</span>}
       <div className={styles.stats}>
         <CompletedProgress color={color} progress={getProgress()} />
         <span className={styles.count}>{count} documentos</span>
       </div>
     </Card>
+  ) : (
+    <></>
   );
 }

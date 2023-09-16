@@ -1,55 +1,47 @@
 import Layout from "src/layout/Layout";
-import React, { useEffect, useState } from "react";
-import styles from "@styles/Docs.module.css";
-import Card from "@components/Card";
 import Recomendations from "@components/Recomendations";
 import DocCard from "@components/DocCard";
-import { CompletedProgress } from "@components/ProgressVar";
 import { GetStaticProps, InferGetStaticPropsType } from "next";
 import { client } from "src/service/client";
 import { GetSubjectsDocument, GetSubjectsQuery } from "src/gql/graphql";
-import capFirst from "src/utils/capFirst";
 import useGetLocalDocs from "src/hooks/useGetLocalDocs";
-import getDocsProgress from "src/utils/getDocsProgress";
-import Tags from "@components/tags/Tags";
 import SubjectsCards from "@components/containers/subjectsCards/SubjectsCards";
+import { useEffect, useState } from "react";
+import styles from "@styles/Docs.module.css";
 
 export default function Docs({
   data,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   const savedDocs = useGetLocalDocs(5);
+  const [stats, setStats] = useState<{
+    [subject: string]: { [topic: string]: string };
+  }>({});
+
+  useEffect(() => {
+    const strStats = localStorage.getItem("subjects-stats");
+    if (!strStats) return;
+    setStats(JSON.parse(strStats));
+  }, []);
 
   return (
     <Layout title="Documentos">
-      <Recomendations title="Asignaturas" link="/">
-        <SubjectsCards subjecsData={data} />
-        {/* {subjects?.map(
-          ({ name, Topics, color, _count: { Docs: count }, id }) => {
-            const tags = Topics?.map((topic) => topic.name);
-            if (!(count > 0) || !tags?.length) return;
-            const progress = getDocsProgress(name, count, stats);
-            const label = `${count} documentos`;
-            const key = "card-" + name;
-            const href = `docs/${id}`;
-            return (
-              <Card key={key} href={href} className={styles.card}>
-                <h2>{capFirst(name)}</h2>
-                <Tags tags={tags} />
-                <CompletedProgress {...{ label, progress, color }} />
-              </Card>
-            );
-          }
-        )} */}
+      <Recomendations title="Asignaturas" link="/docs/subjects">
+        <SubjectsCards
+          stats={stats}
+          subjecsData={data}
+        />
       </Recomendations>
-      <Recomendations title="Guardados" link="/">
-        {savedDocs.map(({ type, options }) => (
-          <DocCard
-            href={"/docs/view/" + options.docId}
-            key={options.title + "-save-doc"}
-            doc={{ type, options }}
-          />
-        ))}
-      </Recomendations>
+      {/* {!!savedDocs?.length && (
+        <Recomendations title="Guardados" link="/">
+          {savedDocs.map(({ type, options }) => (
+            <DocCard
+              href={"/docs/view/" + options.docId}
+              key={options.title + "-save-doc"}
+              doc={{ type, options }}
+            />
+          ))}
+        </Recomendations>
+      )} */}
     </Layout>
   );
 }

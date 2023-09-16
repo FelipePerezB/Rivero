@@ -3,4 +3,12 @@ body .card{
   justify-content: space-between;
   align-items: center;
   width: 100%;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: 300ms;
+}
+
+body .card:hover{
+transition: 200ms;
+transform: scale(1.02);
 }

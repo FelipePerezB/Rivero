@@ -11,9 +11,11 @@ export default function NavigationCard({
   href: string;
 }) {
   return (
-    <Card className={styles.card} href={href}>
-      <div>{children}</div>
-      <FontAwesomeIcon icon={faChevronRight} />
+    <Card interactive href={href}>
+      <div className={"flex justify-between items-center"}>
+        <div>{children}</div>
+        <FontAwesomeIcon size="xs" icon={faChevronRight} />
+      </div>
     </Card>
   );
 }

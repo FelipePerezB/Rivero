@@ -1,11 +1,15 @@
 .tags {
   display: flex;
   gap: 8px;
-  padding: 4px;
+  font-size: 0.8rem;
+  padding: 1px;
+  min-height: 1.8rem;
   overflow-x: hidden;
 }
 
 .tags li {
+  color: var(--black-100);
+  height: max-content;
   padding: 2px 6px;
   min-width: max-content;
   background-color: white;

@@ -4,12 +4,11 @@ import Options from "@components/Options";
 import Table from "@components/Table";
 import React, { useState } from "react";
 import Layout from "src/layout/Layout";
-import styles from "@styles/Stats.module.css";
 import { useRouter } from "next/router";
 
 const StatsCard = ({ title, value }: { title: string; value: string }) => (
-  <article className={styles["sumarize__item"]}>
-    <h3>{title}</h3>
+  <article className="flex flex-col text-center">
+    <h3 className="font-bold">{title}</h3>
     <span>{value}</span>
   </article>
 );
@@ -21,10 +20,12 @@ export default function Stats() {
   const [option, setOption] = useState(options[0]);
   return (
     <Layout title="Estadísticas">
-      <Card className={styles["sumarize"]}>
-        <StatsCard title="Mayor" value="700" />
-        <StatsCard title="Promedio" value="650" />
-        <StatsCard title="Total" value="42" />
+      <Card>
+        <div className="flex justify-around">
+          <StatsCard title="Mayor" value="700" />
+          <StatsCard title="Promedio" value="650" />
+          <StatsCard title="Total" value="42" />
+        </div>
       </Card>
       <Options {...{ option, setOption, options }} />
       {/* <Table

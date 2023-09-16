@@ -1,5 +1,4 @@
 import React from "react";
-import styles from "@styles/Navar.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faUser,
@@ -12,6 +11,7 @@ import {
 import Link from "next/link";
 import { UserButton, useUser } from "@clerk/nextjs";
 import { useRouter } from "next/router";
+import CircleButton from "@components/button/circle-button/circle-button";
 
 export default function Navar({
   setVisibility,
@@ -24,44 +24,23 @@ export default function Navar({
   const canBack = router.asPath.split("/").length > 2;
 
   return (
-    <nav className={styles.navar}>
-      <div></div>
-      <div id="wave" style={{ height: "150px", overflow: "hidden" }}>
+    <nav className="w-full">
+      <ul className="fixed top-0 w-full justify-between items-center p-3 text-white">
         <svg
-          // id="wave"
-          viewBox="0 0 500 150"
-          preserveAspectRatio="none"
-          style={{ height: "100%", width: "100%" }}
+          id="wave"
+          className="fixed top-0 left-0"
+          viewBox="0 0 1440 270"
+          version="1.1"
+          xmlns="http://www.w3.org/2000/svg"
         >
           <path
-            d="M-0.33,79.23 C181.94,97.93 313.43,26.08 501.35,92.02 L500.00,-0.00 L-0.00,-0.00 Z"
-            style={{ stroke: "none", fill: "var(--primary-color)" }}
+            fill="var(--primary-color)"
+            d="M0,27L80,49.5C160,72,320,117,480,130.5C640,144,800,126,960,103.5C1120,81,1280,54,1440,67.5C1600,81,1760,135,1920,130.5C2080,126,2240,63,2400,45C2560,27,2720,54,2880,81C3040,108,3200,135,3360,157.5C3520,180,3680,198,3840,207C4000,216,4160,216,4320,180C4480,144,4640,72,4800,49.5C4960,27,5120,54,5280,63C5440,72,5600,63,5760,67.5C5920,72,6080,90,6240,117C6400,144,6560,180,6720,171C6880,162,7040,108,7200,108C7360,108,7520,162,7680,180C7840,198,8000,180,8160,148.5C8320,117,8480,72,8640,76.5C8800,81,8960,135,9120,166.5C9280,198,9440,207,9600,175.5C9760,144,9920,72,10080,40.5C10240,9,10400,18,10560,36C10720,54,10880,81,11040,99C11200,117,11360,126,11440,130.5L11520,135L11520,270L11440,270C11360,270,11200,270,11040,270C10880,270,10720,270,10560,270C10400,270,10240,270,10080,270C9920,270,9760,270,9600,270C9440,270,9280,270,9120,270C8960,270,8800,270,8640,270C8480,270,8320,270,8160,270C8000,270,7840,270,7680,270C7520,270,7360,270,7200,270C7040,270,6880,270,6720,270C6560,270,6400,270,6240,270C6080,270,5920,270,5760,270C5600,270,5440,270,5280,270C5120,270,4960,270,4800,270C4640,270,4480,270,4320,270C4160,270,4000,270,3840,270C3680,270,3520,270,3360,270C3200,270,3040,270,2880,270C2720,270,2560,270,2400,270C2240,270,2080,270,1920,270C1760,270,1600,270,1440,270C1280,270,1120,270,960,270C800,270,640,270,480,270C320,270,160,270,80,270L0,270Z"
           ></path>
         </svg>
-      </div>
-      {/* <svg
-        id="wave"
-        // style="transform:rotate(180deg); transition: 0.3s"
-        viewBox="0 0 1440 420"
-        version="1.1"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <defs>
-          <linearGradient id="sw-gradient-0" x1="0" x2="0" y1="1" y2="0">
-            <stop stopColor="rgba(33, 106, 217, 1)" offset="0%"></stop>
-            <stop stopColor="rgba(33, 106, 217, 1)" offset="100%"></stop>
-          </linearGradient>
-        </defs>
-        <path
-          // style="transform:translate(0, 0px); opacity:1"
-          fill="url(#sw-gradient-0)"
-          d="M0,294L80,259C160,224,320,154,480,154C640,154,800,224,960,217C1120,210,1280,126,1440,126C1600,126,1760,210,1920,266C2080,322,2240,350,2400,322C2560,294,2720,210,2880,161C3040,112,3200,98,3360,140C3520,182,3680,280,3840,329C4000,378,4160,378,4320,371C4480,364,4640,350,4800,350C4960,350,5120,364,5280,308C5440,252,5600,126,5760,126C5920,126,6080,252,6240,294C6400,336,6560,294,6720,273C6880,252,7040,252,7200,273C7360,294,7520,336,7680,294C7840,252,8000,126,8160,63C8320,0,8480,0,8640,49C8800,98,8960,196,9120,203C9280,210,9440,126,9600,140C9760,154,9920,266,10080,259C10240,252,10400,126,10560,119C10720,112,10880,224,11040,287C11200,350,11360,364,11440,371L11520,378L11520,420L11440,420C11360,420,11200,420,11040,420C10880,420,10720,420,10560,420C10400,420,10240,420,10080,420C9920,420,9760,420,9600,420C9440,420,9280,420,9120,420C8960,420,8800,420,8640,420C8480,420,8320,420,8160,420C8000,420,7840,420,7680,420C7520,420,7360,420,7200,420C7040,420,6880,420,6720,420C6560,420,6400,420,6240,420C6080,420,5920,420,5760,420C5600,420,5440,420,5280,420C5120,420,4960,420,4800,420C4640,420,4480,420,4320,420C4160,420,4000,420,3840,420C3680,420,3520,420,3360,420C3200,420,3040,420,2880,420C2720,420,2560,420,2400,420C2240,420,2080,420,1920,420C1760,420,1600,420,1440,420C1280,420,1120,420,960,420C800,420,640,420,480,420C320,420,160,420,80,420L0,420Z"
-        ></path>
-      </svg> */}
-      <ul>
-        <li>
+        {/* <li className="flex cursor-pointer gap-2 text-lg items-center">
           {title && (
-            <h1 className={styles.title}>
+            <>
               {canBack && (
                 <FontAwesomeIcon
                   onClick={() => router.back()}
@@ -69,14 +48,14 @@ export default function Navar({
                   icon={faChevronLeft}
                 />
               )}
-              {title}
-            </h1>
+              <h1>{title}</h1>
+            </>
           )}
-        </li>
-        <li className={styles.options}>
-          {/* <UserButton /> */}
-          {/* <FontAwesomeIcon className={styles.light} size="xl" icon={faMoon} /> */}
-          <FontAwesomeIcon size="lg" icon={faBars} />
+        </li> */}
+        <li className="fixed left-0">
+          <CircleButton onClick={() => setVisibility(true)}>
+            <FontAwesomeIcon size="lg" icon={faBars} />
+          </CircleButton>
         </li>
       </ul>
     </nav>

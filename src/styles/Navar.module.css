@@ -5,13 +5,13 @@
 
 .navar h1{
   font-size: 1.4rem;
-  font-weight: 600;
+  font-weight: 500;
 }
 
 .navar ul {
   color: white;
   position: fixed;
-  z-index: 1000;
+  /* z-index: 1000; */
   top: 0;
   width: 100%;
   padding: var(--padding);
