@@ -32,7 +32,6 @@ export default function InvitationBtns({
 
   const invitate = ({ emails }: { emails: string }) => {
     const emailsArray = emails.split(",")?.map((email) => email.trim());
-    console.log(invitations);
     emailsArray.forEach(async (email) => {
       const isValid = regexEmail.test(email);
       if (!isValid) return;

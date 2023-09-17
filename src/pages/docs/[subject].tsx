@@ -84,8 +84,8 @@ export default function Docs({
                 <EditButton
                   label="subtopico"
                   childLabel="documento"
-                  onUpdate={(name) => updateSubtopicName(Number(id), name)}
-                  onRemove={() => removeSubtopic(Number(id))}
+                  onUpdate={(name) => updateSubtopicName(Number(subtpicId), name)}
+                  onRemove={() => removeSubtopic(Number(subtpicId))}
                   onCreate={(name) =>
                     createDoc(
                       name,
@@ -104,14 +104,14 @@ export default function Docs({
           {Docs?.map(({ title, externalId, id }) => (
             <AccordionChild key={"accordion-child" + externalId}>
               <div className="flex justify-between items-center">
-                <Link href={`view/${externalId}`}>{title}</Link>{
-                  editMode &&
-                <EditButton
-                  onUpdate={(name) => updateDocName(Number(id), name)}
-                  onRemove={() => removeDoc(Number(id))}
-                  {...{ editMode, label: "documento", value: title }}
-                />
-                }
+                <Link href={`view/${externalId}`}>{title}</Link>
+                {editMode && (
+                  <EditButton
+                    onUpdate={(name) => updateDocName(Number(id), name)}
+                    onRemove={() => removeDoc(Number(id))}
+                    {...{ editMode, label: "documento", value: title }}
+                  />
+                )}
               </div>
             </AccordionChild>
           ))}

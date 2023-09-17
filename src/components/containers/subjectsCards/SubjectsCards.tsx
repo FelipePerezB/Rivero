@@ -40,28 +40,30 @@ export default function SubjectsCards({
             href={href}
           >
             <section>
-              <h2 className="font-bold text-xl">{capFirst(name)}</h2>
-              {editMode && (
-                <EditButton
-                  value={name}
-                  label="asignatura"
-                  childLabel="topico"
-                  editMode={editMode}
-                  onUpdate={(name) => updateSubject(Number(id), name, color)}
-                  onRemove={() => removeSubject(Number(id))}
-                  onCreate={(name) => createTopic(name, Number(id))}
-                />
-              )}
+              <article className="flex items-center gap-1">
+                <h2 className="font-semibold">{capFirst(name)}</h2>
+                {editMode && (
+                  <EditButton
+                    value={name}
+                    label="asignatura"
+                    childLabel="topico"
+                    editMode={editMode}
+                    onUpdate={(name) => updateSubject(Number(id), name, color)}
+                    onRemove={() => removeSubject(Number(id))}
+                    onCreate={(name) => createTopic(name, Number(id))}
+                  />
+                )}
+              </article>
               <Tags tags={tags} />
             </section>
-            <section className="flex justify-between w-full gap-4 items-center">
-              <div className="h-1.5 bg-slate-100 w-full rounded-sm">
+            <section className="flex justify-between w-full gap-4 items-center border-t pt-2 mt-2">
+              <div className="h-1.5 bg-slate-100  w-full rounded-full overflow-hidden">
                 <div
                   style={{ background: color }}
-                  className=" h-full bg-slate-500 w-24 rounded-sm"
+                  className=" h-full bg-slate-500 w-24 rounded-full"
                 ></div>
               </div>
-              <span className="text-slate-400">97%</span>
+              <span className="text-slate-400 text-xs">97%</span>
             </section>
           </Card>
         );

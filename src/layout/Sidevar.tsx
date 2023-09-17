@@ -1,6 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
 import React, { useEffect } from "react";
-import styles from "@styles/Sidevar.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faChartSimple,
@@ -16,21 +15,9 @@ import Link from "next/link";
 import SwitchToogle from "@components/SwitchToogle";
 import { useUser } from "@clerk/nextjs";
 import capFirst from "src/utils/capFirst";
+import Blur from "@components/modals/blur/blur";
 
-const Blur = ({
-  setVisibility,
-  visibility,
-}: {
-  setVisibility: React.Dispatch<React.SetStateAction<boolean>>;
-  visibility: boolean;
-}) => (
-  <div
-    className={`fixed h-full w-full bg-slate-900 transition-opacity duration-500 ${
-      visibility ? "opacity-70" : "opacity-0 hidden"
-    }`}
-    onClick={() => setVisibility(false)}
-  ></div>
-);
+
 
 export default function Sidevar({
   visibility,
@@ -43,7 +30,7 @@ export default function Sidevar({
   const role = user?.publicMetadata?.role as string | undefined;
 
   return (
-    <div className="fixed top-0 left-0 h-full">
+    <div className="fixed z-40 top-0 left-0 h-full">
       <Blur {...{ setVisibility, visibility }} />
       <article
         className={`${
@@ -60,8 +47,8 @@ export default function Sidevar({
               className="w-10 h-10 rounded-full"
               src={user?.imageUrl}
             ></img>
-            <div className={styles["profile__info"]}>
-              <span>
+            <div className="flex flex-col">
+              <span className="text-lg">
                 {(user?.username as string | undefined) &&
                   capFirst(user?.username as string)}
               </span>
@@ -72,7 +59,6 @@ export default function Sidevar({
         <div className="w-full h-0.5 bg-slate-100 my-1"></div>
         <section>
           <ul className="flex flex-col gap-1 text-slate-800 text-lg">
-            <Option link={"/"} icon={faShieldDog} text="Privacidad" />
             <Option link={`/docs`} icon={faFolder} text="Documentos" />
             {(role === "DIRECTOR" || role === "ADMIN") && (
               <Option
@@ -87,7 +73,7 @@ export default function Sidevar({
             <Option icon={faMoon} text="Modo oscuro" />
           </ul>
           <div
-            className={styles["close-menu"]}
+            // className={styles["close-menu"]}
             onClick={() => setVisibility(false)}
           >
             {/* <Option text="Cerrar menu" icon={faClose} /> */}

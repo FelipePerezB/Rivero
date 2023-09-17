@@ -91,9 +91,8 @@ export default function NewDoc() {
     toast.success("Guardado!");
   };
 
-  return doc?.options?.children ? (
-    <Edit nodes={pdfNodes} saveDoc={saveDoc} doc={doc} />
-  ) : (
-    <></>
-  );
+  return <div>A</div>
+  // return doc?.options?.children ? (
+  // ) : (
+  // );
 }

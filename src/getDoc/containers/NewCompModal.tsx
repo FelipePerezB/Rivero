@@ -5,7 +5,7 @@ import styles from "../styles/Modal.module.css";
 import getID from "../utils/getId";
 import GetDoc from "../GetDoc";
 import { pdfNodes } from "src/schemas";
-import { FormModal } from "@components/Modal";
+import { FormModal } from "@components/FormModal";
 import capFirst from "src/utils/capFirst";
 
 type useStateFunc = (data: any) => void;

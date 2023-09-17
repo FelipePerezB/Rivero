@@ -1,7 +1,7 @@
 import StandardInput from "@components/inputs/StandardInput/StandardInput";
 import styles from "./SimpleForm.module.css";
-import Button from "@components/Button";
-import { ButtonAttrs, StandartInputAttrs } from "src/models/StandartInputAttr";
+import Button, { ButtonAttrs } from "@components/Button";
+import { StandartInputAttrs } from "src/models/StandartInputAttr";
 import Buttons from "@components/button/buttons/Buttons";
 import Options from "@components/Options";
 import { useEffect, useState } from "react";

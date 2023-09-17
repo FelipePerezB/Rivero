@@ -5,25 +5,34 @@ import Link from "next/link";
 export default function Card({
   children,
   href,
-  className = "",
+  className,
   interactive = false,
+  size = "lg",
 }: {
+  size?: "lg" | "sm";
   className?: string;
   styled?: boolean;
   children?: ReactNode;
   href?: string;
   interactive?: boolean;
 }) {
-  const Card = (
-    <section
-      className={`bg-white p-2.5 rounded-sm shadow text-slate-800 border-[1px] border-gray-100 ${
-        interactive
-          ? "cursor-pointer hover:scale-105 hover:bg-gray-50 transition-all duration-300"
-          : ""
-      }`}
-    >
+  const sizeVariants = {
+    lg: "w-full",
+    sm: "w-max",
+  };
+
+  const styles = `${sizeVariants[size]} ${className} bg-white p-2.5 rounded-sm shadow-gray-300/30 shadow-lg text-slate-800 border border-gray-200  ${
+    interactive
+      ? "cursor-pointer hover:shadow-xl transition-all duration-300"
+      : ""
+  }  `;
+
+
+  return href ? (
+    <Link className={styles} href={href}>
       {children}
-    </section>
+    </Link>
+  ) : (
+    <article className={styles}>{children}</article>
   );
-  return href ? <Link href={href}>{Card}</Link> : Card;
 }

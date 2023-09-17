@@ -1,5 +1,4 @@
 import React, { ReactNode, useState } from "react";
-import styles from "@styles/Modal.module.css";
 import Button from "./Button";
 import ModalInput from "src/getDoc/components/ModalInput";
 import Modal from "@components/modals/modal/Modal";
@@ -30,10 +29,10 @@ export const FormModal = (params: {
 
   return (
     <Modal {...params}>
-      <div className={styles["form-modal"]}>
-        <div className={styles.children}>
+      <div >
+        <div className="">
           {params.children}
-          <form className={styles.form}>
+          <form className="flex flex-col gap-4">
             {params?.schema &&
               params.schema.map((schema) =>
                 Object.entries(schema).map(([name, type]) => {
@@ -55,7 +54,7 @@ export const FormModal = (params: {
               )}
           </form>
         </div>
-        <div className={styles["form-btn"]}>
+        <div className="">
           <Button
             onClick={() => {
               params.onSubmit && params.onSubmit(values);

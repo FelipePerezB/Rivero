@@ -38,7 +38,7 @@ export default function EditButton({
     if (!onUpdate) return;
     toast.promise(onUpdate(name), {
       loading: `Actualizando ${label}...`,
-      error: `No se ha podido actualizar el ${label}`,
+      error: `No se ha podido actualizar`,
       success: `¡${capFirst(label)} actualizado correctamente a "${name}"!`,
     });
     setModalState(false);
@@ -48,22 +48,19 @@ export default function EditButton({
     if (!onRemove) return;
     toast.promise(onRemove(), {
       loading: `Eliminando ${label}...`,
-      error: `No se ha logrado remover esta ${label}`,
+      error: `No se ha logrado remover`,
       success: `¡${capFirst(label)} eliminado correctamente!`,
     });
     setModalState(false);
   };
 
   const create = async ({ name }: { name: string }) => {
-    console.log(name);
     if (!onCreate || !childLabel || !name) return;
     toast.promise(
-      onCreate(name).then(({ errors }) => {
-        console.log(errors);
-      }),
+      onCreate(name),
       {
         loading: `Creando ${childLabel}...`,
-        error: `No se ha podido crear el ${childLabel} "${name}"`,
+        error: `No se ha podido crear "${name}"`,
         success: `¡${capFirst(childLabel)} "${name}" creado correctamente!`,
       }
     );
@@ -119,6 +116,7 @@ export default function EditButton({
             }}
           >
             <FontAwesomeIcon
+            size="xs"
               style={editMode ? { display: "block" } : { display: "none" }}
               icon={faPen}
             />

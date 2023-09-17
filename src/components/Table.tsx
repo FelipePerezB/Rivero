@@ -33,7 +33,7 @@ const Row = ({
 const Table: React.FC<TableProps> = ({ data, head, onClick }) => {
   return (
     <article>
-      <table className="flex flex-col bg-white overflow-hidden border shadow rounded w-full">
+      <table className="flex flex-col bg-white overflow-hidden border shadow-gray-300/30 shadow-lg rounded w-full">
         {head?.title && (
           <caption className="w-full flex px-2 py-2 justify-between items-center text-xs">
             <h2 className="text-base font-bold">{head.title}</h2>

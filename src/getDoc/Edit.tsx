@@ -13,7 +13,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import GetDoc from "./GetDoc";
 import { useRouter } from "next/router";
-import { FormModal } from "@components/Modal";
+import { FormModal } from "@components/FormModal";
 import {
   CreateDocDocument,
   DocCreateInput,

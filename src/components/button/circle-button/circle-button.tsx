@@ -10,9 +10,9 @@ export default function CircleButton({
   return (
     <button
       onClick={onClick}
-      className="flex justify-center items-center rounded-full p-2 hover:bg-gray-100"
+      className="relative flex justify-center items-center w-5 h-5 hover:text-slate-400/[0.9]"
     >
-      {children}
+      <div className="absolute">{children}</div>
     </button>
   );
 }

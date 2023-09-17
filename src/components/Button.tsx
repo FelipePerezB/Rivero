@@ -15,14 +15,14 @@ export default function Button({
   size = "sm",
 }: ButtonAttrs) {
   const colorVariants = {
-    blue: "bg-blue-600 hover:bg-blue-500 text-white shadow-blue-300",
-    red: "bg-red-500 hover:bg-red-400 text-white shadow-red-300",
-    white: "bg-white hover:bg-gray-100 text-black border",
-    black: "bg-black hover:bg-gray-900 text-white border",
+    blue: "bg-blue-500 hover:bg-blue-500 text-white  shadow-blue-500/40",
+    red: "bg-red-500 hover:bg-red-400 text-white shadow-red-500/40",
+    white: "bg-white hover:bg-gray-100 text-black border shadow-gray-500/10",
+    black: "bg-black hover:bg-gray-900 text-white border shadow-gray-500/10",
   };
 
   const sizeVariants = {
-    sm: "w-max px-4 py-1",
+    sm: "w-max px-3 py-1",
     lg: "w-5/6 py-1.5 my-0 mx-auto",
   };
 
@@ -30,7 +30,7 @@ export default function Button({
     <button
       type="button"
       onClick={onClick}
-      className={`${colorVariants[color]} ${sizeVariants[size]} shadow-sm  rounded-md cursor-pointer hover:scale-95 transition-all duration-150`}
+      className={`${colorVariants[color]} ${sizeVariants[size]} shadow-md rounded-md cursor-pointer hover:scale-95 transition-all duration-150`}
     >
       {children}
     </button>

@@ -8,13 +8,14 @@ import {
 } from "src/gql/graphql";
 import SubjectsCards from "@components/containers/subjectsCards/SubjectsCards";
 import Layout from "src/layout/Layout";
-import Button from "@components/Button";
+import Button, { ButtonAttrs } from "@components/Button";
 import { useMutation } from "@apollo/client";
 import Form from "@components/forms/simpleForm/SimpleForm";
 import Modal from "@components/modals/modal/Modal";
-import { ButtonAttrs, StandartInputAttrs } from "src/models/StandartInputAttr";
+import { StandartInputAttrs } from "src/models/StandartInputAttr";
 import toast from "react-hot-toast";
 import { useUser } from "@clerk/nextjs";
+import Buttons from "@components/button/buttons/Buttons";
 
 export default function Subjects({
   data,
@@ -74,20 +75,20 @@ export default function Subjects({
       <SubjectsCards editMode={editMode} subjecsData={data} stats={stats} />
       {role === "ADMIN" && (
         <>
-          <div>
+          <Buttons>
             <Button onClick={() => setModalState(true)}>
               Crear asignatura
             </Button>
             <Button
+            color="white"
               onClick={() => {
                 setEditMode(!editMode);
                 setModalState(false);
               }}
-              style="secondary"
             >
-              {!editMode ? "Editar asignaturas" : "Desahbilitar edición"}
+              {!editMode ? "Editar asignaturas" : "Deshabilitar edición"}
             </Button>
-          </div>
+          </Buttons>
           <Modal title="Crear asignatura" {...{ modalState, setModalState }}>
             <Form data={formData} />
           </Modal>

@@ -28,11 +28,12 @@ export default function AccordionCard({
 
     $chevron.style.transform = `rotate(${isOpen ? "180deg" : "90deg"})`;
     const bodySize = bodyRef.current?.clientHeight || 0;
+    const headSize = headRef.current?.clientHeight;
     isOpen
-      ? (parentRef.current.style.height = `calc(${
-          headRef.current?.clientHeight
-        }px + ${bodySize}px - 2px + ${bodySize ? "0.5rem" : ""})`)
-      : (parentRef.current.style.height = `calc(${headRef.current.clientHeight}px - 2px)`);
+      ? (parentRef.current.style.height = `calc(${headSize}px + ${bodySize}px - 2px + ${
+          bodySize ? "0.5rem" : ""
+        })`)
+      : (parentRef.current.style.height = `calc(${headSize}px - 2px)`);
   }, [isOpen]);
   return (
     <Card>

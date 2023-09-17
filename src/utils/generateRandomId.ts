@@ -1,4 +1,4 @@
-const makeRandomId = (length: number) => {
+const generateRandomId = (length: number) => {
   let result = "";
   const characters =
     "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
@@ -10,4 +10,4 @@ const makeRandomId = (length: number) => {
   return result;
 };
 
-export default makeRandomId
+export default generateRandomId

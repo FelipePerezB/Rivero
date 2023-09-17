@@ -9,16 +9,42 @@ import DocCard from "@components/DocCard";
 import Link from "next/link";
 import Recomendations from "@components/Recomendations";
 import useGetLocalDocs from "src/hooks/useGetLocalDocs";
-import makeRandomId from "src/utils/getRandomId";
+import generateRandomId from "src/utils/generateRandomId";
+import DocsCards from "@components/containers/docsCards/docs-cards";
+import StandardInput from "@components/inputs/StandardInput/StandardInput";
+import Button from "@components/Button";
+import Options from "@components/Options";
+import CircleButton from "@components/button/circle-button/circle-button";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export default function EditPage() {
   const router = useRouter();
   const savedDocs = useGetLocalDocs();
   const [filteredDocs, setFilteredDocs] = useState(savedDocs);
+  const options = ["Apuntes", "Resumenes", "Prácticas", "Evaluaciones"];
+  // const routes
+  const [option, setOption] = useState("Apuntes");
+  const routes = {
+    Apuntes: "note",
+    Resumenes: "summarie",
+    Prácticas: "practice",
+    Evaluaciones: "evaluation",
+  };
+  const createDoc = () => {
+    router.push(`/docs/edit/${generateRandomId(32)}`);
+  };
 
   return (
-    <Layout title="Editar">
-      <label className={styles["search-container"]}>
+    <Layout title="Crear documentos">
+      <div className="sticky z-10 left-0 top-12  flex gap-4 items-center bg-[var(--background-color)] border-b">
+        <CircleButton>
+          <FontAwesomeIcon onClick={createDoc} icon={faPlus} />
+        </CircleButton>
+        <Options {...{ option, setOption, options }}></Options>
+      </div>
+      {/* <div>
+      <StandardInput name="Buscar" /> */}
+      {/* <label className={styles["search-container"]}>
         <input
           onChange={({ target }) => {
             setFilteredDocs(
@@ -32,20 +58,9 @@ export default function EditPage() {
           className={styles.search}
           placeholder="Búsqueda..."
         />
-      </label>
+      </label> */}
       <Recomendations>
-        {savedDocs.map((doc) => (
-          <>
-            {doc?.options?.title && (
-              <Link
-                key={doc?.options?.title + "-save-doc"}
-                href={"/edit/" + doc?.options?.externalId}
-              >
-                <DocCard doc={doc} />
-              </Link>
-            )}
-          </>
-        ))}
+        <DocsCards docs={savedDocs} />
       </Recomendations>
       {/* <ConfigButton
         callback={() => {
