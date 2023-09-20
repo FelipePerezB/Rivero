@@ -7,7 +7,7 @@ export default function DocsCards({ docs }: { docs?: {}[] }) {
         <Card
           key={`doc-card-${i}`}
           interactive
-          className="flex items-end w-28 h-36 text-xs "
+          className="flex items-end w-32 h-36 text-xs "
         ></Card>
       ))}
     </section>

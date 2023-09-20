@@ -1,6 +1,6 @@
 import { CreateDocDocument, DocTypes, Privacity } from "src/gql/graphql";
 import { client } from "src/service/client";
-import makeRandomId from "src/utils/getRandomId";
+import generateRandomId from "src/utils/generateRandomId";
 
 const createDoc = async (
   name: string,
@@ -35,7 +35,7 @@ const createDoc = async (
           },
         },
         content: "",
-        externalId: makeRandomId(32),
+        externalId: generateRandomId(32),
         privacity: Privacity.Private,
         type: DocTypes.Notes,
       },

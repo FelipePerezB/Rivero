@@ -6,24 +6,27 @@ import { Toaster } from "react-hot-toast";
 
 export default function Layout({
   children,
-  style,
   className,
   title,
+  navBtns,
 }: {
+  navBtns?: ReactNode[];
   className?: string;
   children?: ReactNode;
   style?: "only-nav";
-  title?: string;
+  title?: string | ReactNode;
 }) {
   const [visibility, setVisibility] = useState(false);
   return (
-    <div className={`${className}`}>
+    <div className={`${className} min-h-[100dvh]`}>
       <Head>{title && <title>{`${title} | Rivero`}</title>}</Head>
-      <Navar title={title} setVisibility={setVisibility} />
-      <main className="flex justify-center items-centre flex-col gap-3 p-4 pt-14 mx-auto max-w-md text-slate-800">{children}</main>
-      {/* <Var state={style} /> */}
+      <Navar {...{ navBtns, title, setVisibility }} />
+      <main className="flex justify-center items-centre flex-col gap-4 p-4 pt-16 mx-auto max-w-md text-slate-800">
+        {children}
+      </main>
       <Sidevar visibility={visibility} setVisibility={setVisibility} />
-      <Toaster/>
+      {/* <Var state={style} /> */}
+      <Toaster />
     </div>
   );
 }

@@ -1,4 +1,4 @@
-import Title from "./pdf/Title";
+import Title from "./pdf/title";
 import Columns from "./pdf/Columns";
 import SLE from "./pdf/SLE";
 import Div from "./pdf/Div";

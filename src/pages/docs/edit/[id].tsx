@@ -1,104 +1,118 @@
-import { useQuery } from "@apollo/client";
-import { useRouter } from "next/router";
-import React, { useEffect, useState } from "react";
-import Edit from "src/getDoc/Edit";
-import { api } from "src/getDoc/utils/api";
-import { CreateDocDocument, DocTypes, Privacity } from "src/gql/graphql";
-import { pdfNodes } from "src/schemas";
-import { client } from "src/service/client";
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useEffect, useRef, useState } from "react";
+import Layout, { configAttrs } from "@components/create-components/edit-document/edit-document";
+import GetComponent from "@components/create-components/edit-document/get-component";
+import { hydrateJSON } from "src/utils/create-doc/hydrate.JSON";
+import Menu from "src/getDoc/components/Menu";
 
-type props = { type: string; options: any };
-
-export default function EditPage() {
-  const router = useRouter();
-  const { query } = router;
-  const [config, setConfig] = useState({});
-  useEffect(() => {
-    const { title, topic } = query;
-    const getData = async () => {
-      let content;
-      try {
-        throw new Error("A");
-        const res = await api.get(`docs/${query.id}`);
-        content = res.data.content;
-      } catch (error) {
-        const stringifyData = localStorage.getItem(`doc-${query.id}`);
-        if (stringifyData) {
-          content = JSON.parse(stringifyData);
-        }
-      }
-      content &&
-        setConfig({
-          ...config,
-          doc: content,
-        });
-    };
-    query.id && query.id !== "N" && getData();
-    if (query.id === "N") {
-      setConfig({
-        ...config,
-        options: {
-          category: "EJE: " + topic,
-          title,
-        },
-      });
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [query.id]);
-
-  const saveDoc = (doc: any) => {
-    const { title, topic } = query as {
-      title: string;
-      topic: string;
-    };
-    if (query.id === "N") {
-      const createDoc = async () => {
-        localStorage.setItem(`${title}`, JSON.stringify(doc));
-        try {
-          const { data } = await client.mutate({
-            mutation: CreateDocDocument,
-            variables: {
-              createDocInput: {
-                Topic: {
-                  connect: {
-                    name: topic,
+const res = {
+  subject: "matemática",
+  topic: "álgebra",
+  subtopic: "modelos lineales",
+  document: {
+    title: "sistema de ecuaciones",
+    privacity: "private" as configAttrs['privacity'],
+    content: {
+      type: "document",
+      options: {
+        children: [
+          {
+            type: "page",
+            options: {
+              number: 1,
+              children: [
+                {
+                  type: "title",
+                  options: {
+                    text: "Titulo 1",
+                    size: "h1",
                   },
                 },
-                type: DocTypes.Notes,
-                title,
-                content: doc,
-                Author: {
-                  connect: {
-                    id: 1,
+                {
+                  type: "title",
+                  options: {
+                    text: "Titulo 2",
+                    size: "h1",
                   },
                 },
-                Subject: {
-                  create: undefined
-                },
-                externalId: "HUHQUIHH(",
-                privacity: Privacity.Private
-              },
+              ],
             },
-          });
-          // if (data?.createDoc?.id) router.push(`/docs/edit/${data.createDoc.id}`);
-        } catch (error) {
-          console.error(error);
-        }
-      };
-      createDoc();
-    } else if (query.id) {
-      const updateDoc = async () => {
-        localStorage.setItem(`doc-${query.id}`, JSON.stringify(doc));
-        try {
-          const res = await api.put(`docs/${query.id}`, {
-            content: doc,
-          });
-        } catch (error) {
-          console.error(error);
-        }
-      };
-      updateDoc();
-    }
+          },
+          {
+            type: "page",
+            options: {
+              number: 1,
+              children: [
+                {
+                  type: "title",
+                  options: {
+                    text: "Sistema ecuaciones",
+                    size: "h1",
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  },
+};
+
+export interface ComponentOptions {
+  children?: Component[];
+  [key: string]: unknown;
+}
+
+export interface Component {
+  type: string;
+  id?: string;
+  options: ComponentOptions;
+}
+export default function EditDoc() {
+  const [documentObj, setDocumentObj] = useState<Component>();
+  const { content, privacity, title } = res.document;
+  const [config, setConfig] = useState<configAttrs>({ title, privacity });
+
+  useEffect(() => {
+    if (!documentObj?.id) setDocumentObj(hydrateJSON(res.document.content));
+  }, []);
+
+  const divRef = useRef<HTMLDivElement>(null);
+  const resize = () => {
+    const $container = divRef.current;
+    if (!$container) return;
+    const pixels = 13;
+    const width = 450;
+    const containerWidth = $container.clientWidth;
+    const fontSize = (pixels / width) * Number(containerWidth);
+    $container.style.fontSize = fontSize + "px";
   };
-  return <Edit nodes={pdfNodes} saveDoc={saveDoc} {...config} />;
+  useEffect(() => {
+    resize();
+    window.onresize = resize;
+  }, []);
+
+  return (
+    <Layout config={config}>
+      <div ref={divRef} className="w-full">
+        {!!documentObj?.id && (
+          <GetComponent
+            folder="documents"
+            name={documentObj?.type}
+            attrs={{ ...documentObj, title }}
+          />
+        )}
+      </div>
+      {divRef.current && (
+        <Menu
+          divRef={divRef || undefined}
+          {...{
+            documentComponent: documentObj,
+            setDocument: setDocumentObj,
+          }}
+        />
+      )}
+    </Layout>
+  );
 }

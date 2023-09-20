@@ -18,8 +18,7 @@
   overflow: hidden;
   height: 1.4rem;
   border: 1px solid black;
-  position: absolute;
-  display: flex;
+  position: fixed;
 }
 
 .config-btn {

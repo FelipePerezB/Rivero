@@ -22,7 +22,7 @@ import updateGrade from "src/service/querys/grade/updateGrade";
 import { useRouter } from "next/router";
 import removeGrade from "src/service/querys/grade/removeGrade";
 import { getAuth } from "@clerk/nextjs/server";
-import InvitationBtns from "@components/invitationsBtns/InvitationBtns";
+import InvitationBtns from "@components/button/invitationsBtns/InvitationBtns";
 
 export const getServerSideProps = (async (context) => {
   const redirect = {

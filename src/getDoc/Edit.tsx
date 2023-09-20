@@ -316,12 +316,13 @@ export default function Edit({
       <div className={styles.separator}></div>
       <main id="doc-container" className={styles.docs}>
         {menuConfig && (
-          <Menu
-            setModalType={setModalType}
-            deleteComponentCB={deleteComponentCB}
-            setModalData={setModalData}
-            {...menuConfig}
-          />
+          <></>
+          // <Menu
+          //   setModalType={setModalType}
+          //   deleteComponentCB={deleteComponentCB}
+          //   setModalData={setModalData}
+          //   {...menuConfig}
+          // />
         )}
         {pages && (
           <div className={"edit"} onClick={getCoords}>

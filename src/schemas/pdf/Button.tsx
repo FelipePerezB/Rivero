@@ -1,5 +1,4 @@
 import React, { ReactNode } from "react";
-import styles from "@/styles/Button.module.css";
 
 export default function Button({
   // text,
@@ -12,10 +11,6 @@ export default function Button({
   onClick?: any;
 }) {
   return (
-    <div className={styles.container}>
-      <button type="button" className={styles[style]} onClick={onClick}>
-        {children}
-      </button>
-    </div>
+    <div>A</div>
   );
 }

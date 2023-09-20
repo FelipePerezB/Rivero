@@ -9,7 +9,7 @@ export default function Options({
   setOption: any;
 }) {
   return options && options?.length > 1 ? (
-    <div className="w-full mx-auto my-0 overflow-x-scroll py-3">
+    <div className="w-full mx-auto overflow-x-scroll pb-3 pt-0.5">
       <ul className="flex gap-4 w-1/2">
         {options?.map((opt) => {
           const isActive = opt?.toLowerCase() === option?.toLowerCase();

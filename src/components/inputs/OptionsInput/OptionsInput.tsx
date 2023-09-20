@@ -12,19 +12,23 @@ type props = {
   className?: string;
   dontDefaultCheck?: boolean;
   tabIndex?: number;
+  dataKey?: string;
+  isLarge?: boolean;
 };
 
 export default function OptionsInput(props: props) {
   const createFormData = (data: string) => {
     const obj = {} as any;
-    obj[props.name] = data;
+    obj[props.dataKey || props.name] = data;
     props.onChange(obj);
   };
 
-  return props.options.join("").length <= 30 ? (
+  console.log(!props.isLarge)
+
+  return (props.options.join("").length <= 30 && !props.isLarge) ? (
     <SmallOptionsInput {...props} onChange={createFormData} />
   ) : (
-    <LargeOptionsInput {...props} onChange={createFormData} />
+    <LargeOptionsInput {...props} onChange={props?.onChange} />
   );
 }
 
@@ -34,11 +38,12 @@ function LargeOptionsInput(props: props) {
     <div>
       <StandardInput
         attrs={{ list: id }}
-        name={id}
-        onChange={(value) => props.onChange(value)}
+        name={props.name}
+        dataKey={props.dataKey}
+        onChange={props.onChange}
         type="text"
       />
-      <datalist id={""}>
+      <datalist id={id}>
         {props.options.map((value: string) => (
           <option key={value} value={value}>
             {value}

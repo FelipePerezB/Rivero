@@ -1,5 +1,3 @@
-import { generatePdf } from "./generatePDF";
-
 export const childrenchenas = {
   Question: {
     question: "description",
@@ -12,19 +10,74 @@ export const childrenchenas = {
   },
 };
 
+// Fraction: {
+//   numerator: "text",
+//   denominator: "text",
+// },
+//     sign: "text",
+//     exception: {
+//       type: "subInputs",
+//       sign: "text",
+//       index: "number",
+//     },
+
 export const uiSchemas: any = {
-  Div: {
-    direction: { type: "options", options: ["column", "row"] },
-    children: "children",
-    gap: "text",
-  },
-  Title: {
-    size: {
-      type: "options",
-      options: ["h1", "h2", "h3"],
+  box: [
+    {
+      type: "text",
+      options: {
+        key: "separator",
+        label: "separador",
+      },
     },
-    text: "text",
-  },
+    {
+      type: "children",
+      options: {
+        key: "children",
+        label: "hijos",
+      },
+    },
+  ],
+  question: [
+    {
+      type: "text",
+      options: {
+        key: "question",
+        label: "Pregunta",
+      },
+    },
+    {
+      type: "text",
+      options: {
+        key: "alternatives",
+        label: "alternativas",
+      },
+    },
+    {
+      type: "text",
+      options: {
+        key: "expectedAns",
+        label: "Alternativa correcta",
+      },
+    },
+  ],
+  title: [
+    {
+      type: "options",
+      options: {
+        key: "size",
+        label: "tamaño",
+        options: ["h1", "h2", "h3"],
+      },
+    },
+    {
+      type: "text",
+      options: {
+        key: "text",
+        label: "texto",
+      },
+    },
+  ],
   Paragraph: {
     text: "description",
     indent: {
@@ -32,52 +85,77 @@ export const uiSchemas: any = {
       type: "boolean",
     },
   },
-  Columns: {
-    gap: { type: "options", options: ["16px", "32px"] },
-    children: "children",
-  },
-  SLE: {
-    ec1: "text",
-    ec2: "text",
-  },
-  Exercises: {
-    children: {
+  sle: [
+    {
+      type: "text",
+      options: {
+        key: "ec1",
+        label: "Ecuación 1",
+      },
+    },
+    {
+      type: "text",
+      options: {
+        key: "ec2",
+        label: "Ecuación 2",
+      },
+    },
+  ],
+  excercises: [
+    {
       type: "children",
-      child: "question",
+      options: {
+        types: ["question"],
+        key: "children",
+        label: "preguntas",
+      },
     },
-    startsIn: "number",
-    isAnEvaluation: "boolean",
-  },
-  Equality: {
-    exception: {
-      type: "subInputs",
-      sign: "text",
-      index: "number",
+    {
+      type: "text",
+      options: {
+        key: "link",
+        label: "link",
+      },
     },
-    withBorder: "boolean",
-    children: "children",
-    sign: "text",
-  },
-  Fraction: {
-    numerator: "text",
-    denominator: "text",
-  },
-  LineChart: {
-    size: { type: "options", options: ["xs", "s", "m", "l"] },
-    rangeX: "text",
-    rangeY: "text",
-    ecuations: {
-      type: "subInputsArray",
-      ecuation: "text",
+  ],
+  linechart: [
+    {
+      type: "options",
+      options: {
+        key: "size",
+        label: "tamaño",
+        options: ["xs", "m", "l"],
+      },
     },
-  },
+    {
+      type: "text",
+      options: {
+        key: "rangeX",
+        label: "Rango en X",
+      },
+    },
+    {
+      type: "text",
+      options: {
+        key: "rangeY",
+        label: "Rango en Y",
+      },
+    },
+    {
+      type: "text",
+      options: {
+        key: "ecuation",
+        label: "ecuación",
+      },
+    },
+  ],
 };
 
 export const schemas: any = {
   ...uiSchemas,
   ...childrenchenas,
   Doc: {
-    privacity: { type: "options", options: ["public", "private"]},
+    privacity: { type: "options", options: ["public", "private"] },
     id: { type: "text", private: true },
     externalId: { type: "text", private: true },
     type: { type: "text", private: true },
@@ -89,17 +167,10 @@ export const schemas: any = {
       type: "children",
       child: "page",
     },
-    resize: {
-      type: "range",
-      text: "Zoom",
-    },
-    download: {
-      type: "callback",
-      text: "Descargar PDF",
-      callback: generatePdf,
-    },
   },
 };
+
+export const componentsNames = Object.entries(uiSchemas).map(([name]) => name);
 
 // const comps: any = {};
 

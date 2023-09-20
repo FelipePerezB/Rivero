@@ -7,8 +7,6 @@ import React, { useEffect, useState } from "react";
 import Modal from "src/getDoc/containers/NewCompModal";
 import getID from "src/getDoc/utils/getId";
 import capFirst from "src/utils/capFirst";
-import GetDoc from "src/getDoc/GetDoc";
-import { GetDocDocument } from "src/gql/graphql";
 import GetPdfNode from "src/schemas/pdf";
 type component = {
   type: string;

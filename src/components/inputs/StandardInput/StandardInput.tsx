@@ -24,7 +24,7 @@ export default function StandardInput({
   };
   return (
     <label className={styles["standart-input"]}>
-      <span className={styles.name}>{capFirst(name)}</span>
+      <span className="text-slate-700">{capFirst(name)}</span>
       <input
         {...(attrs as {})}
         placeholder={placeholder}

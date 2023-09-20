@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ReactNode } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faUser,
@@ -16,9 +16,11 @@ import CircleButton from "@components/button/circle-button/circle-button";
 export default function Navar({
   setVisibility,
   title,
+  navBtns,
 }: {
+  navBtns?: ReactNode[];
   setVisibility: any;
-  title?: string;
+  title?: string | ReactNode;
 }) {
   const router = useRouter();
   const canBack = router.asPath.split("/").length > 2;
@@ -37,7 +39,8 @@ export default function Navar({
             </>
           )}
         </li>
-        <li className="text-white">
+        <li className="flex gap-4 items-centertext-white">
+          {navBtns?.map((btn) => btn)}
           <CircleButton onClick={() => setVisibility(true)}>
             <FontAwesomeIcon size="lg" icon={faBars} />
           </CircleButton>

@@ -37,8 +37,8 @@ export default function Modal({
               />
             </span>
           </div>
-          <div className="w-full h-[1px] bg-gray-900 my-2.5 rounded-full"></div>
-          <div className="flex flex-col gap-4">{children}</div>
+          <div className="w-full h-[1px] bg-gray-300 my-2.5 rounded-full"></div>
+          <div className="flex flex-col gap-3 overflow-y-scroll overflow-x-hidden max-h-96">{children}</div>
         </div>
       </div>,
       document?.querySelector("#modal") as HTMLDivElement
