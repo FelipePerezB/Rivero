@@ -5,8 +5,9 @@ import Layout, {
 } from "@components/create-components/edit-document/edit-document";
 import GetComponent from "@components/create-components/edit-document/get-component";
 import { hydrateJSON } from "src/utils/create-doc/hydrate.JSON";
-import Menu from "src/getDoc/components/Menu";
+// import Menu from "src/getDoc/components/Menu";
 import lzsString from "lz-string";
+import Menu from "@components/create-components/edit-document/menu";
 
 const res = {
   subject: "matemática",

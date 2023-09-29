@@ -1,5 +1,5 @@
 import { Component } from "src/pages/docs/edit/[id]";
-import getSchema from "./getSchema";
+import getSchema from "../../components/create-components/utils/getSchema";
 import GetComponent from "@components/create-components/edit-document/get-component";
 
 const getInputs = (

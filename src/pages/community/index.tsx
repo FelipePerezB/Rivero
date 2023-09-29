@@ -3,8 +3,7 @@ import React, { ReactNode, useEffect, useState } from "react";
 import Layout from "src/layout/Layout";
 import styles from "@styles/Community.module.css";
 import Recomendations from "@components/Recomendations";
-import GetDoc from "src/getDoc/GetDoc";
-import ConfigButton from "@components/ConfigButton";
+// import GetDoc from "src/getDoc/GetDoc";
 import { faComment, faMessage } from "@fortawesome/free-solid-svg-icons";
 
 export default function Docs() {
@@ -225,7 +224,7 @@ const DocPost = ({ title, content }: { title: string; content: any }) => (
   >
     <div className={styles["commnunity-document"]}>
       <div>
-        <GetDoc {...content} />
+        {/* <GetDoc {...content} /> */}
       </div>
     </div>
   </Post>

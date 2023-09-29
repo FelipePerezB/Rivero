@@ -1,4 +1,4 @@
-import { UpdateGradeDocument, UpdateSubjectDocument } from "src/gql/graphql";
+import {  UpdateSubjectDocument } from "src/gql/graphql";
 import { client } from "src/service/client";
 
 const updateSubject = async (id: number, name: string, color: string) =>

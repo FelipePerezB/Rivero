@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import styles from "../styles/Doc.module.css";
+import styles from "./styles/menu.module.css";
 import onEdit from "src/utils/create-doc/onEdit";
 import React, { SetStateAction, useEffect, useState } from "react";
 import { createPortal } from "react-dom";

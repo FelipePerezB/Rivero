@@ -34,11 +34,11 @@ export default function Docs({
   data,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   const { user } = useUser();
-  const role = user?.publicMetadata.role as string | undefined;
+  const role = user?.publicMetadata?.role as string | undefined;
   const [editMode, setEditMode] = useState(false);
 
-  const subtopics = data.topicAndSubtopic.Subtopics;
-  const { color, id, name: subject, Topics } = data?.subject;
+  const subtopics = data?.topicAndSubtopic?.Subtopics;
+  const { color, id, name: subject, Topics } = data?.subject || {};
 
   const options = Topics?.map(({ name }) => capFirst(name));
   const [option, setOption] = useState(options?.at(0));
@@ -46,7 +46,6 @@ export default function Docs({
   const { name: topic, id: topicId } =
     Topics?.find(({ name }) => name?.toLowerCase() === option?.toLowerCase()) ||
     {};
-  // const count = _count?.Docs;
 
   return (
     <Layout title={capFirst(subject)}>
@@ -75,7 +74,7 @@ export default function Docs({
           head={
             <AccordionHead>
               {capFirst(name)}
-              {!!user?.id && (
+              {/* {!!user?.id && (
                 <EditButton
                   label="subtopico"
                   childLabel="documento"
@@ -94,7 +93,7 @@ export default function Docs({
                   }
                   {...{ editMode, value: name }}
                 />
-              )}
+              )} */}
             </AccordionHead>
           }
         >
@@ -104,7 +103,7 @@ export default function Docs({
                 <AccordionChild key={"accordion-child" + File?.title}>
                   <div className="flex justify-between items-center">
                     <Link href={`view/${File?.externalId}`}>{File?.title}</Link>
-                    {editMode && (
+                    {/* {editMode && (
                       <EditButton
                         onUpdate={(name) => updateDocName(Number(id), name)}
                         onRemove={() => removeDoc(Number(id))}
@@ -114,7 +113,7 @@ export default function Docs({
                           value: File?.title,
                         }}
                       />
-                    )}
+                    )} */}
                   </div>
                 </AccordionChild>
               )}

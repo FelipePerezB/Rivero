@@ -1,18 +1,23 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Mafs, Coordinates, Plot, labelPi } from "mafs";
 // import CustomComponent from "./CustomComponent";
-import getID from "src/getDoc/utils/getId";
+// import getID from "src/getDoc/utils/getId";
 import { useEffect, useRef, useState } from "react";
 
 export default function LineChart({
-  id = getID(),
-  options: { size = "s", rangeX = "-10/10", rangeY = "-10/40", ecuation = "2 * x" },
+  id,
+  options: {
+    size = "s",
+    rangeX = "-10/10",
+    rangeY = "-10/40",
+    ecuation = "2 * x",
+  },
 }: {
   options: {
     size: "xs" | "s" | "m" | "l";
     rangeX: string;
     rangeY: string;
-    ecuation: string,
+    ecuation: string;
   };
   id: string;
 }) {
@@ -64,12 +69,14 @@ export default function LineChart({
 
   return (
     <div data-component={id} style={{ width: "max-content", margin: "0 auto" }}>
-      <div style={{ width: heights[size], height: heights[size] }} className="rounded-md overflow-hidden" ref={divRef}>
+      <div
+        style={{ width: heights[size], height: heights[size] }}
+        className="rounded-md overflow-hidden"
+        ref={divRef}
+      >
         {height && lines && (
           <Mafs
-          
             height={height}
-
             viewBox={{
               x: rangeX.split("/").map((range) => Number(range)) as [
                 number,
@@ -83,21 +90,20 @@ export default function LineChart({
             width={height}
           >
             <Coordinates.Cartesian
-
               xAxis={lines.x}
               yAxis={lines.y}
               subdivisions={1.001}
             />
             {/* {ecua.map(({ ecuation }, i) => { */}
 
-              {/* return ( */}
-                <Plot.OfX
-                  color={colors[n]}
-                  key={ec}
-                  weight={height / 75}
-                  y={eval(ec)}
-                />
-              {/* ); */}
+            {/* return ( */}
+            <Plot.OfX
+              color={colors[n]}
+              key={ec}
+              weight={height / 75}
+              y={eval(ec)}
+            />
+            {/* ); */}
             {/* })} */}
           </Mafs>
         )}

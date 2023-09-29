@@ -1,4 +1,4 @@
-import { schemas } from "src/getDoc/utils/getComponent";
+import { schemas } from "./schemas";
 
 type schema = {
   type: string;

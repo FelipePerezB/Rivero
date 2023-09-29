@@ -5,7 +5,6 @@ import Modal from "@components/modals/modal/Modal";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState } from "react";
-import { api } from "src/getDoc/utils/api";
 import { Role } from "src/gql/graphql";
 
 const regexEmail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;

@@ -145,7 +145,7 @@ export default function Dashboard({
               title: name,
               icons: (
                 <>
-                  <EditButton
+                  {/* <EditButton
                     isPublic={true}
                     value={name}
                     onUpdate={(name) =>
@@ -154,7 +154,7 @@ export default function Dashboard({
                     onRemove={() => removeGroup(Number(id))}
                     editMode={true}
                     label="curso"
-                  />
+                  /> */}
                   <InvitationBtns
                     gradeId={Number(id)}
                     role={Role.Student}

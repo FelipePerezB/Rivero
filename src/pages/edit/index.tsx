@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import styles from "@styles/Edit.module.css";
 import Layout from "src/layout/Layout";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
-import ConfigButton from "@components/ConfigButton";
+// import ConfigButton from "@components/ConfigButton";
 import { useRouter } from "next/router";
 import DocCard from "@components/DocCard";
 import Link from "next/link";

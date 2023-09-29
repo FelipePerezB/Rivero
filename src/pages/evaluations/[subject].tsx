@@ -71,7 +71,7 @@ export default function Evaluations({
       <section
         style={{ display: "flex", flexDirection: "column", gap: "12px" }}
       >
-        {data.notes.map(({ File }, i) => (
+        {data?.notes?.map(({ File }, i) => (
           <NavigationCard
             key={File?.title + "-evaluation-" + i}
             href={`/stats/${File?.id}`}
@@ -111,7 +111,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
   });
   if (!data?.subjects || error?.name) throw new Error("Failed to request");
   return {
-    paths: data.subjects?.map((subject) => ({
+    paths: data?.subjects?.map((subject) => ({
       params: {
         path: subject?.id,
         subject: subject?.id,

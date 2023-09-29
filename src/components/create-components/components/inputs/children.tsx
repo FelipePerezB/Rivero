@@ -1,5 +1,5 @@
 import OptionsInput from "@components/inputs/OptionsInput/OptionsInput";
-import { componentsNames } from "src/getDoc/utils/getComponent";
+import { componentsNames } from "../../utils/schemas";
 import Modal from "@components/modals/modal/Modal";
 import { ReactNode, SetStateAction, useEffect, useMemo, useState } from "react";
 import { Component } from "src/pages/docs/edit/[id]";

@@ -6,7 +6,7 @@ import GetComponent from "@components/create-components/edit-document/get-compon
 import React, { ReactNode, SetStateAction, useEffect, useState } from "react";
 import { Component } from "src/pages/docs/edit/[id]";
 import getInputs from "src/utils/create-doc/getInputs";
-import getSchema from "src/utils/create-doc/getSchema";
+import getSchema from "../../utils/getSchema";
 import { onDeleteProps } from "src/utils/create-doc/onDelete";
 import { onEditProps } from "src/utils/create-doc/onEdit";
 import Children from "./children";
