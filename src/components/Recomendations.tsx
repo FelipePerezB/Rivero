@@ -29,7 +29,7 @@ export default function Recomendations({
 
   return (
     <>
-      <section className={styles[`${type}`]}>
+      <section className="flex flex-col gap-2">
         {link && type === "row" && (
           <div className={styles.info}>
             <h2 className={styles.title}>{title}</h2>
@@ -54,9 +54,7 @@ export default function Recomendations({
             ))}
           </fieldset>
         )}
-        <div className={styles.recomendations}>
-          <div className={styles.children}>{children}</div>
-        </div>
+        <div className="flex flex-wrap justify-center gap-3">{children}</div>
       </section>
     </>
   );

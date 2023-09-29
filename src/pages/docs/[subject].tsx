@@ -35,29 +35,24 @@ export default function Docs({
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   const { user } = useUser();
   const role = user?.publicMetadata.role as string | undefined;
-  const { id, color, name: subject, Topics: topics } = data?.subject || {};
   const [editMode, setEditMode] = useState(false);
 
-  const options = topics
-    ?.filter(({ Subtopics }) => Subtopics)
-    ?.map(({ name }) => capFirst(name));
+  const subtopics = data.topicAndSubtopic.Subtopics;
+  const { color, id, name: subject, Topics } = data?.subject;
+
+  const options = Topics?.map(({ name }) => capFirst(name));
   const [option, setOption] = useState(options?.at(0));
 
-  const {
-    name: topic,
-    _count,
-    Subtopics,
-    id: topicId,
-  } = topics?.find(
-    ({ name }) => name?.toLowerCase() === option?.toLowerCase()
-  ) || {};
-  const count = _count?.Docs;
+  const { name: topic, id: topicId } =
+    Topics?.find(({ name }) => name?.toLowerCase() === option?.toLowerCase()) ||
+    {};
+  // const count = _count?.Docs;
 
   return (
     <Layout title={capFirst(subject)}>
       <NavigationCard href={`/evaluations/${id}`}>Evaluaciones</NavigationCard>
       <Options {...{ option, setOption, options }} />
-      <ProgressCard {...{ color, count: count, subject, topic }}>
+      <ProgressCard {...{ color, subject, topic }}>
         <div className="flex gap-2 items-center">
           <span>{topic && capFirst(topic)}</span>
           {topicId && (
@@ -74,7 +69,7 @@ export default function Docs({
         </div>
       </ProgressCard>
 
-      {Subtopics?.map(({ Docs, name, id: subtpicId }) => (
+      {subtopics?.map(({ name, id: subtpicId, Notes }) => (
         <AccordionCard
           key={name + "-subtopic"}
           head={
@@ -84,7 +79,9 @@ export default function Docs({
                 <EditButton
                   label="subtopico"
                   childLabel="documento"
-                  onUpdate={(name) => updateSubtopicName(Number(subtpicId), name)}
+                  onUpdate={(name) =>
+                    updateSubtopicName(Number(subtpicId), name)
+                  }
                   onRemove={() => removeSubtopic(Number(subtpicId))}
                   onCreate={(name) =>
                     createDoc(
@@ -101,19 +98,27 @@ export default function Docs({
             </AccordionHead>
           }
         >
-          {Docs?.map(({ title, externalId, id }) => (
-            <AccordionChild key={"accordion-child" + externalId}>
-              <div className="flex justify-between items-center">
-                <Link href={`view/${externalId}`}>{title}</Link>
-                {editMode && (
-                  <EditButton
-                    onUpdate={(name) => updateDocName(Number(id), name)}
-                    onRemove={() => removeDoc(Number(id))}
-                    {...{ editMode, label: "documento", value: title }}
-                  />
-                )}
-              </div>
-            </AccordionChild>
+          {Notes?.map(({ File, type }) => (
+            <>
+              {type === "DOCUMENT" && (
+                <AccordionChild key={"accordion-child" + File?.title}>
+                  <div className="flex justify-between items-center">
+                    <Link href={`view/${File?.externalId}`}>{File?.title}</Link>
+                    {editMode && (
+                      <EditButton
+                        onUpdate={(name) => updateDocName(Number(id), name)}
+                        onRemove={() => removeDoc(Number(id))}
+                        {...{
+                          editMode,
+                          label: "documento",
+                          value: File?.title,
+                        }}
+                      />
+                    )}
+                  </div>
+                </AccordionChild>
+              )}
+            </>
           ))}
         </AccordionCard>
       ))}
@@ -153,7 +158,7 @@ export const getStaticProps: GetStaticProps<{
   if (!id) throw new Error("Failed to request");
   const { data, error } = await client.query({
     query: GetSubjectDocument,
-    variables: { subjectId: Number(id) },
+    variables: { subjectId: Number(id), topicId: 1 },
     fetchPolicy: "network-only",
   });
   if (!data.subject.color || error?.name) throw new Error("Failed to request");

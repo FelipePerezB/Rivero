@@ -29,579 +29,6 @@ export type DateTimeNullableFilter = {
   notIn?: InputMaybe<Array<Scalars['DateTime']['input']>>;
 };
 
-export type Doc = {
-  __typename?: 'Doc';
-  Author: User;
-  Score?: Maybe<Array<Score>>;
-  Subject: Subject;
-  Subtopic?: Maybe<Subtopic>;
-  Topic: Topic;
-  _count: DocCount;
-  content: Scalars['String']['output'];
-  createdAt?: Maybe<Scalars['DateTime']['output']>;
-  externalId: Scalars['String']['output'];
-  id: Scalars['ID']['output'];
-  privacity: Privacity;
-  subjectId: Scalars['Int']['output'];
-  subtopicId?: Maybe<Scalars['Int']['output']>;
-  title: Scalars['String']['output'];
-  topicId: Scalars['Int']['output'];
-  type: DocTypes;
-  updateAt?: Maybe<Scalars['DateTime']['output']>;
-  userId: Scalars['Int']['output'];
-};
-
-export type DocCount = {
-  __typename?: 'DocCount';
-  Score: Scalars['Int']['output'];
-};
-
-export type DocCreateInput = {
-  Author: UserCreateNestedOneWithoutDocInput;
-  Score?: InputMaybe<ScoreCreateNestedManyWithoutDocumentInput>;
-  Subject: SubjectCreateNestedOneWithoutDocsInput;
-  Subtopic?: InputMaybe<SubtopicCreateNestedOneWithoutDocsInput>;
-  Topic: TopicCreateNestedOneWithoutDocsInput;
-  content: Scalars['String']['input'];
-  createdAt?: InputMaybe<Scalars['DateTime']['input']>;
-  externalId: Scalars['String']['input'];
-  privacity: Privacity;
-  title: Scalars['String']['input'];
-  type: DocTypes;
-  updateAt?: InputMaybe<Scalars['DateTime']['input']>;
-};
-
-export type DocCreateManyAuthorInput = {
-  content: Scalars['String']['input'];
-  createdAt?: InputMaybe<Scalars['DateTime']['input']>;
-  externalId: Scalars['String']['input'];
-  id?: InputMaybe<Scalars['Int']['input']>;
-  privacity: Privacity;
-  subjectId: Scalars['Int']['input'];
-  subtopicId?: InputMaybe<Scalars['Int']['input']>;
-  title: Scalars['String']['input'];
-  topicId: Scalars['Int']['input'];
-  type: DocTypes;
-  updateAt?: InputMaybe<Scalars['DateTime']['input']>;
-};
-
-export type DocCreateManyAuthorInputEnvelope = {
-  data: Array<DocCreateManyAuthorInput>;
-  skipDuplicates?: InputMaybe<Scalars['Boolean']['input']>;
-};
-
-export type DocCreateManySubjectInput = {
-  content: Scalars['String']['input'];
-  createdAt?: InputMaybe<Scalars['DateTime']['input']>;
-  externalId: Scalars['String']['input'];
-  id?: InputMaybe<Scalars['Int']['input']>;
-  privacity: Privacity;
-  subtopicId?: InputMaybe<Scalars['Int']['input']>;
-  title: Scalars['String']['input'];
-  topicId: Scalars['Int']['input'];
-  type: DocTypes;
-  updateAt?: InputMaybe<Scalars['DateTime']['input']>;
-  userId: Scalars['Int']['input'];
-};
-
-export type DocCreateManySubjectInputEnvelope = {
-  data: Array<DocCreateManySubjectInput>;
-  skipDuplicates?: InputMaybe<Scalars['Boolean']['input']>;
-};
-
-export type DocCreateManySubtopicInput = {
-  content: Scalars['String']['input'];
-  createdAt?: InputMaybe<Scalars['DateTime']['input']>;
-  externalId: Scalars['String']['input'];
-  id?: InputMaybe<Scalars['Int']['input']>;
-  privacity: Privacity;
-  subjectId: Scalars['Int']['input'];
-  title: Scalars['String']['input'];
-  topicId: Scalars['Int']['input'];
-  type: DocTypes;
-  updateAt?: InputMaybe<Scalars['DateTime']['input']>;
-  userId: Scalars['Int']['input'];
-};
-
-export type DocCreateManySubtopicInputEnvelope = {
-  data: Array<DocCreateManySubtopicInput>;
-  skipDuplicates?: InputMaybe<Scalars['Boolean']['input']>;
-};
-
-export type DocCreateManyTopicInput = {
-  content: Scalars['String']['input'];
-  createdAt?: InputMaybe<Scalars['DateTime']['input']>;
-  externalId: Scalars['String']['input'];
-  id?: InputMaybe<Scalars['Int']['input']>;
-  privacity: Privacity;
-  subjectId: Scalars['Int']['input'];
-  subtopicId?: InputMaybe<Scalars['Int']['input']>;
-  title: Scalars['String']['input'];
-  type: DocTypes;
-  updateAt?: InputMaybe<Scalars['DateTime']['input']>;
-  userId: Scalars['Int']['input'];
-};
-
-export type DocCreateManyTopicInputEnvelope = {
-  data: Array<DocCreateManyTopicInput>;
-  skipDuplicates?: InputMaybe<Scalars['Boolean']['input']>;
-};
-
-export type DocCreateNestedManyWithoutAuthorInput = {
-  connect?: InputMaybe<Array<DocWhereUniqueInput>>;
-  connectOrCreate?: InputMaybe<Array<DocCreateOrConnectWithoutAuthorInput>>;
-  create?: InputMaybe<Array<DocCreateWithoutAuthorInput>>;
-  createMany?: InputMaybe<DocCreateManyAuthorInputEnvelope>;
-};
-
-export type DocCreateNestedManyWithoutSubjectInput = {
-  connect?: InputMaybe<Array<DocWhereUniqueInput>>;
-  connectOrCreate?: InputMaybe<Array<DocCreateOrConnectWithoutSubjectInput>>;
-  create?: InputMaybe<Array<DocCreateWithoutSubjectInput>>;
-  createMany?: InputMaybe<DocCreateManySubjectInputEnvelope>;
-};
-
-export type DocCreateNestedManyWithoutSubtopicInput = {
-  connect?: InputMaybe<Array<DocWhereUniqueInput>>;
-  connectOrCreate?: InputMaybe<Array<DocCreateOrConnectWithoutSubtopicInput>>;
-  create?: InputMaybe<Array<DocCreateWithoutSubtopicInput>>;
-  createMany?: InputMaybe<DocCreateManySubtopicInputEnvelope>;
-};
-
-export type DocCreateNestedManyWithoutTopicInput = {
-  connect?: InputMaybe<Array<DocWhereUniqueInput>>;
-  connectOrCreate?: InputMaybe<Array<DocCreateOrConnectWithoutTopicInput>>;
-  create?: InputMaybe<Array<DocCreateWithoutTopicInput>>;
-  createMany?: InputMaybe<DocCreateManyTopicInputEnvelope>;
-};
-
-export type DocCreateNestedOneWithoutScoreInput = {
-  connect?: InputMaybe<DocWhereUniqueInput>;
-  connectOrCreate?: InputMaybe<DocCreateOrConnectWithoutScoreInput>;
-  create?: InputMaybe<DocCreateWithoutScoreInput>;
-};
-
-export type DocCreateOrConnectWithoutAuthorInput = {
-  create: DocCreateWithoutAuthorInput;
-  where: DocWhereUniqueInput;
-};
-
-export type DocCreateOrConnectWithoutScoreInput = {
-  create: DocCreateWithoutScoreInput;
-  where: DocWhereUniqueInput;
-};
-
-export type DocCreateOrConnectWithoutSubjectInput = {
-  create: DocCreateWithoutSubjectInput;
-  where: DocWhereUniqueInput;
-};
-
-export type DocCreateOrConnectWithoutSubtopicInput = {
-  create: DocCreateWithoutSubtopicInput;
-  where: DocWhereUniqueInput;
-};
-
-export type DocCreateOrConnectWithoutTopicInput = {
-  create: DocCreateWithoutTopicInput;
-  where: DocWhereUniqueInput;
-};
-
-export type DocCreateWithoutAuthorInput = {
-  Score?: InputMaybe<ScoreCreateNestedManyWithoutDocumentInput>;
-  Subject: SubjectCreateNestedOneWithoutDocsInput;
-  Subtopic?: InputMaybe<SubtopicCreateNestedOneWithoutDocsInput>;
-  Topic: TopicCreateNestedOneWithoutDocsInput;
-  content: Scalars['String']['input'];
-  createdAt?: InputMaybe<Scalars['DateTime']['input']>;
-  externalId: Scalars['String']['input'];
-  privacity: Privacity;
-  title: Scalars['String']['input'];
-  type: DocTypes;
-  updateAt?: InputMaybe<Scalars['DateTime']['input']>;
-};
-
-export type DocCreateWithoutScoreInput = {
-  Author: UserCreateNestedOneWithoutDocInput;
-  Subject: SubjectCreateNestedOneWithoutDocsInput;
-  Subtopic?: InputMaybe<SubtopicCreateNestedOneWithoutDocsInput>;
-  Topic: TopicCreateNestedOneWithoutDocsInput;
-  content: Scalars['String']['input'];
-  createdAt?: InputMaybe<Scalars['DateTime']['input']>;
-  externalId: Scalars['String']['input'];
-  privacity: Privacity;
-  title: Scalars['String']['input'];
-  type: DocTypes;
-  updateAt?: InputMaybe<Scalars['DateTime']['input']>;
-};
-
-export type DocCreateWithoutSubjectInput = {
-  Author: UserCreateNestedOneWithoutDocInput;
-  Score?: InputMaybe<ScoreCreateNestedManyWithoutDocumentInput>;
-  Subtopic?: InputMaybe<SubtopicCreateNestedOneWithoutDocsInput>;
-  Topic: TopicCreateNestedOneWithoutDocsInput;
-  content: Scalars['String']['input'];
-  createdAt?: InputMaybe<Scalars['DateTime']['input']>;
-  externalId: Scalars['String']['input'];
-  privacity: Privacity;
-  title: Scalars['String']['input'];
-  type: DocTypes;
-  updateAt?: InputMaybe<Scalars['DateTime']['input']>;
-};
-
-export type DocCreateWithoutSubtopicInput = {
-  Author: UserCreateNestedOneWithoutDocInput;
-  Score?: InputMaybe<ScoreCreateNestedManyWithoutDocumentInput>;
-  Subject: SubjectCreateNestedOneWithoutDocsInput;
-  Topic: TopicCreateNestedOneWithoutDocsInput;
-  content: Scalars['String']['input'];
-  createdAt?: InputMaybe<Scalars['DateTime']['input']>;
-  externalId: Scalars['String']['input'];
-  privacity: Privacity;
-  title: Scalars['String']['input'];
-  type: DocTypes;
-  updateAt?: InputMaybe<Scalars['DateTime']['input']>;
-};
-
-export type DocCreateWithoutTopicInput = {
-  Author: UserCreateNestedOneWithoutDocInput;
-  Score?: InputMaybe<ScoreCreateNestedManyWithoutDocumentInput>;
-  Subject: SubjectCreateNestedOneWithoutDocsInput;
-  Subtopic?: InputMaybe<SubtopicCreateNestedOneWithoutDocsInput>;
-  content: Scalars['String']['input'];
-  createdAt?: InputMaybe<Scalars['DateTime']['input']>;
-  externalId: Scalars['String']['input'];
-  privacity: Privacity;
-  title: Scalars['String']['input'];
-  type: DocTypes;
-  updateAt?: InputMaybe<Scalars['DateTime']['input']>;
-};
-
-export type DocListRelationFilter = {
-  every?: InputMaybe<DocWhereInput>;
-  none?: InputMaybe<DocWhereInput>;
-  some?: InputMaybe<DocWhereInput>;
-};
-
-export type DocRelationFilter = {
-  is?: InputMaybe<DocWhereInput>;
-  isNot?: InputMaybe<DocWhereInput>;
-};
-
-export type DocScalarWhereInput = {
-  AND?: InputMaybe<Array<DocScalarWhereInput>>;
-  NOT?: InputMaybe<Array<DocScalarWhereInput>>;
-  OR?: InputMaybe<Array<DocScalarWhereInput>>;
-  content?: InputMaybe<StringFilter>;
-  createdAt?: InputMaybe<DateTimeNullableFilter>;
-  externalId?: InputMaybe<StringFilter>;
-  id?: InputMaybe<IntFilter>;
-  privacity?: InputMaybe<EnumPrivacityFilter>;
-  subjectId?: InputMaybe<IntFilter>;
-  subtopicId?: InputMaybe<IntNullableFilter>;
-  title?: InputMaybe<StringFilter>;
-  topicId?: InputMaybe<IntFilter>;
-  type?: InputMaybe<EnumDocTypesFilter>;
-  updateAt?: InputMaybe<DateTimeNullableFilter>;
-  userId?: InputMaybe<IntFilter>;
-};
-
-export enum DocTypes {
-  Evaluation = 'EVALUATION',
-  Exercises = 'EXERCISES',
-  Notes = 'NOTES'
-}
-
-export type DocUpdateInput = {
-  Author?: InputMaybe<UserUpdateOneRequiredWithoutDocNestedInput>;
-  Score?: InputMaybe<ScoreUpdateManyWithoutDocumentNestedInput>;
-  Subject?: InputMaybe<SubjectUpdateOneRequiredWithoutDocsNestedInput>;
-  Subtopic?: InputMaybe<SubtopicUpdateOneWithoutDocsNestedInput>;
-  Topic?: InputMaybe<TopicUpdateOneRequiredWithoutDocsNestedInput>;
-  content?: InputMaybe<StringFieldUpdateOperationsInput>;
-  createdAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
-  externalId?: InputMaybe<StringFieldUpdateOperationsInput>;
-  privacity?: InputMaybe<EnumPrivacityFieldUpdateOperationsInput>;
-  title?: InputMaybe<StringFieldUpdateOperationsInput>;
-  type?: InputMaybe<EnumDocTypesFieldUpdateOperationsInput>;
-  updateAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
-};
-
-export type DocUpdateManyMutationInput = {
-  content?: InputMaybe<StringFieldUpdateOperationsInput>;
-  createdAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
-  externalId?: InputMaybe<StringFieldUpdateOperationsInput>;
-  privacity?: InputMaybe<EnumPrivacityFieldUpdateOperationsInput>;
-  title?: InputMaybe<StringFieldUpdateOperationsInput>;
-  type?: InputMaybe<EnumDocTypesFieldUpdateOperationsInput>;
-  updateAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
-};
-
-export type DocUpdateManyWithWhereWithoutAuthorInput = {
-  data: DocUpdateManyMutationInput;
-  where: DocScalarWhereInput;
-};
-
-export type DocUpdateManyWithWhereWithoutSubjectInput = {
-  data: DocUpdateManyMutationInput;
-  where: DocScalarWhereInput;
-};
-
-export type DocUpdateManyWithWhereWithoutSubtopicInput = {
-  data: DocUpdateManyMutationInput;
-  where: DocScalarWhereInput;
-};
-
-export type DocUpdateManyWithWhereWithoutTopicInput = {
-  data: DocUpdateManyMutationInput;
-  where: DocScalarWhereInput;
-};
-
-export type DocUpdateManyWithoutAuthorNestedInput = {
-  connect?: InputMaybe<Array<DocWhereUniqueInput>>;
-  connectOrCreate?: InputMaybe<Array<DocCreateOrConnectWithoutAuthorInput>>;
-  create?: InputMaybe<Array<DocCreateWithoutAuthorInput>>;
-  createMany?: InputMaybe<DocCreateManyAuthorInputEnvelope>;
-  delete?: InputMaybe<Array<DocWhereUniqueInput>>;
-  deleteMany?: InputMaybe<Array<DocScalarWhereInput>>;
-  disconnect?: InputMaybe<Array<DocWhereUniqueInput>>;
-  set?: InputMaybe<Array<DocWhereUniqueInput>>;
-  update?: InputMaybe<Array<DocUpdateWithWhereUniqueWithoutAuthorInput>>;
-  updateMany?: InputMaybe<Array<DocUpdateManyWithWhereWithoutAuthorInput>>;
-  upsert?: InputMaybe<Array<DocUpsertWithWhereUniqueWithoutAuthorInput>>;
-};
-
-export type DocUpdateManyWithoutSubjectNestedInput = {
-  connect?: InputMaybe<Array<DocWhereUniqueInput>>;
-  connectOrCreate?: InputMaybe<Array<DocCreateOrConnectWithoutSubjectInput>>;
-  create?: InputMaybe<Array<DocCreateWithoutSubjectInput>>;
-  createMany?: InputMaybe<DocCreateManySubjectInputEnvelope>;
-  delete?: InputMaybe<Array<DocWhereUniqueInput>>;
-  deleteMany?: InputMaybe<Array<DocScalarWhereInput>>;
-  disconnect?: InputMaybe<Array<DocWhereUniqueInput>>;
-  set?: InputMaybe<Array<DocWhereUniqueInput>>;
-  update?: InputMaybe<Array<DocUpdateWithWhereUniqueWithoutSubjectInput>>;
-  updateMany?: InputMaybe<Array<DocUpdateManyWithWhereWithoutSubjectInput>>;
-  upsert?: InputMaybe<Array<DocUpsertWithWhereUniqueWithoutSubjectInput>>;
-};
-
-export type DocUpdateManyWithoutSubtopicNestedInput = {
-  connect?: InputMaybe<Array<DocWhereUniqueInput>>;
-  connectOrCreate?: InputMaybe<Array<DocCreateOrConnectWithoutSubtopicInput>>;
-  create?: InputMaybe<Array<DocCreateWithoutSubtopicInput>>;
-  createMany?: InputMaybe<DocCreateManySubtopicInputEnvelope>;
-  delete?: InputMaybe<Array<DocWhereUniqueInput>>;
-  deleteMany?: InputMaybe<Array<DocScalarWhereInput>>;
-  disconnect?: InputMaybe<Array<DocWhereUniqueInput>>;
-  set?: InputMaybe<Array<DocWhereUniqueInput>>;
-  update?: InputMaybe<Array<DocUpdateWithWhereUniqueWithoutSubtopicInput>>;
-  updateMany?: InputMaybe<Array<DocUpdateManyWithWhereWithoutSubtopicInput>>;
-  upsert?: InputMaybe<Array<DocUpsertWithWhereUniqueWithoutSubtopicInput>>;
-};
-
-export type DocUpdateManyWithoutTopicNestedInput = {
-  connect?: InputMaybe<Array<DocWhereUniqueInput>>;
-  connectOrCreate?: InputMaybe<Array<DocCreateOrConnectWithoutTopicInput>>;
-  create?: InputMaybe<Array<DocCreateWithoutTopicInput>>;
-  createMany?: InputMaybe<DocCreateManyTopicInputEnvelope>;
-  delete?: InputMaybe<Array<DocWhereUniqueInput>>;
-  deleteMany?: InputMaybe<Array<DocScalarWhereInput>>;
-  disconnect?: InputMaybe<Array<DocWhereUniqueInput>>;
-  set?: InputMaybe<Array<DocWhereUniqueInput>>;
-  update?: InputMaybe<Array<DocUpdateWithWhereUniqueWithoutTopicInput>>;
-  updateMany?: InputMaybe<Array<DocUpdateManyWithWhereWithoutTopicInput>>;
-  upsert?: InputMaybe<Array<DocUpsertWithWhereUniqueWithoutTopicInput>>;
-};
-
-export type DocUpdateOneRequiredWithoutScoreNestedInput = {
-  connect?: InputMaybe<DocWhereUniqueInput>;
-  connectOrCreate?: InputMaybe<DocCreateOrConnectWithoutScoreInput>;
-  create?: InputMaybe<DocCreateWithoutScoreInput>;
-  update?: InputMaybe<DocUpdateToOneWithWhereWithoutScoreInput>;
-  upsert?: InputMaybe<DocUpsertWithoutScoreInput>;
-};
-
-export type DocUpdateToOneWithWhereWithoutScoreInput = {
-  data: DocUpdateWithoutScoreInput;
-  where?: InputMaybe<DocWhereInput>;
-};
-
-export type DocUpdateWithWhereUniqueWithoutAuthorInput = {
-  data: DocUpdateWithoutAuthorInput;
-  where: DocWhereUniqueInput;
-};
-
-export type DocUpdateWithWhereUniqueWithoutSubjectInput = {
-  data: DocUpdateWithoutSubjectInput;
-  where: DocWhereUniqueInput;
-};
-
-export type DocUpdateWithWhereUniqueWithoutSubtopicInput = {
-  data: DocUpdateWithoutSubtopicInput;
-  where: DocWhereUniqueInput;
-};
-
-export type DocUpdateWithWhereUniqueWithoutTopicInput = {
-  data: DocUpdateWithoutTopicInput;
-  where: DocWhereUniqueInput;
-};
-
-export type DocUpdateWithoutAuthorInput = {
-  Score?: InputMaybe<ScoreUpdateManyWithoutDocumentNestedInput>;
-  Subject?: InputMaybe<SubjectUpdateOneRequiredWithoutDocsNestedInput>;
-  Subtopic?: InputMaybe<SubtopicUpdateOneWithoutDocsNestedInput>;
-  Topic?: InputMaybe<TopicUpdateOneRequiredWithoutDocsNestedInput>;
-  content?: InputMaybe<StringFieldUpdateOperationsInput>;
-  createdAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
-  externalId?: InputMaybe<StringFieldUpdateOperationsInput>;
-  privacity?: InputMaybe<EnumPrivacityFieldUpdateOperationsInput>;
-  title?: InputMaybe<StringFieldUpdateOperationsInput>;
-  type?: InputMaybe<EnumDocTypesFieldUpdateOperationsInput>;
-  updateAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
-};
-
-export type DocUpdateWithoutScoreInput = {
-  Author?: InputMaybe<UserUpdateOneRequiredWithoutDocNestedInput>;
-  Subject?: InputMaybe<SubjectUpdateOneRequiredWithoutDocsNestedInput>;
-  Subtopic?: InputMaybe<SubtopicUpdateOneWithoutDocsNestedInput>;
-  Topic?: InputMaybe<TopicUpdateOneRequiredWithoutDocsNestedInput>;
-  content?: InputMaybe<StringFieldUpdateOperationsInput>;
-  createdAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
-  externalId?: InputMaybe<StringFieldUpdateOperationsInput>;
-  privacity?: InputMaybe<EnumPrivacityFieldUpdateOperationsInput>;
-  title?: InputMaybe<StringFieldUpdateOperationsInput>;
-  type?: InputMaybe<EnumDocTypesFieldUpdateOperationsInput>;
-  updateAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
-};
-
-export type DocUpdateWithoutSubjectInput = {
-  Author?: InputMaybe<UserUpdateOneRequiredWithoutDocNestedInput>;
-  Score?: InputMaybe<ScoreUpdateManyWithoutDocumentNestedInput>;
-  Subtopic?: InputMaybe<SubtopicUpdateOneWithoutDocsNestedInput>;
-  Topic?: InputMaybe<TopicUpdateOneRequiredWithoutDocsNestedInput>;
-  content?: InputMaybe<StringFieldUpdateOperationsInput>;
-  createdAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
-  externalId?: InputMaybe<StringFieldUpdateOperationsInput>;
-  privacity?: InputMaybe<EnumPrivacityFieldUpdateOperationsInput>;
-  title?: InputMaybe<StringFieldUpdateOperationsInput>;
-  type?: InputMaybe<EnumDocTypesFieldUpdateOperationsInput>;
-  updateAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
-};
-
-export type DocUpdateWithoutSubtopicInput = {
-  Author?: InputMaybe<UserUpdateOneRequiredWithoutDocNestedInput>;
-  Score?: InputMaybe<ScoreUpdateManyWithoutDocumentNestedInput>;
-  Subject?: InputMaybe<SubjectUpdateOneRequiredWithoutDocsNestedInput>;
-  Topic?: InputMaybe<TopicUpdateOneRequiredWithoutDocsNestedInput>;
-  content?: InputMaybe<StringFieldUpdateOperationsInput>;
-  createdAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
-  externalId?: InputMaybe<StringFieldUpdateOperationsInput>;
-  privacity?: InputMaybe<EnumPrivacityFieldUpdateOperationsInput>;
-  title?: InputMaybe<StringFieldUpdateOperationsInput>;
-  type?: InputMaybe<EnumDocTypesFieldUpdateOperationsInput>;
-  updateAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
-};
-
-export type DocUpdateWithoutTopicInput = {
-  Author?: InputMaybe<UserUpdateOneRequiredWithoutDocNestedInput>;
-  Score?: InputMaybe<ScoreUpdateManyWithoutDocumentNestedInput>;
-  Subject?: InputMaybe<SubjectUpdateOneRequiredWithoutDocsNestedInput>;
-  Subtopic?: InputMaybe<SubtopicUpdateOneWithoutDocsNestedInput>;
-  content?: InputMaybe<StringFieldUpdateOperationsInput>;
-  createdAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
-  externalId?: InputMaybe<StringFieldUpdateOperationsInput>;
-  privacity?: InputMaybe<EnumPrivacityFieldUpdateOperationsInput>;
-  title?: InputMaybe<StringFieldUpdateOperationsInput>;
-  type?: InputMaybe<EnumDocTypesFieldUpdateOperationsInput>;
-  updateAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
-};
-
-export type DocUpsertWithWhereUniqueWithoutAuthorInput = {
-  create: DocCreateWithoutAuthorInput;
-  update: DocUpdateWithoutAuthorInput;
-  where: DocWhereUniqueInput;
-};
-
-export type DocUpsertWithWhereUniqueWithoutSubjectInput = {
-  create: DocCreateWithoutSubjectInput;
-  update: DocUpdateWithoutSubjectInput;
-  where: DocWhereUniqueInput;
-};
-
-export type DocUpsertWithWhereUniqueWithoutSubtopicInput = {
-  create: DocCreateWithoutSubtopicInput;
-  update: DocUpdateWithoutSubtopicInput;
-  where: DocWhereUniqueInput;
-};
-
-export type DocUpsertWithWhereUniqueWithoutTopicInput = {
-  create: DocCreateWithoutTopicInput;
-  update: DocUpdateWithoutTopicInput;
-  where: DocWhereUniqueInput;
-};
-
-export type DocUpsertWithoutScoreInput = {
-  create: DocCreateWithoutScoreInput;
-  update: DocUpdateWithoutScoreInput;
-  where?: InputMaybe<DocWhereInput>;
-};
-
-export type DocWhereInput = {
-  AND?: InputMaybe<Array<DocWhereInput>>;
-  Author?: InputMaybe<UserRelationFilter>;
-  NOT?: InputMaybe<Array<DocWhereInput>>;
-  OR?: InputMaybe<Array<DocWhereInput>>;
-  Score?: InputMaybe<ScoreListRelationFilter>;
-  Subject?: InputMaybe<SubjectRelationFilter>;
-  Subtopic?: InputMaybe<SubtopicNullableRelationFilter>;
-  Topic?: InputMaybe<TopicRelationFilter>;
-  content?: InputMaybe<StringFilter>;
-  createdAt?: InputMaybe<DateTimeNullableFilter>;
-  externalId?: InputMaybe<StringFilter>;
-  id?: InputMaybe<IntFilter>;
-  privacity?: InputMaybe<EnumPrivacityFilter>;
-  subjectId?: InputMaybe<IntFilter>;
-  subtopicId?: InputMaybe<IntNullableFilter>;
-  title?: InputMaybe<StringFilter>;
-  topicId?: InputMaybe<IntFilter>;
-  type?: InputMaybe<EnumDocTypesFilter>;
-  updateAt?: InputMaybe<DateTimeNullableFilter>;
-  userId?: InputMaybe<IntFilter>;
-};
-
-export type DocWhereUniqueInput = {
-  AND?: InputMaybe<Array<DocWhereInput>>;
-  Author?: InputMaybe<UserRelationFilter>;
-  NOT?: InputMaybe<Array<DocWhereInput>>;
-  OR?: InputMaybe<Array<DocWhereInput>>;
-  Score?: InputMaybe<ScoreListRelationFilter>;
-  Subject?: InputMaybe<SubjectRelationFilter>;
-  Subtopic?: InputMaybe<SubtopicNullableRelationFilter>;
-  Topic?: InputMaybe<TopicRelationFilter>;
-  content?: InputMaybe<StringFilter>;
-  createdAt?: InputMaybe<DateTimeNullableFilter>;
-  externalId?: InputMaybe<Scalars['String']['input']>;
-  id?: InputMaybe<Scalars['Int']['input']>;
-  privacity?: InputMaybe<EnumPrivacityFilter>;
-  subjectId?: InputMaybe<IntFilter>;
-  subtopicId?: InputMaybe<IntNullableFilter>;
-  title?: InputMaybe<StringFilter>;
-  topicId?: InputMaybe<IntFilter>;
-  type?: InputMaybe<EnumDocTypesFilter>;
-  updateAt?: InputMaybe<DateTimeNullableFilter>;
-  userId?: InputMaybe<IntFilter>;
-};
-
-export type EnumDocTypesFieldUpdateOperationsInput = {
-  set?: InputMaybe<DocTypes>;
-};
-
-export type EnumDocTypesFilter = {
-  equals?: InputMaybe<DocTypes>;
-  in?: InputMaybe<Array<DocTypes>>;
-  not?: InputMaybe<NestedEnumDocTypesFilter>;
-  notIn?: InputMaybe<Array<DocTypes>>;
-};
-
 export type EnumPrivacityFieldUpdateOperationsInput = {
   set?: InputMaybe<Privacity>;
 };
@@ -624,202 +51,432 @@ export type EnumRoleFilter = {
   notIn?: InputMaybe<Array<Role>>;
 };
 
-export type Grade = {
-  __typename?: 'Grade';
-  School: School;
-  Users?: Maybe<Array<User>>;
-  _count: GradeCount;
+export type EnumTypesFieldUpdateOperationsInput = {
+  set?: InputMaybe<Types>;
+};
+
+export type EnumTypesFilter = {
+  equals?: InputMaybe<Types>;
+  in?: InputMaybe<Array<Types>>;
+  not?: InputMaybe<NestedEnumTypesFilter>;
+  notIn?: InputMaybe<Array<Types>>;
+};
+
+export type File = {
+  __typename?: 'File';
+  Author: User;
+  Note?: Maybe<Note>;
+  authorId: Scalars['Int']['output'];
+  content: Scalars['String']['output'];
   createdAt?: Maybe<Scalars['DateTime']['output']>;
+  externalId: Scalars['String']['output'];
   id: Scalars['ID']['output'];
-  name: Scalars['String']['output'];
-  schoolId: Scalars['Int']['output'];
+  noteId?: Maybe<Scalars['Int']['output']>;
+  privacity: Privacity;
+  title: Scalars['String']['output'];
   updateAt?: Maybe<Scalars['DateTime']['output']>;
 };
 
-export type GradeCount = {
-  __typename?: 'GradeCount';
-  Users: Scalars['Int']['output'];
-};
-
-export type GradeCreateInput = {
-  School: SchoolCreateNestedOneWithoutGradesInput;
-  Users?: InputMaybe<UserCreateNestedManyWithoutGradeInput>;
+export type FileCreateManyAuthorInput = {
+  content: Scalars['String']['input'];
   createdAt?: InputMaybe<Scalars['DateTime']['input']>;
-  name: Scalars['String']['input'];
-  updateAt?: InputMaybe<Scalars['DateTime']['input']>;
-};
-
-export type GradeCreateManySchoolInput = {
-  createdAt?: InputMaybe<Scalars['DateTime']['input']>;
+  externalId: Scalars['String']['input'];
   id?: InputMaybe<Scalars['Int']['input']>;
-  name: Scalars['String']['input'];
+  noteId?: InputMaybe<Scalars['Int']['input']>;
+  privacity: Privacity;
+  title: Scalars['String']['input'];
   updateAt?: InputMaybe<Scalars['DateTime']['input']>;
 };
 
-export type GradeCreateManySchoolInputEnvelope = {
-  data: Array<GradeCreateManySchoolInput>;
+export type FileCreateManyAuthorInputEnvelope = {
+  data: Array<FileCreateManyAuthorInput>;
   skipDuplicates?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
-export type GradeCreateNestedManyWithoutSchoolInput = {
-  connect?: InputMaybe<Array<GradeWhereUniqueInput>>;
-  connectOrCreate?: InputMaybe<Array<GradeCreateOrConnectWithoutSchoolInput>>;
-  create?: InputMaybe<Array<GradeCreateWithoutSchoolInput>>;
-  createMany?: InputMaybe<GradeCreateManySchoolInputEnvelope>;
+export type FileCreateNestedManyWithoutAuthorInput = {
+  connect?: InputMaybe<Array<FileWhereUniqueInput>>;
+  connectOrCreate?: InputMaybe<Array<FileCreateOrConnectWithoutAuthorInput>>;
+  create?: InputMaybe<Array<FileCreateWithoutAuthorInput>>;
+  createMany?: InputMaybe<FileCreateManyAuthorInputEnvelope>;
 };
 
-export type GradeCreateNestedOneWithoutUsersInput = {
-  connect?: InputMaybe<GradeWhereUniqueInput>;
-  connectOrCreate?: InputMaybe<GradeCreateOrConnectWithoutUsersInput>;
-  create?: InputMaybe<GradeCreateWithoutUsersInput>;
+export type FileCreateNestedOneWithoutNoteInput = {
+  connect?: InputMaybe<FileWhereUniqueInput>;
+  connectOrCreate?: InputMaybe<FileCreateOrConnectWithoutNoteInput>;
+  create?: InputMaybe<FileCreateWithoutNoteInput>;
 };
 
-export type GradeCreateOrConnectWithoutSchoolInput = {
-  create: GradeCreateWithoutSchoolInput;
-  where: GradeWhereUniqueInput;
+export type FileCreateOrConnectWithoutAuthorInput = {
+  create: FileCreateWithoutAuthorInput;
+  where: FileWhereUniqueInput;
 };
 
-export type GradeCreateOrConnectWithoutUsersInput = {
-  create: GradeCreateWithoutUsersInput;
-  where: GradeWhereUniqueInput;
+export type FileCreateOrConnectWithoutNoteInput = {
+  create: FileCreateWithoutNoteInput;
+  where: FileWhereUniqueInput;
 };
 
-export type GradeCreateWithoutSchoolInput = {
-  Users?: InputMaybe<UserCreateNestedManyWithoutGradeInput>;
+export type FileCreateWithoutAuthorInput = {
+  Note?: InputMaybe<NoteCreateNestedOneWithoutFileInput>;
+  content: Scalars['String']['input'];
   createdAt?: InputMaybe<Scalars['DateTime']['input']>;
-  name: Scalars['String']['input'];
+  externalId: Scalars['String']['input'];
+  privacity: Privacity;
+  title: Scalars['String']['input'];
   updateAt?: InputMaybe<Scalars['DateTime']['input']>;
 };
 
-export type GradeCreateWithoutUsersInput = {
-  School: SchoolCreateNestedOneWithoutGradesInput;
+export type FileCreateWithoutNoteInput = {
+  Author: UserCreateNestedOneWithoutFileInput;
+  content: Scalars['String']['input'];
   createdAt?: InputMaybe<Scalars['DateTime']['input']>;
-  name: Scalars['String']['input'];
+  externalId: Scalars['String']['input'];
+  privacity: Privacity;
+  title: Scalars['String']['input'];
   updateAt?: InputMaybe<Scalars['DateTime']['input']>;
 };
 
-export type GradeListRelationFilter = {
-  every?: InputMaybe<GradeWhereInput>;
-  none?: InputMaybe<GradeWhereInput>;
-  some?: InputMaybe<GradeWhereInput>;
+export type FileListRelationFilter = {
+  every?: InputMaybe<FileWhereInput>;
+  none?: InputMaybe<FileWhereInput>;
+  some?: InputMaybe<FileWhereInput>;
 };
 
-export type GradeRelationFilter = {
-  is?: InputMaybe<GradeWhereInput>;
-  isNot?: InputMaybe<GradeWhereInput>;
+export type FileNullableRelationFilter = {
+  is?: InputMaybe<FileWhereInput>;
+  isNot?: InputMaybe<FileWhereInput>;
 };
 
-export type GradeScalarWhereInput = {
-  AND?: InputMaybe<Array<GradeScalarWhereInput>>;
-  NOT?: InputMaybe<Array<GradeScalarWhereInput>>;
-  OR?: InputMaybe<Array<GradeScalarWhereInput>>;
+export type FileScalarWhereInput = {
+  AND?: InputMaybe<Array<FileScalarWhereInput>>;
+  NOT?: InputMaybe<Array<FileScalarWhereInput>>;
+  OR?: InputMaybe<Array<FileScalarWhereInput>>;
+  authorId?: InputMaybe<IntFilter>;
+  content?: InputMaybe<StringFilter>;
   createdAt?: InputMaybe<DateTimeNullableFilter>;
+  externalId?: InputMaybe<StringFilter>;
   id?: InputMaybe<IntFilter>;
-  name?: InputMaybe<StringFilter>;
-  schoolId?: InputMaybe<IntFilter>;
+  noteId?: InputMaybe<IntNullableFilter>;
+  privacity?: InputMaybe<EnumPrivacityFilter>;
+  title?: InputMaybe<StringFilter>;
   updateAt?: InputMaybe<DateTimeNullableFilter>;
 };
 
-export type GradeUpdateInput = {
-  School?: InputMaybe<SchoolUpdateOneRequiredWithoutGradesNestedInput>;
-  Users?: InputMaybe<UserUpdateManyWithoutGradeNestedInput>;
+export type FileUpdateManyMutationInput = {
+  content?: InputMaybe<StringFieldUpdateOperationsInput>;
+  createdAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
+  externalId?: InputMaybe<StringFieldUpdateOperationsInput>;
+  privacity?: InputMaybe<EnumPrivacityFieldUpdateOperationsInput>;
+  title?: InputMaybe<StringFieldUpdateOperationsInput>;
+  updateAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
+};
+
+export type FileUpdateManyWithWhereWithoutAuthorInput = {
+  data: FileUpdateManyMutationInput;
+  where: FileScalarWhereInput;
+};
+
+export type FileUpdateManyWithoutAuthorNestedInput = {
+  connect?: InputMaybe<Array<FileWhereUniqueInput>>;
+  connectOrCreate?: InputMaybe<Array<FileCreateOrConnectWithoutAuthorInput>>;
+  create?: InputMaybe<Array<FileCreateWithoutAuthorInput>>;
+  createMany?: InputMaybe<FileCreateManyAuthorInputEnvelope>;
+  delete?: InputMaybe<Array<FileWhereUniqueInput>>;
+  deleteMany?: InputMaybe<Array<FileScalarWhereInput>>;
+  disconnect?: InputMaybe<Array<FileWhereUniqueInput>>;
+  set?: InputMaybe<Array<FileWhereUniqueInput>>;
+  update?: InputMaybe<Array<FileUpdateWithWhereUniqueWithoutAuthorInput>>;
+  updateMany?: InputMaybe<Array<FileUpdateManyWithWhereWithoutAuthorInput>>;
+  upsert?: InputMaybe<Array<FileUpsertWithWhereUniqueWithoutAuthorInput>>;
+};
+
+export type FileUpdateOneWithoutNoteNestedInput = {
+  connect?: InputMaybe<FileWhereUniqueInput>;
+  connectOrCreate?: InputMaybe<FileCreateOrConnectWithoutNoteInput>;
+  create?: InputMaybe<FileCreateWithoutNoteInput>;
+  delete?: InputMaybe<FileWhereInput>;
+  disconnect?: InputMaybe<FileWhereInput>;
+  update?: InputMaybe<FileUpdateToOneWithWhereWithoutNoteInput>;
+  upsert?: InputMaybe<FileUpsertWithoutNoteInput>;
+};
+
+export type FileUpdateToOneWithWhereWithoutNoteInput = {
+  data: FileUpdateWithoutNoteInput;
+  where?: InputMaybe<FileWhereInput>;
+};
+
+export type FileUpdateWithWhereUniqueWithoutAuthorInput = {
+  data: FileUpdateWithoutAuthorInput;
+  where: FileWhereUniqueInput;
+};
+
+export type FileUpdateWithoutAuthorInput = {
+  Note?: InputMaybe<NoteUpdateOneWithoutFileNestedInput>;
+  content?: InputMaybe<StringFieldUpdateOperationsInput>;
+  createdAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
+  externalId?: InputMaybe<StringFieldUpdateOperationsInput>;
+  privacity?: InputMaybe<EnumPrivacityFieldUpdateOperationsInput>;
+  title?: InputMaybe<StringFieldUpdateOperationsInput>;
+  updateAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
+};
+
+export type FileUpdateWithoutNoteInput = {
+  Author?: InputMaybe<UserUpdateOneRequiredWithoutFileNestedInput>;
+  content?: InputMaybe<StringFieldUpdateOperationsInput>;
+  createdAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
+  externalId?: InputMaybe<StringFieldUpdateOperationsInput>;
+  privacity?: InputMaybe<EnumPrivacityFieldUpdateOperationsInput>;
+  title?: InputMaybe<StringFieldUpdateOperationsInput>;
+  updateAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
+};
+
+export type FileUpsertWithWhereUniqueWithoutAuthorInput = {
+  create: FileCreateWithoutAuthorInput;
+  update: FileUpdateWithoutAuthorInput;
+  where: FileWhereUniqueInput;
+};
+
+export type FileUpsertWithoutNoteInput = {
+  create: FileCreateWithoutNoteInput;
+  update: FileUpdateWithoutNoteInput;
+  where?: InputMaybe<FileWhereInput>;
+};
+
+export type FileWhereInput = {
+  AND?: InputMaybe<Array<FileWhereInput>>;
+  Author?: InputMaybe<UserRelationFilter>;
+  NOT?: InputMaybe<Array<FileWhereInput>>;
+  Note?: InputMaybe<NoteNullableRelationFilter>;
+  OR?: InputMaybe<Array<FileWhereInput>>;
+  authorId?: InputMaybe<IntFilter>;
+  content?: InputMaybe<StringFilter>;
+  createdAt?: InputMaybe<DateTimeNullableFilter>;
+  externalId?: InputMaybe<StringFilter>;
+  id?: InputMaybe<IntFilter>;
+  noteId?: InputMaybe<IntNullableFilter>;
+  privacity?: InputMaybe<EnumPrivacityFilter>;
+  title?: InputMaybe<StringFilter>;
+  updateAt?: InputMaybe<DateTimeNullableFilter>;
+};
+
+export type FileWhereUniqueInput = {
+  AND?: InputMaybe<Array<FileWhereInput>>;
+  Author?: InputMaybe<UserRelationFilter>;
+  NOT?: InputMaybe<Array<FileWhereInput>>;
+  Note?: InputMaybe<NoteNullableRelationFilter>;
+  OR?: InputMaybe<Array<FileWhereInput>>;
+  authorId?: InputMaybe<IntFilter>;
+  content?: InputMaybe<StringFilter>;
+  createdAt?: InputMaybe<DateTimeNullableFilter>;
+  externalId?: InputMaybe<Scalars['String']['input']>;
+  id?: InputMaybe<Scalars['Int']['input']>;
+  noteId?: InputMaybe<Scalars['Int']['input']>;
+  privacity?: InputMaybe<EnumPrivacityFilter>;
+  title?: InputMaybe<StringFilter>;
+  updateAt?: InputMaybe<DateTimeNullableFilter>;
+};
+
+export type Group = {
+  __typename?: 'Group';
+  Organization: Organization;
+  Users?: Maybe<Array<User>>;
+  _count: GroupCount;
+  createdAt?: Maybe<Scalars['DateTime']['output']>;
+  id: Scalars['ID']['output'];
+  name: Scalars['String']['output'];
+  organizationId: Scalars['Int']['output'];
+  updateAt?: Maybe<Scalars['DateTime']['output']>;
+};
+
+export type GroupCount = {
+  __typename?: 'GroupCount';
+  Users: Scalars['Int']['output'];
+};
+
+export type GroupCreateInput = {
+  Organization: OrganizationCreateNestedOneWithoutGroupsInput;
+  Users?: InputMaybe<UserCreateNestedManyWithoutGroupInput>;
+  createdAt?: InputMaybe<Scalars['DateTime']['input']>;
+  name: Scalars['String']['input'];
+  updateAt?: InputMaybe<Scalars['DateTime']['input']>;
+};
+
+export type GroupCreateManyOrganizationInput = {
+  createdAt?: InputMaybe<Scalars['DateTime']['input']>;
+  id?: InputMaybe<Scalars['Int']['input']>;
+  name: Scalars['String']['input'];
+  updateAt?: InputMaybe<Scalars['DateTime']['input']>;
+};
+
+export type GroupCreateManyOrganizationInputEnvelope = {
+  data: Array<GroupCreateManyOrganizationInput>;
+  skipDuplicates?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export type GroupCreateNestedManyWithoutOrganizationInput = {
+  connect?: InputMaybe<Array<GroupWhereUniqueInput>>;
+  connectOrCreate?: InputMaybe<Array<GroupCreateOrConnectWithoutOrganizationInput>>;
+  create?: InputMaybe<Array<GroupCreateWithoutOrganizationInput>>;
+  createMany?: InputMaybe<GroupCreateManyOrganizationInputEnvelope>;
+};
+
+export type GroupCreateNestedManyWithoutUsersInput = {
+  connect?: InputMaybe<Array<GroupWhereUniqueInput>>;
+  connectOrCreate?: InputMaybe<Array<GroupCreateOrConnectWithoutUsersInput>>;
+  create?: InputMaybe<Array<GroupCreateWithoutUsersInput>>;
+};
+
+export type GroupCreateOrConnectWithoutOrganizationInput = {
+  create: GroupCreateWithoutOrganizationInput;
+  where: GroupWhereUniqueInput;
+};
+
+export type GroupCreateOrConnectWithoutUsersInput = {
+  create: GroupCreateWithoutUsersInput;
+  where: GroupWhereUniqueInput;
+};
+
+export type GroupCreateWithoutOrganizationInput = {
+  Users?: InputMaybe<UserCreateNestedManyWithoutGroupInput>;
+  createdAt?: InputMaybe<Scalars['DateTime']['input']>;
+  name: Scalars['String']['input'];
+  updateAt?: InputMaybe<Scalars['DateTime']['input']>;
+};
+
+export type GroupCreateWithoutUsersInput = {
+  Organization: OrganizationCreateNestedOneWithoutGroupsInput;
+  createdAt?: InputMaybe<Scalars['DateTime']['input']>;
+  name: Scalars['String']['input'];
+  updateAt?: InputMaybe<Scalars['DateTime']['input']>;
+};
+
+export type GroupListRelationFilter = {
+  every?: InputMaybe<GroupWhereInput>;
+  none?: InputMaybe<GroupWhereInput>;
+  some?: InputMaybe<GroupWhereInput>;
+};
+
+export type GroupScalarWhereInput = {
+  AND?: InputMaybe<Array<GroupScalarWhereInput>>;
+  NOT?: InputMaybe<Array<GroupScalarWhereInput>>;
+  OR?: InputMaybe<Array<GroupScalarWhereInput>>;
+  createdAt?: InputMaybe<DateTimeNullableFilter>;
+  id?: InputMaybe<IntFilter>;
+  name?: InputMaybe<StringFilter>;
+  organizationId?: InputMaybe<IntFilter>;
+  updateAt?: InputMaybe<DateTimeNullableFilter>;
+};
+
+export type GroupUpdateInput = {
+  Organization?: InputMaybe<OrganizationUpdateOneRequiredWithoutGroupsNestedInput>;
+  Users?: InputMaybe<UserUpdateManyWithoutGroupNestedInput>;
   createdAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
   name?: InputMaybe<StringFieldUpdateOperationsInput>;
   updateAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
 };
 
-export type GradeUpdateManyMutationInput = {
+export type GroupUpdateManyMutationInput = {
   createdAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
   name?: InputMaybe<StringFieldUpdateOperationsInput>;
   updateAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
 };
 
-export type GradeUpdateManyWithWhereWithoutSchoolInput = {
-  data: GradeUpdateManyMutationInput;
-  where: GradeScalarWhereInput;
+export type GroupUpdateManyWithWhereWithoutOrganizationInput = {
+  data: GroupUpdateManyMutationInput;
+  where: GroupScalarWhereInput;
 };
 
-export type GradeUpdateManyWithoutSchoolNestedInput = {
-  connect?: InputMaybe<Array<GradeWhereUniqueInput>>;
-  connectOrCreate?: InputMaybe<Array<GradeCreateOrConnectWithoutSchoolInput>>;
-  create?: InputMaybe<Array<GradeCreateWithoutSchoolInput>>;
-  createMany?: InputMaybe<GradeCreateManySchoolInputEnvelope>;
-  delete?: InputMaybe<Array<GradeWhereUniqueInput>>;
-  deleteMany?: InputMaybe<Array<GradeScalarWhereInput>>;
-  disconnect?: InputMaybe<Array<GradeWhereUniqueInput>>;
-  set?: InputMaybe<Array<GradeWhereUniqueInput>>;
-  update?: InputMaybe<Array<GradeUpdateWithWhereUniqueWithoutSchoolInput>>;
-  updateMany?: InputMaybe<Array<GradeUpdateManyWithWhereWithoutSchoolInput>>;
-  upsert?: InputMaybe<Array<GradeUpsertWithWhereUniqueWithoutSchoolInput>>;
+export type GroupUpdateManyWithWhereWithoutUsersInput = {
+  data: GroupUpdateManyMutationInput;
+  where: GroupScalarWhereInput;
 };
 
-export type GradeUpdateOneRequiredWithoutUsersNestedInput = {
-  connect?: InputMaybe<GradeWhereUniqueInput>;
-  connectOrCreate?: InputMaybe<GradeCreateOrConnectWithoutUsersInput>;
-  create?: InputMaybe<GradeCreateWithoutUsersInput>;
-  update?: InputMaybe<GradeUpdateToOneWithWhereWithoutUsersInput>;
-  upsert?: InputMaybe<GradeUpsertWithoutUsersInput>;
+export type GroupUpdateManyWithoutOrganizationNestedInput = {
+  connect?: InputMaybe<Array<GroupWhereUniqueInput>>;
+  connectOrCreate?: InputMaybe<Array<GroupCreateOrConnectWithoutOrganizationInput>>;
+  create?: InputMaybe<Array<GroupCreateWithoutOrganizationInput>>;
+  createMany?: InputMaybe<GroupCreateManyOrganizationInputEnvelope>;
+  delete?: InputMaybe<Array<GroupWhereUniqueInput>>;
+  deleteMany?: InputMaybe<Array<GroupScalarWhereInput>>;
+  disconnect?: InputMaybe<Array<GroupWhereUniqueInput>>;
+  set?: InputMaybe<Array<GroupWhereUniqueInput>>;
+  update?: InputMaybe<Array<GroupUpdateWithWhereUniqueWithoutOrganizationInput>>;
+  updateMany?: InputMaybe<Array<GroupUpdateManyWithWhereWithoutOrganizationInput>>;
+  upsert?: InputMaybe<Array<GroupUpsertWithWhereUniqueWithoutOrganizationInput>>;
 };
 
-export type GradeUpdateToOneWithWhereWithoutUsersInput = {
-  data: GradeUpdateWithoutUsersInput;
-  where?: InputMaybe<GradeWhereInput>;
+export type GroupUpdateManyWithoutUsersNestedInput = {
+  connect?: InputMaybe<Array<GroupWhereUniqueInput>>;
+  connectOrCreate?: InputMaybe<Array<GroupCreateOrConnectWithoutUsersInput>>;
+  create?: InputMaybe<Array<GroupCreateWithoutUsersInput>>;
+  delete?: InputMaybe<Array<GroupWhereUniqueInput>>;
+  deleteMany?: InputMaybe<Array<GroupScalarWhereInput>>;
+  disconnect?: InputMaybe<Array<GroupWhereUniqueInput>>;
+  set?: InputMaybe<Array<GroupWhereUniqueInput>>;
+  update?: InputMaybe<Array<GroupUpdateWithWhereUniqueWithoutUsersInput>>;
+  updateMany?: InputMaybe<Array<GroupUpdateManyWithWhereWithoutUsersInput>>;
+  upsert?: InputMaybe<Array<GroupUpsertWithWhereUniqueWithoutUsersInput>>;
 };
 
-export type GradeUpdateWithWhereUniqueWithoutSchoolInput = {
-  data: GradeUpdateWithoutSchoolInput;
-  where: GradeWhereUniqueInput;
+export type GroupUpdateWithWhereUniqueWithoutOrganizationInput = {
+  data: GroupUpdateWithoutOrganizationInput;
+  where: GroupWhereUniqueInput;
 };
 
-export type GradeUpdateWithoutSchoolInput = {
-  Users?: InputMaybe<UserUpdateManyWithoutGradeNestedInput>;
+export type GroupUpdateWithWhereUniqueWithoutUsersInput = {
+  data: GroupUpdateWithoutUsersInput;
+  where: GroupWhereUniqueInput;
+};
+
+export type GroupUpdateWithoutOrganizationInput = {
+  Users?: InputMaybe<UserUpdateManyWithoutGroupNestedInput>;
   createdAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
   name?: InputMaybe<StringFieldUpdateOperationsInput>;
   updateAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
 };
 
-export type GradeUpdateWithoutUsersInput = {
-  School?: InputMaybe<SchoolUpdateOneRequiredWithoutGradesNestedInput>;
+export type GroupUpdateWithoutUsersInput = {
+  Organization?: InputMaybe<OrganizationUpdateOneRequiredWithoutGroupsNestedInput>;
   createdAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
   name?: InputMaybe<StringFieldUpdateOperationsInput>;
   updateAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
 };
 
-export type GradeUpsertWithWhereUniqueWithoutSchoolInput = {
-  create: GradeCreateWithoutSchoolInput;
-  update: GradeUpdateWithoutSchoolInput;
-  where: GradeWhereUniqueInput;
+export type GroupUpsertWithWhereUniqueWithoutOrganizationInput = {
+  create: GroupCreateWithoutOrganizationInput;
+  update: GroupUpdateWithoutOrganizationInput;
+  where: GroupWhereUniqueInput;
 };
 
-export type GradeUpsertWithoutUsersInput = {
-  create: GradeCreateWithoutUsersInput;
-  update: GradeUpdateWithoutUsersInput;
-  where?: InputMaybe<GradeWhereInput>;
+export type GroupUpsertWithWhereUniqueWithoutUsersInput = {
+  create: GroupCreateWithoutUsersInput;
+  update: GroupUpdateWithoutUsersInput;
+  where: GroupWhereUniqueInput;
 };
 
-export type GradeWhereInput = {
-  AND?: InputMaybe<Array<GradeWhereInput>>;
-  NOT?: InputMaybe<Array<GradeWhereInput>>;
-  OR?: InputMaybe<Array<GradeWhereInput>>;
-  School?: InputMaybe<SchoolRelationFilter>;
+export type GroupWhereInput = {
+  AND?: InputMaybe<Array<GroupWhereInput>>;
+  NOT?: InputMaybe<Array<GroupWhereInput>>;
+  OR?: InputMaybe<Array<GroupWhereInput>>;
+  Organization?: InputMaybe<OrganizationRelationFilter>;
   Users?: InputMaybe<UserListRelationFilter>;
   createdAt?: InputMaybe<DateTimeNullableFilter>;
   id?: InputMaybe<IntFilter>;
   name?: InputMaybe<StringFilter>;
-  schoolId?: InputMaybe<IntFilter>;
+  organizationId?: InputMaybe<IntFilter>;
   updateAt?: InputMaybe<DateTimeNullableFilter>;
 };
 
-export type GradeWhereUniqueInput = {
-  AND?: InputMaybe<Array<GradeWhereInput>>;
-  NOT?: InputMaybe<Array<GradeWhereInput>>;
-  OR?: InputMaybe<Array<GradeWhereInput>>;
-  School?: InputMaybe<SchoolRelationFilter>;
+export type GroupWhereUniqueInput = {
+  AND?: InputMaybe<Array<GroupWhereInput>>;
+  NOT?: InputMaybe<Array<GroupWhereInput>>;
+  OR?: InputMaybe<Array<GroupWhereInput>>;
+  Organization?: InputMaybe<OrganizationRelationFilter>;
   Users?: InputMaybe<UserListRelationFilter>;
   createdAt?: InputMaybe<DateTimeNullableFilter>;
   id?: InputMaybe<Scalars['Int']['input']>;
   name?: InputMaybe<StringFilter>;
-  schoolId?: InputMaybe<IntFilter>;
+  organizationId?: InputMaybe<IntFilter>;
   updateAt?: InputMaybe<DateTimeNullableFilter>;
 };
 
@@ -855,25 +512,25 @@ export type IntNullableFilter = {
 
 export type Mutation = {
   __typename?: 'Mutation';
-  createDoc: Doc;
-  createGrade: Grade;
-  createSchool: School;
+  createGroup: Group;
+  createNote: Note;
+  createOrganization: Organization;
   createScore: Score;
   createSubject: Subject;
   createSubtopic: Subtopic;
   createTopic: Topic;
   createUser: User;
-  removeDoc: Doc;
-  removeGrade: Grade;
-  removeSchool: School;
+  removeGroup: Group;
+  removeNote: Note;
+  removeOrganization: Organization;
   removeScore: Score;
   removeSubject: Subject;
   removeSubtopic: Subtopic;
   removeTopic: Topic;
   removeUser: User;
-  updateDoc: Doc;
-  updateGrade: Grade;
-  updateSchool: School;
+  updateGroup: Group;
+  updateNote: Note;
+  updateOrganization: Organization;
   updateScore: Score;
   updateSubject: Subject;
   updateSubtopic: Subtopic;
@@ -882,18 +539,18 @@ export type Mutation = {
 };
 
 
-export type MutationCreateDocArgs = {
-  createDocInput: DocCreateInput;
+export type MutationCreateGroupArgs = {
+  createGroupInput: GroupCreateInput;
 };
 
 
-export type MutationCreateGradeArgs = {
-  createGradeInput: GradeCreateInput;
+export type MutationCreateNoteArgs = {
+  createNoteInput: NoteCreateInput;
 };
 
 
-export type MutationCreateSchoolArgs = {
-  createSchoolInput: SchoolCreateInput;
+export type MutationCreateOrganizationArgs = {
+  createOrganizationInput: OrganizationCreateInput;
 };
 
 
@@ -922,17 +579,17 @@ export type MutationCreateUserArgs = {
 };
 
 
-export type MutationRemoveDocArgs = {
+export type MutationRemoveGroupArgs = {
   id: Scalars['Int']['input'];
 };
 
 
-export type MutationRemoveGradeArgs = {
+export type MutationRemoveNoteArgs = {
   id: Scalars['Int']['input'];
 };
 
 
-export type MutationRemoveSchoolArgs = {
+export type MutationRemoveOrganizationArgs = {
   id: Scalars['Int']['input'];
 };
 
@@ -962,21 +619,21 @@ export type MutationRemoveUserArgs = {
 };
 
 
-export type MutationUpdateDocArgs = {
+export type MutationUpdateGroupArgs = {
   id: Scalars['Float']['input'];
-  updateDocInput: DocUpdateInput;
+  updateGroupInput: GroupUpdateInput;
 };
 
 
-export type MutationUpdateGradeArgs = {
+export type MutationUpdateNoteArgs = {
   id: Scalars['Float']['input'];
-  updateGradeInput: GradeUpdateInput;
+  updateNoteInput: NoteUpdateInput;
 };
 
 
-export type MutationUpdateSchoolArgs = {
+export type MutationUpdateOrganizationArgs = {
   id: Scalars['Float']['input'];
-  updateSchoolInput: SchoolUpdateInput;
+  updateOrganizationInput: OrganizationUpdateInput;
 };
 
 
@@ -1020,13 +677,6 @@ export type NestedDateTimeNullableFilter = {
   notIn?: InputMaybe<Array<Scalars['DateTime']['input']>>;
 };
 
-export type NestedEnumDocTypesFilter = {
-  equals?: InputMaybe<DocTypes>;
-  in?: InputMaybe<Array<DocTypes>>;
-  not?: InputMaybe<NestedEnumDocTypesFilter>;
-  notIn?: InputMaybe<Array<DocTypes>>;
-};
-
 export type NestedEnumPrivacityFilter = {
   equals?: InputMaybe<Privacity>;
   in?: InputMaybe<Array<Privacity>>;
@@ -1039,6 +689,13 @@ export type NestedEnumRoleFilter = {
   in?: InputMaybe<Array<Role>>;
   not?: InputMaybe<NestedEnumRoleFilter>;
   notIn?: InputMaybe<Array<Role>>;
+};
+
+export type NestedEnumTypesFilter = {
+  equals?: InputMaybe<Types>;
+  in?: InputMaybe<Array<Types>>;
+  not?: InputMaybe<NestedEnumTypesFilter>;
+  notIn?: InputMaybe<Array<Types>>;
 };
 
 export type NestedIntFilter = {
@@ -1077,8 +734,628 @@ export type NestedStringFilter = {
   startsWith?: InputMaybe<Scalars['String']['input']>;
 };
 
+export type Note = {
+  __typename?: 'Note';
+  File?: Maybe<File>;
+  Scores?: Maybe<Array<Score>>;
+  Subject?: Maybe<Subject>;
+  Subtopic?: Maybe<Subtopic>;
+  Topic?: Maybe<Topic>;
+  _count: NoteCount;
+  createdAt?: Maybe<Scalars['DateTime']['output']>;
+  fileId?: Maybe<Scalars['Int']['output']>;
+  id: Scalars['ID']['output'];
+  subjectId?: Maybe<Scalars['Int']['output']>;
+  subtopicId?: Maybe<Scalars['Int']['output']>;
+  topicId?: Maybe<Scalars['Int']['output']>;
+  type: Types;
+  updateAt?: Maybe<Scalars['DateTime']['output']>;
+};
+
+export type NoteCount = {
+  __typename?: 'NoteCount';
+  Scores: Scalars['Int']['output'];
+};
+
+export type NoteCreateInput = {
+  File?: InputMaybe<FileCreateNestedOneWithoutNoteInput>;
+  Scores?: InputMaybe<ScoreCreateNestedManyWithoutNoteInput>;
+  Subject?: InputMaybe<SubjectCreateNestedOneWithoutNotesInput>;
+  Subtopic?: InputMaybe<SubtopicCreateNestedOneWithoutNotesInput>;
+  Topic?: InputMaybe<TopicCreateNestedOneWithoutNotesInput>;
+  createdAt?: InputMaybe<Scalars['DateTime']['input']>;
+  fileId?: InputMaybe<Scalars['Int']['input']>;
+  type: Types;
+  updateAt?: InputMaybe<Scalars['DateTime']['input']>;
+};
+
+export type NoteCreateManySubjectInput = {
+  createdAt?: InputMaybe<Scalars['DateTime']['input']>;
+  fileId?: InputMaybe<Scalars['Int']['input']>;
+  id?: InputMaybe<Scalars['Int']['input']>;
+  subtopicId?: InputMaybe<Scalars['Int']['input']>;
+  topicId?: InputMaybe<Scalars['Int']['input']>;
+  type: Types;
+  updateAt?: InputMaybe<Scalars['DateTime']['input']>;
+};
+
+export type NoteCreateManySubjectInputEnvelope = {
+  data: Array<NoteCreateManySubjectInput>;
+  skipDuplicates?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export type NoteCreateManySubtopicInput = {
+  createdAt?: InputMaybe<Scalars['DateTime']['input']>;
+  fileId?: InputMaybe<Scalars['Int']['input']>;
+  id?: InputMaybe<Scalars['Int']['input']>;
+  subjectId?: InputMaybe<Scalars['Int']['input']>;
+  topicId?: InputMaybe<Scalars['Int']['input']>;
+  type: Types;
+  updateAt?: InputMaybe<Scalars['DateTime']['input']>;
+};
+
+export type NoteCreateManySubtopicInputEnvelope = {
+  data: Array<NoteCreateManySubtopicInput>;
+  skipDuplicates?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export type NoteCreateManyTopicInput = {
+  createdAt?: InputMaybe<Scalars['DateTime']['input']>;
+  fileId?: InputMaybe<Scalars['Int']['input']>;
+  id?: InputMaybe<Scalars['Int']['input']>;
+  subjectId?: InputMaybe<Scalars['Int']['input']>;
+  subtopicId?: InputMaybe<Scalars['Int']['input']>;
+  type: Types;
+  updateAt?: InputMaybe<Scalars['DateTime']['input']>;
+};
+
+export type NoteCreateManyTopicInputEnvelope = {
+  data: Array<NoteCreateManyTopicInput>;
+  skipDuplicates?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export type NoteCreateNestedManyWithoutSubjectInput = {
+  connect?: InputMaybe<Array<NoteWhereUniqueInput>>;
+  connectOrCreate?: InputMaybe<Array<NoteCreateOrConnectWithoutSubjectInput>>;
+  create?: InputMaybe<Array<NoteCreateWithoutSubjectInput>>;
+  createMany?: InputMaybe<NoteCreateManySubjectInputEnvelope>;
+};
+
+export type NoteCreateNestedManyWithoutSubtopicInput = {
+  connect?: InputMaybe<Array<NoteWhereUniqueInput>>;
+  connectOrCreate?: InputMaybe<Array<NoteCreateOrConnectWithoutSubtopicInput>>;
+  create?: InputMaybe<Array<NoteCreateWithoutSubtopicInput>>;
+  createMany?: InputMaybe<NoteCreateManySubtopicInputEnvelope>;
+};
+
+export type NoteCreateNestedManyWithoutTopicInput = {
+  connect?: InputMaybe<Array<NoteWhereUniqueInput>>;
+  connectOrCreate?: InputMaybe<Array<NoteCreateOrConnectWithoutTopicInput>>;
+  create?: InputMaybe<Array<NoteCreateWithoutTopicInput>>;
+  createMany?: InputMaybe<NoteCreateManyTopicInputEnvelope>;
+};
+
+export type NoteCreateNestedOneWithoutFileInput = {
+  connect?: InputMaybe<NoteWhereUniqueInput>;
+  connectOrCreate?: InputMaybe<NoteCreateOrConnectWithoutFileInput>;
+  create?: InputMaybe<NoteCreateWithoutFileInput>;
+};
+
+export type NoteCreateNestedOneWithoutScoresInput = {
+  connect?: InputMaybe<NoteWhereUniqueInput>;
+  connectOrCreate?: InputMaybe<NoteCreateOrConnectWithoutScoresInput>;
+  create?: InputMaybe<NoteCreateWithoutScoresInput>;
+};
+
+export type NoteCreateOrConnectWithoutFileInput = {
+  create: NoteCreateWithoutFileInput;
+  where: NoteWhereUniqueInput;
+};
+
+export type NoteCreateOrConnectWithoutScoresInput = {
+  create: NoteCreateWithoutScoresInput;
+  where: NoteWhereUniqueInput;
+};
+
+export type NoteCreateOrConnectWithoutSubjectInput = {
+  create: NoteCreateWithoutSubjectInput;
+  where: NoteWhereUniqueInput;
+};
+
+export type NoteCreateOrConnectWithoutSubtopicInput = {
+  create: NoteCreateWithoutSubtopicInput;
+  where: NoteWhereUniqueInput;
+};
+
+export type NoteCreateOrConnectWithoutTopicInput = {
+  create: NoteCreateWithoutTopicInput;
+  where: NoteWhereUniqueInput;
+};
+
+export type NoteCreateWithoutFileInput = {
+  Scores?: InputMaybe<ScoreCreateNestedManyWithoutNoteInput>;
+  Subject?: InputMaybe<SubjectCreateNestedOneWithoutNotesInput>;
+  Subtopic?: InputMaybe<SubtopicCreateNestedOneWithoutNotesInput>;
+  Topic?: InputMaybe<TopicCreateNestedOneWithoutNotesInput>;
+  createdAt?: InputMaybe<Scalars['DateTime']['input']>;
+  fileId?: InputMaybe<Scalars['Int']['input']>;
+  type: Types;
+  updateAt?: InputMaybe<Scalars['DateTime']['input']>;
+};
+
+export type NoteCreateWithoutScoresInput = {
+  File?: InputMaybe<FileCreateNestedOneWithoutNoteInput>;
+  Subject?: InputMaybe<SubjectCreateNestedOneWithoutNotesInput>;
+  Subtopic?: InputMaybe<SubtopicCreateNestedOneWithoutNotesInput>;
+  Topic?: InputMaybe<TopicCreateNestedOneWithoutNotesInput>;
+  createdAt?: InputMaybe<Scalars['DateTime']['input']>;
+  fileId?: InputMaybe<Scalars['Int']['input']>;
+  type: Types;
+  updateAt?: InputMaybe<Scalars['DateTime']['input']>;
+};
+
+export type NoteCreateWithoutSubjectInput = {
+  File?: InputMaybe<FileCreateNestedOneWithoutNoteInput>;
+  Scores?: InputMaybe<ScoreCreateNestedManyWithoutNoteInput>;
+  Subtopic?: InputMaybe<SubtopicCreateNestedOneWithoutNotesInput>;
+  Topic?: InputMaybe<TopicCreateNestedOneWithoutNotesInput>;
+  createdAt?: InputMaybe<Scalars['DateTime']['input']>;
+  fileId?: InputMaybe<Scalars['Int']['input']>;
+  type: Types;
+  updateAt?: InputMaybe<Scalars['DateTime']['input']>;
+};
+
+export type NoteCreateWithoutSubtopicInput = {
+  File?: InputMaybe<FileCreateNestedOneWithoutNoteInput>;
+  Scores?: InputMaybe<ScoreCreateNestedManyWithoutNoteInput>;
+  Subject?: InputMaybe<SubjectCreateNestedOneWithoutNotesInput>;
+  Topic?: InputMaybe<TopicCreateNestedOneWithoutNotesInput>;
+  createdAt?: InputMaybe<Scalars['DateTime']['input']>;
+  fileId?: InputMaybe<Scalars['Int']['input']>;
+  type: Types;
+  updateAt?: InputMaybe<Scalars['DateTime']['input']>;
+};
+
+export type NoteCreateWithoutTopicInput = {
+  File?: InputMaybe<FileCreateNestedOneWithoutNoteInput>;
+  Scores?: InputMaybe<ScoreCreateNestedManyWithoutNoteInput>;
+  Subject?: InputMaybe<SubjectCreateNestedOneWithoutNotesInput>;
+  Subtopic?: InputMaybe<SubtopicCreateNestedOneWithoutNotesInput>;
+  createdAt?: InputMaybe<Scalars['DateTime']['input']>;
+  fileId?: InputMaybe<Scalars['Int']['input']>;
+  type: Types;
+  updateAt?: InputMaybe<Scalars['DateTime']['input']>;
+};
+
+export type NoteListRelationFilter = {
+  every?: InputMaybe<NoteWhereInput>;
+  none?: InputMaybe<NoteWhereInput>;
+  some?: InputMaybe<NoteWhereInput>;
+};
+
+export type NoteNullableRelationFilter = {
+  is?: InputMaybe<NoteWhereInput>;
+  isNot?: InputMaybe<NoteWhereInput>;
+};
+
+export type NoteScalarWhereInput = {
+  AND?: InputMaybe<Array<NoteScalarWhereInput>>;
+  NOT?: InputMaybe<Array<NoteScalarWhereInput>>;
+  OR?: InputMaybe<Array<NoteScalarWhereInput>>;
+  createdAt?: InputMaybe<DateTimeNullableFilter>;
+  fileId?: InputMaybe<IntNullableFilter>;
+  id?: InputMaybe<IntFilter>;
+  subjectId?: InputMaybe<IntNullableFilter>;
+  subtopicId?: InputMaybe<IntNullableFilter>;
+  topicId?: InputMaybe<IntNullableFilter>;
+  type?: InputMaybe<EnumTypesFilter>;
+  updateAt?: InputMaybe<DateTimeNullableFilter>;
+};
+
+export type NoteUpdateInput = {
+  File?: InputMaybe<FileUpdateOneWithoutNoteNestedInput>;
+  Scores?: InputMaybe<ScoreUpdateManyWithoutNoteNestedInput>;
+  Subject?: InputMaybe<SubjectUpdateOneWithoutNotesNestedInput>;
+  Subtopic?: InputMaybe<SubtopicUpdateOneWithoutNotesNestedInput>;
+  Topic?: InputMaybe<TopicUpdateOneWithoutNotesNestedInput>;
+  createdAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
+  fileId?: InputMaybe<NullableIntFieldUpdateOperationsInput>;
+  type?: InputMaybe<EnumTypesFieldUpdateOperationsInput>;
+  updateAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
+};
+
+export type NoteUpdateManyMutationInput = {
+  createdAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
+  fileId?: InputMaybe<NullableIntFieldUpdateOperationsInput>;
+  type?: InputMaybe<EnumTypesFieldUpdateOperationsInput>;
+  updateAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
+};
+
+export type NoteUpdateManyWithWhereWithoutSubjectInput = {
+  data: NoteUpdateManyMutationInput;
+  where: NoteScalarWhereInput;
+};
+
+export type NoteUpdateManyWithWhereWithoutSubtopicInput = {
+  data: NoteUpdateManyMutationInput;
+  where: NoteScalarWhereInput;
+};
+
+export type NoteUpdateManyWithWhereWithoutTopicInput = {
+  data: NoteUpdateManyMutationInput;
+  where: NoteScalarWhereInput;
+};
+
+export type NoteUpdateManyWithoutSubjectNestedInput = {
+  connect?: InputMaybe<Array<NoteWhereUniqueInput>>;
+  connectOrCreate?: InputMaybe<Array<NoteCreateOrConnectWithoutSubjectInput>>;
+  create?: InputMaybe<Array<NoteCreateWithoutSubjectInput>>;
+  createMany?: InputMaybe<NoteCreateManySubjectInputEnvelope>;
+  delete?: InputMaybe<Array<NoteWhereUniqueInput>>;
+  deleteMany?: InputMaybe<Array<NoteScalarWhereInput>>;
+  disconnect?: InputMaybe<Array<NoteWhereUniqueInput>>;
+  set?: InputMaybe<Array<NoteWhereUniqueInput>>;
+  update?: InputMaybe<Array<NoteUpdateWithWhereUniqueWithoutSubjectInput>>;
+  updateMany?: InputMaybe<Array<NoteUpdateManyWithWhereWithoutSubjectInput>>;
+  upsert?: InputMaybe<Array<NoteUpsertWithWhereUniqueWithoutSubjectInput>>;
+};
+
+export type NoteUpdateManyWithoutSubtopicNestedInput = {
+  connect?: InputMaybe<Array<NoteWhereUniqueInput>>;
+  connectOrCreate?: InputMaybe<Array<NoteCreateOrConnectWithoutSubtopicInput>>;
+  create?: InputMaybe<Array<NoteCreateWithoutSubtopicInput>>;
+  createMany?: InputMaybe<NoteCreateManySubtopicInputEnvelope>;
+  delete?: InputMaybe<Array<NoteWhereUniqueInput>>;
+  deleteMany?: InputMaybe<Array<NoteScalarWhereInput>>;
+  disconnect?: InputMaybe<Array<NoteWhereUniqueInput>>;
+  set?: InputMaybe<Array<NoteWhereUniqueInput>>;
+  update?: InputMaybe<Array<NoteUpdateWithWhereUniqueWithoutSubtopicInput>>;
+  updateMany?: InputMaybe<Array<NoteUpdateManyWithWhereWithoutSubtopicInput>>;
+  upsert?: InputMaybe<Array<NoteUpsertWithWhereUniqueWithoutSubtopicInput>>;
+};
+
+export type NoteUpdateManyWithoutTopicNestedInput = {
+  connect?: InputMaybe<Array<NoteWhereUniqueInput>>;
+  connectOrCreate?: InputMaybe<Array<NoteCreateOrConnectWithoutTopicInput>>;
+  create?: InputMaybe<Array<NoteCreateWithoutTopicInput>>;
+  createMany?: InputMaybe<NoteCreateManyTopicInputEnvelope>;
+  delete?: InputMaybe<Array<NoteWhereUniqueInput>>;
+  deleteMany?: InputMaybe<Array<NoteScalarWhereInput>>;
+  disconnect?: InputMaybe<Array<NoteWhereUniqueInput>>;
+  set?: InputMaybe<Array<NoteWhereUniqueInput>>;
+  update?: InputMaybe<Array<NoteUpdateWithWhereUniqueWithoutTopicInput>>;
+  updateMany?: InputMaybe<Array<NoteUpdateManyWithWhereWithoutTopicInput>>;
+  upsert?: InputMaybe<Array<NoteUpsertWithWhereUniqueWithoutTopicInput>>;
+};
+
+export type NoteUpdateOneWithoutFileNestedInput = {
+  connect?: InputMaybe<NoteWhereUniqueInput>;
+  connectOrCreate?: InputMaybe<NoteCreateOrConnectWithoutFileInput>;
+  create?: InputMaybe<NoteCreateWithoutFileInput>;
+  delete?: InputMaybe<NoteWhereInput>;
+  disconnect?: InputMaybe<NoteWhereInput>;
+  update?: InputMaybe<NoteUpdateToOneWithWhereWithoutFileInput>;
+  upsert?: InputMaybe<NoteUpsertWithoutFileInput>;
+};
+
+export type NoteUpdateOneWithoutScoresNestedInput = {
+  connect?: InputMaybe<NoteWhereUniqueInput>;
+  connectOrCreate?: InputMaybe<NoteCreateOrConnectWithoutScoresInput>;
+  create?: InputMaybe<NoteCreateWithoutScoresInput>;
+  delete?: InputMaybe<NoteWhereInput>;
+  disconnect?: InputMaybe<NoteWhereInput>;
+  update?: InputMaybe<NoteUpdateToOneWithWhereWithoutScoresInput>;
+  upsert?: InputMaybe<NoteUpsertWithoutScoresInput>;
+};
+
+export type NoteUpdateToOneWithWhereWithoutFileInput = {
+  data: NoteUpdateWithoutFileInput;
+  where?: InputMaybe<NoteWhereInput>;
+};
+
+export type NoteUpdateToOneWithWhereWithoutScoresInput = {
+  data: NoteUpdateWithoutScoresInput;
+  where?: InputMaybe<NoteWhereInput>;
+};
+
+export type NoteUpdateWithWhereUniqueWithoutSubjectInput = {
+  data: NoteUpdateWithoutSubjectInput;
+  where: NoteWhereUniqueInput;
+};
+
+export type NoteUpdateWithWhereUniqueWithoutSubtopicInput = {
+  data: NoteUpdateWithoutSubtopicInput;
+  where: NoteWhereUniqueInput;
+};
+
+export type NoteUpdateWithWhereUniqueWithoutTopicInput = {
+  data: NoteUpdateWithoutTopicInput;
+  where: NoteWhereUniqueInput;
+};
+
+export type NoteUpdateWithoutFileInput = {
+  Scores?: InputMaybe<ScoreUpdateManyWithoutNoteNestedInput>;
+  Subject?: InputMaybe<SubjectUpdateOneWithoutNotesNestedInput>;
+  Subtopic?: InputMaybe<SubtopicUpdateOneWithoutNotesNestedInput>;
+  Topic?: InputMaybe<TopicUpdateOneWithoutNotesNestedInput>;
+  createdAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
+  fileId?: InputMaybe<NullableIntFieldUpdateOperationsInput>;
+  type?: InputMaybe<EnumTypesFieldUpdateOperationsInput>;
+  updateAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
+};
+
+export type NoteUpdateWithoutScoresInput = {
+  File?: InputMaybe<FileUpdateOneWithoutNoteNestedInput>;
+  Subject?: InputMaybe<SubjectUpdateOneWithoutNotesNestedInput>;
+  Subtopic?: InputMaybe<SubtopicUpdateOneWithoutNotesNestedInput>;
+  Topic?: InputMaybe<TopicUpdateOneWithoutNotesNestedInput>;
+  createdAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
+  fileId?: InputMaybe<NullableIntFieldUpdateOperationsInput>;
+  type?: InputMaybe<EnumTypesFieldUpdateOperationsInput>;
+  updateAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
+};
+
+export type NoteUpdateWithoutSubjectInput = {
+  File?: InputMaybe<FileUpdateOneWithoutNoteNestedInput>;
+  Scores?: InputMaybe<ScoreUpdateManyWithoutNoteNestedInput>;
+  Subtopic?: InputMaybe<SubtopicUpdateOneWithoutNotesNestedInput>;
+  Topic?: InputMaybe<TopicUpdateOneWithoutNotesNestedInput>;
+  createdAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
+  fileId?: InputMaybe<NullableIntFieldUpdateOperationsInput>;
+  type?: InputMaybe<EnumTypesFieldUpdateOperationsInput>;
+  updateAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
+};
+
+export type NoteUpdateWithoutSubtopicInput = {
+  File?: InputMaybe<FileUpdateOneWithoutNoteNestedInput>;
+  Scores?: InputMaybe<ScoreUpdateManyWithoutNoteNestedInput>;
+  Subject?: InputMaybe<SubjectUpdateOneWithoutNotesNestedInput>;
+  Topic?: InputMaybe<TopicUpdateOneWithoutNotesNestedInput>;
+  createdAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
+  fileId?: InputMaybe<NullableIntFieldUpdateOperationsInput>;
+  type?: InputMaybe<EnumTypesFieldUpdateOperationsInput>;
+  updateAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
+};
+
+export type NoteUpdateWithoutTopicInput = {
+  File?: InputMaybe<FileUpdateOneWithoutNoteNestedInput>;
+  Scores?: InputMaybe<ScoreUpdateManyWithoutNoteNestedInput>;
+  Subject?: InputMaybe<SubjectUpdateOneWithoutNotesNestedInput>;
+  Subtopic?: InputMaybe<SubtopicUpdateOneWithoutNotesNestedInput>;
+  createdAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
+  fileId?: InputMaybe<NullableIntFieldUpdateOperationsInput>;
+  type?: InputMaybe<EnumTypesFieldUpdateOperationsInput>;
+  updateAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
+};
+
+export type NoteUpsertWithWhereUniqueWithoutSubjectInput = {
+  create: NoteCreateWithoutSubjectInput;
+  update: NoteUpdateWithoutSubjectInput;
+  where: NoteWhereUniqueInput;
+};
+
+export type NoteUpsertWithWhereUniqueWithoutSubtopicInput = {
+  create: NoteCreateWithoutSubtopicInput;
+  update: NoteUpdateWithoutSubtopicInput;
+  where: NoteWhereUniqueInput;
+};
+
+export type NoteUpsertWithWhereUniqueWithoutTopicInput = {
+  create: NoteCreateWithoutTopicInput;
+  update: NoteUpdateWithoutTopicInput;
+  where: NoteWhereUniqueInput;
+};
+
+export type NoteUpsertWithoutFileInput = {
+  create: NoteCreateWithoutFileInput;
+  update: NoteUpdateWithoutFileInput;
+  where?: InputMaybe<NoteWhereInput>;
+};
+
+export type NoteUpsertWithoutScoresInput = {
+  create: NoteCreateWithoutScoresInput;
+  update: NoteUpdateWithoutScoresInput;
+  where?: InputMaybe<NoteWhereInput>;
+};
+
+export type NoteWhereInput = {
+  AND?: InputMaybe<Array<NoteWhereInput>>;
+  File?: InputMaybe<FileNullableRelationFilter>;
+  NOT?: InputMaybe<Array<NoteWhereInput>>;
+  OR?: InputMaybe<Array<NoteWhereInput>>;
+  Scores?: InputMaybe<ScoreListRelationFilter>;
+  Subject?: InputMaybe<SubjectNullableRelationFilter>;
+  Subtopic?: InputMaybe<SubtopicNullableRelationFilter>;
+  Topic?: InputMaybe<TopicNullableRelationFilter>;
+  createdAt?: InputMaybe<DateTimeNullableFilter>;
+  fileId?: InputMaybe<IntNullableFilter>;
+  id?: InputMaybe<IntFilter>;
+  subjectId?: InputMaybe<IntNullableFilter>;
+  subtopicId?: InputMaybe<IntNullableFilter>;
+  topicId?: InputMaybe<IntNullableFilter>;
+  type?: InputMaybe<EnumTypesFilter>;
+  updateAt?: InputMaybe<DateTimeNullableFilter>;
+};
+
+export type NoteWhereUniqueInput = {
+  AND?: InputMaybe<Array<NoteWhereInput>>;
+  File?: InputMaybe<FileNullableRelationFilter>;
+  NOT?: InputMaybe<Array<NoteWhereInput>>;
+  OR?: InputMaybe<Array<NoteWhereInput>>;
+  Scores?: InputMaybe<ScoreListRelationFilter>;
+  Subject?: InputMaybe<SubjectNullableRelationFilter>;
+  Subtopic?: InputMaybe<SubtopicNullableRelationFilter>;
+  Topic?: InputMaybe<TopicNullableRelationFilter>;
+  createdAt?: InputMaybe<DateTimeNullableFilter>;
+  fileId?: InputMaybe<IntNullableFilter>;
+  id?: InputMaybe<Scalars['Int']['input']>;
+  subjectId?: InputMaybe<IntNullableFilter>;
+  subtopicId?: InputMaybe<IntNullableFilter>;
+  topicId?: InputMaybe<IntNullableFilter>;
+  type?: InputMaybe<EnumTypesFilter>;
+  updateAt?: InputMaybe<DateTimeNullableFilter>;
+};
+
 export type NullableDateTimeFieldUpdateOperationsInput = {
   set?: InputMaybe<Scalars['DateTime']['input']>;
+};
+
+export type NullableIntFieldUpdateOperationsInput = {
+  decrement?: InputMaybe<Scalars['Int']['input']>;
+  divide?: InputMaybe<Scalars['Int']['input']>;
+  increment?: InputMaybe<Scalars['Int']['input']>;
+  multiply?: InputMaybe<Scalars['Int']['input']>;
+  set?: InputMaybe<Scalars['Int']['input']>;
+};
+
+export type Organization = {
+  __typename?: 'Organization';
+  Groups?: Maybe<Array<Group>>;
+  Users?: Maybe<Array<User>>;
+  _count: OrganizationCount;
+  createdAt?: Maybe<Scalars['DateTime']['output']>;
+  id: Scalars['ID']['output'];
+  name: Scalars['String']['output'];
+  updateAt?: Maybe<Scalars['DateTime']['output']>;
+};
+
+export type OrganizationCount = {
+  __typename?: 'OrganizationCount';
+  Groups: Scalars['Int']['output'];
+  Users: Scalars['Int']['output'];
+};
+
+export type OrganizationCreateInput = {
+  Groups?: InputMaybe<GroupCreateNestedManyWithoutOrganizationInput>;
+  Users?: InputMaybe<UserCreateNestedManyWithoutOrganizationInput>;
+  createdAt?: InputMaybe<Scalars['DateTime']['input']>;
+  name: Scalars['String']['input'];
+  updateAt?: InputMaybe<Scalars['DateTime']['input']>;
+};
+
+export type OrganizationCreateNestedOneWithoutGroupsInput = {
+  connect?: InputMaybe<OrganizationWhereUniqueInput>;
+  connectOrCreate?: InputMaybe<OrganizationCreateOrConnectWithoutGroupsInput>;
+  create?: InputMaybe<OrganizationCreateWithoutGroupsInput>;
+};
+
+export type OrganizationCreateNestedOneWithoutUsersInput = {
+  connect?: InputMaybe<OrganizationWhereUniqueInput>;
+  connectOrCreate?: InputMaybe<OrganizationCreateOrConnectWithoutUsersInput>;
+  create?: InputMaybe<OrganizationCreateWithoutUsersInput>;
+};
+
+export type OrganizationCreateOrConnectWithoutGroupsInput = {
+  create: OrganizationCreateWithoutGroupsInput;
+  where: OrganizationWhereUniqueInput;
+};
+
+export type OrganizationCreateOrConnectWithoutUsersInput = {
+  create: OrganizationCreateWithoutUsersInput;
+  where: OrganizationWhereUniqueInput;
+};
+
+export type OrganizationCreateWithoutGroupsInput = {
+  Users?: InputMaybe<UserCreateNestedManyWithoutOrganizationInput>;
+  createdAt?: InputMaybe<Scalars['DateTime']['input']>;
+  name: Scalars['String']['input'];
+  updateAt?: InputMaybe<Scalars['DateTime']['input']>;
+};
+
+export type OrganizationCreateWithoutUsersInput = {
+  Groups?: InputMaybe<GroupCreateNestedManyWithoutOrganizationInput>;
+  createdAt?: InputMaybe<Scalars['DateTime']['input']>;
+  name: Scalars['String']['input'];
+  updateAt?: InputMaybe<Scalars['DateTime']['input']>;
+};
+
+export type OrganizationRelationFilter = {
+  is?: InputMaybe<OrganizationWhereInput>;
+  isNot?: InputMaybe<OrganizationWhereInput>;
+};
+
+export type OrganizationUpdateInput = {
+  Groups?: InputMaybe<GroupUpdateManyWithoutOrganizationNestedInput>;
+  Users?: InputMaybe<UserUpdateManyWithoutOrganizationNestedInput>;
+  createdAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
+  name?: InputMaybe<StringFieldUpdateOperationsInput>;
+  updateAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
+};
+
+export type OrganizationUpdateOneRequiredWithoutGroupsNestedInput = {
+  connect?: InputMaybe<OrganizationWhereUniqueInput>;
+  connectOrCreate?: InputMaybe<OrganizationCreateOrConnectWithoutGroupsInput>;
+  create?: InputMaybe<OrganizationCreateWithoutGroupsInput>;
+  update?: InputMaybe<OrganizationUpdateToOneWithWhereWithoutGroupsInput>;
+  upsert?: InputMaybe<OrganizationUpsertWithoutGroupsInput>;
+};
+
+export type OrganizationUpdateOneRequiredWithoutUsersNestedInput = {
+  connect?: InputMaybe<OrganizationWhereUniqueInput>;
+  connectOrCreate?: InputMaybe<OrganizationCreateOrConnectWithoutUsersInput>;
+  create?: InputMaybe<OrganizationCreateWithoutUsersInput>;
+  update?: InputMaybe<OrganizationUpdateToOneWithWhereWithoutUsersInput>;
+  upsert?: InputMaybe<OrganizationUpsertWithoutUsersInput>;
+};
+
+export type OrganizationUpdateToOneWithWhereWithoutGroupsInput = {
+  data: OrganizationUpdateWithoutGroupsInput;
+  where?: InputMaybe<OrganizationWhereInput>;
+};
+
+export type OrganizationUpdateToOneWithWhereWithoutUsersInput = {
+  data: OrganizationUpdateWithoutUsersInput;
+  where?: InputMaybe<OrganizationWhereInput>;
+};
+
+export type OrganizationUpdateWithoutGroupsInput = {
+  Users?: InputMaybe<UserUpdateManyWithoutOrganizationNestedInput>;
+  createdAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
+  name?: InputMaybe<StringFieldUpdateOperationsInput>;
+  updateAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
+};
+
+export type OrganizationUpdateWithoutUsersInput = {
+  Groups?: InputMaybe<GroupUpdateManyWithoutOrganizationNestedInput>;
+  createdAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
+  name?: InputMaybe<StringFieldUpdateOperationsInput>;
+  updateAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
+};
+
+export type OrganizationUpsertWithoutGroupsInput = {
+  create: OrganizationCreateWithoutGroupsInput;
+  update: OrganizationUpdateWithoutGroupsInput;
+  where?: InputMaybe<OrganizationWhereInput>;
+};
+
+export type OrganizationUpsertWithoutUsersInput = {
+  create: OrganizationCreateWithoutUsersInput;
+  update: OrganizationUpdateWithoutUsersInput;
+  where?: InputMaybe<OrganizationWhereInput>;
+};
+
+export type OrganizationWhereInput = {
+  AND?: InputMaybe<Array<OrganizationWhereInput>>;
+  Groups?: InputMaybe<GroupListRelationFilter>;
+  NOT?: InputMaybe<Array<OrganizationWhereInput>>;
+  OR?: InputMaybe<Array<OrganizationWhereInput>>;
+  Users?: InputMaybe<UserListRelationFilter>;
+  createdAt?: InputMaybe<DateTimeNullableFilter>;
+  id?: InputMaybe<IntFilter>;
+  name?: InputMaybe<StringFilter>;
+  updateAt?: InputMaybe<DateTimeNullableFilter>;
+};
+
+export type OrganizationWhereUniqueInput = {
+  AND?: InputMaybe<Array<OrganizationWhereInput>>;
+  Groups?: InputMaybe<GroupListRelationFilter>;
+  NOT?: InputMaybe<Array<OrganizationWhereInput>>;
+  OR?: InputMaybe<Array<OrganizationWhereInput>>;
+  Users?: InputMaybe<UserListRelationFilter>;
+  createdAt?: InputMaybe<DateTimeNullableFilter>;
+  id?: InputMaybe<Scalars['Int']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
+  updateAt?: InputMaybe<DateTimeNullableFilter>;
 };
 
 export enum Privacity {
@@ -1088,12 +1365,12 @@ export enum Privacity {
 
 export type Query = {
   __typename?: 'Query';
-  doc: Doc;
-  docs: Array<Doc>;
-  grade: Grade;
-  grades: Array<Grade>;
-  school: School;
-  schools: Array<School>;
+  group: Group;
+  groups: Array<Group>;
+  note: Note;
+  notes: Array<Note>;
+  organization: Organization;
+  organizations: Array<Organization>;
   score: Score;
   scores: Array<Score>;
   subject: Subject;
@@ -1101,6 +1378,7 @@ export type Query = {
   subtopic: Subtopic;
   subtopics: Array<Subtopic>;
   topic: Topic;
+  topicAndSubtopic: Topic;
   topics: Array<Topic>;
   user: User;
   userByEmail: User;
@@ -1108,27 +1386,27 @@ export type Query = {
 };
 
 
-export type QueryDocArgs = {
-  where: DocWhereUniqueInput;
-};
-
-
-export type QueryDocsArgs = {
-  where?: InputMaybe<DocWhereInput>;
-};
-
-
-export type QueryGradeArgs = {
+export type QueryGroupArgs = {
   id: Scalars['Int']['input'];
 };
 
 
-export type QueryGradesArgs = {
-  where?: InputMaybe<GradeWhereInput>;
+export type QueryGroupsArgs = {
+  where?: InputMaybe<GroupWhereInput>;
 };
 
 
-export type QuerySchoolArgs = {
+export type QueryNoteArgs = {
+  where: NoteWhereUniqueInput;
+};
+
+
+export type QueryNotesArgs = {
+  where?: InputMaybe<NoteWhereInput>;
+};
+
+
+export type QueryOrganizationArgs = {
   id: Scalars['Int']['input'];
 };
 
@@ -1159,6 +1437,11 @@ export type QuerySubtopicsArgs = {
 
 
 export type QueryTopicArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type QueryTopicAndSubtopicArgs = {
   id: Scalars['Int']['input'];
 };
 
@@ -1194,179 +1477,29 @@ export enum Role {
   Teacher = 'TEACHER'
 }
 
-export type School = {
-  __typename?: 'School';
-  Grades?: Maybe<Array<Grade>>;
-  Users?: Maybe<Array<User>>;
-  _count: SchoolCount;
-  createdAt?: Maybe<Scalars['DateTime']['output']>;
-  id: Scalars['ID']['output'];
-  name: Scalars['String']['output'];
-  updateAt?: Maybe<Scalars['DateTime']['output']>;
-};
-
-export type SchoolCount = {
-  __typename?: 'SchoolCount';
-  Grades: Scalars['Int']['output'];
-  Users: Scalars['Int']['output'];
-};
-
-export type SchoolCreateInput = {
-  Grades?: InputMaybe<GradeCreateNestedManyWithoutSchoolInput>;
-  Users?: InputMaybe<UserCreateNestedManyWithoutSchoolInput>;
-  createdAt?: InputMaybe<Scalars['DateTime']['input']>;
-  name: Scalars['String']['input'];
-  updateAt?: InputMaybe<Scalars['DateTime']['input']>;
-};
-
-export type SchoolCreateNestedOneWithoutGradesInput = {
-  connect?: InputMaybe<SchoolWhereUniqueInput>;
-  connectOrCreate?: InputMaybe<SchoolCreateOrConnectWithoutGradesInput>;
-  create?: InputMaybe<SchoolCreateWithoutGradesInput>;
-};
-
-export type SchoolCreateNestedOneWithoutUsersInput = {
-  connect?: InputMaybe<SchoolWhereUniqueInput>;
-  connectOrCreate?: InputMaybe<SchoolCreateOrConnectWithoutUsersInput>;
-  create?: InputMaybe<SchoolCreateWithoutUsersInput>;
-};
-
-export type SchoolCreateOrConnectWithoutGradesInput = {
-  create: SchoolCreateWithoutGradesInput;
-  where: SchoolWhereUniqueInput;
-};
-
-export type SchoolCreateOrConnectWithoutUsersInput = {
-  create: SchoolCreateWithoutUsersInput;
-  where: SchoolWhereUniqueInput;
-};
-
-export type SchoolCreateWithoutGradesInput = {
-  Users?: InputMaybe<UserCreateNestedManyWithoutSchoolInput>;
-  createdAt?: InputMaybe<Scalars['DateTime']['input']>;
-  name: Scalars['String']['input'];
-  updateAt?: InputMaybe<Scalars['DateTime']['input']>;
-};
-
-export type SchoolCreateWithoutUsersInput = {
-  Grades?: InputMaybe<GradeCreateNestedManyWithoutSchoolInput>;
-  createdAt?: InputMaybe<Scalars['DateTime']['input']>;
-  name: Scalars['String']['input'];
-  updateAt?: InputMaybe<Scalars['DateTime']['input']>;
-};
-
-export type SchoolRelationFilter = {
-  is?: InputMaybe<SchoolWhereInput>;
-  isNot?: InputMaybe<SchoolWhereInput>;
-};
-
-export type SchoolUpdateInput = {
-  Grades?: InputMaybe<GradeUpdateManyWithoutSchoolNestedInput>;
-  Users?: InputMaybe<UserUpdateManyWithoutSchoolNestedInput>;
-  createdAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
-  name?: InputMaybe<StringFieldUpdateOperationsInput>;
-  updateAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
-};
-
-export type SchoolUpdateOneRequiredWithoutGradesNestedInput = {
-  connect?: InputMaybe<SchoolWhereUniqueInput>;
-  connectOrCreate?: InputMaybe<SchoolCreateOrConnectWithoutGradesInput>;
-  create?: InputMaybe<SchoolCreateWithoutGradesInput>;
-  update?: InputMaybe<SchoolUpdateToOneWithWhereWithoutGradesInput>;
-  upsert?: InputMaybe<SchoolUpsertWithoutGradesInput>;
-};
-
-export type SchoolUpdateOneRequiredWithoutUsersNestedInput = {
-  connect?: InputMaybe<SchoolWhereUniqueInput>;
-  connectOrCreate?: InputMaybe<SchoolCreateOrConnectWithoutUsersInput>;
-  create?: InputMaybe<SchoolCreateWithoutUsersInput>;
-  update?: InputMaybe<SchoolUpdateToOneWithWhereWithoutUsersInput>;
-  upsert?: InputMaybe<SchoolUpsertWithoutUsersInput>;
-};
-
-export type SchoolUpdateToOneWithWhereWithoutGradesInput = {
-  data: SchoolUpdateWithoutGradesInput;
-  where?: InputMaybe<SchoolWhereInput>;
-};
-
-export type SchoolUpdateToOneWithWhereWithoutUsersInput = {
-  data: SchoolUpdateWithoutUsersInput;
-  where?: InputMaybe<SchoolWhereInput>;
-};
-
-export type SchoolUpdateWithoutGradesInput = {
-  Users?: InputMaybe<UserUpdateManyWithoutSchoolNestedInput>;
-  createdAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
-  name?: InputMaybe<StringFieldUpdateOperationsInput>;
-  updateAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
-};
-
-export type SchoolUpdateWithoutUsersInput = {
-  Grades?: InputMaybe<GradeUpdateManyWithoutSchoolNestedInput>;
-  createdAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
-  name?: InputMaybe<StringFieldUpdateOperationsInput>;
-  updateAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
-};
-
-export type SchoolUpsertWithoutGradesInput = {
-  create: SchoolCreateWithoutGradesInput;
-  update: SchoolUpdateWithoutGradesInput;
-  where?: InputMaybe<SchoolWhereInput>;
-};
-
-export type SchoolUpsertWithoutUsersInput = {
-  create: SchoolCreateWithoutUsersInput;
-  update: SchoolUpdateWithoutUsersInput;
-  where?: InputMaybe<SchoolWhereInput>;
-};
-
-export type SchoolWhereInput = {
-  AND?: InputMaybe<Array<SchoolWhereInput>>;
-  Grades?: InputMaybe<GradeListRelationFilter>;
-  NOT?: InputMaybe<Array<SchoolWhereInput>>;
-  OR?: InputMaybe<Array<SchoolWhereInput>>;
-  Users?: InputMaybe<UserListRelationFilter>;
-  createdAt?: InputMaybe<DateTimeNullableFilter>;
-  id?: InputMaybe<IntFilter>;
-  name?: InputMaybe<StringFilter>;
-  updateAt?: InputMaybe<DateTimeNullableFilter>;
-};
-
-export type SchoolWhereUniqueInput = {
-  AND?: InputMaybe<Array<SchoolWhereInput>>;
-  Grades?: InputMaybe<GradeListRelationFilter>;
-  NOT?: InputMaybe<Array<SchoolWhereInput>>;
-  OR?: InputMaybe<Array<SchoolWhereInput>>;
-  Users?: InputMaybe<UserListRelationFilter>;
-  createdAt?: InputMaybe<DateTimeNullableFilter>;
-  id?: InputMaybe<Scalars['Int']['input']>;
-  name?: InputMaybe<Scalars['String']['input']>;
-  updateAt?: InputMaybe<DateTimeNullableFilter>;
-};
-
 export type Score = {
   __typename?: 'Score';
+  Note?: Maybe<Note>;
   User: User;
   alternatives: Scalars['String']['output'];
   createdAt?: Maybe<Scalars['DateTime']['output']>;
-  docId: Scalars['Int']['output'];
-  document: Doc;
   id: Scalars['ID']['output'];
+  noteId?: Maybe<Scalars['Int']['output']>;
   score: Scalars['Int']['output'];
   updateAt?: Maybe<Scalars['DateTime']['output']>;
   userId: Scalars['Int']['output'];
 };
 
 export type ScoreCreateInput = {
+  Note?: InputMaybe<NoteCreateNestedOneWithoutScoresInput>;
   User: UserCreateNestedOneWithoutScoreInput;
   alternatives: Scalars['String']['input'];
   createdAt?: InputMaybe<Scalars['DateTime']['input']>;
-  document: DocCreateNestedOneWithoutScoreInput;
   score: Scalars['Int']['input'];
   updateAt?: InputMaybe<Scalars['DateTime']['input']>;
 };
 
-export type ScoreCreateManyDocumentInput = {
+export type ScoreCreateManyNoteInput = {
   alternatives: Scalars['String']['input'];
   createdAt?: InputMaybe<Scalars['DateTime']['input']>;
   id?: InputMaybe<Scalars['Int']['input']>;
@@ -1375,16 +1508,16 @@ export type ScoreCreateManyDocumentInput = {
   userId: Scalars['Int']['input'];
 };
 
-export type ScoreCreateManyDocumentInputEnvelope = {
-  data: Array<ScoreCreateManyDocumentInput>;
+export type ScoreCreateManyNoteInputEnvelope = {
+  data: Array<ScoreCreateManyNoteInput>;
   skipDuplicates?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 export type ScoreCreateManyUserInput = {
   alternatives: Scalars['String']['input'];
   createdAt?: InputMaybe<Scalars['DateTime']['input']>;
-  docId: Scalars['Int']['input'];
   id?: InputMaybe<Scalars['Int']['input']>;
+  noteId?: InputMaybe<Scalars['Int']['input']>;
   score: Scalars['Int']['input'];
   updateAt?: InputMaybe<Scalars['DateTime']['input']>;
 };
@@ -1394,11 +1527,11 @@ export type ScoreCreateManyUserInputEnvelope = {
   skipDuplicates?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
-export type ScoreCreateNestedManyWithoutDocumentInput = {
+export type ScoreCreateNestedManyWithoutNoteInput = {
   connect?: InputMaybe<Array<ScoreWhereUniqueInput>>;
-  connectOrCreate?: InputMaybe<Array<ScoreCreateOrConnectWithoutDocumentInput>>;
-  create?: InputMaybe<Array<ScoreCreateWithoutDocumentInput>>;
-  createMany?: InputMaybe<ScoreCreateManyDocumentInputEnvelope>;
+  connectOrCreate?: InputMaybe<Array<ScoreCreateOrConnectWithoutNoteInput>>;
+  create?: InputMaybe<Array<ScoreCreateWithoutNoteInput>>;
+  createMany?: InputMaybe<ScoreCreateManyNoteInputEnvelope>;
 };
 
 export type ScoreCreateNestedManyWithoutUserInput = {
@@ -1408,8 +1541,8 @@ export type ScoreCreateNestedManyWithoutUserInput = {
   createMany?: InputMaybe<ScoreCreateManyUserInputEnvelope>;
 };
 
-export type ScoreCreateOrConnectWithoutDocumentInput = {
-  create: ScoreCreateWithoutDocumentInput;
+export type ScoreCreateOrConnectWithoutNoteInput = {
+  create: ScoreCreateWithoutNoteInput;
   where: ScoreWhereUniqueInput;
 };
 
@@ -1418,7 +1551,7 @@ export type ScoreCreateOrConnectWithoutUserInput = {
   where: ScoreWhereUniqueInput;
 };
 
-export type ScoreCreateWithoutDocumentInput = {
+export type ScoreCreateWithoutNoteInput = {
   User: UserCreateNestedOneWithoutScoreInput;
   alternatives: Scalars['String']['input'];
   createdAt?: InputMaybe<Scalars['DateTime']['input']>;
@@ -1427,9 +1560,9 @@ export type ScoreCreateWithoutDocumentInput = {
 };
 
 export type ScoreCreateWithoutUserInput = {
+  Note?: InputMaybe<NoteCreateNestedOneWithoutScoresInput>;
   alternatives: Scalars['String']['input'];
   createdAt?: InputMaybe<Scalars['DateTime']['input']>;
-  document: DocCreateNestedOneWithoutScoreInput;
   score: Scalars['Int']['input'];
   updateAt?: InputMaybe<Scalars['DateTime']['input']>;
 };
@@ -1446,18 +1579,18 @@ export type ScoreScalarWhereInput = {
   OR?: InputMaybe<Array<ScoreScalarWhereInput>>;
   alternatives?: InputMaybe<StringFilter>;
   createdAt?: InputMaybe<DateTimeNullableFilter>;
-  docId?: InputMaybe<IntFilter>;
   id?: InputMaybe<IntFilter>;
+  noteId?: InputMaybe<IntNullableFilter>;
   score?: InputMaybe<IntFilter>;
   updateAt?: InputMaybe<DateTimeNullableFilter>;
   userId?: InputMaybe<IntFilter>;
 };
 
 export type ScoreUpdateInput = {
+  Note?: InputMaybe<NoteUpdateOneWithoutScoresNestedInput>;
   User?: InputMaybe<UserUpdateOneRequiredWithoutScoreNestedInput>;
   alternatives?: InputMaybe<StringFieldUpdateOperationsInput>;
   createdAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
-  document?: InputMaybe<DocUpdateOneRequiredWithoutScoreNestedInput>;
   score?: InputMaybe<IntFieldUpdateOperationsInput>;
   updateAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
 };
@@ -1469,7 +1602,7 @@ export type ScoreUpdateManyMutationInput = {
   updateAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
 };
 
-export type ScoreUpdateManyWithWhereWithoutDocumentInput = {
+export type ScoreUpdateManyWithWhereWithoutNoteInput = {
   data: ScoreUpdateManyMutationInput;
   where: ScoreScalarWhereInput;
 };
@@ -1479,18 +1612,18 @@ export type ScoreUpdateManyWithWhereWithoutUserInput = {
   where: ScoreScalarWhereInput;
 };
 
-export type ScoreUpdateManyWithoutDocumentNestedInput = {
+export type ScoreUpdateManyWithoutNoteNestedInput = {
   connect?: InputMaybe<Array<ScoreWhereUniqueInput>>;
-  connectOrCreate?: InputMaybe<Array<ScoreCreateOrConnectWithoutDocumentInput>>;
-  create?: InputMaybe<Array<ScoreCreateWithoutDocumentInput>>;
-  createMany?: InputMaybe<ScoreCreateManyDocumentInputEnvelope>;
+  connectOrCreate?: InputMaybe<Array<ScoreCreateOrConnectWithoutNoteInput>>;
+  create?: InputMaybe<Array<ScoreCreateWithoutNoteInput>>;
+  createMany?: InputMaybe<ScoreCreateManyNoteInputEnvelope>;
   delete?: InputMaybe<Array<ScoreWhereUniqueInput>>;
   deleteMany?: InputMaybe<Array<ScoreScalarWhereInput>>;
   disconnect?: InputMaybe<Array<ScoreWhereUniqueInput>>;
   set?: InputMaybe<Array<ScoreWhereUniqueInput>>;
-  update?: InputMaybe<Array<ScoreUpdateWithWhereUniqueWithoutDocumentInput>>;
-  updateMany?: InputMaybe<Array<ScoreUpdateManyWithWhereWithoutDocumentInput>>;
-  upsert?: InputMaybe<Array<ScoreUpsertWithWhereUniqueWithoutDocumentInput>>;
+  update?: InputMaybe<Array<ScoreUpdateWithWhereUniqueWithoutNoteInput>>;
+  updateMany?: InputMaybe<Array<ScoreUpdateManyWithWhereWithoutNoteInput>>;
+  upsert?: InputMaybe<Array<ScoreUpsertWithWhereUniqueWithoutNoteInput>>;
 };
 
 export type ScoreUpdateManyWithoutUserNestedInput = {
@@ -1507,8 +1640,8 @@ export type ScoreUpdateManyWithoutUserNestedInput = {
   upsert?: InputMaybe<Array<ScoreUpsertWithWhereUniqueWithoutUserInput>>;
 };
 
-export type ScoreUpdateWithWhereUniqueWithoutDocumentInput = {
-  data: ScoreUpdateWithoutDocumentInput;
+export type ScoreUpdateWithWhereUniqueWithoutNoteInput = {
+  data: ScoreUpdateWithoutNoteInput;
   where: ScoreWhereUniqueInput;
 };
 
@@ -1517,7 +1650,7 @@ export type ScoreUpdateWithWhereUniqueWithoutUserInput = {
   where: ScoreWhereUniqueInput;
 };
 
-export type ScoreUpdateWithoutDocumentInput = {
+export type ScoreUpdateWithoutNoteInput = {
   User?: InputMaybe<UserUpdateOneRequiredWithoutScoreNestedInput>;
   alternatives?: InputMaybe<StringFieldUpdateOperationsInput>;
   createdAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
@@ -1526,16 +1659,16 @@ export type ScoreUpdateWithoutDocumentInput = {
 };
 
 export type ScoreUpdateWithoutUserInput = {
+  Note?: InputMaybe<NoteUpdateOneWithoutScoresNestedInput>;
   alternatives?: InputMaybe<StringFieldUpdateOperationsInput>;
   createdAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
-  document?: InputMaybe<DocUpdateOneRequiredWithoutScoreNestedInput>;
   score?: InputMaybe<IntFieldUpdateOperationsInput>;
   updateAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
 };
 
-export type ScoreUpsertWithWhereUniqueWithoutDocumentInput = {
-  create: ScoreCreateWithoutDocumentInput;
-  update: ScoreUpdateWithoutDocumentInput;
+export type ScoreUpsertWithWhereUniqueWithoutNoteInput = {
+  create: ScoreCreateWithoutNoteInput;
+  update: ScoreUpdateWithoutNoteInput;
   where: ScoreWhereUniqueInput;
 };
 
@@ -1548,13 +1681,13 @@ export type ScoreUpsertWithWhereUniqueWithoutUserInput = {
 export type ScoreWhereInput = {
   AND?: InputMaybe<Array<ScoreWhereInput>>;
   NOT?: InputMaybe<Array<ScoreWhereInput>>;
+  Note?: InputMaybe<NoteNullableRelationFilter>;
   OR?: InputMaybe<Array<ScoreWhereInput>>;
   User?: InputMaybe<UserRelationFilter>;
   alternatives?: InputMaybe<StringFilter>;
   createdAt?: InputMaybe<DateTimeNullableFilter>;
-  docId?: InputMaybe<IntFilter>;
-  document?: InputMaybe<DocRelationFilter>;
   id?: InputMaybe<IntFilter>;
+  noteId?: InputMaybe<IntNullableFilter>;
   score?: InputMaybe<IntFilter>;
   updateAt?: InputMaybe<DateTimeNullableFilter>;
   userId?: InputMaybe<IntFilter>;
@@ -1563,13 +1696,13 @@ export type ScoreWhereInput = {
 export type ScoreWhereUniqueInput = {
   AND?: InputMaybe<Array<ScoreWhereInput>>;
   NOT?: InputMaybe<Array<ScoreWhereInput>>;
+  Note?: InputMaybe<NoteNullableRelationFilter>;
   OR?: InputMaybe<Array<ScoreWhereInput>>;
   User?: InputMaybe<UserRelationFilter>;
   alternatives?: InputMaybe<StringFilter>;
   createdAt?: InputMaybe<DateTimeNullableFilter>;
-  docId?: InputMaybe<IntFilter>;
-  document?: InputMaybe<DocRelationFilter>;
   id?: InputMaybe<Scalars['Int']['input']>;
+  noteId?: InputMaybe<IntNullableFilter>;
   score?: InputMaybe<IntFilter>;
   updateAt?: InputMaybe<DateTimeNullableFilter>;
   userId?: InputMaybe<IntFilter>;
@@ -1596,7 +1729,7 @@ export type StringFilter = {
 
 export type Subject = {
   __typename?: 'Subject';
-  Docs?: Maybe<Array<Doc>>;
+  Notes?: Maybe<Array<Note>>;
   Subtopic?: Maybe<Array<Subtopic>>;
   Topics?: Maybe<Array<Topic>>;
   _count: SubjectCount;
@@ -1609,13 +1742,13 @@ export type Subject = {
 
 export type SubjectCount = {
   __typename?: 'SubjectCount';
-  Docs: Scalars['Int']['output'];
+  Notes: Scalars['Int']['output'];
   Subtopic: Scalars['Int']['output'];
   Topics: Scalars['Int']['output'];
 };
 
 export type SubjectCreateInput = {
-  Docs?: InputMaybe<DocCreateNestedManyWithoutSubjectInput>;
+  Notes?: InputMaybe<NoteCreateNestedManyWithoutSubjectInput>;
   Subtopic?: InputMaybe<SubtopicCreateNestedManyWithoutSubjectInput>;
   Topics?: InputMaybe<TopicCreateNestedManyWithoutSubjectInput>;
   color: Scalars['String']['input'];
@@ -1624,10 +1757,10 @@ export type SubjectCreateInput = {
   updateAt?: InputMaybe<Scalars['DateTime']['input']>;
 };
 
-export type SubjectCreateNestedOneWithoutDocsInput = {
+export type SubjectCreateNestedOneWithoutNotesInput = {
   connect?: InputMaybe<SubjectWhereUniqueInput>;
-  connectOrCreate?: InputMaybe<SubjectCreateOrConnectWithoutDocsInput>;
-  create?: InputMaybe<SubjectCreateWithoutDocsInput>;
+  connectOrCreate?: InputMaybe<SubjectCreateOrConnectWithoutNotesInput>;
+  create?: InputMaybe<SubjectCreateWithoutNotesInput>;
 };
 
 export type SubjectCreateNestedOneWithoutSubtopicInput = {
@@ -1642,8 +1775,8 @@ export type SubjectCreateNestedOneWithoutTopicsInput = {
   create?: InputMaybe<SubjectCreateWithoutTopicsInput>;
 };
 
-export type SubjectCreateOrConnectWithoutDocsInput = {
-  create: SubjectCreateWithoutDocsInput;
+export type SubjectCreateOrConnectWithoutNotesInput = {
+  create: SubjectCreateWithoutNotesInput;
   where: SubjectWhereUniqueInput;
 };
 
@@ -1657,7 +1790,7 @@ export type SubjectCreateOrConnectWithoutTopicsInput = {
   where: SubjectWhereUniqueInput;
 };
 
-export type SubjectCreateWithoutDocsInput = {
+export type SubjectCreateWithoutNotesInput = {
   Subtopic?: InputMaybe<SubtopicCreateNestedManyWithoutSubjectInput>;
   Topics?: InputMaybe<TopicCreateNestedManyWithoutSubjectInput>;
   color: Scalars['String']['input'];
@@ -1667,7 +1800,7 @@ export type SubjectCreateWithoutDocsInput = {
 };
 
 export type SubjectCreateWithoutSubtopicInput = {
-  Docs?: InputMaybe<DocCreateNestedManyWithoutSubjectInput>;
+  Notes?: InputMaybe<NoteCreateNestedManyWithoutSubjectInput>;
   Topics?: InputMaybe<TopicCreateNestedManyWithoutSubjectInput>;
   color: Scalars['String']['input'];
   createdAt?: InputMaybe<Scalars['DateTime']['input']>;
@@ -1676,7 +1809,7 @@ export type SubjectCreateWithoutSubtopicInput = {
 };
 
 export type SubjectCreateWithoutTopicsInput = {
-  Docs?: InputMaybe<DocCreateNestedManyWithoutSubjectInput>;
+  Notes?: InputMaybe<NoteCreateNestedManyWithoutSubjectInput>;
   Subtopic?: InputMaybe<SubtopicCreateNestedManyWithoutSubjectInput>;
   color: Scalars['String']['input'];
   createdAt?: InputMaybe<Scalars['DateTime']['input']>;
@@ -1689,13 +1822,8 @@ export type SubjectNullableRelationFilter = {
   isNot?: InputMaybe<SubjectWhereInput>;
 };
 
-export type SubjectRelationFilter = {
-  is?: InputMaybe<SubjectWhereInput>;
-  isNot?: InputMaybe<SubjectWhereInput>;
-};
-
 export type SubjectUpdateInput = {
-  Docs?: InputMaybe<DocUpdateManyWithoutSubjectNestedInput>;
+  Notes?: InputMaybe<NoteUpdateManyWithoutSubjectNestedInput>;
   Subtopic?: InputMaybe<SubtopicUpdateManyWithoutSubjectNestedInput>;
   Topics?: InputMaybe<TopicUpdateManyWithoutSubjectNestedInput>;
   color?: InputMaybe<StringFieldUpdateOperationsInput>;
@@ -1704,12 +1832,14 @@ export type SubjectUpdateInput = {
   updateAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
 };
 
-export type SubjectUpdateOneRequiredWithoutDocsNestedInput = {
+export type SubjectUpdateOneWithoutNotesNestedInput = {
   connect?: InputMaybe<SubjectWhereUniqueInput>;
-  connectOrCreate?: InputMaybe<SubjectCreateOrConnectWithoutDocsInput>;
-  create?: InputMaybe<SubjectCreateWithoutDocsInput>;
-  update?: InputMaybe<SubjectUpdateToOneWithWhereWithoutDocsInput>;
-  upsert?: InputMaybe<SubjectUpsertWithoutDocsInput>;
+  connectOrCreate?: InputMaybe<SubjectCreateOrConnectWithoutNotesInput>;
+  create?: InputMaybe<SubjectCreateWithoutNotesInput>;
+  delete?: InputMaybe<SubjectWhereInput>;
+  disconnect?: InputMaybe<SubjectWhereInput>;
+  update?: InputMaybe<SubjectUpdateToOneWithWhereWithoutNotesInput>;
+  upsert?: InputMaybe<SubjectUpsertWithoutNotesInput>;
 };
 
 export type SubjectUpdateOneWithoutSubtopicNestedInput = {
@@ -1732,8 +1862,8 @@ export type SubjectUpdateOneWithoutTopicsNestedInput = {
   upsert?: InputMaybe<SubjectUpsertWithoutTopicsInput>;
 };
 
-export type SubjectUpdateToOneWithWhereWithoutDocsInput = {
-  data: SubjectUpdateWithoutDocsInput;
+export type SubjectUpdateToOneWithWhereWithoutNotesInput = {
+  data: SubjectUpdateWithoutNotesInput;
   where?: InputMaybe<SubjectWhereInput>;
 };
 
@@ -1747,7 +1877,7 @@ export type SubjectUpdateToOneWithWhereWithoutTopicsInput = {
   where?: InputMaybe<SubjectWhereInput>;
 };
 
-export type SubjectUpdateWithoutDocsInput = {
+export type SubjectUpdateWithoutNotesInput = {
   Subtopic?: InputMaybe<SubtopicUpdateManyWithoutSubjectNestedInput>;
   Topics?: InputMaybe<TopicUpdateManyWithoutSubjectNestedInput>;
   color?: InputMaybe<StringFieldUpdateOperationsInput>;
@@ -1757,7 +1887,7 @@ export type SubjectUpdateWithoutDocsInput = {
 };
 
 export type SubjectUpdateWithoutSubtopicInput = {
-  Docs?: InputMaybe<DocUpdateManyWithoutSubjectNestedInput>;
+  Notes?: InputMaybe<NoteUpdateManyWithoutSubjectNestedInput>;
   Topics?: InputMaybe<TopicUpdateManyWithoutSubjectNestedInput>;
   color?: InputMaybe<StringFieldUpdateOperationsInput>;
   createdAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
@@ -1766,7 +1896,7 @@ export type SubjectUpdateWithoutSubtopicInput = {
 };
 
 export type SubjectUpdateWithoutTopicsInput = {
-  Docs?: InputMaybe<DocUpdateManyWithoutSubjectNestedInput>;
+  Notes?: InputMaybe<NoteUpdateManyWithoutSubjectNestedInput>;
   Subtopic?: InputMaybe<SubtopicUpdateManyWithoutSubjectNestedInput>;
   color?: InputMaybe<StringFieldUpdateOperationsInput>;
   createdAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
@@ -1774,9 +1904,9 @@ export type SubjectUpdateWithoutTopicsInput = {
   updateAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
 };
 
-export type SubjectUpsertWithoutDocsInput = {
-  create: SubjectCreateWithoutDocsInput;
-  update: SubjectUpdateWithoutDocsInput;
+export type SubjectUpsertWithoutNotesInput = {
+  create: SubjectCreateWithoutNotesInput;
+  update: SubjectUpdateWithoutNotesInput;
   where?: InputMaybe<SubjectWhereInput>;
 };
 
@@ -1794,8 +1924,8 @@ export type SubjectUpsertWithoutTopicsInput = {
 
 export type SubjectWhereInput = {
   AND?: InputMaybe<Array<SubjectWhereInput>>;
-  Docs?: InputMaybe<DocListRelationFilter>;
   NOT?: InputMaybe<Array<SubjectWhereInput>>;
+  Notes?: InputMaybe<NoteListRelationFilter>;
   OR?: InputMaybe<Array<SubjectWhereInput>>;
   Subtopic?: InputMaybe<SubtopicListRelationFilter>;
   Topics?: InputMaybe<TopicListRelationFilter>;
@@ -1808,8 +1938,8 @@ export type SubjectWhereInput = {
 
 export type SubjectWhereUniqueInput = {
   AND?: InputMaybe<Array<SubjectWhereInput>>;
-  Docs?: InputMaybe<DocListRelationFilter>;
   NOT?: InputMaybe<Array<SubjectWhereInput>>;
+  Notes?: InputMaybe<NoteListRelationFilter>;
   OR?: InputMaybe<Array<SubjectWhereInput>>;
   Subtopic?: InputMaybe<SubtopicListRelationFilter>;
   Topics?: InputMaybe<TopicListRelationFilter>;
@@ -1822,7 +1952,7 @@ export type SubjectWhereUniqueInput = {
 
 export type Subtopic = {
   __typename?: 'Subtopic';
-  Docs?: Maybe<Array<Doc>>;
+  Notes?: Maybe<Array<Note>>;
   Subject?: Maybe<Subject>;
   Topic: Topic;
   _count: SubtopicCount;
@@ -1836,11 +1966,11 @@ export type Subtopic = {
 
 export type SubtopicCount = {
   __typename?: 'SubtopicCount';
-  Docs: Scalars['Int']['output'];
+  Notes: Scalars['Int']['output'];
 };
 
 export type SubtopicCreateInput = {
-  Docs?: InputMaybe<DocCreateNestedManyWithoutSubtopicInput>;
+  Notes?: InputMaybe<NoteCreateNestedManyWithoutSubtopicInput>;
   Subject?: InputMaybe<SubjectCreateNestedOneWithoutSubtopicInput>;
   Topic: TopicCreateNestedOneWithoutSubtopicsInput;
   createdAt?: InputMaybe<Scalars['DateTime']['input']>;
@@ -1888,14 +2018,14 @@ export type SubtopicCreateNestedManyWithoutTopicInput = {
   createMany?: InputMaybe<SubtopicCreateManyTopicInputEnvelope>;
 };
 
-export type SubtopicCreateNestedOneWithoutDocsInput = {
+export type SubtopicCreateNestedOneWithoutNotesInput = {
   connect?: InputMaybe<SubtopicWhereUniqueInput>;
-  connectOrCreate?: InputMaybe<SubtopicCreateOrConnectWithoutDocsInput>;
-  create?: InputMaybe<SubtopicCreateWithoutDocsInput>;
+  connectOrCreate?: InputMaybe<SubtopicCreateOrConnectWithoutNotesInput>;
+  create?: InputMaybe<SubtopicCreateWithoutNotesInput>;
 };
 
-export type SubtopicCreateOrConnectWithoutDocsInput = {
-  create: SubtopicCreateWithoutDocsInput;
+export type SubtopicCreateOrConnectWithoutNotesInput = {
+  create: SubtopicCreateWithoutNotesInput;
   where: SubtopicWhereUniqueInput;
 };
 
@@ -1909,7 +2039,7 @@ export type SubtopicCreateOrConnectWithoutTopicInput = {
   where: SubtopicWhereUniqueInput;
 };
 
-export type SubtopicCreateWithoutDocsInput = {
+export type SubtopicCreateWithoutNotesInput = {
   Subject?: InputMaybe<SubjectCreateNestedOneWithoutSubtopicInput>;
   Topic: TopicCreateNestedOneWithoutSubtopicsInput;
   createdAt?: InputMaybe<Scalars['DateTime']['input']>;
@@ -1918,7 +2048,7 @@ export type SubtopicCreateWithoutDocsInput = {
 };
 
 export type SubtopicCreateWithoutSubjectInput = {
-  Docs?: InputMaybe<DocCreateNestedManyWithoutSubtopicInput>;
+  Notes?: InputMaybe<NoteCreateNestedManyWithoutSubtopicInput>;
   Topic: TopicCreateNestedOneWithoutSubtopicsInput;
   createdAt?: InputMaybe<Scalars['DateTime']['input']>;
   name: Scalars['String']['input'];
@@ -1926,7 +2056,7 @@ export type SubtopicCreateWithoutSubjectInput = {
 };
 
 export type SubtopicCreateWithoutTopicInput = {
-  Docs?: InputMaybe<DocCreateNestedManyWithoutSubtopicInput>;
+  Notes?: InputMaybe<NoteCreateNestedManyWithoutSubtopicInput>;
   Subject?: InputMaybe<SubjectCreateNestedOneWithoutSubtopicInput>;
   createdAt?: InputMaybe<Scalars['DateTime']['input']>;
   name: Scalars['String']['input'];
@@ -1957,7 +2087,7 @@ export type SubtopicScalarWhereInput = {
 };
 
 export type SubtopicUpdateInput = {
-  Docs?: InputMaybe<DocUpdateManyWithoutSubtopicNestedInput>;
+  Notes?: InputMaybe<NoteUpdateManyWithoutSubtopicNestedInput>;
   Subject?: InputMaybe<SubjectUpdateOneWithoutSubtopicNestedInput>;
   Topic?: InputMaybe<TopicUpdateOneRequiredWithoutSubtopicsNestedInput>;
   createdAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
@@ -2009,18 +2139,18 @@ export type SubtopicUpdateManyWithoutTopicNestedInput = {
   upsert?: InputMaybe<Array<SubtopicUpsertWithWhereUniqueWithoutTopicInput>>;
 };
 
-export type SubtopicUpdateOneWithoutDocsNestedInput = {
+export type SubtopicUpdateOneWithoutNotesNestedInput = {
   connect?: InputMaybe<SubtopicWhereUniqueInput>;
-  connectOrCreate?: InputMaybe<SubtopicCreateOrConnectWithoutDocsInput>;
-  create?: InputMaybe<SubtopicCreateWithoutDocsInput>;
+  connectOrCreate?: InputMaybe<SubtopicCreateOrConnectWithoutNotesInput>;
+  create?: InputMaybe<SubtopicCreateWithoutNotesInput>;
   delete?: InputMaybe<SubtopicWhereInput>;
   disconnect?: InputMaybe<SubtopicWhereInput>;
-  update?: InputMaybe<SubtopicUpdateToOneWithWhereWithoutDocsInput>;
-  upsert?: InputMaybe<SubtopicUpsertWithoutDocsInput>;
+  update?: InputMaybe<SubtopicUpdateToOneWithWhereWithoutNotesInput>;
+  upsert?: InputMaybe<SubtopicUpsertWithoutNotesInput>;
 };
 
-export type SubtopicUpdateToOneWithWhereWithoutDocsInput = {
-  data: SubtopicUpdateWithoutDocsInput;
+export type SubtopicUpdateToOneWithWhereWithoutNotesInput = {
+  data: SubtopicUpdateWithoutNotesInput;
   where?: InputMaybe<SubtopicWhereInput>;
 };
 
@@ -2034,7 +2164,7 @@ export type SubtopicUpdateWithWhereUniqueWithoutTopicInput = {
   where: SubtopicWhereUniqueInput;
 };
 
-export type SubtopicUpdateWithoutDocsInput = {
+export type SubtopicUpdateWithoutNotesInput = {
   Subject?: InputMaybe<SubjectUpdateOneWithoutSubtopicNestedInput>;
   Topic?: InputMaybe<TopicUpdateOneRequiredWithoutSubtopicsNestedInput>;
   createdAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
@@ -2043,7 +2173,7 @@ export type SubtopicUpdateWithoutDocsInput = {
 };
 
 export type SubtopicUpdateWithoutSubjectInput = {
-  Docs?: InputMaybe<DocUpdateManyWithoutSubtopicNestedInput>;
+  Notes?: InputMaybe<NoteUpdateManyWithoutSubtopicNestedInput>;
   Topic?: InputMaybe<TopicUpdateOneRequiredWithoutSubtopicsNestedInput>;
   createdAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
   name?: InputMaybe<StringFieldUpdateOperationsInput>;
@@ -2051,7 +2181,7 @@ export type SubtopicUpdateWithoutSubjectInput = {
 };
 
 export type SubtopicUpdateWithoutTopicInput = {
-  Docs?: InputMaybe<DocUpdateManyWithoutSubtopicNestedInput>;
+  Notes?: InputMaybe<NoteUpdateManyWithoutSubtopicNestedInput>;
   Subject?: InputMaybe<SubjectUpdateOneWithoutSubtopicNestedInput>;
   createdAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
   name?: InputMaybe<StringFieldUpdateOperationsInput>;
@@ -2070,16 +2200,16 @@ export type SubtopicUpsertWithWhereUniqueWithoutTopicInput = {
   where: SubtopicWhereUniqueInput;
 };
 
-export type SubtopicUpsertWithoutDocsInput = {
-  create: SubtopicCreateWithoutDocsInput;
-  update: SubtopicUpdateWithoutDocsInput;
+export type SubtopicUpsertWithoutNotesInput = {
+  create: SubtopicCreateWithoutNotesInput;
+  update: SubtopicUpdateWithoutNotesInput;
   where?: InputMaybe<SubtopicWhereInput>;
 };
 
 export type SubtopicWhereInput = {
   AND?: InputMaybe<Array<SubtopicWhereInput>>;
-  Docs?: InputMaybe<DocListRelationFilter>;
   NOT?: InputMaybe<Array<SubtopicWhereInput>>;
+  Notes?: InputMaybe<NoteListRelationFilter>;
   OR?: InputMaybe<Array<SubtopicWhereInput>>;
   Subject?: InputMaybe<SubjectNullableRelationFilter>;
   Topic?: InputMaybe<TopicRelationFilter>;
@@ -2093,8 +2223,8 @@ export type SubtopicWhereInput = {
 
 export type SubtopicWhereUniqueInput = {
   AND?: InputMaybe<Array<SubtopicWhereInput>>;
-  Docs?: InputMaybe<DocListRelationFilter>;
   NOT?: InputMaybe<Array<SubtopicWhereInput>>;
+  Notes?: InputMaybe<NoteListRelationFilter>;
   OR?: InputMaybe<Array<SubtopicWhereInput>>;
   Subject?: InputMaybe<SubjectNullableRelationFilter>;
   Topic?: InputMaybe<TopicRelationFilter>;
@@ -2108,7 +2238,7 @@ export type SubtopicWhereUniqueInput = {
 
 export type Topic = {
   __typename?: 'Topic';
-  Docs?: Maybe<Array<Doc>>;
+  Notes?: Maybe<Array<Note>>;
   Subject?: Maybe<Subject>;
   Subtopics?: Maybe<Array<Subtopic>>;
   _count: TopicCount;
@@ -2121,12 +2251,12 @@ export type Topic = {
 
 export type TopicCount = {
   __typename?: 'TopicCount';
-  Docs: Scalars['Int']['output'];
+  Notes: Scalars['Int']['output'];
   Subtopics: Scalars['Int']['output'];
 };
 
 export type TopicCreateInput = {
-  Docs?: InputMaybe<DocCreateNestedManyWithoutTopicInput>;
+  Notes?: InputMaybe<NoteCreateNestedManyWithoutTopicInput>;
   Subject?: InputMaybe<SubjectCreateNestedOneWithoutTopicsInput>;
   Subtopics?: InputMaybe<SubtopicCreateNestedManyWithoutTopicInput>;
   createdAt?: InputMaybe<Scalars['DateTime']['input']>;
@@ -2153,10 +2283,10 @@ export type TopicCreateNestedManyWithoutSubjectInput = {
   createMany?: InputMaybe<TopicCreateManySubjectInputEnvelope>;
 };
 
-export type TopicCreateNestedOneWithoutDocsInput = {
+export type TopicCreateNestedOneWithoutNotesInput = {
   connect?: InputMaybe<TopicWhereUniqueInput>;
-  connectOrCreate?: InputMaybe<TopicCreateOrConnectWithoutDocsInput>;
-  create?: InputMaybe<TopicCreateWithoutDocsInput>;
+  connectOrCreate?: InputMaybe<TopicCreateOrConnectWithoutNotesInput>;
+  create?: InputMaybe<TopicCreateWithoutNotesInput>;
 };
 
 export type TopicCreateNestedOneWithoutSubtopicsInput = {
@@ -2165,8 +2295,8 @@ export type TopicCreateNestedOneWithoutSubtopicsInput = {
   create?: InputMaybe<TopicCreateWithoutSubtopicsInput>;
 };
 
-export type TopicCreateOrConnectWithoutDocsInput = {
-  create: TopicCreateWithoutDocsInput;
+export type TopicCreateOrConnectWithoutNotesInput = {
+  create: TopicCreateWithoutNotesInput;
   where: TopicWhereUniqueInput;
 };
 
@@ -2180,7 +2310,7 @@ export type TopicCreateOrConnectWithoutSubtopicsInput = {
   where: TopicWhereUniqueInput;
 };
 
-export type TopicCreateWithoutDocsInput = {
+export type TopicCreateWithoutNotesInput = {
   Subject?: InputMaybe<SubjectCreateNestedOneWithoutTopicsInput>;
   Subtopics?: InputMaybe<SubtopicCreateNestedManyWithoutTopicInput>;
   createdAt?: InputMaybe<Scalars['DateTime']['input']>;
@@ -2189,7 +2319,7 @@ export type TopicCreateWithoutDocsInput = {
 };
 
 export type TopicCreateWithoutSubjectInput = {
-  Docs?: InputMaybe<DocCreateNestedManyWithoutTopicInput>;
+  Notes?: InputMaybe<NoteCreateNestedManyWithoutTopicInput>;
   Subtopics?: InputMaybe<SubtopicCreateNestedManyWithoutTopicInput>;
   createdAt?: InputMaybe<Scalars['DateTime']['input']>;
   name: Scalars['String']['input'];
@@ -2197,7 +2327,7 @@ export type TopicCreateWithoutSubjectInput = {
 };
 
 export type TopicCreateWithoutSubtopicsInput = {
-  Docs?: InputMaybe<DocCreateNestedManyWithoutTopicInput>;
+  Notes?: InputMaybe<NoteCreateNestedManyWithoutTopicInput>;
   Subject?: InputMaybe<SubjectCreateNestedOneWithoutTopicsInput>;
   createdAt?: InputMaybe<Scalars['DateTime']['input']>;
   name: Scalars['String']['input'];
@@ -2208,6 +2338,11 @@ export type TopicListRelationFilter = {
   every?: InputMaybe<TopicWhereInput>;
   none?: InputMaybe<TopicWhereInput>;
   some?: InputMaybe<TopicWhereInput>;
+};
+
+export type TopicNullableRelationFilter = {
+  is?: InputMaybe<TopicWhereInput>;
+  isNot?: InputMaybe<TopicWhereInput>;
 };
 
 export type TopicRelationFilter = {
@@ -2227,7 +2362,7 @@ export type TopicScalarWhereInput = {
 };
 
 export type TopicUpdateInput = {
-  Docs?: InputMaybe<DocUpdateManyWithoutTopicNestedInput>;
+  Notes?: InputMaybe<NoteUpdateManyWithoutTopicNestedInput>;
   Subject?: InputMaybe<SubjectUpdateOneWithoutTopicsNestedInput>;
   Subtopics?: InputMaybe<SubtopicUpdateManyWithoutTopicNestedInput>;
   createdAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
@@ -2260,14 +2395,6 @@ export type TopicUpdateManyWithoutSubjectNestedInput = {
   upsert?: InputMaybe<Array<TopicUpsertWithWhereUniqueWithoutSubjectInput>>;
 };
 
-export type TopicUpdateOneRequiredWithoutDocsNestedInput = {
-  connect?: InputMaybe<TopicWhereUniqueInput>;
-  connectOrCreate?: InputMaybe<TopicCreateOrConnectWithoutDocsInput>;
-  create?: InputMaybe<TopicCreateWithoutDocsInput>;
-  update?: InputMaybe<TopicUpdateToOneWithWhereWithoutDocsInput>;
-  upsert?: InputMaybe<TopicUpsertWithoutDocsInput>;
-};
-
 export type TopicUpdateOneRequiredWithoutSubtopicsNestedInput = {
   connect?: InputMaybe<TopicWhereUniqueInput>;
   connectOrCreate?: InputMaybe<TopicCreateOrConnectWithoutSubtopicsInput>;
@@ -2276,8 +2403,18 @@ export type TopicUpdateOneRequiredWithoutSubtopicsNestedInput = {
   upsert?: InputMaybe<TopicUpsertWithoutSubtopicsInput>;
 };
 
-export type TopicUpdateToOneWithWhereWithoutDocsInput = {
-  data: TopicUpdateWithoutDocsInput;
+export type TopicUpdateOneWithoutNotesNestedInput = {
+  connect?: InputMaybe<TopicWhereUniqueInput>;
+  connectOrCreate?: InputMaybe<TopicCreateOrConnectWithoutNotesInput>;
+  create?: InputMaybe<TopicCreateWithoutNotesInput>;
+  delete?: InputMaybe<TopicWhereInput>;
+  disconnect?: InputMaybe<TopicWhereInput>;
+  update?: InputMaybe<TopicUpdateToOneWithWhereWithoutNotesInput>;
+  upsert?: InputMaybe<TopicUpsertWithoutNotesInput>;
+};
+
+export type TopicUpdateToOneWithWhereWithoutNotesInput = {
+  data: TopicUpdateWithoutNotesInput;
   where?: InputMaybe<TopicWhereInput>;
 };
 
@@ -2291,7 +2428,7 @@ export type TopicUpdateWithWhereUniqueWithoutSubjectInput = {
   where: TopicWhereUniqueInput;
 };
 
-export type TopicUpdateWithoutDocsInput = {
+export type TopicUpdateWithoutNotesInput = {
   Subject?: InputMaybe<SubjectUpdateOneWithoutTopicsNestedInput>;
   Subtopics?: InputMaybe<SubtopicUpdateManyWithoutTopicNestedInput>;
   createdAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
@@ -2300,7 +2437,7 @@ export type TopicUpdateWithoutDocsInput = {
 };
 
 export type TopicUpdateWithoutSubjectInput = {
-  Docs?: InputMaybe<DocUpdateManyWithoutTopicNestedInput>;
+  Notes?: InputMaybe<NoteUpdateManyWithoutTopicNestedInput>;
   Subtopics?: InputMaybe<SubtopicUpdateManyWithoutTopicNestedInput>;
   createdAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
   name?: InputMaybe<StringFieldUpdateOperationsInput>;
@@ -2308,7 +2445,7 @@ export type TopicUpdateWithoutSubjectInput = {
 };
 
 export type TopicUpdateWithoutSubtopicsInput = {
-  Docs?: InputMaybe<DocUpdateManyWithoutTopicNestedInput>;
+  Notes?: InputMaybe<NoteUpdateManyWithoutTopicNestedInput>;
   Subject?: InputMaybe<SubjectUpdateOneWithoutTopicsNestedInput>;
   createdAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
   name?: InputMaybe<StringFieldUpdateOperationsInput>;
@@ -2321,9 +2458,9 @@ export type TopicUpsertWithWhereUniqueWithoutSubjectInput = {
   where: TopicWhereUniqueInput;
 };
 
-export type TopicUpsertWithoutDocsInput = {
-  create: TopicCreateWithoutDocsInput;
-  update: TopicUpdateWithoutDocsInput;
+export type TopicUpsertWithoutNotesInput = {
+  create: TopicCreateWithoutNotesInput;
+  update: TopicUpdateWithoutNotesInput;
   where?: InputMaybe<TopicWhereInput>;
 };
 
@@ -2335,8 +2472,8 @@ export type TopicUpsertWithoutSubtopicsInput = {
 
 export type TopicWhereInput = {
   AND?: InputMaybe<Array<TopicWhereInput>>;
-  Docs?: InputMaybe<DocListRelationFilter>;
   NOT?: InputMaybe<Array<TopicWhereInput>>;
+  Notes?: InputMaybe<NoteListRelationFilter>;
   OR?: InputMaybe<Array<TopicWhereInput>>;
   Subject?: InputMaybe<SubjectNullableRelationFilter>;
   Subtopics?: InputMaybe<SubtopicListRelationFilter>;
@@ -2349,8 +2486,8 @@ export type TopicWhereInput = {
 
 export type TopicWhereUniqueInput = {
   AND?: InputMaybe<Array<TopicWhereInput>>;
-  Docs?: InputMaybe<DocListRelationFilter>;
   NOT?: InputMaybe<Array<TopicWhereInput>>;
+  Notes?: InputMaybe<NoteListRelationFilter>;
   OR?: InputMaybe<Array<TopicWhereInput>>;
   Subject?: InputMaybe<SubjectNullableRelationFilter>;
   Subtopics?: InputMaybe<SubtopicListRelationFilter>;
@@ -2361,93 +2498,84 @@ export type TopicWhereUniqueInput = {
   updateAt?: InputMaybe<DateTimeNullableFilter>;
 };
 
+export enum Types {
+  Document = 'DOCUMENT',
+  Evaluation = 'EVALUATION',
+  Practice = 'PRACTICE'
+}
+
 export type User = {
   __typename?: 'User';
-  Doc?: Maybe<Array<Doc>>;
-  Grade: Grade;
-  School: School;
+  File?: Maybe<Array<File>>;
+  Group?: Maybe<Array<Group>>;
+  Organization: Organization;
   Score?: Maybe<Array<Score>>;
   _count: UserCount;
   createdAt?: Maybe<Scalars['DateTime']['output']>;
   email: Scalars['String']['output'];
   externalId: Scalars['String']['output'];
-  gradeId: Scalars['Int']['output'];
   id: Scalars['ID']['output'];
+  lastname: Scalars['String']['output'];
+  name: Scalars['String']['output'];
+  organizationId: Scalars['Int']['output'];
   role: Role;
-  schoolId: Scalars['Int']['output'];
   updateAt?: Maybe<Scalars['DateTime']['output']>;
-  username: Scalars['String']['output'];
 };
 
 export type UserCount = {
   __typename?: 'UserCount';
-  Doc: Scalars['Int']['output'];
+  File: Scalars['Int']['output'];
+  Group: Scalars['Int']['output'];
   Score: Scalars['Int']['output'];
 };
 
 export type UserCreateInput = {
-  Doc?: InputMaybe<DocCreateNestedManyWithoutAuthorInput>;
-  Grade: GradeCreateNestedOneWithoutUsersInput;
-  School: SchoolCreateNestedOneWithoutUsersInput;
+  File?: InputMaybe<FileCreateNestedManyWithoutAuthorInput>;
+  Group?: InputMaybe<GroupCreateNestedManyWithoutUsersInput>;
+  Organization: OrganizationCreateNestedOneWithoutUsersInput;
   Score?: InputMaybe<ScoreCreateNestedManyWithoutUserInput>;
   createdAt?: InputMaybe<Scalars['DateTime']['input']>;
   email: Scalars['String']['input'];
   externalId: Scalars['String']['input'];
+  lastname: Scalars['String']['input'];
+  name: Scalars['String']['input'];
   role: Role;
   updateAt?: InputMaybe<Scalars['DateTime']['input']>;
-  username: Scalars['String']['input'];
 };
 
-export type UserCreateManyGradeInput = {
+export type UserCreateManyOrganizationInput = {
   createdAt?: InputMaybe<Scalars['DateTime']['input']>;
   email: Scalars['String']['input'];
   externalId: Scalars['String']['input'];
   id?: InputMaybe<Scalars['Int']['input']>;
+  lastname: Scalars['String']['input'];
+  name: Scalars['String']['input'];
   role: Role;
-  schoolId: Scalars['Int']['input'];
   updateAt?: InputMaybe<Scalars['DateTime']['input']>;
-  username: Scalars['String']['input'];
 };
 
-export type UserCreateManyGradeInputEnvelope = {
-  data: Array<UserCreateManyGradeInput>;
+export type UserCreateManyOrganizationInputEnvelope = {
+  data: Array<UserCreateManyOrganizationInput>;
   skipDuplicates?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
-export type UserCreateManySchoolInput = {
-  createdAt?: InputMaybe<Scalars['DateTime']['input']>;
-  email: Scalars['String']['input'];
-  externalId: Scalars['String']['input'];
-  gradeId: Scalars['Int']['input'];
-  id?: InputMaybe<Scalars['Int']['input']>;
-  role: Role;
-  updateAt?: InputMaybe<Scalars['DateTime']['input']>;
-  username: Scalars['String']['input'];
-};
-
-export type UserCreateManySchoolInputEnvelope = {
-  data: Array<UserCreateManySchoolInput>;
-  skipDuplicates?: InputMaybe<Scalars['Boolean']['input']>;
-};
-
-export type UserCreateNestedManyWithoutGradeInput = {
+export type UserCreateNestedManyWithoutGroupInput = {
   connect?: InputMaybe<Array<UserWhereUniqueInput>>;
-  connectOrCreate?: InputMaybe<Array<UserCreateOrConnectWithoutGradeInput>>;
-  create?: InputMaybe<Array<UserCreateWithoutGradeInput>>;
-  createMany?: InputMaybe<UserCreateManyGradeInputEnvelope>;
+  connectOrCreate?: InputMaybe<Array<UserCreateOrConnectWithoutGroupInput>>;
+  create?: InputMaybe<Array<UserCreateWithoutGroupInput>>;
 };
 
-export type UserCreateNestedManyWithoutSchoolInput = {
+export type UserCreateNestedManyWithoutOrganizationInput = {
   connect?: InputMaybe<Array<UserWhereUniqueInput>>;
-  connectOrCreate?: InputMaybe<Array<UserCreateOrConnectWithoutSchoolInput>>;
-  create?: InputMaybe<Array<UserCreateWithoutSchoolInput>>;
-  createMany?: InputMaybe<UserCreateManySchoolInputEnvelope>;
+  connectOrCreate?: InputMaybe<Array<UserCreateOrConnectWithoutOrganizationInput>>;
+  create?: InputMaybe<Array<UserCreateWithoutOrganizationInput>>;
+  createMany?: InputMaybe<UserCreateManyOrganizationInputEnvelope>;
 };
 
-export type UserCreateNestedOneWithoutDocInput = {
+export type UserCreateNestedOneWithoutFileInput = {
   connect?: InputMaybe<UserWhereUniqueInput>;
-  connectOrCreate?: InputMaybe<UserCreateOrConnectWithoutDocInput>;
-  create?: InputMaybe<UserCreateWithoutDocInput>;
+  connectOrCreate?: InputMaybe<UserCreateOrConnectWithoutFileInput>;
+  create?: InputMaybe<UserCreateWithoutFileInput>;
 };
 
 export type UserCreateNestedOneWithoutScoreInput = {
@@ -2456,18 +2584,18 @@ export type UserCreateNestedOneWithoutScoreInput = {
   create?: InputMaybe<UserCreateWithoutScoreInput>;
 };
 
-export type UserCreateOrConnectWithoutDocInput = {
-  create: UserCreateWithoutDocInput;
+export type UserCreateOrConnectWithoutFileInput = {
+  create: UserCreateWithoutFileInput;
   where: UserWhereUniqueInput;
 };
 
-export type UserCreateOrConnectWithoutGradeInput = {
-  create: UserCreateWithoutGradeInput;
+export type UserCreateOrConnectWithoutGroupInput = {
+  create: UserCreateWithoutGroupInput;
   where: UserWhereUniqueInput;
 };
 
-export type UserCreateOrConnectWithoutSchoolInput = {
-  create: UserCreateWithoutSchoolInput;
+export type UserCreateOrConnectWithoutOrganizationInput = {
+  create: UserCreateWithoutOrganizationInput;
   where: UserWhereUniqueInput;
 };
 
@@ -2476,52 +2604,56 @@ export type UserCreateOrConnectWithoutScoreInput = {
   where: UserWhereUniqueInput;
 };
 
-export type UserCreateWithoutDocInput = {
-  Grade: GradeCreateNestedOneWithoutUsersInput;
-  School: SchoolCreateNestedOneWithoutUsersInput;
+export type UserCreateWithoutFileInput = {
+  Group?: InputMaybe<GroupCreateNestedManyWithoutUsersInput>;
+  Organization: OrganizationCreateNestedOneWithoutUsersInput;
   Score?: InputMaybe<ScoreCreateNestedManyWithoutUserInput>;
   createdAt?: InputMaybe<Scalars['DateTime']['input']>;
   email: Scalars['String']['input'];
   externalId: Scalars['String']['input'];
+  lastname: Scalars['String']['input'];
+  name: Scalars['String']['input'];
   role: Role;
   updateAt?: InputMaybe<Scalars['DateTime']['input']>;
-  username: Scalars['String']['input'];
 };
 
-export type UserCreateWithoutGradeInput = {
-  Doc?: InputMaybe<DocCreateNestedManyWithoutAuthorInput>;
-  School: SchoolCreateNestedOneWithoutUsersInput;
+export type UserCreateWithoutGroupInput = {
+  File?: InputMaybe<FileCreateNestedManyWithoutAuthorInput>;
+  Organization: OrganizationCreateNestedOneWithoutUsersInput;
   Score?: InputMaybe<ScoreCreateNestedManyWithoutUserInput>;
   createdAt?: InputMaybe<Scalars['DateTime']['input']>;
   email: Scalars['String']['input'];
   externalId: Scalars['String']['input'];
+  lastname: Scalars['String']['input'];
+  name: Scalars['String']['input'];
   role: Role;
   updateAt?: InputMaybe<Scalars['DateTime']['input']>;
-  username: Scalars['String']['input'];
 };
 
-export type UserCreateWithoutSchoolInput = {
-  Doc?: InputMaybe<DocCreateNestedManyWithoutAuthorInput>;
-  Grade: GradeCreateNestedOneWithoutUsersInput;
+export type UserCreateWithoutOrganizationInput = {
+  File?: InputMaybe<FileCreateNestedManyWithoutAuthorInput>;
+  Group?: InputMaybe<GroupCreateNestedManyWithoutUsersInput>;
   Score?: InputMaybe<ScoreCreateNestedManyWithoutUserInput>;
   createdAt?: InputMaybe<Scalars['DateTime']['input']>;
   email: Scalars['String']['input'];
   externalId: Scalars['String']['input'];
+  lastname: Scalars['String']['input'];
+  name: Scalars['String']['input'];
   role: Role;
   updateAt?: InputMaybe<Scalars['DateTime']['input']>;
-  username: Scalars['String']['input'];
 };
 
 export type UserCreateWithoutScoreInput = {
-  Doc?: InputMaybe<DocCreateNestedManyWithoutAuthorInput>;
-  Grade: GradeCreateNestedOneWithoutUsersInput;
-  School: SchoolCreateNestedOneWithoutUsersInput;
+  File?: InputMaybe<FileCreateNestedManyWithoutAuthorInput>;
+  Group?: InputMaybe<GroupCreateNestedManyWithoutUsersInput>;
+  Organization: OrganizationCreateNestedOneWithoutUsersInput;
   createdAt?: InputMaybe<Scalars['DateTime']['input']>;
   email: Scalars['String']['input'];
   externalId: Scalars['String']['input'];
+  lastname: Scalars['String']['input'];
+  name: Scalars['String']['input'];
   role: Role;
   updateAt?: InputMaybe<Scalars['DateTime']['input']>;
-  username: Scalars['String']['input'];
 };
 
 export type UserListRelationFilter = {
@@ -2542,80 +2674,81 @@ export type UserScalarWhereInput = {
   createdAt?: InputMaybe<DateTimeNullableFilter>;
   email?: InputMaybe<StringFilter>;
   externalId?: InputMaybe<StringFilter>;
-  gradeId?: InputMaybe<IntFilter>;
   id?: InputMaybe<IntFilter>;
+  lastname?: InputMaybe<StringFilter>;
+  name?: InputMaybe<StringFilter>;
+  organizationId?: InputMaybe<IntFilter>;
   role?: InputMaybe<EnumRoleFilter>;
-  schoolId?: InputMaybe<IntFilter>;
   updateAt?: InputMaybe<DateTimeNullableFilter>;
-  username?: InputMaybe<StringFilter>;
 };
 
 export type UserUpdateInput = {
-  Doc?: InputMaybe<DocUpdateManyWithoutAuthorNestedInput>;
-  Grade?: InputMaybe<GradeUpdateOneRequiredWithoutUsersNestedInput>;
-  School?: InputMaybe<SchoolUpdateOneRequiredWithoutUsersNestedInput>;
+  File?: InputMaybe<FileUpdateManyWithoutAuthorNestedInput>;
+  Group?: InputMaybe<GroupUpdateManyWithoutUsersNestedInput>;
+  Organization?: InputMaybe<OrganizationUpdateOneRequiredWithoutUsersNestedInput>;
   Score?: InputMaybe<ScoreUpdateManyWithoutUserNestedInput>;
   createdAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
   email?: InputMaybe<StringFieldUpdateOperationsInput>;
   externalId?: InputMaybe<StringFieldUpdateOperationsInput>;
+  lastname?: InputMaybe<StringFieldUpdateOperationsInput>;
+  name?: InputMaybe<StringFieldUpdateOperationsInput>;
   role?: InputMaybe<EnumRoleFieldUpdateOperationsInput>;
   updateAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
-  username?: InputMaybe<StringFieldUpdateOperationsInput>;
 };
 
 export type UserUpdateManyMutationInput = {
   createdAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
   email?: InputMaybe<StringFieldUpdateOperationsInput>;
   externalId?: InputMaybe<StringFieldUpdateOperationsInput>;
+  lastname?: InputMaybe<StringFieldUpdateOperationsInput>;
+  name?: InputMaybe<StringFieldUpdateOperationsInput>;
   role?: InputMaybe<EnumRoleFieldUpdateOperationsInput>;
   updateAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
-  username?: InputMaybe<StringFieldUpdateOperationsInput>;
 };
 
-export type UserUpdateManyWithWhereWithoutGradeInput = {
+export type UserUpdateManyWithWhereWithoutGroupInput = {
   data: UserUpdateManyMutationInput;
   where: UserScalarWhereInput;
 };
 
-export type UserUpdateManyWithWhereWithoutSchoolInput = {
+export type UserUpdateManyWithWhereWithoutOrganizationInput = {
   data: UserUpdateManyMutationInput;
   where: UserScalarWhereInput;
 };
 
-export type UserUpdateManyWithoutGradeNestedInput = {
+export type UserUpdateManyWithoutGroupNestedInput = {
   connect?: InputMaybe<Array<UserWhereUniqueInput>>;
-  connectOrCreate?: InputMaybe<Array<UserCreateOrConnectWithoutGradeInput>>;
-  create?: InputMaybe<Array<UserCreateWithoutGradeInput>>;
-  createMany?: InputMaybe<UserCreateManyGradeInputEnvelope>;
+  connectOrCreate?: InputMaybe<Array<UserCreateOrConnectWithoutGroupInput>>;
+  create?: InputMaybe<Array<UserCreateWithoutGroupInput>>;
   delete?: InputMaybe<Array<UserWhereUniqueInput>>;
   deleteMany?: InputMaybe<Array<UserScalarWhereInput>>;
   disconnect?: InputMaybe<Array<UserWhereUniqueInput>>;
   set?: InputMaybe<Array<UserWhereUniqueInput>>;
-  update?: InputMaybe<Array<UserUpdateWithWhereUniqueWithoutGradeInput>>;
-  updateMany?: InputMaybe<Array<UserUpdateManyWithWhereWithoutGradeInput>>;
-  upsert?: InputMaybe<Array<UserUpsertWithWhereUniqueWithoutGradeInput>>;
+  update?: InputMaybe<Array<UserUpdateWithWhereUniqueWithoutGroupInput>>;
+  updateMany?: InputMaybe<Array<UserUpdateManyWithWhereWithoutGroupInput>>;
+  upsert?: InputMaybe<Array<UserUpsertWithWhereUniqueWithoutGroupInput>>;
 };
 
-export type UserUpdateManyWithoutSchoolNestedInput = {
+export type UserUpdateManyWithoutOrganizationNestedInput = {
   connect?: InputMaybe<Array<UserWhereUniqueInput>>;
-  connectOrCreate?: InputMaybe<Array<UserCreateOrConnectWithoutSchoolInput>>;
-  create?: InputMaybe<Array<UserCreateWithoutSchoolInput>>;
-  createMany?: InputMaybe<UserCreateManySchoolInputEnvelope>;
+  connectOrCreate?: InputMaybe<Array<UserCreateOrConnectWithoutOrganizationInput>>;
+  create?: InputMaybe<Array<UserCreateWithoutOrganizationInput>>;
+  createMany?: InputMaybe<UserCreateManyOrganizationInputEnvelope>;
   delete?: InputMaybe<Array<UserWhereUniqueInput>>;
   deleteMany?: InputMaybe<Array<UserScalarWhereInput>>;
   disconnect?: InputMaybe<Array<UserWhereUniqueInput>>;
   set?: InputMaybe<Array<UserWhereUniqueInput>>;
-  update?: InputMaybe<Array<UserUpdateWithWhereUniqueWithoutSchoolInput>>;
-  updateMany?: InputMaybe<Array<UserUpdateManyWithWhereWithoutSchoolInput>>;
-  upsert?: InputMaybe<Array<UserUpsertWithWhereUniqueWithoutSchoolInput>>;
+  update?: InputMaybe<Array<UserUpdateWithWhereUniqueWithoutOrganizationInput>>;
+  updateMany?: InputMaybe<Array<UserUpdateManyWithWhereWithoutOrganizationInput>>;
+  upsert?: InputMaybe<Array<UserUpsertWithWhereUniqueWithoutOrganizationInput>>;
 };
 
-export type UserUpdateOneRequiredWithoutDocNestedInput = {
+export type UserUpdateOneRequiredWithoutFileNestedInput = {
   connect?: InputMaybe<UserWhereUniqueInput>;
-  connectOrCreate?: InputMaybe<UserCreateOrConnectWithoutDocInput>;
-  create?: InputMaybe<UserCreateWithoutDocInput>;
-  update?: InputMaybe<UserUpdateToOneWithWhereWithoutDocInput>;
-  upsert?: InputMaybe<UserUpsertWithoutDocInput>;
+  connectOrCreate?: InputMaybe<UserCreateOrConnectWithoutFileInput>;
+  create?: InputMaybe<UserCreateWithoutFileInput>;
+  update?: InputMaybe<UserUpdateToOneWithWhereWithoutFileInput>;
+  upsert?: InputMaybe<UserUpsertWithoutFileInput>;
 };
 
 export type UserUpdateOneRequiredWithoutScoreNestedInput = {
@@ -2626,8 +2759,8 @@ export type UserUpdateOneRequiredWithoutScoreNestedInput = {
   upsert?: InputMaybe<UserUpsertWithoutScoreInput>;
 };
 
-export type UserUpdateToOneWithWhereWithoutDocInput = {
-  data: UserUpdateWithoutDocInput;
+export type UserUpdateToOneWithWhereWithoutFileInput = {
+  data: UserUpdateWithoutFileInput;
   where?: InputMaybe<UserWhereInput>;
 };
 
@@ -2636,79 +2769,83 @@ export type UserUpdateToOneWithWhereWithoutScoreInput = {
   where?: InputMaybe<UserWhereInput>;
 };
 
-export type UserUpdateWithWhereUniqueWithoutGradeInput = {
-  data: UserUpdateWithoutGradeInput;
+export type UserUpdateWithWhereUniqueWithoutGroupInput = {
+  data: UserUpdateWithoutGroupInput;
   where: UserWhereUniqueInput;
 };
 
-export type UserUpdateWithWhereUniqueWithoutSchoolInput = {
-  data: UserUpdateWithoutSchoolInput;
+export type UserUpdateWithWhereUniqueWithoutOrganizationInput = {
+  data: UserUpdateWithoutOrganizationInput;
   where: UserWhereUniqueInput;
 };
 
-export type UserUpdateWithoutDocInput = {
-  Grade?: InputMaybe<GradeUpdateOneRequiredWithoutUsersNestedInput>;
-  School?: InputMaybe<SchoolUpdateOneRequiredWithoutUsersNestedInput>;
+export type UserUpdateWithoutFileInput = {
+  Group?: InputMaybe<GroupUpdateManyWithoutUsersNestedInput>;
+  Organization?: InputMaybe<OrganizationUpdateOneRequiredWithoutUsersNestedInput>;
   Score?: InputMaybe<ScoreUpdateManyWithoutUserNestedInput>;
   createdAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
   email?: InputMaybe<StringFieldUpdateOperationsInput>;
   externalId?: InputMaybe<StringFieldUpdateOperationsInput>;
+  lastname?: InputMaybe<StringFieldUpdateOperationsInput>;
+  name?: InputMaybe<StringFieldUpdateOperationsInput>;
   role?: InputMaybe<EnumRoleFieldUpdateOperationsInput>;
   updateAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
-  username?: InputMaybe<StringFieldUpdateOperationsInput>;
 };
 
-export type UserUpdateWithoutGradeInput = {
-  Doc?: InputMaybe<DocUpdateManyWithoutAuthorNestedInput>;
-  School?: InputMaybe<SchoolUpdateOneRequiredWithoutUsersNestedInput>;
+export type UserUpdateWithoutGroupInput = {
+  File?: InputMaybe<FileUpdateManyWithoutAuthorNestedInput>;
+  Organization?: InputMaybe<OrganizationUpdateOneRequiredWithoutUsersNestedInput>;
   Score?: InputMaybe<ScoreUpdateManyWithoutUserNestedInput>;
   createdAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
   email?: InputMaybe<StringFieldUpdateOperationsInput>;
   externalId?: InputMaybe<StringFieldUpdateOperationsInput>;
+  lastname?: InputMaybe<StringFieldUpdateOperationsInput>;
+  name?: InputMaybe<StringFieldUpdateOperationsInput>;
   role?: InputMaybe<EnumRoleFieldUpdateOperationsInput>;
   updateAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
-  username?: InputMaybe<StringFieldUpdateOperationsInput>;
 };
 
-export type UserUpdateWithoutSchoolInput = {
-  Doc?: InputMaybe<DocUpdateManyWithoutAuthorNestedInput>;
-  Grade?: InputMaybe<GradeUpdateOneRequiredWithoutUsersNestedInput>;
+export type UserUpdateWithoutOrganizationInput = {
+  File?: InputMaybe<FileUpdateManyWithoutAuthorNestedInput>;
+  Group?: InputMaybe<GroupUpdateManyWithoutUsersNestedInput>;
   Score?: InputMaybe<ScoreUpdateManyWithoutUserNestedInput>;
   createdAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
   email?: InputMaybe<StringFieldUpdateOperationsInput>;
   externalId?: InputMaybe<StringFieldUpdateOperationsInput>;
+  lastname?: InputMaybe<StringFieldUpdateOperationsInput>;
+  name?: InputMaybe<StringFieldUpdateOperationsInput>;
   role?: InputMaybe<EnumRoleFieldUpdateOperationsInput>;
   updateAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
-  username?: InputMaybe<StringFieldUpdateOperationsInput>;
 };
 
 export type UserUpdateWithoutScoreInput = {
-  Doc?: InputMaybe<DocUpdateManyWithoutAuthorNestedInput>;
-  Grade?: InputMaybe<GradeUpdateOneRequiredWithoutUsersNestedInput>;
-  School?: InputMaybe<SchoolUpdateOneRequiredWithoutUsersNestedInput>;
+  File?: InputMaybe<FileUpdateManyWithoutAuthorNestedInput>;
+  Group?: InputMaybe<GroupUpdateManyWithoutUsersNestedInput>;
+  Organization?: InputMaybe<OrganizationUpdateOneRequiredWithoutUsersNestedInput>;
   createdAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
   email?: InputMaybe<StringFieldUpdateOperationsInput>;
   externalId?: InputMaybe<StringFieldUpdateOperationsInput>;
+  lastname?: InputMaybe<StringFieldUpdateOperationsInput>;
+  name?: InputMaybe<StringFieldUpdateOperationsInput>;
   role?: InputMaybe<EnumRoleFieldUpdateOperationsInput>;
   updateAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
-  username?: InputMaybe<StringFieldUpdateOperationsInput>;
 };
 
-export type UserUpsertWithWhereUniqueWithoutGradeInput = {
-  create: UserCreateWithoutGradeInput;
-  update: UserUpdateWithoutGradeInput;
+export type UserUpsertWithWhereUniqueWithoutGroupInput = {
+  create: UserCreateWithoutGroupInput;
+  update: UserUpdateWithoutGroupInput;
   where: UserWhereUniqueInput;
 };
 
-export type UserUpsertWithWhereUniqueWithoutSchoolInput = {
-  create: UserCreateWithoutSchoolInput;
-  update: UserUpdateWithoutSchoolInput;
+export type UserUpsertWithWhereUniqueWithoutOrganizationInput = {
+  create: UserCreateWithoutOrganizationInput;
+  update: UserUpdateWithoutOrganizationInput;
   where: UserWhereUniqueInput;
 };
 
-export type UserUpsertWithoutDocInput = {
-  create: UserCreateWithoutDocInput;
-  update: UserUpdateWithoutDocInput;
+export type UserUpsertWithoutFileInput = {
+  create: UserCreateWithoutFileInput;
+  update: UserUpdateWithoutFileInput;
   where?: InputMaybe<UserWhereInput>;
 };
 
@@ -2720,53 +2857,53 @@ export type UserUpsertWithoutScoreInput = {
 
 export type UserWhereInput = {
   AND?: InputMaybe<Array<UserWhereInput>>;
-  Doc?: InputMaybe<DocListRelationFilter>;
-  Grade?: InputMaybe<GradeRelationFilter>;
+  File?: InputMaybe<FileListRelationFilter>;
+  Group?: InputMaybe<GroupListRelationFilter>;
   NOT?: InputMaybe<Array<UserWhereInput>>;
   OR?: InputMaybe<Array<UserWhereInput>>;
-  School?: InputMaybe<SchoolRelationFilter>;
+  Organization?: InputMaybe<OrganizationRelationFilter>;
   Score?: InputMaybe<ScoreListRelationFilter>;
   createdAt?: InputMaybe<DateTimeNullableFilter>;
   email?: InputMaybe<StringFilter>;
   externalId?: InputMaybe<StringFilter>;
-  gradeId?: InputMaybe<IntFilter>;
   id?: InputMaybe<IntFilter>;
+  lastname?: InputMaybe<StringFilter>;
+  name?: InputMaybe<StringFilter>;
+  organizationId?: InputMaybe<IntFilter>;
   role?: InputMaybe<EnumRoleFilter>;
-  schoolId?: InputMaybe<IntFilter>;
   updateAt?: InputMaybe<DateTimeNullableFilter>;
-  username?: InputMaybe<StringFilter>;
 };
 
 export type UserWhereUniqueInput = {
   AND?: InputMaybe<Array<UserWhereInput>>;
-  Doc?: InputMaybe<DocListRelationFilter>;
-  Grade?: InputMaybe<GradeRelationFilter>;
+  File?: InputMaybe<FileListRelationFilter>;
+  Group?: InputMaybe<GroupListRelationFilter>;
   NOT?: InputMaybe<Array<UserWhereInput>>;
   OR?: InputMaybe<Array<UserWhereInput>>;
-  School?: InputMaybe<SchoolRelationFilter>;
+  Organization?: InputMaybe<OrganizationRelationFilter>;
   Score?: InputMaybe<ScoreListRelationFilter>;
   createdAt?: InputMaybe<DateTimeNullableFilter>;
   email?: InputMaybe<Scalars['String']['input']>;
   externalId?: InputMaybe<Scalars['String']['input']>;
-  gradeId?: InputMaybe<IntFilter>;
   id?: InputMaybe<Scalars['Int']['input']>;
+  lastname?: InputMaybe<StringFilter>;
+  name?: InputMaybe<StringFilter>;
+  organizationId?: InputMaybe<IntFilter>;
   role?: InputMaybe<EnumRoleFilter>;
-  schoolId?: InputMaybe<IntFilter>;
   updateAt?: InputMaybe<DateTimeNullableFilter>;
-  username?: InputMaybe<StringFilter>;
 };
 
 export type GetSubjectsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetSubjectsQuery = { __typename?: 'Query', subjects: Array<{ __typename?: 'Subject', color: string, name: string, id: string, _count: { __typename?: 'SubjectCount', Docs: number }, Topics?: Array<{ __typename?: 'Topic', name: string }> | null }> };
+export type GetSubjectsQuery = { __typename?: 'Query', subjects: Array<{ __typename?: 'Subject', color: string, name: string, id: string, Topics?: Array<{ __typename?: 'Topic', name: string }> | null }> };
 
 export type GetUserQueryVariables = Exact<{
   where: UserWhereUniqueInput;
 }>;
 
 
-export type GetUserQuery = { __typename?: 'Query', user: { __typename?: 'User', username: string, role: Role, schoolId: number, email: string, externalId: string, id: string } };
+export type GetUserQuery = { __typename?: 'Query', user: { __typename?: 'User', name: string, lastname: string, role: Role, organizationId: number, email: string, externalId: string, id: string } };
 
 export type GetSubjectsPathsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -2775,43 +2912,51 @@ export type GetSubjectsPathsQuery = { __typename?: 'Query', subjects: Array<{ __
 
 export type GetSubjectQueryVariables = Exact<{
   subjectId: Scalars['Int']['input'];
+  topicId: Scalars['Int']['input'];
 }>;
 
 
-export type GetSubjectQuery = { __typename?: 'Query', subject: { __typename?: 'Subject', id: string, name: string, color: string, Topics?: Array<{ __typename?: 'Topic', id: string, name: string, _count: { __typename?: 'TopicCount', Docs: number }, Subtopics?: Array<{ __typename?: 'Subtopic', id: string, name: string, Docs?: Array<{ __typename?: 'Doc', id: string, externalId: string, title: string }> | null }> | null }> | null } };
+export type GetSubjectQuery = { __typename?: 'Query', subject: { __typename?: 'Subject', id: string, name: string, color: string, Topics?: Array<{ __typename?: 'Topic', name: string, id: string }> | null }, topicAndSubtopic: { __typename?: 'Topic', name: string, id: string, Subtopics?: Array<{ __typename?: 'Subtopic', id: string, name: string, _count: { __typename?: 'SubtopicCount', Notes: number }, Notes?: Array<{ __typename?: 'Note', type: Types, File?: { __typename?: 'File', title: string, externalId: string, id: string } | null }> | null }> | null } };
+
+export type GetNotesQueryVariables = Exact<{
+  where?: InputMaybe<NoteWhereInput>;
+}>;
+
+
+export type GetNotesQuery = { __typename?: 'Query', notes: Array<{ __typename?: 'Note', File?: { __typename?: 'File', id: string, title: string } | null }> };
 
 export type GetUserByEmailQueryVariables = Exact<{
   email: Scalars['String']['input'];
 }>;
 
 
-export type GetUserByEmailQuery = { __typename?: 'Query', userByEmail: { __typename?: 'User', email: string, gradeId: number, id: string, username: string, role: Role } };
+export type GetUserByEmailQuery = { __typename?: 'Query', userByEmail: { __typename?: 'User', email: string, id: string, lastname: string, name: string, role: Role } };
 
 export type GetUsersQueryVariables = Exact<{
   where?: InputMaybe<UserWhereInput>;
 }>;
 
 
-export type GetUsersQuery = { __typename?: 'Query', users: Array<{ __typename?: 'User', username: string, gradeId: number, role: Role, email: string }> };
+export type GetUsersQuery = { __typename?: 'Query', users: Array<{ __typename?: 'User', lastname: string, name: string, role: Role, email: string }> };
 
-export type GetSchoolsQueryVariables = Exact<{ [key: string]: never; }>;
+export type GetOrganizationQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetSchoolsQuery = { __typename?: 'Query', schools: Array<{ __typename?: 'School', id: string, name: string }> };
+export type GetOrganizationQuery = { __typename?: 'Query', organizations: Array<{ __typename?: 'Organization', id: string, name: string }> };
 
-export type GetGradesQueryVariables = Exact<{
-  where?: InputMaybe<GradeWhereInput>;
+export type GetGroupsQueryVariables = Exact<{
+  where?: InputMaybe<GroupWhereInput>;
 }>;
 
 
-export type GetGradesQuery = { __typename?: 'Query', grades: Array<{ __typename?: 'Grade', id: string, name: string }> };
+export type GetGroupsQuery = { __typename?: 'Query', groups: Array<{ __typename?: 'Group', id: string, name: string }> };
 
-export type CreateGradeMutationVariables = Exact<{
-  createGradeInput: GradeCreateInput;
+export type CreateGroupMutationVariables = Exact<{
+  createGroupInput: GroupCreateInput;
 }>;
 
 
-export type CreateGradeMutation = { __typename?: 'Mutation', createGrade: { __typename?: 'Grade', name: string } };
+export type CreateGroupMutation = { __typename?: 'Mutation', createGroup: { __typename?: 'Group', name: string } };
 
 export type CreateTopicMutationVariables = Exact<{
   createTopicInput: TopicCreateInput;
@@ -2826,21 +2971,6 @@ export type CreateSubtopicMutationVariables = Exact<{
 
 
 export type CreateSubtopicMutation = { __typename?: 'Mutation', createSubtopic: { __typename?: 'Subtopic', id: string, name: string } };
-
-export type CreateDocMutationVariables = Exact<{
-  createDocInput: DocCreateInput;
-}>;
-
-
-export type CreateDocMutation = { __typename?: 'Mutation', createDoc: { __typename?: 'Doc', id: string } };
-
-export type UpdateDocMutationVariables = Exact<{
-  updateDocId: Scalars['Float']['input'];
-  updateDocInput: DocUpdateInput;
-}>;
-
-
-export type UpdateDocMutation = { __typename?: 'Mutation', updateDoc: { __typename?: 'Doc', id: string } };
 
 export type UpdateTopicMutationVariables = Exact<{
   updateTopicId: Scalars['Float']['input'];
@@ -2858,13 +2988,13 @@ export type UpdateSubtopicMutationVariables = Exact<{
 
 export type UpdateSubtopicMutation = { __typename?: 'Mutation', updateSubtopic: { __typename?: 'Subtopic', id: string } };
 
-export type UpdateGradeMutationVariables = Exact<{
-  updateGradeId: Scalars['Float']['input'];
-  updateGradeInput: GradeUpdateInput;
+export type UpdateGroupMutationVariables = Exact<{
+  updateGroupId: Scalars['Float']['input'];
+  updateGroupInput: GroupUpdateInput;
 }>;
 
 
-export type UpdateGradeMutation = { __typename?: 'Mutation', updateGrade: { __typename?: 'Grade', id: string, name: string } };
+export type UpdateGroupMutation = { __typename?: 'Mutation', updateGroup: { __typename?: 'Group', id: string, name: string } };
 
 export type UpdateSubjectMutationVariables = Exact<{
   updateSubjectId: Scalars['Float']['input'];
@@ -2893,7 +3023,7 @@ export type RemoveUserMutationVariables = Exact<{
 }>;
 
 
-export type RemoveUserMutation = { __typename?: 'Mutation', removeUser: { __typename?: 'User', id: string, username: string } };
+export type RemoveUserMutation = { __typename?: 'Mutation', removeUser: { __typename?: 'User', id: string, name: string, lastname: string } };
 
 export type RemoveSubjectMutationVariables = Exact<{
   removeSubjectId: Scalars['Int']['input'];
@@ -2902,12 +3032,12 @@ export type RemoveSubjectMutationVariables = Exact<{
 
 export type RemoveSubjectMutation = { __typename?: 'Mutation', removeSubject: { __typename?: 'Subject', id: string, name: string } };
 
-export type RemoveGradeMutationVariables = Exact<{
-  removeGradeId: Scalars['Int']['input'];
+export type RemoveGroupMutationVariables = Exact<{
+  removeGroupId: Scalars['Int']['input'];
 }>;
 
 
-export type RemoveGradeMutation = { __typename?: 'Mutation', removeGrade: { __typename?: 'Grade', id: string, name: string } };
+export type RemoveGroupMutation = { __typename?: 'Mutation', removeGroup: { __typename?: 'Group', id: string, name: string } };
 
 export type UpdateUserMutationVariables = Exact<{
   where: UserWhereUniqueInput;
@@ -2916,20 +3046,6 @@ export type UpdateUserMutationVariables = Exact<{
 
 
 export type UpdateUserMutation = { __typename?: 'Mutation', updateUser: { __typename?: 'User', id: string } };
-
-export type GetDocQueryVariables = Exact<{
-  where: DocWhereUniqueInput;
-}>;
-
-
-export type GetDocQuery = { __typename?: 'Query', doc: { __typename?: 'Doc', content: string, title: string, privacity: Privacity, externalId: string, id: string, type: DocTypes, Subject: { __typename?: 'Subject', name: string }, Topic: { __typename?: 'Topic', name: string }, Subtopic?: { __typename?: 'Subtopic', name: string } | null } };
-
-export type RemoveDocMutationVariables = Exact<{
-  removeDocId: Scalars['Int']['input'];
-}>;
-
-
-export type RemoveDocMutation = { __typename?: 'Mutation', removeDoc: { __typename?: 'Doc', title: string, id: string } };
 
 export type RemoveTopicMutationVariables = Exact<{
   removeTopicId: Scalars['Int']['input'];
@@ -2946,30 +3062,27 @@ export type RemoveSubtopicMutationVariables = Exact<{
 export type RemoveSubtopicMutation = { __typename?: 'Mutation', removeSubtopic: { __typename?: 'Subtopic', name: string, id: string } };
 
 
-export const GetSubjectsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetSubjects"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"subjects"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"color"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"_count"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"Docs"}}]}},{"kind":"Field","name":{"kind":"Name","value":"Topics"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]}}]} as unknown as DocumentNode<GetSubjectsQuery, GetSubjectsQueryVariables>;
-export const GetUserDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetUser"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UserWhereUniqueInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"user"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"username"}},{"kind":"Field","name":{"kind":"Name","value":"role"}},{"kind":"Field","name":{"kind":"Name","value":"schoolId"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"externalId"}},{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<GetUserQuery, GetUserQueryVariables>;
+export const GetSubjectsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetSubjects"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"subjects"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"color"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"Topics"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]}}]} as unknown as DocumentNode<GetSubjectsQuery, GetSubjectsQueryVariables>;
+export const GetUserDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetUser"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UserWhereUniqueInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"user"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"lastname"}},{"kind":"Field","name":{"kind":"Name","value":"role"}},{"kind":"Field","name":{"kind":"Name","value":"organizationId"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"externalId"}},{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<GetUserQuery, GetUserQueryVariables>;
 export const GetSubjectsPathsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetSubjectsPaths"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"subjects"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<GetSubjectsPathsQuery, GetSubjectsPathsQueryVariables>;
-export const GetSubjectDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetSubject"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"subjectId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"subject"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"subjectId"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"color"}},{"kind":"Field","name":{"kind":"Name","value":"Topics"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"_count"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"Docs"}}]}},{"kind":"Field","name":{"kind":"Name","value":"Subtopics"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"Docs"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"externalId"}},{"kind":"Field","name":{"kind":"Name","value":"title"}}]}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetSubjectQuery, GetSubjectQueryVariables>;
-export const GetUserByEmailDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetUserByEmail"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"email"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"userByEmail"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"email"},"value":{"kind":"Variable","name":{"kind":"Name","value":"email"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"gradeId"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"username"}},{"kind":"Field","name":{"kind":"Name","value":"role"}}]}}]}}]} as unknown as DocumentNode<GetUserByEmailQuery, GetUserByEmailQueryVariables>;
-export const GetUsersDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetUsers"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"UserWhereInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"users"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"username"}},{"kind":"Field","name":{"kind":"Name","value":"gradeId"}},{"kind":"Field","name":{"kind":"Name","value":"role"}},{"kind":"Field","name":{"kind":"Name","value":"email"}}]}}]}}]} as unknown as DocumentNode<GetUsersQuery, GetUsersQueryVariables>;
-export const GetSchoolsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetSchools"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"schools"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]} as unknown as DocumentNode<GetSchoolsQuery, GetSchoolsQueryVariables>;
-export const GetGradesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetGrades"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"GradeWhereInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"grades"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]} as unknown as DocumentNode<GetGradesQuery, GetGradesQueryVariables>;
-export const CreateGradeDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateGrade"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"createGradeInput"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"GradeCreateInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createGrade"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"createGradeInput"},"value":{"kind":"Variable","name":{"kind":"Name","value":"createGradeInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]} as unknown as DocumentNode<CreateGradeMutation, CreateGradeMutationVariables>;
+export const GetSubjectDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetSubject"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"subjectId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"topicId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"subject"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"subjectId"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"color"}},{"kind":"Field","name":{"kind":"Name","value":"Topics"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"topicAndSubtopic"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"topicId"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"Subtopics"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"_count"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"Notes"}}]}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"Notes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"File"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"externalId"}},{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetSubjectQuery, GetSubjectQueryVariables>;
+export const GetNotesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetNotes"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"NoteWhereInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"notes"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"File"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}}]}}]}}]}}]} as unknown as DocumentNode<GetNotesQuery, GetNotesQueryVariables>;
+export const GetUserByEmailDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetUserByEmail"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"email"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"userByEmail"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"email"},"value":{"kind":"Variable","name":{"kind":"Name","value":"email"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"lastname"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"role"}}]}}]}}]} as unknown as DocumentNode<GetUserByEmailQuery, GetUserByEmailQueryVariables>;
+export const GetUsersDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetUsers"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"UserWhereInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"users"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"lastname"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"role"}},{"kind":"Field","name":{"kind":"Name","value":"email"}}]}}]}}]} as unknown as DocumentNode<GetUsersQuery, GetUsersQueryVariables>;
+export const GetOrganizationDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetOrganization"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"organizations"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]} as unknown as DocumentNode<GetOrganizationQuery, GetOrganizationQueryVariables>;
+export const GetGroupsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetGroups"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"GroupWhereInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"groups"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]} as unknown as DocumentNode<GetGroupsQuery, GetGroupsQueryVariables>;
+export const CreateGroupDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateGroup"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"createGroupInput"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"GroupCreateInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createGroup"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"createGroupInput"},"value":{"kind":"Variable","name":{"kind":"Name","value":"createGroupInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]} as unknown as DocumentNode<CreateGroupMutation, CreateGroupMutationVariables>;
 export const CreateTopicDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateTopic"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"createTopicInput"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"TopicCreateInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createTopic"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"createTopicInput"},"value":{"kind":"Variable","name":{"kind":"Name","value":"createTopicInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<CreateTopicMutation, CreateTopicMutationVariables>;
 export const CreateSubtopicDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateSubtopic"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"createSubtopicInput"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"SubtopicCreateInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createSubtopic"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"createSubtopicInput"},"value":{"kind":"Variable","name":{"kind":"Name","value":"createSubtopicInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]} as unknown as DocumentNode<CreateSubtopicMutation, CreateSubtopicMutationVariables>;
-export const CreateDocDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateDoc"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"createDocInput"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"DocCreateInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createDoc"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"createDocInput"},"value":{"kind":"Variable","name":{"kind":"Name","value":"createDocInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<CreateDocMutation, CreateDocMutationVariables>;
-export const UpdateDocDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateDoc"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"updateDocId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Float"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"updateDocInput"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"DocUpdateInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateDoc"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"updateDocId"}}},{"kind":"Argument","name":{"kind":"Name","value":"updateDocInput"},"value":{"kind":"Variable","name":{"kind":"Name","value":"updateDocInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<UpdateDocMutation, UpdateDocMutationVariables>;
 export const UpdateTopicDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateTopic"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"updateTopicId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Float"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"updateTopicInput"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"TopicUpdateInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateTopic"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"updateTopicId"}}},{"kind":"Argument","name":{"kind":"Name","value":"updateTopicInput"},"value":{"kind":"Variable","name":{"kind":"Name","value":"updateTopicInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<UpdateTopicMutation, UpdateTopicMutationVariables>;
 export const UpdateSubtopicDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateSubtopic"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"updateSubtopicId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Float"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"updateSubtopicInput"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"SubtopicUpdateInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateSubtopic"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"updateSubtopicId"}}},{"kind":"Argument","name":{"kind":"Name","value":"updateSubtopicInput"},"value":{"kind":"Variable","name":{"kind":"Name","value":"updateSubtopicInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<UpdateSubtopicMutation, UpdateSubtopicMutationVariables>;
-export const UpdateGradeDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateGrade"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"updateGradeId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Float"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"updateGradeInput"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"GradeUpdateInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateGrade"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"updateGradeId"}}},{"kind":"Argument","name":{"kind":"Name","value":"updateGradeInput"},"value":{"kind":"Variable","name":{"kind":"Name","value":"updateGradeInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]} as unknown as DocumentNode<UpdateGradeMutation, UpdateGradeMutationVariables>;
+export const UpdateGroupDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateGroup"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"updateGroupId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Float"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"updateGroupInput"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"GroupUpdateInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateGroup"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"updateGroupId"}}},{"kind":"Argument","name":{"kind":"Name","value":"updateGroupInput"},"value":{"kind":"Variable","name":{"kind":"Name","value":"updateGroupInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]} as unknown as DocumentNode<UpdateGroupMutation, UpdateGroupMutationVariables>;
 export const UpdateSubjectDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateSubject"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"updateSubjectId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Float"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"updateSubjectInput"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"SubjectUpdateInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateSubject"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"updateSubjectId"}}},{"kind":"Argument","name":{"kind":"Name","value":"updateSubjectInput"},"value":{"kind":"Variable","name":{"kind":"Name","value":"updateSubjectInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<UpdateSubjectMutation, UpdateSubjectMutationVariables>;
 export const CreateSubjectDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateSubject"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"createSubjectInput"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"SubjectCreateInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createSubject"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"createSubjectInput"},"value":{"kind":"Variable","name":{"kind":"Name","value":"createSubjectInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]} as unknown as DocumentNode<CreateSubjectMutation, CreateSubjectMutationVariables>;
 export const CreateUserDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"createUser"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"createUserInput"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UserCreateInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createUser"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"createUserInput"},"value":{"kind":"Variable","name":{"kind":"Name","value":"createUserInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"email"}}]}}]}}]} as unknown as DocumentNode<CreateUserMutation, CreateUserMutationVariables>;
-export const RemoveUserDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"RemoveUser"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UserWhereUniqueInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"removeUser"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"username"}}]}}]}}]} as unknown as DocumentNode<RemoveUserMutation, RemoveUserMutationVariables>;
+export const RemoveUserDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"RemoveUser"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UserWhereUniqueInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"removeUser"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"lastname"}}]}}]}}]} as unknown as DocumentNode<RemoveUserMutation, RemoveUserMutationVariables>;
 export const RemoveSubjectDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"RemoveSubject"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"removeSubjectId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"removeSubject"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"removeSubjectId"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]} as unknown as DocumentNode<RemoveSubjectMutation, RemoveSubjectMutationVariables>;
-export const RemoveGradeDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"RemoveGrade"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"removeGradeId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"removeGrade"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"removeGradeId"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]} as unknown as DocumentNode<RemoveGradeMutation, RemoveGradeMutationVariables>;
+export const RemoveGroupDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"RemoveGroup"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"removeGroupId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"removeGroup"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"removeGroupId"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]} as unknown as DocumentNode<RemoveGroupMutation, RemoveGroupMutationVariables>;
 export const UpdateUserDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateUser"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UserWhereUniqueInput"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"updateUserInput"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UserUpdateInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateUser"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}},{"kind":"Argument","name":{"kind":"Name","value":"updateUserInput"},"value":{"kind":"Variable","name":{"kind":"Name","value":"updateUserInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<UpdateUserMutation, UpdateUserMutationVariables>;
-export const GetDocDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetDoc"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"DocWhereUniqueInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"doc"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"content"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"privacity"}},{"kind":"Field","name":{"kind":"Name","value":"externalId"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"Subject"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}}]}},{"kind":"Field","name":{"kind":"Name","value":"Topic"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}}]}},{"kind":"Field","name":{"kind":"Name","value":"Subtopic"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]}}]} as unknown as DocumentNode<GetDocQuery, GetDocQueryVariables>;
-export const RemoveDocDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"RemoveDoc"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"removeDocId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"removeDoc"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"removeDocId"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<RemoveDocMutation, RemoveDocMutationVariables>;
 export const RemoveTopicDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"RemoveTopic"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"removeTopicId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"removeTopic"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"removeTopicId"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]} as unknown as DocumentNode<RemoveTopicMutation, RemoveTopicMutationVariables>;
 export const RemoveSubtopicDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"removeSubtopic"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"removeSubtopicId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"removeSubtopic"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"removeSubtopicId"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<RemoveSubtopicMutation, RemoveSubtopicMutationVariables>;

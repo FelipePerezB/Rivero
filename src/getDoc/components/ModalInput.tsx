@@ -175,7 +175,7 @@ export default function ModalInput({
           )}
         </article>
 
-        <Button style="secondary" onClick={() => setModalState(true)}>
+        <Button  onClick={() => setModalState(true)}>
           <span> {!defaultValue?.options ? "Añadir" : "Reemplazar"}</span>
         </Button>
         <NewCompModal
@@ -299,7 +299,6 @@ export default function ModalInput({
           })}
         </div>
         <Button
-          style="small-active"
           onClick={() => {
             setElements([...elements, { ...objectValues }]);
           }}
@@ -318,7 +317,7 @@ export default function ModalInput({
     text: string;
   }) => {
     return (
-      <Button style="small-active" onClick={callback}>
+      <Button onClick={callback}>
         <span>{text}</span>
       </Button>
     );

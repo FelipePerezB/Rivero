@@ -8,7 +8,7 @@ export const ProgressVar = ({
   color?: string;
 }) => {
   return (
-    <div className={styles["progress-container"]}>
+    <div className="h-2 w-full bg-slate-100 rounded-full">
       <div
         style={{ width: `${progress}%`, background: color }}
         className={styles.progress}
@@ -30,7 +30,7 @@ export const CompletedProgress = ({
   const text = `${progress}% ${size === "lg" ? "completado" : ""}`
   return (
     <div className="w-full">
-      <span className={styles["completed-progress"]}>
+      <span className="flex gap-3 items-center">
         <ProgressVar color={color} progress={progress} />
         <span>{text}</span>
       </span>

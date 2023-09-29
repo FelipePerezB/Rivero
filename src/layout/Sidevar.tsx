@@ -17,8 +17,6 @@ import { useUser } from "@clerk/nextjs";
 import capFirst from "src/utils/capFirst";
 import Blur from "@components/modals/blur/blur";
 
-
-
 export default function Sidevar({
   visibility,
   setVisibility,
@@ -37,26 +35,30 @@ export default function Sidevar({
           visibility ? "-" : "-translate-x-96"
         } rounded-md p-4 h-[100dvh] w-80 bg-white fixed top-4 left-4 z-50 transition-transform duration-500`}
       >
-        {user?.username && (
-          <Link
-            className="flex items-center gap-3  p-2 hover:bg-slate-100 rounded-md"
-            href={"/profile"}
-          >
-            <img
-              alt="Perfil"
-              className="w-10 h-10 rounded-full"
-              src={user?.imageUrl}
-            ></img>
-            <div className="flex flex-col">
-              <span className="text-lg">
-                {(user?.username as string | undefined) &&
-                  capFirst(user?.username as string)}
-              </span>
-              <span className="text-xs border w-max p-0.5 rounded font-bold">{role}</span>
-            </div>
-          </Link>
+        {user?.firstName && (
+          <>
+            <Link
+              className="flex items-center gap-3  p-2 hover:bg-slate-100 rounded-md"
+              href={"/profile"}
+            >
+              <img
+                alt="Perfil"
+                className="w-10 h-10 rounded-full"
+                src={user?.imageUrl}
+              ></img>
+              <div className="flex flex-col">
+                <span className="text-lg">
+                  {(user?.firstName as string | undefined) &&
+                    capFirst(user?.firstName as string)}
+                </span>
+                <span className="text-xs border w-max p-0.5 rounded font-bold">
+                  {role}
+                </span>
+              </div>
+            </Link>
+            <div className="w-full h-0.5 bg-slate-100 my-1"></div>
+          </>
         )}
-        <div className="w-full h-0.5 bg-slate-100 my-1"></div>
         <section>
           <ul className="flex flex-col gap-1 text-slate-800 text-lg">
             <Option link={`/docs`} icon={faFolder} text="Documentos" />
@@ -70,7 +72,6 @@ export default function Sidevar({
             {role === "ADMIN" && (
               <Option link={`/edit`} icon={faPlus} text="Crear documentos" />
             )}
-            <Option icon={faMoon} text="Modo oscuro" />
           </ul>
           <div
             // className={styles["close-menu"]}

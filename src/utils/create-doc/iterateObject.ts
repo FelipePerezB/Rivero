@@ -19,7 +19,6 @@ const iterateObj = (
       if (children && Array.isArray(children)) {
         let result;
         children.forEach((child) => {
-          console.log(children)
           
           const childResult = iterateObj(expectedId, child, callback, depth);
           if (childResult) {

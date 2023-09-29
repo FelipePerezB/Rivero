@@ -6,9 +6,9 @@ import Modal from "@components/modals/modal/Modal";
 import StandardInput from "@components/inputs/StandardInput/StandardInput";
 import { useMutation } from "@apollo/client";
 import {
-  CreateGradeDocument,
-  GetGradesDocument,
-  GetGradesQuery,
+  CreateGroupDocument,
+  GetGroupsDocument,
+  GetGroupsQuery,
   GetUserDocument,
   GetUsersDocument,
   GetUsersQuery,
@@ -18,9 +18,9 @@ import toast from "react-hot-toast";
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import { client } from "src/service/client";
 import EditButton from "@components/button/editButton/EditButton";
-import updateGrade from "src/service/querys/grade/updateGrade";
+import updateGroup from "src/service/querys/grade/updateGrade";
 import { useRouter } from "next/router";
-import removeGrade from "src/service/querys/grade/removeGrade";
+import removeGroup from "src/service/querys/grade/removeGrade";
 import { getAuth } from "@clerk/nextjs/server";
 import InvitationBtns from "@components/button/invitationsBtns/InvitationBtns";
 
@@ -31,44 +31,48 @@ export const getServerSideProps = (async (context) => {
 
   const { userId } = getAuth(context.req);
   const { school } = context.query;
+
   if (!userId) return redirect;
   const {
     data: {
-      user: { role, schoolId },
+      user: { role, organizationId },
     },
     error,
   } = await client.query({
     query: GetUserDocument,
     variables: {
       where: {
+        
         externalId: userId,
       },
     },
-    fetchPolicy: "network-only"
+    fetchPolicy: "network-only",
   });
+  console.log(userId);
+
 
   if (!role || error) return redirect;
   if (!(role === Role.Admin || role === Role.Director)) return redirect;
-  if (role === Role.Director && Number(school) !== schoolId)
+  if (role === Role.Director && Number(school) !== organizationId)
     return {
       redirect: {
-        destination: `/dashboard/${schoolId}`,
+        destination: `/dashboard/${organizationId}`,
         permanent: false,
       },
     };
 
   const variables = {
     where: {
-      schoolId: {
+      organizationId: {
         equals: Number(school),
       },
     },
   };
   const {
-    data: { grades },
-    error: gradesError,
+    data: { groups },
+    error: groupsError,
   } = await client.query({
-    query: GetGradesDocument,
+    query: GetGroupsDocument,
     variables,
     fetchPolicy: "network-only",
   });
@@ -82,32 +86,32 @@ export const getServerSideProps = (async (context) => {
     fetchPolicy: "network-only",
   });
 
-  if (!grades || gradesError || !users || usersError) return redirect;
-  return { props: { data: { users, grades } } };
+  if (!groups || groupsError || !users || usersError) return redirect;
+  return { props: { data: { users, groups } } };
 }) satisfies GetServerSideProps<{
-  data: { users: GetUsersQuery["users"]; grades: GetGradesQuery["grades"] };
+  data: { users: GetUsersQuery["users"]; groups: GetGroupsQuery["groups"] };
 }>;
 
 export default function Dashboard({
-  data: { users, grades },
+  data: { users, groups },
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const router = useRouter();
   const { school } = router.query;
-  const [createGrade] = useMutation(CreateGradeDocument);
-  const [gradeModalState, setGradeModalState] = useState(false);
-  const [gradeInputState, setGradeInputState] = useState({
+  const [createGroup] = useMutation(CreateGroupDocument);
+  const [gradeModalState, setGroupModalState] = useState(false);
+  const [gradeInputState, setGroupInputState] = useState({
     grade: "",
   });
 
-  const addGrade = () => {
+  const addGroup = () => {
     if (!gradeInputState.grade) return;
     try {
       toast.promise(
-        createGrade({
+        createGroup({
           variables: {
-            createGradeInput: {
+            createGroupInput: {
               name: gradeInputState.grade,
-              School: {
+              Organization: {
                 connect: {
                   id: Number(school),
                 },
@@ -124,12 +128,12 @@ export default function Dashboard({
     } catch (error) {
       console.error(error);
     }
-    setGradeModalState(false);
+    setGroupModalState(false);
   };
 
   return (
     <Layout title="Dashboard">
-      {grades?.map(({ name, id }) => {
+      {groups?.map(({ name, id }) => {
         return (
           <Table
             key={name + "-table"}
@@ -145,9 +149,9 @@ export default function Dashboard({
                     isPublic={true}
                     value={name}
                     onUpdate={(name) =>
-                      updateGrade(Number(id), name, Number(school))
+                      updateGroup(Number(id), name, Number(school))
                     }
-                    onRemove={() => removeGrade(Number(id))}
+                    onRemove={() => removeGroup(Number(id))}
                     editMode={true}
                     label="curso"
                   />
@@ -159,16 +163,16 @@ export default function Dashboard({
                 </>
               ),
             }}
-            data={users
-              ?.filter(({ gradeId }) => gradeId === Number(id))
-              ?.map(({ username, email }) => [username, email])}
+            // data={users
+            //   ?.filter(({ gradeId }) => gradeId === Number(id))
+            //   ?.map(({ username, email }) => [username, email])}
           />
         );
       })}
-      <Button onClick={() => setGradeModalState(true)}>Agregar curso</Button>
+      <Button onClick={() => setGroupModalState(true)}>Agregar curso</Button>
       <Modal
         modalState={gradeModalState}
-        setModalState={setGradeModalState}
+        setModalState={setGroupModalState}
         title="Agregar curso"
       >
         <StandardInput
@@ -176,9 +180,7 @@ export default function Dashboard({
           dataKey="grade"
           placeholder="4° Medio A..."
         />
-        <Button onClick={addGrade}>
-          Agregar
-        </Button>
+        <Button onClick={addGroup}>Agregar</Button>
       </Modal>
     </Layout>
   );

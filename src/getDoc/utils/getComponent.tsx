@@ -5,9 +5,15 @@ export const childrenchenas = {
     expectedAns: "text",
     children: "child",
   },
-  Page: {
-    children: "children",
-  },
+  page: [
+    {
+      type: "children",
+      options: {
+        key: "children",
+        label: "hijos",
+      },
+    },
+  ],
 };
 
 // Fraction: {
@@ -23,6 +29,22 @@ export const childrenchenas = {
 
 export const uiSchemas: any = {
   box: [
+    {
+      type: "options",
+      options: {
+        key: "direction",
+        label: "Dirección",
+        options: ["row", "column"],
+      },
+    },
+    {
+      type: "options",
+      options: {
+        key: "align",
+        label: "Alinear",
+        options: ["start", "center", "end"],
+      },
+    },
     {
       type: "text",
       options: {
@@ -78,13 +100,15 @@ export const uiSchemas: any = {
       },
     },
   ],
-  Paragraph: {
-    text: "description",
-    indent: {
-      private: true,
-      type: "boolean",
+  paragraph: [
+    {
+      type: "rich-text",
+      options: {
+        key: "text",
+        label: "texto", 
+      },
     },
-  },
+  ],
   sle: [
     {
       type: "text",

@@ -23,8 +23,6 @@ export default function OptionsInput(props: props) {
     props.onChange(obj);
   };
 
-  console.log(!props.isLarge)
-
   return (props.options.join("").length <= 30 && !props.isLarge) ? (
     <SmallOptionsInput {...props} onChange={createFormData} />
   ) : (
@@ -40,7 +38,7 @@ function LargeOptionsInput(props: props) {
         attrs={{ list: id }}
         name={props.name}
         dataKey={props.dataKey}
-        onChange={props.onChange}
+        onChange={props?.onChange}
         type="text"
       />
       <datalist id={id}>

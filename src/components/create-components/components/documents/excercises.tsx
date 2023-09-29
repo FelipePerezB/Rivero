@@ -18,13 +18,11 @@ export default function excercises({
     }[];
   };
 }) {
-  console.log(id)
   return (
     <section data-component={id}>
       <Title options={{size: "h2", text: "Práctica"}} />
       <div className="flex flex-col gap-[0.8em] pb-[0.6em]">
         {children?.map((child, i) =>{ 
-          console.log(child)
           return (
           <GetComponent
             key={`child-${id}-${child.type}-${i}`}

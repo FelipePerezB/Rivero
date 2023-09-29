@@ -107,7 +107,7 @@ export default function ChildrenInput({
           })}
         </div>
       )}
-      <Button style="small-active" onClick={() => setModalState(true)}>
+      <Button onClick={() => setModalState(true)}>
         <span>Añadir hijo</span>
       </Button>
       <Modal

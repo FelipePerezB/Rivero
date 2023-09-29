@@ -32,7 +32,6 @@ export default function Question({
     setClassname(name);
     setCheck(false);
   }, [check]);
-  console.log(id)
   return (
     <div data-component={id} >
       <article>

@@ -56,7 +56,7 @@ export default function AccordionCard({
         </div>
         {children?.toString() && (
           <div ref={bodyRef}>
-            <div className="h-0.5 rounded-lg bg-slate-100"></div>
+            <div className="h-0.5 bg-gray-100 rounded-full"></div>
             {children}
           </div>
         )}

@@ -12,6 +12,5 @@ export default function TextInput({
   value: string;
   onChange: (value: { [key: string]: string }) => void;
 }) {
-  console.log(dataKey)
   return <StandardInput {...{ onChange, name: label, dataKey, value }} />;
 }

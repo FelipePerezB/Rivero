@@ -27,9 +27,9 @@ export default function Navar({
 
   return (
     <nav className="w-full">
-      <ul className="fixed z-30 top-0 w-full bg-gray-800 flex justify-between items-center p-3 text-white">
+      <ul className="fixed z-30 top-0 w-full flex justify-between items-center p-3 border-b bg-white">
         <li
-          className="flex cursor-pointer gap-2 text-xl items-center font-semibold"
+          className="flex cursor-pointer gap-2 text-xl items-center font-bold"
           onClick={() => router.back()}
         >
           {title && (
@@ -39,8 +39,11 @@ export default function Navar({
             </>
           )}
         </li>
-        <li className="flex gap-4 items-centertext-white">
+        <li className="flex gap-2 items-cente">
           {navBtns?.map((btn) => btn)}
+          <CircleButton>
+            <FontAwesomeIcon size="lg" icon={faMoon} />
+          </CircleButton>
           <CircleButton onClick={() => setVisibility(true)}>
             <FontAwesomeIcon size="lg" icon={faBars} />
           </CircleButton>

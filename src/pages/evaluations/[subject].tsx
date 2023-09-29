@@ -1,6 +1,4 @@
 import Card from "@components/Card";
-import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import Layout from "src/layout/Layout";
 import styles from "@styles/Evaluations.module.css";
@@ -16,8 +14,20 @@ import {
   ChartData,
 } from "chart.js";
 import NavigationCard from "@components/cards/navigationCard/NavigationCard";
+import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from "next";
+import {
+  GetNotesDocument,
+  GetNotesQuery,
+  GetSubjectsPathsDocument,
+  InputMaybe,
+  Types,
+} from "src/gql/graphql";
+import { Context } from "@apollo/client";
+import { client } from "src/service/client";
 
-export default function Evaluations() {
+export default function Evaluations({
+  data,
+}: InferGetStaticPropsType<typeof getStaticProps>) {
   ChartJS.register(
     CategoryScale,
     Legend,
@@ -61,7 +71,14 @@ export default function Evaluations() {
       <section
         style={{ display: "flex", flexDirection: "column", gap: "12px" }}
       >
-        <NavigationCard href="/stats/1">Ensayo M1 N°2726</NavigationCard>
+        {data.notes.map(({ File }, i) => (
+          <NavigationCard
+            key={File?.title + "-evaluation-" + i}
+            href={`/stats/${File?.id}`}
+          >
+            {File?.title}
+          </NavigationCard>
+        ))}
       </section>
       <section>
         <Card>
@@ -86,3 +103,46 @@ export default function Evaluations() {
     </Layout>
   );
 }
+
+export const getStaticPaths: GetStaticPaths = async () => {
+  const { data, error } = await client.query({
+    query: GetSubjectsPathsDocument,
+    fetchPolicy: "network-only",
+  });
+  if (!data?.subjects || error?.name) throw new Error("Failed to request");
+  return {
+    paths: data.subjects?.map((subject) => ({
+      params: {
+        path: subject?.id,
+        subject: subject?.id,
+      },
+    })),
+    fallback: true,
+  };
+};
+
+export const getStaticProps: GetStaticProps<{
+  data: GetNotesQuery;
+}> = async (context: Context) => {
+  const { subject: id } = context?.params;
+  if (!id) throw new Error("Failed to request");
+  const { data, error } = await client.query({
+    query: GetNotesDocument,
+    variables: {
+      where: {
+        subjectId: {
+          equals: 1,
+        },
+        type: {
+          equals: "EVALUATION" as InputMaybe<Types>,
+        },
+      },
+    },
+    fetchPolicy: "network-only",
+  });
+  if (!data.notes.length || error?.name) throw new Error("Failed to request");
+  return {
+    props: { data },
+    revalidate: 60 * 60 * 24,
+  };
+};

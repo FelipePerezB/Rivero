@@ -34,6 +34,7 @@ export default function Subjects({
     setStats(JSON.parse(strStats));
   }, []);
 
+
   const query = async ({
     name,
     color = "#0c0e13",
@@ -52,7 +53,6 @@ export default function Subjects({
       success: `¡Asignatura "${name}" creado correctamente!`,
       error: `No se ha logrado crear la asignatura ${name}`,
     });
-    console.log({ name, color });
   };
 
   const [editMode, setEditMode] = useState(false);
@@ -61,7 +61,7 @@ export default function Subjects({
     {
       title: "AA",
       buttons: [
-        { children: "Crear", style: "small-active", onClick: query },
+        { children: "Crear", onClick: query },
       ] as ButtonAttrs[],
       inputs: [
         { name: "Nombre", dataKey: "name" },

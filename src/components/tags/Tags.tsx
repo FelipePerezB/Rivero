@@ -1,7 +1,7 @@
 import capFirst from "src/utils/capFirst";
 
 const Tag = ({ children }: { children: JSX.Element | string }) => (
-  <li className="border rounded-sm px-1 py-0.5 text-slate-700 font-light text-xs">
+  <li className="border rounded px-1 py-0.5 font-light text-xs">
     {children}
   </li>
 );

@@ -5,9 +5,6 @@ query GetSubjects {
     color
     name
     id
-    _count {
-      Docs
-    }
     Topics {
       name
     }
@@ -16,9 +13,10 @@ query GetSubjects {
 
 query GetUser($where: UserWhereUniqueInput!) {
   user(where: $where) {
-    username
+    name
+    lastname
     role
-    schoolId
+    organizationId
     email
     externalId
     id
@@ -31,26 +29,42 @@ query GetSubjectsPaths {
   }
 }
 
-query GetSubject($subjectId: Int!) {
+query GetSubject($subjectId: Int!, $topicId: Int!) {
   subject(id: $subjectId) {
     id
     name
     color
     Topics {
+      name
+      id
+    }
+  }
+  topicAndSubtopic(id: $topicId) {
+    name
+    id
+    Subtopics {
+      _count {
+        Notes
+      }
       id
       name
-      _count {
-        Docs
-      }
-      Subtopics {
-        id
-        name
-        Docs {
-          id
-          externalId
+      Notes {
+        type
+        File {
           title
+          externalId
+          id
         }
       }
+    }
+  }
+}
+
+query GetNotes($where: NoteWhereInput) {
+  notes(where: $where) {
+    File {
+      id
+      title
     }
   }
 }
@@ -80,38 +94,38 @@ query GetSubject($subjectId: Int!) {
 query GetUserByEmail($email: String!) {
   userByEmail(email: $email) {
     email
-    gradeId
     id
-    username
+    lastname
+    name
     role
   }
 }
 
 query GetUsers($where: UserWhereInput) {
   users(where: $where) {
-    username
-    gradeId
+    lastname
+    name
     role
     email
   }
 }
 
-query GetSchools {
-  schools {
+query GetOrganization {
+  organizations {
     id
     name
   }
 }
 
-query GetGrades($where: GradeWhereInput) {
-  grades(where: $where) {
+query GetGroups($where: GroupWhereInput) {
+  groups(where: $where) {
     id
     name
   }
 }
 
-mutation CreateGrade($createGradeInput: GradeCreateInput!) {
-  createGrade(createGradeInput: $createGradeInput) {
+mutation CreateGroup($createGroupInput: GroupCreateInput!) {
+  createGroup(createGroupInput: $createGroupInput) {
     name
   }
 }
@@ -130,18 +144,18 @@ mutation CreateSubtopic($createSubtopicInput: SubtopicCreateInput!) {
   }
 }
 
-mutation CreateDoc($createDocInput: DocCreateInput!) {
-  createDoc(createDocInput: $createDocInput) {
-    id
-  }
-}
+# mutation CreateDoc($createDocInput: DocCreateInput!) {
+#   createDoc(createDocInput: $createDocInput) {
+#     id
+#   }
+# }
 
 # query LoginUser($user: LoginUserInput!) {
 #   login(user: $user) {
 #     username
 #     email
 #     id
-#     gradeId
+#     groupId
 #     role
 #   }
 # }
@@ -152,11 +166,12 @@ mutation CreateDoc($createDocInput: DocCreateInput!) {
 #   }
 # }
 
-mutation UpdateDoc($updateDocId: Float!, $updateDocInput: DocUpdateInput!) {
-  updateDoc(id: $updateDocId, updateDocInput: $updateDocInput) {
-    id
-  }
-}
+# mutation UpdateDoc($updateDocId: Float!, $updateDocInput: DocUpdateInput!) {
+#   updateDoc(id: $updateDocId, updateDocInput: $updateDocInput) {
+#     id
+#   }
+# }
+
 mutation UpdateTopic(
   $updateTopicId: Float!
   $updateTopicInput: TopicUpdateInput!
@@ -179,11 +194,11 @@ mutation UpdateSubtopic(
   }
 }
 
-mutation UpdateGrade(
-  $updateGradeId: Float!
-  $updateGradeInput: GradeUpdateInput!
+mutation UpdateGroup(
+  $updateGroupId: Float!
+  $updateGroupInput: GroupUpdateInput!
 ) {
-  updateGrade(id: $updateGradeId, updateGradeInput: $updateGradeInput) {
+  updateGroup(id: $updateGroupId, updateGroupInput: $updateGroupInput) {
     id
     name
   }
@@ -216,7 +231,8 @@ mutation createUser($createUserInput: UserCreateInput!) {
 mutation RemoveUser($where: UserWhereUniqueInput!) {
   removeUser(where: $where) {
     id
-    username
+    name
+    lastname
   }
 }
 
@@ -227,8 +243,8 @@ mutation RemoveSubject($removeSubjectId: Int!) {
   }
 }
 
-mutation RemoveGrade($removeGradeId: Int!) {
-  removeGrade(id: $removeGradeId) {
+mutation RemoveGroup($removeGroupId: Int!) {
+  removeGroup(id: $removeGroupId) {
     id
     name
   }
@@ -243,32 +259,32 @@ mutation UpdateUser(
   }
 }
 
-query GetDoc($where: DocWhereUniqueInput!) {
-  doc(where: $where) {
-    content
-    title
-    privacity
-    externalId
-    id
-    type
-    Subject {
-      name
-    }
-    Topic {
-      name
-    }
-    Subtopic {
-      name
-    }
-  }
-}
+# query GetDoc($where: DocWhereUniqueInput!) {
+#   doc(where: $where) {
+#     content
+#     title
+#     privacity
+#     externalId
+#     id
+#     type
+#     Subject {
+#       name
+#     }
+#     Topic {
+#       name
+#     }
+#     Subtopic {
+#       name
+#     }
+#   }
+# }
 
-mutation RemoveDoc($removeDocId: Int!) {
-  removeDoc(id: $removeDocId) {
-    title
-    id
-  }
-}
+# mutation RemoveDoc($removeDocId: Int!) {
+#   removeDoc(id: $removeDocId) {
+#     title
+#     id
+#   }
+# }
 
 mutation RemoveTopic($removeTopicId: Int!) {
   removeTopic(id: $removeTopicId) {

@@ -121,7 +121,7 @@ export default function Check() {
         />{" "}
       </Card>
       {optionGroups.map((group, i) => group)}
-      <Button style={"small-active"}>Revisar</Button>
+      <Button>Revisar</Button>
     </Layout>
   );
 }

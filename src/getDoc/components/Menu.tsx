@@ -47,7 +47,7 @@ export default function Menu({
           iterateObj(id, documentComponent, getComponent);
         }
       };
-  }, [divRef?.current]);
+  }, [divRef?.current, documentComponent]);
 
   useEffect(() => {
     setMenuState(true);
@@ -61,9 +61,7 @@ export default function Menu({
 
   const edit = (callback: () => void) => {
     if (!documentComponent?.id) return;
-    console.log(documentComponent);
     callback();
-    console.log(documentComponent);
     setDocument({ ...documentComponent });
   };
 

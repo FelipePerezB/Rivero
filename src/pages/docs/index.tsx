@@ -6,6 +6,8 @@ import { GetSubjectsDocument, GetSubjectsQuery } from "src/gql/graphql";
 import useGetLocalDocs from "src/hooks/useGetLocalDocs";
 import SubjectsCards from "@components/containers/subjectsCards/SubjectsCards";
 import { useEffect, useState } from "react";
+import DocCard from "@components/DocCard";
+import DocsCards from "@components/containers/docsCards/docs-cards";
 
 export default function Docs({
   data,
@@ -26,17 +28,11 @@ export default function Docs({
       <Recomendations title="Asignaturas" link="/docs/subjects">
         <SubjectsCards stats={stats} subjecsData={data} />
       </Recomendations>
-      {/* {!!savedDocs?.length && (
+      {!!savedDocs?.length && (
         <Recomendations title="Guardados" link="/">
-          {savedDocs.map(({ type, options }) => (
-            <DocCard
-              href={"/docs/view/" + options.docId}
-              key={options.title + "-save-doc"}
-              doc={{ type, options }}
-            />
-          ))}
+          <DocsCards docs={savedDocs}/>
         </Recomendations>
-      )} */}
+      )}
     </Layout>
   );
 }

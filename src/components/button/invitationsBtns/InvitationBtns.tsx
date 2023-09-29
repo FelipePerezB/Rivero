@@ -59,7 +59,7 @@ export default function InvitationBtns({
         />
       </CircleButton>
       <Modal {...{ modalState, setModalState, title: "Invitar usuarios" }}>
-        <Form
+        {/* <Form
           {...{
             data: [
               {
@@ -81,7 +81,7 @@ export default function InvitationBtns({
               },
             ],
           }}
-        />
+        /> */}
         {!!invitationsArray.length && (
           <Table
             head={{

@@ -19,7 +19,7 @@ export default function Modal({
     createPortal(
       <div
         key={title}
-        className={`flex  z-40 fixed top-0 left-0 justify-center items-center w-full h-full`}
+        className={`flex  z-40 fixed top-0 left-0 justify-center items-center w-full h-full print:hidden`}
       >
         <Blur {...{ setVisibility: setModalState, visibility: modalState }} />
         <div
@@ -38,7 +38,7 @@ export default function Modal({
             </span>
           </div>
           <div className="w-full h-[1px] bg-gray-300 my-2.5 rounded-full"></div>
-          <div className="flex flex-col gap-3 overflow-y-scroll overflow-x-hidden max-h-96">{children}</div>
+          <div className="flex flex-col gap-3 overflow-y-scroll overflow-x-hidden max-h-96 p-1">{children}</div>
         </div>
       </div>,
       document?.querySelector("#modal") as HTMLDivElement

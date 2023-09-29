@@ -37,7 +37,6 @@ export default function Page({
     }[];
   };
 }) {
-  console.log(lastPage)
   return (
     <div
       className={`bg-white border p-[1.6em] aspect-[210/297] w-full shadow-md hover:shadow-xl print:shadow-none ${

@@ -11,6 +11,7 @@ const getInputs = (
   const schemas = getSchema(type);
   if (schemas?.length) {
     return schemas?.map(({ options, type }, i) => {
+      if(type === "children") return <></>
       const value = attrs?.options[options.key];
       return (
         <GetComponent

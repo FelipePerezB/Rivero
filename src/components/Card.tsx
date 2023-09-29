@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { ReactNode } from "react";
+import { CSSProperties, ReactNode } from "react";
 import Link from "next/link";
 
 export default function Card({
@@ -7,32 +7,34 @@ export default function Card({
   href,
   className,
   interactive = false,
-  size = "lg",
+  styles,
+  // size = "lg",
 }: {
-  size?: "lg" | "sm";
+  styles?: CSSProperties,
+  // size?: "lg" | "sm";
   className?: string;
   styled?: boolean;
   children?: ReactNode;
   href?: string;
   interactive?: boolean;
 }) {
-  const sizeVariants = {
-    lg: "w-full",
-    sm: "w-max",
-  };
+  // const sizeVariants = {
+  //   lg: "w-full",
+  //   sm: "w-max",
+  // };
 
-  const styles = `${sizeVariants[size]} ${className} bg-white p-2.5 rounded-sm shadow-gray-300/30 shadow-lg text-slate-800 border border-gray-200  ${
+  const nodeClassName = `${className} w-full sm:w-max bg-white p-2.5 rounded-md shadow-gray-100 shadow text-slate-800 border border-gray-250  ${
     interactive
-      ? "cursor-pointer hover:shadow-xl transition-all duration-300"
-      : ""
+      ? "cursor-pointer hover:scale-[0.975] transition-all duration-200"
+      : "duration-100"
   }  `;
 
 
   return href ? (
-    <Link className={styles} href={href}>
+    <Link style={styles} className={nodeClassName} href={href}>
       {children}
     </Link>
   ) : (
-    <article className={styles}>{children}</article>
+    <article style={styles} className={nodeClassName}>{children}</article>
   );
 }

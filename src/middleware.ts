@@ -5,7 +5,7 @@
 // See https://clerk.com/docs/nextjs/middleware for more information about configuring your middleware
 export default authMiddleware({
   // publicRoutes:['/'],
-  ignoredRoutes: ["/", "/docs/edit/2", "/docs/view/6", "/dashboard", "/api/webhook"],
+  ignoredRoutes: ["/", "/docs/edit/2", "/docs/view/6", "/dashboard", "/api/webhook", "docs/edit/1"],
 });
 
 export const config = {

@@ -3,7 +3,6 @@ import GetComponent from "./get-component";
 import { Component } from "src/pages/docs/edit/[id]";
 
 export default function Preview({ attrs }: { attrs: Component }) {
-  console.log(attrs)
   const node = useMemo(
     () => (
       <GetComponent attrs={{ ...attrs }} folder="documents" name={attrs.type} />

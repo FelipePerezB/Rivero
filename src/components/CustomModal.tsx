@@ -48,7 +48,6 @@ export default function CustomModal({
       </ul>
       {options && (
         <Button
-          style="primary"
           onClick={() => {
             callback && callback(values);
           }}

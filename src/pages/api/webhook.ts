@@ -9,6 +9,7 @@ import {
   RemoveUserDocument,
   Role,
   UpdateUserDocument,
+  UserCreateInput,
 } from "src/gql/graphql";
 
 const webhookSecret = process.env.WEBHOOK_SECRET;
@@ -37,20 +38,23 @@ export default async function handler(
   if (eventType === "user.created" || eventType === "user.updated") {
     const {
       id,
-      username,
+      last_name,
+      first_name,
       email_addresses,
-      public_metadata: { gradeId, schoolId, role },
+      public_metadata: { groups, organizationId, role },
     } = evt.data;
     if (!id) {
       res.status(400).json({});
       return;
     }
+    const userGroups = groups as number[];
     if (
       !id ||
-      !username ||
+      !last_name ||
+      !first_name ||
       !email_addresses[0]?.email_address ||
-      !gradeId ||
-      !schoolId ||
+      !groups ||
+      !organizationId ||
       !role
     ) {
       res.status(400).json({});
@@ -58,21 +62,24 @@ export default async function handler(
     }
 
     const body = {
-      email: email_addresses[0].email_address as string,
-      username,
-      externalId: id,
-      Grade: {
+      lastname: last_name,
+      name: first_name,
+      Organization: {
         connect: {
-          id: gradeId as number,
+          id: Number(organizationId),
         },
+      },
+      email: email_addresses[0].email_address,
+      externalId: id,
+      Group: {
+        connect: userGroups.map((id) => ({
+          connect: {
+            id,
+          },
+        })),
       },
       role: role as Role,
-      School: {
-        connect: {
-          id: schoolId as number,
-        },
-      },
-    };
+    } as UserCreateInput;
     if (eventType === "user.created") {
       const { data, errors } = await client.mutate({
         mutation: CreateUserDocument,
@@ -91,11 +98,11 @@ export default async function handler(
         mutation: UpdateUserDocument,
         variables: {
           updateUserInput: {
-            username: {
-              set: username,
+            lastname: {
+              set: last_name,
             },
-            Grade: body.Grade,
-            School: body.School,
+            Group: body.Group,
+            Organization: body.Organization,
             role: {
               set: body.role,
             },
