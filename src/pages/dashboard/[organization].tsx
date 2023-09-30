@@ -30,7 +30,7 @@ export const getServerSideProps = (async (context) => {
   };
 
   const { userId } = getAuth(context.req);
-  const { school } = context.query;
+  const { organization } = context.query;
 
   if (!userId) return redirect;
   const {
@@ -42,7 +42,6 @@ export const getServerSideProps = (async (context) => {
     query: GetUserDocument,
     variables: {
       where: {
-        
         externalId: userId,
       },
     },
@@ -50,10 +49,9 @@ export const getServerSideProps = (async (context) => {
   });
   console.log(userId);
 
-
   if (!role || error) return redirect;
   if (!(role === Role.Admin || role === Role.Director)) return redirect;
-  if (role === Role.Director && Number(school) !== organizationId)
+  if (role === Role.Director && Number(organization) !== organizationId)
     return {
       redirect: {
         destination: `/dashboard/${organizationId}`,
@@ -64,7 +62,7 @@ export const getServerSideProps = (async (context) => {
   const variables = {
     where: {
       organizationId: {
-        equals: Number(school),
+        equals: Number(organization),
       },
     },
   };
@@ -96,7 +94,7 @@ export default function Dashboard({
   data: { users, groups },
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const router = useRouter();
-  const { school } = router.query;
+  const { organization } = router.query;
   const [createGroup] = useMutation(CreateGroupDocument);
   const [gradeModalState, setGroupModalState] = useState(false);
   const [gradeInputState, setGroupInputState] = useState({
@@ -113,7 +111,7 @@ export default function Dashboard({
               name: gradeInputState.grade,
               Organization: {
                 connect: {
-                  id: Number(school),
+                  id: Number(organization),
                 },
               },
             },
@@ -133,7 +131,7 @@ export default function Dashboard({
 
   return (
     <Layout title="Dashboard">
-      {groups?.map(({ name, id }) => {
+      {groups?.map(({ name, id, Users }) => {
         return (
           <Table
             key={name + "-table"}
@@ -158,14 +156,15 @@ export default function Dashboard({
                   <InvitationBtns
                     gradeId={Number(id)}
                     role={Role.Student}
-                    schoolId={Number(school)}
+                    organizationId={Number(organization)}
                   />
                 </>
               ),
             }}
-            // data={users
-            //   ?.filter(({ gradeId }) => gradeId === Number(id))
-            //   ?.map(({ username, email }) => [username, email])}
+            data={Users?.map(({ name, lastname, email }) => [
+              `${name} ${lastname}`,
+              email,
+            ])}
           />
         );
       })}

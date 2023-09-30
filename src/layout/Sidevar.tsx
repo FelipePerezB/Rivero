@@ -64,7 +64,7 @@ export default function Sidevar({
             <Option link={`/docs`} icon={faFolder} text="Documentos" />
             {(role === "DIRECTOR" || role === "ADMIN") && (
               <Option
-                link={`/dashboard/${user?.publicMetadata?.schoolId}`}
+                link={`/dashboard/${user?.publicMetadata?.organizationId}`}
                 icon={faChartSimple}
                 text="Dashboard"
               />

@@ -1,11 +1,14 @@
+import Button from "@components/Button";
 import Table from "@components/Table";
 import CircleButton from "@components/button/circle-button/circle-button";
 import Form from "@components/forms/simpleForm/SimpleForm";
+import StandardInput from "@components/inputs/StandardInput/StandardInput";
 import Modal from "@components/modals/modal/Modal";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState } from "react";
 import { Role } from "src/gql/graphql";
+import api from "src/service/api";
 
 const regexEmail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
@@ -16,20 +19,21 @@ type invitationStatus = {
 
 export default function InvitationBtns({
   gradeId,
-  schoolId,
+  organizationId,
   role,
 }: {
   gradeId: number;
-  schoolId: number;
+  organizationId: number;
   role: Role;
 }) {
   const [modalState, setModalState] = useState(false);
   const [invitations, setInvitations] = useState<invitationStatus>({});
+  const [emails, setEmails] = useState("");
   const invitationsArray = Object.entries(invitations).map(
     ([email, status]) => [email, status]
   );
 
-  const invitate = ({ emails }: { emails: string }) => {
+  const invitate = () => {
     const emailsArray = emails.split(",")?.map((email) => email.trim());
     emailsArray.forEach(async (email) => {
       const isValid = regexEmail.test(email);
@@ -38,6 +42,17 @@ export default function InvitationBtns({
       Object.assign(invitations, { [email]: status });
       setInvitations({ ...invitations });
       try {
+        const data = await api("auth/sendInvitation", {
+          method: "POST",
+          body: JSON.stringify({
+            email,
+            organizationId,
+            groups: [gradeId],
+            role,
+          }),
+        });
+        console.log({ email, organizationId, groups: [gradeId], role });
+        console.log(data);
         status = "Enviada";
       } catch (error) {
         status = "Fallida";
@@ -58,29 +73,13 @@ export default function InvitationBtns({
         />
       </CircleButton>
       <Modal {...{ modalState, setModalState, title: "Invitar usuarios" }}>
-        {/* <Form
-          {...{
-            data: [
-              {
-                title: "Invitar",
-                inputs: [
-                  {
-                    name: "Correos",
-                    dataKey: "emails",
-                    placeholder: "felipe@gmail.com, pedro@gmail.com...",
-                  },
-                ],
-                buttons: [
-                  {
-                    children: "Invitar",
-                    style: "small-active",
-                    onClick: invitate,
-                  },
-                ],
-              },
-            ],
-          }}
-        /> */}
+        <StandardInput
+          onChange={({ emails }) => setEmails(emails)}
+          name="Correos"
+          dataKey="emails"
+          placeholder="felipe@gmail.com, alicia@gmail.com"
+        />
+        <Button onClick={invitate}>Invitar</Button>
         {!!invitationsArray.length && (
           <Table
             head={{
@@ -91,7 +90,7 @@ export default function InvitationBtns({
             }}
             data={invitationsArray}
           />
-          )}
+        )}
       </Modal>
     </>
   );

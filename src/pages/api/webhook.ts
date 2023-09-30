@@ -73,13 +73,12 @@ export default async function handler(
       externalId: id,
       Group: {
         connect: userGroups.map((id) => ({
-          connect: {
-            id,
-          },
+          id,
         })),
       },
       role: role as Role,
     } as UserCreateInput;
+    console.log(body);
     if (eventType === "user.created") {
       const { data, errors } = await client.mutate({
         mutation: CreateUserDocument,
@@ -87,6 +86,7 @@ export default async function handler(
           createUserInput: body,
         },
       });
+      console.log(data, errors);
       if (errors || !data) {
         res.status(400).json(errors);
         return;

@@ -3,7 +3,8 @@ import Layout from "src/layout/Layout";
 import styles from "@styles/Home.module.css";
 import { useEffect, useState } from "react";
 import { UserButton, useAuth } from "@clerk/nextjs";
-import axios from "axios";
+import InvitationBtns from "@components/button/invitationsBtns/InvitationBtns";
+import { Role } from "src/gql/graphql";
 
 export default function Home() {
   // const session = useSession();
@@ -36,6 +37,7 @@ export default function Home() {
   return (
     <>
       <Layout>
+        <InvitationBtns gradeId={1} role={Role.Student} organizationId={1} />
         <UserButton afterSignOutUrl="/" />
         {/* <Recomendations  setState={} filters={[]} title="Ultimos puntajes" link="/stats">
           <Scores scores={stats} />

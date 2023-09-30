@@ -121,6 +121,14 @@ query GetGroups($where: GroupWhereInput) {
   groups(where: $where) {
     id
     name
+    Users {
+      name
+      lastname
+      externalId
+      role
+      externalId
+      email
+    }
   }
 }
 
