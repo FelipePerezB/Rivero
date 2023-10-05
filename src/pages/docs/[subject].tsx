@@ -6,6 +6,8 @@ import {
   GetSubjectDocument,
   GetSubjectQuery,
   GetSubjectsPathsDocument,
+  Role,
+  Types,
 } from "src/gql/graphql";
 import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from "next";
 import Options from "@components/Options";
@@ -29,11 +31,15 @@ import removeDoc from "src/service/querys/doc/removeDoc";
 import createSubtopic from "src/service/querys/subtopic/createSubtopic";
 import createDoc from "src/service/querys/doc/createDoc";
 import { useUser } from "@clerk/nextjs";
+import { useRouter } from "next/router";
+import generateRandomId from "src/utils/generateRandomId";
+import { IdLenght } from "src/models/document.model";
 
 export default function Docs({
   data,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   const { user } = useUser();
+  const router = useRouter();
   const role = user?.publicMetadata?.role as string | undefined;
   const [editMode, setEditMode] = useState(false);
 
@@ -47,11 +53,26 @@ export default function Docs({
     Topics?.find(({ name }) => name?.toLowerCase() === option?.toLowerCase()) ||
     {};
 
+  const documentsCount = subtopics
+    ?.map(({ _count }) => _count?.Notes)
+    .reduce((a, b) => a + b);
+
+  const practiceId = data?.subject?.Notes?.find(({ type }) => {
+    type === Types.Practice;
+  })?.File?.externalId;
+
+  const practice = () => {
+    router.push(`/practice/${practiceId}`);
+  };
+  const createPractice = () => {
+    router.push(`/practice/${generateRandomId(IdLenght.lg)}`);
+  };
+
   return (
     <Layout title={capFirst(subject)}>
       <NavigationCard href={`/evaluations/${id}`}>Evaluaciones</NavigationCard>
       <Options {...{ option, setOption, options }} />
-      <ProgressCard {...{ color, subject, topic }}>
+      <ProgressCard {...{ color, subject, topic, count: documentsCount }}>
         <div className="flex gap-2 items-center">
           <span>{topic && capFirst(topic)}</span>
           {topicId && (
@@ -74,7 +95,7 @@ export default function Docs({
           head={
             <AccordionHead>
               {capFirst(name)}
-              {/* {!!user?.id && (
+              {!!user?.id && (
                 <EditButton
                   label="subtopico"
                   childLabel="documento"
@@ -82,30 +103,24 @@ export default function Docs({
                     updateSubtopicName(Number(subtpicId), name)
                   }
                   onRemove={() => removeSubtopic(Number(subtpicId))}
-                  onCreate={(name) =>
-                    createDoc(
-                      name,
-                      Number(id),
-                      Number(topicId),
-                      Number(subtpicId),
-                      user.id
-                    )
-                  }
+                  onCreate={(name) => createDoc(name, Number(id), user.id)}
                   {...{ editMode, value: name }}
                 />
-              )} */}
+              )}
             </AccordionHead>
           }
         >
-          {Notes?.map(({ File, type }) => (
-            <>
-              {type === "DOCUMENT" && (
+          {Notes?.map(
+            ({ File, type, id }) =>
+              type === Types.Document && (
                 <AccordionChild key={"accordion-child" + File?.title}>
                   <div className="flex justify-between items-center">
                     <Link href={`view/${File?.externalId}`}>{File?.title}</Link>
-                    {/* {editMode && (
+                    {editMode && (
                       <EditButton
-                        onUpdate={(name) => updateDocName(Number(id), name)}
+                        onUpdate={(name) =>
+                          updateDocName(Number(File?.id), name)
+                        }
                         onRemove={() => removeDoc(Number(id))}
                         {...{
                           editMode,
@@ -113,16 +128,18 @@ export default function Docs({
                           value: File?.title,
                         }}
                       />
-                    )} */}
+                    )}
                   </div>
                 </AccordionChild>
-              )}
-            </>
-          ))}
+              )
+          )}
         </AccordionCard>
       ))}
       <Buttons>
-        <Button>Prácticar</Button>
+        {practiceId && <Button onClick={practice}>Prácticar</Button>}
+        {!practiceId && role === Role.Admin && (
+          <Button onClick={createPractice}>Crear práctica</Button>
+        )}
         {role === "ADMIN" && (
           <Button color="white" onClick={() => setEditMode(!editMode)}>
             {!editMode ? "Editar" : "Deshabilitar edición"}

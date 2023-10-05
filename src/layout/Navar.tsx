@@ -27,7 +27,7 @@ export default function Navar({
 
   return (
     <nav className="w-full">
-      <ul className="fixed z-30 top-0 w-full flex justify-between items-center p-3 border-b bg-white">
+      <ul className="fixed z-30 top-0 w-full flex justify-between items-center p-3 border-b border-gray-300">
         <li
           className="flex cursor-pointer gap-2 text-xl items-center font-bold"
           onClick={() => router.back()}

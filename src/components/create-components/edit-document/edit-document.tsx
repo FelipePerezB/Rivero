@@ -4,22 +4,29 @@ import CircleButton from "@components/button/circle-button/circle-button";
 import OptionsInput from "@components/inputs/OptionsInput/OptionsInput";
 import StandardInput from "@components/inputs/StandardInput/StandardInput";
 import Modal from "@components/modals/modal/Modal";
-import { faBars, faShare } from "@fortawesome/free-solid-svg-icons";
+import { faBars, faShare, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { ReactNode, useState } from "react";
 import Image from "next/image";
 import { useUser } from "@clerk/nextjs";
 import Sidevar from "src/layout/Sidevar";
-import capFirst from "src/utils/capFirst";
 import Options from "@components/Options";
 import { Component } from "src/pages/docs/edit/[id]";
 import { useRouter } from "next/router";
 import { hydrateJSON } from "src/utils/create-doc/hydrate.JSON";
+import {
+  Privacity,
+  RemoveFileDocument,
+  UpsertFileDocument,
+} from "src/gql/graphql";
+import { DocumentJSON } from "src/models/document.model";
+import { client } from "src/service/client";
+import toast from "react-hot-toast";
 
 export type configAttrs = {
   title: string;
   id: string;
-  privacity: "private" | "public";
+  privacity: Privacity;
   content: Component;
 };
 function removeIdFromObject(obj: Component) {
@@ -40,13 +47,13 @@ function removeIdFromJson(jsonStr: string) {
 }
 
 const ConfigForm = ({
-  config: { privacity },
+  privacity,
   document,
-  setDocument,
+  setSettings,
 }: {
   document?: Component;
-  config: configAttrs;
-  setDocument: React.Dispatch<React.SetStateAction<Component | undefined>>;
+  privacity: Privacity;
+  setSettings: React.Dispatch<React.SetStateAction<DocumentJSON>>;
 }) => {
   const optimizedContent = removeIdFromJson(JSON.stringify(document));
   const [content, setContent] = useState("");
@@ -56,9 +63,18 @@ const ConfigForm = ({
     <>
       <OptionsInput
         value={privacity}
-        onChange={() => {}}
+        dataKey="privacity"
+        onChange={({ privacity }) =>
+          setSettings((settings) => ({
+            ...settings,
+            file: {
+              ...settings.file,
+              privacity,
+            },
+          }))
+        }
         name="Privacidad"
-        options={["private", "public"]}
+        options={Object.values(Privacity)}
       />
       <StandardInput
         value={`https:/rivero.academy/view/${id}`}
@@ -72,9 +88,17 @@ const ConfigForm = ({
         onChange={({ content }) => setContent(content)}
       />
       <Buttons>
-        <Button onClick={print}>Descargar</Button>
+        <Button onClick={()=>print()}>Descargar</Button>
         <Button
-          onClick={() => setDocument(hydrateJSON(JSON.parse(content)))}
+          onClick={() =>
+            setSettings((settings) => ({
+              ...settings,
+              file: {
+                ...settings.file,
+                content: hydrateJSON(JSON.parse(content)),
+              },
+            }))
+          }
           color="white"
         >
           Reemplazar
@@ -85,33 +109,138 @@ const ConfigForm = ({
 };
 
 const Navar = ({
-  id,
-  title,
-  document,
+  settings,
+  setSettings,
   setVisibility,
   setModalState,
 }: {
-  id: string;
-  document?: Component;
-  title: string;
+  setSettings: React.Dispatch<React.SetStateAction<DocumentJSON>>;
+  settings: DocumentJSON;
   setVisibility: React.Dispatch<React.SetStateAction<boolean>>;
   setModalState: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
+  const {
+    file: { externalId, title, content, privacity },
+    subject,
+    subtopic,
+    topic,
+  } = settings ?? { file: {} };
   const { user } = useUser();
+  const router = useRouter();
+
+  const onRemove = async () => {
+    toast.promise(
+      client
+        .mutate({
+          mutation: RemoveFileDocument,
+          variables: {
+            where: {
+              externalId,
+            },
+          },
+        })
+        .then(() => {
+          localStorage.removeItem("doc-" + externalId);
+          router.push("/edit");
+        }),
+      {
+        error: "No se ha logrado eliminar",
+        loading: "Eliminando...",
+        success: "¡Eliminado!",
+      }
+    );
+  };
+
+  const remove = async () => {
+    toast((t) => (
+      <div className="flex flex-col gap-2">
+        <span>¿Seguro que quiere eliminar el documento?</span>
+        <Button
+          onClick={() => {
+            onRemove();
+            toast.dismiss(t.id);
+          }}
+          color={"red"}
+        >
+          Eliminar
+        </Button>
+      </div>
+    ));
+  };
+
   const onSave = () => {
-    id &&
-      document?.type &&
+    externalId &&
+      content?.type &&
       localStorage.setItem(
-        "doc-" + id,
-        JSON.stringify(removeIdFromObject(document))
+        "doc-" + externalId,
+        JSON.stringify({
+          subject,
+          subtopic,
+          topic,
+          file: {
+            content: removeIdFromObject(content),
+            externalId,
+            title,
+            privacity,
+          },
+        })
       );
+    toast.success("¡Guardado localmente!");
+  };
+
+  const upsert = async () => {
+    toast.promise(
+      client.mutate({
+        mutation: UpsertFileDocument,
+        variables: {
+          where: { externalId },
+          create: {
+            Author: {
+              connect: {
+                externalId: user?.id,
+              },
+            },
+            content: JSON.stringify(removeIdFromObject(content)),
+            privacity,
+            title,
+            externalId,
+          },
+          update: {
+            content: {
+              set: JSON.stringify(removeIdFromObject(content)),
+            },
+            privacity: {
+              set: privacity,
+            },
+            title: {
+              set: title,
+            },
+          },
+        },
+      }),
+      {
+        error: "Error al sincronizar",
+        loading: "Sincronizando",
+        success: "¡Sincronizado correctamente!",
+      }
+    );
   };
 
   return (
     <nav className="fixed z-20 top-0 left-0 w-full h-max border-b shadow-sm bg-white print:hidden">
       <ul className="flex items-center justify-between h-full px-6 py-1.5">
         <li className="flex flex-col">
-          <span className="text-lg font-bold">{title && capFirst(title)}</span>
+          <div
+            contentEditable
+            dangerouslySetInnerHTML={{ __html: `${title}` }}
+            onBlur={({ target }) =>
+              setSettings({
+                ...settings,
+                file: { ...settings.file, title: target.innerText },
+              })
+            }
+            className="text-lg font-bold"
+          ></div>
           <div className="flex gap-2">
             <span
               onClick={onSave}
@@ -119,12 +248,28 @@ const Navar = ({
             >
               Guardar
             </span>
-            <span className="text-xs cursor-pointer active:text-blue-500">
+            <span
+              onClick={upsert}
+              className="text-xs cursor-pointer active:text-blue-500"
+            >
               Sincronizar
             </span>
           </div>
         </li>
         <li className="flex items-center gap-2.5 md:gap-5">
+          <div
+            onClick={remove}
+            className=" cursor-pointer flex items-center gap-1"
+          >
+            <CircleButton>
+              <FontAwesomeIcon
+                className="flex items-center"
+                size="lg"
+                icon={faTrash}
+              />
+            </CircleButton>
+            <span className="hidden md:inline-block">Eliminar</span>
+          </div>
           <div
             onClick={() => setModalState(true)}
             className=" cursor-pointer flex items-center gap-1"
@@ -164,24 +309,15 @@ const Navar = ({
   );
 };
 
-
 export default function EditDocumentLayout({
-  config: { title, privacity, content, id } = {
-    id: "",
-    privacity: "private",
-    title: "Nuevo documento",
-    content: {
-      type: "document",
-      options: {},
-    },
-  },
+  settings,
   children,
   document,
-  setDocument,
+  setSettings,
 }: {
-  setDocument: React.Dispatch<React.SetStateAction<Component | undefined>>;
+  settings: DocumentJSON;
+  setSettings: React.Dispatch<React.SetStateAction<DocumentJSON>>;
   document?: Component;
-  config: configAttrs;
   children: ReactNode;
 }) {
   const options = ["Configuración"];
@@ -190,18 +326,16 @@ export default function EditDocumentLayout({
   const [option, setOption] = useState(options[0]);
   return (
     <div className="p-4 pt-16 max-w-2xl mx-auto print:max-w-none print:p-0">
-      <Navar {...{ setModalState, setVisibility, title, document, id }} />
+      <Navar {...{ setModalState, setVisibility, settings, setSettings }} />
       {children}
       <div>
         <Modal title="Compartir" {...{ modalState, setModalState }}>
           <Options {...{ setOption, option, options }}></Options>
           {option === "Configuración" && (
             <ConfigForm
-              {...{
-                config: { content, privacity, title, id },
-                document,
-                setDocument,
-              }}
+              privacity={settings?.file?.privacity}
+              setSettings={setSettings}
+              document={settings?.file?.content}
             />
           )}
         </Modal>

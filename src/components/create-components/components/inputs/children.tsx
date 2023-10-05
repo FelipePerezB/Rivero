@@ -1,3 +1,4 @@
+'use client'
 import OptionsInput from "@components/inputs/OptionsInput/OptionsInput";
 import { componentsNames } from "../../utils/schemas";
 import Modal from "@components/modals/modal/Modal";

@@ -1,3 +1,4 @@
+'use client'
 /* eslint-disable react-hooks/exhaustive-deps */
 import styles from "./StandardInput.module.css";
 import React, { useEffect } from "react";
@@ -19,13 +20,14 @@ export default function StandardInput({
   const createFormData = (data: string) => {
     const obj = {} as any;
     if (dataKey) obj[dataKey] = data;
-    else obj[name] = data;
+    else if (name) obj[name] = data;
     onChange && onChange(obj);
   };
   return (
-    <label className={styles["standart-input"]}>
-      <span className="text-slate-700">{capFirst(name)}</span>
+    <label className={`${styles["standart-input"]}`}>
+      {name && <span className="text-slate-700">{capFirst(name)}</span>}
       <input
+      className="shadow-md"
         {...(attrs as {})}
         placeholder={placeholder}
         defaultValue={value}

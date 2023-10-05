@@ -26,12 +26,6 @@
   border: 2px solid black;
 }
 
-.stats{
-  display: flex;
-  overflow: scroll;
-  gap: 16px;
-}
-
 .stats__card{
   display: flex;
   flex-direction: column;

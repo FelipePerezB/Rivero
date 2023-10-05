@@ -3,13 +3,11 @@ import Title from "./title";
 import capFirst from "src/utils/capFirst";
 const DocumentHeader = ({ title = "" }: { title: string }) => {
   return (
-    <div className=" pb-[0.4em] border-b mb-[0.6em]">
-      <span className="flex gap-[0.3em]  rounded text-blue-500 print:text-gray-300">
-        <span className="font-bold">Rivero</span>
-        <span>|</span>
-        <span className="font-bold">Matemática</span>
-      </span>
+    <div className="flex flex-col items-center pb-[1em] border-b-[0.1em] mb-[0.6em] text-em leading-normal">
       <Title options={{ size: "h1", text: capFirst(title) }} />
+      <span className="flex gap-[0.3em] text-gray-500 rounded print:text-gray-300">
+        <span className="font-bold">-- Rivero --</span>
+      </span>
     </div>
   );
 };

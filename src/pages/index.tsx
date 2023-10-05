@@ -37,7 +37,6 @@ export default function Home() {
   return (
     <>
       <Layout>
-        <InvitationBtns gradeId={1} role={Role.Student} organizationId={1} />
         <UserButton afterSignOutUrl="/" />
         {/* <Recomendations  setState={} filters={[]} title="Ultimos puntajes" link="/stats">
           <Scores scores={stats} />

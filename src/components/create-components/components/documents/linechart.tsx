@@ -1,8 +1,10 @@
+'use client'
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Mafs, Coordinates, Plot, labelPi } from "mafs";
 // import CustomComponent from "./CustomComponent";
 // import getID from "src/getDoc/utils/getId";
 import { useEffect, useRef, useState } from "react";
+
 
 export default function LineChart({
   id,
@@ -33,6 +35,7 @@ export default function LineChart({
     m: "15em",
     l: "20em",
   };
+
   useEffect(() => {
     divRef.current && setHeight(divRef.current?.clientHeight);
 

@@ -22,22 +22,28 @@
 }
 
 .children {
-  display: flex;
-  flex-direction: column;
+  padding: 0 8px;
+  display: grid;
   justify-content: center;
   align-items: center;
-  flex-wrap: wrap;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  gap: 16px;
 }
 
-.row .children {
+.children > *{
+  /* width: 100%; */
+  height: 100%;
+}
+
+/* .row .children {
   gap: calc(var(--padding) + 4px);
   padding: 4px;
-}
+} */
 
-.column .children {
+/* .column .children {
   flex-wrap: wrap;
   gap: 32px;
-}
+} */
 
 .filter {
   border: none;

@@ -12,7 +12,7 @@
   padding: var(--sm-padding);
   border: none;
   outline: 1px solid lightgray;
-  box-shadow: var(--shadow);
+  /* box-shadow: var(--shadow); */
   border-radius: 4px;
   width: 100%;
 }

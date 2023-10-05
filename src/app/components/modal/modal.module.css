@@ -1,0 +1,14 @@
+.show {
+  animation: show 150ms ease-in-out normal;
+}
+
+@keyframes show {
+  from {
+    transform: scale(0.95);
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}

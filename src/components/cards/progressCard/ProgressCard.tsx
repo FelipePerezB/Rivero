@@ -1,3 +1,4 @@
+'use client'
 import Card from "@components/Card";
 import { CompletedProgress } from "@components/ProgressVar";
 import React, { ReactNode, useEffect, useState } from "react";
@@ -40,7 +41,7 @@ export default function ProgressCard({
   };
 
   return topic ? (
-    <Card className={styles.card}>
+    <Card className="flex flex-col items-start">
       {children && <span className={styles.title}>{children}</span>}
       <div className={styles.stats}>
         <CompletedProgress color={color} progress={getProgress()} />

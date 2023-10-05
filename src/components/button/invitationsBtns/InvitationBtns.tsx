@@ -1,12 +1,14 @@
+'use client'
 import Button from "@components/Button";
 import Table from "@components/Table";
 import CircleButton from "@components/button/circle-button/circle-button";
 import Form from "@components/forms/simpleForm/SimpleForm";
 import StandardInput from "@components/inputs/StandardInput/StandardInput";
-import Modal from "@components/modals/modal/Modal";
+// import Modal from "@components/modals/modal/Modal";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState } from "react";
+import Modal from "src/app/components/modal/modal";
 import { Role } from "src/gql/graphql";
 import api from "src/service/api";
 
@@ -18,11 +20,11 @@ type invitationStatus = {
 };
 
 export default function InvitationBtns({
-  gradeId,
+  groupId,
   organizationId,
   role,
 }: {
-  gradeId: number;
+  groupId: number;
   organizationId: number;
   role: Role;
 }) {
@@ -47,12 +49,10 @@ export default function InvitationBtns({
           body: JSON.stringify({
             email,
             organizationId,
-            groups: [gradeId],
+            groups: [groupId],
             role,
           }),
         });
-        console.log({ email, organizationId, groups: [gradeId], role });
-        console.log(data);
         status = "Enviada";
       } catch (error) {
         status = "Fallida";
@@ -72,7 +72,7 @@ export default function InvitationBtns({
           }}
         />
       </CircleButton>
-      <Modal {...{ modalState, setModalState, title: "Invitar usuarios" }}>
+      <Modal id="invitation" searchParams={{}} title="Invitar">
         <StandardInput
           onChange={({ emails }) => setEmails(emails)}
           name="Correos"

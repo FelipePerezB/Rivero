@@ -142,23 +142,23 @@ export default function Dashboard({
               ],
               title: name,
               icons: (
-                <>
-                  {/* <EditButton
+                [<>
+                  <EditButton
                     isPublic={true}
                     value={name}
                     onUpdate={(name) =>
-                      updateGroup(Number(id), name, Number(school))
+                      updateGroup(Number(id), name, Number(organization))
                     }
                     onRemove={() => removeGroup(Number(id))}
                     editMode={true}
                     label="curso"
-                  /> */}
+                  />
                   <InvitationBtns
-                    gradeId={Number(id)}
+                    groupId={Number(id)}
                     role={Role.Student}
                     organizationId={Number(organization)}
                   />
-                </>
+                </>]
               ),
             }}
             data={Users?.map(({ name, lastname, email }) => [

@@ -1,61 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useRef, useState } from "react";
-import Layout, {
-  configAttrs,
-} from "@components/create-components/edit-document/edit-document";
+import Layout from "@components/create-components/edit-document/edit-document";
 import GetComponent from "@components/create-components/edit-document/get-component";
 import { hydrateJSON } from "src/utils/create-doc/hydrate.JSON";
-// import Menu from "src/getDoc/components/Menu";
-import lzsString from "lz-string";
 import Menu from "@components/create-components/edit-document/menu";
-
-const res = {
-  subject: "matemática",
-  topic: "álgebra",
-  subtopic: "modelos lineales",
-  document: {
-    id: "qbxoYMthcK7XlTWyt6L8u7ZdXTEMHUXf",
-    title: "sistema de ecuaciones",
-    privacity: "private" as configAttrs["privacity"],
-    content: {
-      type: "document",
-      options: {
-        children: [
-          {
-            type: "page",
-            options: {
-              number: 1,
-              children: [
-                {
-                  type: "title",
-                  options: {
-                    text: "Titulo 1",
-                    size: "h1",
-                  },
-                },
-              ],
-            },
-          },
-          {
-            type: "page",
-            options: {
-              number: 1,
-              children: [
-                {
-                  type: "title",
-                  options: {
-                    text: "Sistema ecuaciones",
-                    size: "h1",
-                  },
-                },
-              ],
-            },
-          },
-        ],
-      },
-    },
-  },
-};
+import useGetFile from "src/hooks/useGetFile";
+import { useRouter } from "next/router";
+import { DocumentJSON } from "src/models/document.model";
+import { Toaster } from "react-hot-toast";
 
 export interface ComponentOptions {
   children?: Component[];
@@ -68,14 +20,11 @@ export interface Component {
   options: ComponentOptions;
 }
 export default function EditDoc() {
-  const [documentObj, setDocumentObj] = useState<Component>();
-  const { content, privacity, title, id } = res.document;
-  const [config, setConfig] = useState<configAttrs>({
-    title,
-    privacity,
-    id,
-    content,
-  });
+  const router = useRouter();
+  const id = router.query.id as string;
+  const document = useGetFile(id);
+  const [settings, setSettings] = useState<DocumentJSON>(document);
+  // const { content, privacity, title } = file.document;
   const divRef = useRef<HTMLDivElement>(null);
   const resize = () => {
     const $container = divRef.current;
@@ -87,31 +36,46 @@ export default function EditDoc() {
     $container.style.fontSize = fontSize + "px";
   };
   useEffect(() => {
-    if (!documentObj?.id) setDocumentObj(hydrateJSON(res.document.content));
+    setSettings({
+      ...settings,
+      file: {
+        ...settings.file,
+        content: hydrateJSON(document.file.content),
+        externalId: id,
+      },
+    });
     resize();
     window.onresize = resize;
-  }, []);
+  }, [id, document]);
 
   return (
-    <Layout document={documentObj} config={config} setDocument={setDocumentObj}>
+    <Layout
+      document={settings.file.content}
+      settings={settings}
+      setSettings={setSettings}
+    >
       <div ref={divRef} className="w-full">
-        {!!documentObj?.id && (
-          <GetComponent
-            folder="documents"
-            name={documentObj?.type}
-            attrs={{ ...documentObj, title }}
-          />
-        )}
+        <div className="print:text-[calc(100vw*(13/450))]">
+          {!!settings?.file.externalId && (
+            <GetComponent
+              folder="documents"
+              name={'document'}
+              attrs={{ ...settings.file.content, title: settings?.file?.title }}
+            />
+          )}
+        </div>
       </div>
       {divRef.current && (
         <Menu
           divRef={divRef || undefined}
           {...{
-            documentComponent: documentObj,
-            setDocument: setDocumentObj,
+            settings,
+            documentComponent: settings.file.content,
+            setSettings,
           }}
         />
       )}
+      <Toaster/>
     </Layout>
   );
 }

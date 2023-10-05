@@ -13,12 +13,12 @@ export default function Title({
 }) {
   const sizes = {
     h1: (
-      <h1 className="text-[2em] font-bold">
+      <h1 className="text-[2em]/[1.6em] font-bold">
         {text}
       </h1>
     ),
-    h2: <h2 className="text-[1.3em] font-semibold">{text}</h2>,
-    h3: <h3 className="text-[1.1em] font-semibold">{text}</h3>,
+    h2: <h2 className="text-[1.3em]/[1em] font-semibold">{text}</h2>,
+    h3: <h3 className="text-[1.1em]/[1em] font-semibold">{text}</h3>,
   };
   return <div data-component={id}>{sizes[size]}</div>;
 }

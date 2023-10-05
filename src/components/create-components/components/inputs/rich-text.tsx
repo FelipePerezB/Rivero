@@ -1,3 +1,4 @@
+'use client'
 import { LexicalComposer } from "@lexical/react/LexicalComposer";
 import { ContentEditable } from "@lexical/react/LexicalContentEditable";
 import { RichTextPlugin } from "@lexical/react/LexicalRichTextPlugin";
@@ -23,7 +24,6 @@ type RootChildren = {
 };
 
 function compressJSON(json: RootChildren) {
-  console.log("AA")
   return JSON.stringify(
     json?.children?.map(({ children }) =>
       children?.map(({ format, text, type, equation }) => {

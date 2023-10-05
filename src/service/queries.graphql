@@ -34,6 +34,12 @@ query GetSubject($subjectId: Int!, $topicId: Int!) {
     id
     name
     color
+    Notes {
+      File {
+        externalId
+      }
+      type
+    }
     Topics {
       name
       id
@@ -49,6 +55,7 @@ query GetSubject($subjectId: Int!, $topicId: Int!) {
       id
       name
       Notes {
+        id
         type
         File {
           title
@@ -62,34 +69,13 @@ query GetSubject($subjectId: Int!, $topicId: Int!) {
 
 query GetNotes($where: NoteWhereInput) {
   notes(where: $where) {
+    id
     File {
       id
       title
     }
   }
 }
-
-# query GetAllDataSubjects {
-#   subjects {
-#     id
-#     name
-#     color
-#     Topics {
-#       _count {
-#         Docs
-#       }
-#       id
-#       name
-#       Subtopics {
-#         name
-#         Docs {
-#           id
-#           title
-#         }
-#       }
-#     }
-#   }
-# }
 
 query GetUserByEmail($email: String!) {
   userByEmail(email: $email) {
@@ -152,11 +138,15 @@ mutation CreateSubtopic($createSubtopicInput: SubtopicCreateInput!) {
   }
 }
 
-# mutation CreateDoc($createDocInput: DocCreateInput!) {
-#   createDoc(createDocInput: $createDocInput) {
-#     id
-#   }
-# }
+mutation CreateNote($createNoteInput: NoteCreateInput!) {
+  createNote(createNoteInput: $createNoteInput) {
+    id
+    File {
+      externalId
+      title
+    }
+  }
+}
 
 # query LoginUser($user: LoginUserInput!) {
 #   login(user: $user) {
@@ -222,6 +212,13 @@ mutation UpdateSubject(
   }
 }
 
+mutation UpdateFile($updateFileId: Float!, $updateFileInput: FileUpdateInput!) {
+  updateFile(id: $updateFileId, updateFileInput: $updateFileInput) {
+    title
+    id
+  }
+}
+
 mutation CreateSubject($createSubjectInput: SubjectCreateInput!) {
   createSubject(createSubjectInput: $createSubjectInput) {
     id
@@ -258,6 +255,12 @@ mutation RemoveGroup($removeGroupId: Int!) {
   }
 }
 
+mutation RemoveNote($removeNoteId: Int!) {
+  removeNote(id: $removeNoteId) {
+    id
+  }
+}
+
 mutation UpdateUser(
   $where: UserWhereUniqueInput!
   $updateUserInput: UserUpdateInput!
@@ -267,32 +270,11 @@ mutation UpdateUser(
   }
 }
 
-# query GetDoc($where: DocWhereUniqueInput!) {
-#   doc(where: $where) {
-#     content
-#     title
-#     privacity
-#     externalId
-#     id
-#     type
-#     Subject {
-#       name
-#     }
-#     Topic {
-#       name
-#     }
-#     Subtopic {
-#       name
-#     }
-#   }
-# }
-
-# mutation RemoveDoc($removeDocId: Int!) {
-#   removeDoc(id: $removeDocId) {
-#     title
-#     id
-#   }
-# }
+mutation UpdateNote($updateNoteId: Float!, $updateNoteInput: NoteUpdateInput!) {
+  updateNote(id: $updateNoteId, updateNoteInput: $updateNoteInput) {
+    id
+  }
+}
 
 mutation RemoveTopic($removeTopicId: Int!) {
   removeTopic(id: $removeTopicId) {
@@ -305,5 +287,42 @@ mutation removeSubtopic($removeSubtopicId: Int!) {
   removeSubtopic(id: $removeSubtopicId) {
     name
     id
+  }
+}
+
+mutation UpsertFile(
+  $where: FileWhereUniqueInput!
+  $create: FileCreateInput!
+  $update: FileUpdateInput!
+) {
+  upsertFile(where: $where, create: $create, update: $update) {
+    title
+    externalId
+  }
+}
+
+query GetFile($where: FileWhereUniqueInput!) {
+  file(where: $where) {
+    externalId
+    id
+    title
+    content
+    privacity
+  }
+}
+
+query GetFiles($where: FileWhereInput, $skip: Float, $take: Float) {
+  files(where: $where, skip: $skip, take: $take) {
+    content
+    title
+    externalId
+  }
+}
+
+mutation RemoveFile($where: FileWhereUniqueInput!) {
+  removeFile(where: $where) {
+    externalId
+    id
+    title
   }
 }

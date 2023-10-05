@@ -21,7 +21,7 @@ export default function Layout({
     <div className={`${className} min-h-[100dvh]`}>
       <Head>{title && <title>{`${title} | Rivero`}</title>}</Head>
       <Navar {...{ navBtns, title, setVisibility }} />
-      <main className="flex justify-center items-centre flex-col gap-4 p-4 pt-16 mx-auto max-w-md text-slate-800">
+      <main className="flex justify-center items-centre flex-col gap-4 p-4 pt-16 mx-auto max-w-lg text-slate-800">
         {children}
       </main>
       <Sidevar visibility={visibility} setVisibility={setVisibility} />

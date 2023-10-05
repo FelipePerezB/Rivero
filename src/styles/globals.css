@@ -23,9 +23,10 @@
   --primary-color: #2d73eb;
   --active-letter-color: #214aba;
   --games-color: #1485d8;
-  /* --background-color: rgb(239, 243, 246); */
-  --background-color: rgb(252, 252, 256);
-  /* --background-color: #edf1f4; */
+  --background-color: #FDFEFF;
+  /* --background-color: rgb(252, 254, 256); */
+  /* --background-color: white; */
+  /* --background-color: #f5f8fa; */
   --card-color: white;
   --card-color-active: #f1f1f1;
 
@@ -91,8 +92,8 @@ body {
   font-size: 0.9rem;
   /* font-family: "nunito"; */
   font-family: "nunito";
-  background-color: white;
-  /* background-color: var(--background-color); */
+  /* background-color: white; */
+  background-color: var(--background-color);
   margin: 0;
   overflow-x: hidden;
 }

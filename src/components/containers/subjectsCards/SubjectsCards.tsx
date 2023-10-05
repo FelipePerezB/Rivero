@@ -11,13 +11,13 @@ import createTopic from "src/service/querys/topic/createTopic";
 
 export default function SubjectsCards({
   subjecsData,
-  stats,
+  // stats,
   redirect = true,
   editMode = false,
 }: {
   editMode?: boolean;
   redirect?: boolean;
-  stats: {
+  stats?: {
     [subject: string]: { [topic: string]: string };
   };
   subjecsData?: GetSubjectsQuery;
@@ -33,13 +33,22 @@ export default function SubjectsCards({
         const href =
           Topics?.length && redirect && !editMode ? `/docs/${id}` : "";
         return (
-          <Card interactive key={key} href={href}>
-            <section className="sm:w-44">
-              <article className="flex items-center gap-1">
-                <h3 className="text-lg font-semibold">{capFirst(name)}</h3>
-              </article>
+          <Card
+            interactive
+            key={key}
+            href={href}
+            className="sm:w-56 bg-red grid grid-cols-[3px,1fr] gap-3 overflow-hidden hover:bg-slate-50"
+          >
+            <div
+              // style={{ background: color }}
+              className="w-full h-full bg-blue-500 rounded-full"
+            ></div>
+            <div className="sm:w-52 overflow-hidden">
+              {/* <article className="flex items-center gap-1"> */}
+              <h3 className="text-lg font">{capFirst(name)}</h3>
+              {/* </article> */}
               <Tags tags={tags} />
-            </section>
+            </div>
           </Card>
         );
       })}

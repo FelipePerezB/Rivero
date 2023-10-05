@@ -10,6 +10,7 @@ import { Component } from "src/pages/docs/edit/[id]";
 import getNode from "src/utils/create-doc/getNode";
 import iterateObj from "src/utils/create-doc/iterateObject";
 import ComponentModal from "@components/create-components/edit-document/modal";
+import { DocumentJSON } from "src/models/document.model";
 
 type props = { type: string; options: any; id: string };
 
@@ -17,12 +18,14 @@ export default function Menu({
   // coords,
   // component,
   divRef,
-  documentComponent,
-  setDocument,
+  settings,
+  // documentComponent,
+  setSettings,
 }: {
+  settings: DocumentJSON;
   divRef?: React.RefObject<HTMLDivElement>;
-  documentComponent?: Component;
-  setDocument: React.Dispatch<SetStateAction<Component | undefined>>;
+  // documentComponent?: Component;
+  setSettings: React.Dispatch<React.SetStateAction<DocumentJSON>>;
   setModalData?: any;
 }) {
   const [menuState, setMenuState] = useState(false);
@@ -30,13 +33,14 @@ export default function Menu({
   const [modalType, setModalType] = useState<"edit" | "addChild">("edit");
   const [component, setComponent] = useState<Component>();
   const [coords, setCoords] = useState<{ x?: number; y?: number }>({});
+  const parentComponent = settings.file.content;
 
   useEffect(() => {
     if (divRef?.current)
       divRef.current.onclick = (event) => {
         const node = getNode(event.target as HTMLElement);
         const id = node?.dataset.component;
-        if (id && documentComponent) {
+        if (id && parentComponent) {
           const getComponent = (obj?: Component) => {
             obj && setComponent(obj);
             setCoords({
@@ -44,10 +48,10 @@ export default function Menu({
               y: event.clientY,
             });
           };
-          iterateObj(id, documentComponent, getComponent);
+          iterateObj(id, parentComponent, getComponent);
         }
       };
-  }, [divRef?.current, documentComponent]);
+  }, [divRef?.current, parentComponent]);
 
   useEffect(() => {
     setMenuState(true);
@@ -60,22 +64,24 @@ export default function Menu({
   }, [coords.x, coords.y]);
 
   const edit = (callback: () => void) => {
-    if (!documentComponent?.id) return;
+    // if (!documentComponent?.id) return;
     callback();
-    setDocument({ ...documentComponent });
+    setSettings({ ...settings });
+    // setSettings((settings)=>({...settings, file:{settings.file, content:{...settings.file.content, ...documentComponent} }}));
   };
 
-
   if (coords?.x && coords?.y) {
-    return createPortal(
+    return (
       <>
         {coords?.y && coords?.x && "a" && (
           <div
             style={{ top: coords?.y + "px", left: coords?.x + "px" }}
             className={`${
-              styles["menu-btns"] 
+              styles["menu-btns"]
             } print:opacity-0 hover:opacity-100 hover:translate-x-0 hover:flex transition-all duration-200 ${
-              menuState ? "opacity-100 flex" : "opacity-5 translate-x-[100vw] transition-transform duration-1000"
+              menuState
+                ? "opacity-100 flex"
+                : "opacity-5 translate-x-[100vw] transition-transform duration-1000"
             }`}
           >
             <p
@@ -91,13 +97,13 @@ export default function Menu({
                 icon={faGear}
               />
             </p>
-            {component?.id && documentComponent?.id && (
+            {component?.id && parentComponent?.id && (
               <p
                 onClick={() => {
                   edit(
                     () =>
                       component.id &&
-                      onDelete({ id: component.id, page: documentComponent })
+                      onDelete({ id: component.id, page: parentComponent })
                   );
                 }}
                 className={styles["delete-btn"]}
@@ -118,7 +124,7 @@ export default function Menu({
             )}
           </div>
         )}
-        {documentComponent?.id && component?.id && (
+        {parentComponent?.id && component?.id && (
           <ComponentModal
             {...{
               onEdit: (data) => {
@@ -126,7 +132,7 @@ export default function Menu({
                   component.id && onEdit(data);
                 });
               },
-              document: documentComponent,
+              document: parentComponent,
               modalState,
               setModalState,
               component,
@@ -137,8 +143,7 @@ export default function Menu({
             }}
           />
         )}
-      </>,
-      document.querySelector("#modal") as HTMLDivElement
+      </>
     );
   } else return <></>;
 }

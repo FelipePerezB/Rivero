@@ -1,3 +1,4 @@
+'use client'
 /* eslint-disable react-hooks/exhaustive-deps */
 import Button from "@components/Button";
 import Options from "@components/Options";

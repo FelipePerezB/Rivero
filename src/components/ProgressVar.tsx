@@ -8,10 +8,10 @@ export const ProgressVar = ({
   color?: string;
 }) => {
   return (
-    <div className="h-2 w-full bg-slate-100 rounded-full">
+    <div className="h-2 w-full bg-gray-100 rounded-full overflow-hidden">
       <div
-        style={{ width: `${progress}%`, background: color }}
-        className={styles.progress}
+        style={{ width: `${progress}%`}}
+        className={"bg-blue-500 h-full rounded-full transition-all duration-900"}
       ></div>
     </div>
   );

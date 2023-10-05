@@ -12,7 +12,7 @@ export default function ModalContainer({
 }) {
   return (
     <div className="fixed top-0 left-0 h-full">
-      <Blur {...{ setVisibility, visibility }} />
+      {/* <Blur {...{ setVisibility, visibility }} /> */}
       <article
         className={`${
           visibility ? "" : "-translate-x-96"

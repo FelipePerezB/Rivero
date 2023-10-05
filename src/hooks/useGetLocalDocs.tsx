@@ -1,17 +1,10 @@
+'use client'
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
+import { DocumentJSON } from "src/models/document.model";
 
 export default function useGetLocalDocs(number: number = 10) {
-  const [savedDocs, setSavedDocs] = useState<
-    {
-      type: string;
-      options: {
-        docId: number;
-        externalId: number;
-        title: string;
-      };
-    }[]
-  >([]);
+  const [savedDocs, setSavedDocs] = useState<DocumentJSON[]>([]);
   useEffect(() => {
     if (savedDocs?.length) return;
     const docs = [];
@@ -26,14 +19,20 @@ export default function useGetLocalDocs(number: number = 10) {
         const jsonDoc = JSON.parse(doc);
         const newDoc = {
           ...jsonDoc,
-          options: {
-            ...jsonDoc.options,
-            children: [jsonDoc.options.children[0]],
+          file: {
+            ...jsonDoc.file,
+            content: {
+              ...jsonDoc.file.content,
+              options: {
+                ...jsonDoc.file.content.options,
+                children: [jsonDoc?.file?.content.options?.children[0]],
+              },
+            },
           },
         };
         const isSaved = savedDocs
-          .map((doc) => doc.options.externalId)
-          .includes(newDoc.options.externalId);
+          .map((doc) => doc.file.externalId)
+          .includes(newDoc.file.externalId);
         if (isSaved) return;
         docs.push(newDoc);
       }

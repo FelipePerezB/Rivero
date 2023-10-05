@@ -1,9 +1,10 @@
 import { ReactNode } from "react";
+import Card from "./Card";
 
 interface TableProps {
   head?: {
     title?: string;
-    icons?: ReactNode;
+    icons?: ReactNode[];
     keys: { name: string; key?: string }[];
   };
 
@@ -13,16 +14,17 @@ interface TableProps {
 
 const Row = ({
   children,
-  onClick,
-}: {
+}: // onClick,
+{
   children: ReactNode | string;
-  onClick?: () => void;
+  // onClick?: () => void;
 }) => {
   return (
     <tr
-      onClick={() => !!onClick && onClick()}
-      className={`w-full flex justify-around  text-center py-1.5 p-2 border-t ${
-        !!onClick ? "cursor-pointer" : ""
+      // onClick={() => !!onClick && onClick()}
+      className={`w-full flex justify-around py-2 p-2 border-t ${
+        ""
+        // !!onClick ? "cursor-pointer" : ""
       }`}
     >
       {children}
@@ -32,12 +34,14 @@ const Row = ({
 
 const Table: React.FC<TableProps> = ({ data, head, onClick }) => {
   return (
-    <article>
-      <table className="flex flex-col bg-white overflow-hidden border shadow-gray-300/30 shadow-lg rounded w-full">
+    <Card>
+      <table className="flex flex-col">
         {head?.title && (
-          <caption className="w-full flex px-2 py-2 justify-between items-center text-xs">
-            <h2 className="text-base font-bold">{head.title}</h2>
-            <div className="flex items-center gap-1">{head.icons}</div>
+          <caption className="w-full flex px-2 pb-2 justify-between items-center">
+            <h3 className="text-lg font-bold">{head.title}</h3>
+            <div className="flex items-center gap-2.5 text-sm">
+              {head.icons?.map((icon) => icon)}
+            </div>
           </caption>
         )}
         {!!data?.length && (
@@ -49,11 +53,11 @@ const Table: React.FC<TableProps> = ({ data, head, onClick }) => {
             </Row>
           </thead>
         )}
-        <tbody className="inline-block w-full max-h-72 overflow-y-scroll">
+        <tbody className="inline-block w-full max-h-52 overflow-y-scroll">
           {data?.map((row, rowIndex) => (
             <Row
               key={"row-" + rowIndex}
-              onClick={onClick && (() => !!onClick && onClick(row))}
+              // onClick={onClick && (() => !!onClick && onClick(row))}
             >
               {row.map((cell, cellIndex) => (
                 <td
@@ -67,7 +71,7 @@ const Table: React.FC<TableProps> = ({ data, head, onClick }) => {
           ))}
         </tbody>
       </table>
-    </article>
+    </Card>
   );
 };
 

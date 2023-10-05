@@ -1,5 +1,5 @@
 import GetComponent from "@components/create-components/edit-document/get-component";
-import React, { useEffect, useMemo, useRef } from "react";
+import React from "react";
 
 export default function Document({
   type,
@@ -19,13 +19,12 @@ export default function Document({
   id: string;
 }) {
   return (
-    <div className="print:text-[calc(100vw*(13/450))]">
-      <div
-        id="document-container"
-        data-component={id}
-        className="flex flex-col gap-4 print:gap-0 text-[0.95em]"
-      >
-        {options?.children.map((child, i) => (
+    <div
+      id="document-container"
+      data-component={id}
+      className="flex flex-col gap-4 print:gap-0 text-[0.95em]"
+    >
+      {options?.children?.map((child, i) => (
           <GetComponent
             key={`doc-${id}}`}
             attrs={{
@@ -34,16 +33,15 @@ export default function Document({
                 title,
               },
               options: {
-                ...child.options,
+                ...child?.options,
                 number: i + 1,
                 lastPage: i + 1 === options.children.length,
               },
             }}
-            name={child.type}
+            name={child?.type}
             folder="documents"
           />
         ))}
-      </div>
     </div>
   );
 }
