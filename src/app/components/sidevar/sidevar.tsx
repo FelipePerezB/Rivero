@@ -1,16 +1,5 @@
-import React, { DialogHTMLAttributes, Suspense, useRef } from "react";
-import SidevarImage from "./sidevar-image";
-import Blur from "@components/modals/blur/blur";
-import Image from "next/image";
-import capFirst from "src/utils/capFirst";
-import Link from "next/link";
-import { currentUser } from "@clerk/nextjs";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
-
-type Props = {
-  searchParams: Record<string, string> | null | undefined;
-};
 
 export default function Sidevar() {
   // const dialogRef = useRef<HTMLDialogElement>(null);

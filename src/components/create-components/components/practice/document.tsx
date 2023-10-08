@@ -1,4 +1,4 @@
-// "use client";
+"use client";
 import Card from "@components/Card";
 import React, { useState } from "react";
 import Timer from "src/app/practice/timer";
@@ -27,6 +27,8 @@ export default function Practice({
   };
   id: string;
 }) {
+  const [bonus, setBonus] = useState(0);
+  const [index, setIndex] = useState(0);
   const questions = [];
   const getQuestion = (index: number) => ({
     id: `${index}62526`,
@@ -40,23 +42,6 @@ export default function Practice({
     questions.push(question);
   }
 
-  let questionIndex;
-  if (searchParams?.n) {
-    const findedIndex = questions.findIndex(
-      (question) => question.id === searchParams.n
-    );
-    questionIndex =
-      findedIndex !== -1
-        ? findedIndex
-        : questions.findIndex((question) => question.id === searchParams.c);
-  } else {
-    questionIndex = 0;
-  }
-
-  const nextId = questions[questionIndex + 1].id;
-  const currentId = questions[questionIndex].id;
-  const bonus = Number(searchParams?.bonus) || 0;
-
   return (
     <div className="mx-auto flex flex-col gap-3 justify-center items-center w-full p-2 max-w-lg">
       <h1 className="text-2xl font-bold w-full text-left">
@@ -64,26 +49,14 @@ export default function Practice({
       </h1>
 
       <Timer bonus={bonus} />
-      <Card>
+      <Card className="p-3.5">
         <Question
-          options={questions[questionIndex]}
+          options={questions[index]}
           id=""
-          bonus={bonus}
-          currentId={currentId}
-          index={questionIndex}
-          nextId={nextId}
+          setBonus={setBonus}
+          index={index}
+          setIndex={setIndex}
         />
-        {/* <GetComponent
-          attrs={{
-            options: questions[questionIndex],
-            nextId,
-            currentId,
-            index: questionIndex,
-            bonus,
-          }}
-          name={"question"}
-          folder="practice"
-        /> */}
       </Card>
     </div>
   );

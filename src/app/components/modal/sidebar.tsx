@@ -1,7 +1,17 @@
 "use client";
 import React, { ReactNode } from "react";
-import Blur from "./blur";
+// import Blur from "./blur";
 import { useSearchParams } from "next/navigation";
+import Link from "next/link";
+
+const Blur = ({ show }: { show: boolean }) => (
+  <Link
+    key={"blur"}
+    href={"?"}
+    className={`cursor-default fixed z-40 top-0 left-0 opacity-0 h-full w-full bg-slate-900/50 transition-all duration-500
+  ${show ? "opacity-100" : "animate-hide"}`}
+  ></Link>
+);
 
 export default function Sidebar({
   sidebarKey = "sidebar",

@@ -9,22 +9,25 @@ export default function Document({
 }: {
   title: string;
   type: string;
-  options: {
-    children: {
+  options?: {
+    children?: {
       type: string;
-      id: string;
+      id?: string;
       options: { [key: string]: unknown };
     }[];
   };
   id: string;
 }) {
+  console.log("AAAAA")
   return (
     <div
       id="document-container"
       data-component={id}
       className="flex flex-col gap-4 print:gap-0 text-[0.95em]"
     >
-      {options?.children?.map((child, i) => (
+      {options?.children?.map((child, i) => {
+        console.log(child)
+        return (
           <GetComponent
             key={`doc-${id}}`}
             attrs={{
@@ -35,13 +38,13 @@ export default function Document({
               options: {
                 ...child?.options,
                 number: i + 1,
-                lastPage: i + 1 === options.children.length,
+                lastPage: i + 1 === options?.children?.length,
               },
             }}
             name={child?.type}
             folder="documents"
           />
-        ))}
+        )})}
     </div>
   );
 }

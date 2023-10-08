@@ -1,27 +1,28 @@
 "use client";
 import { ProgressVar } from "@components/ProgressVar";
-import { useRouter } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
-// let start = 10;
-let start = 60 * 5.5;
-let end = 0;
-
+let start = 60 * 2;
 const format = (time: number) => (`${time}`.length > 1 ? time : `0${time}`);
 
 export default function Timer({ bonus = 0 }: { bonus: number }) {
-  // const router = useRouter();
   const [count, setCount] = useState(start);
-  // const [maxCount, setMaxCount] = useState(start);
-  const time = count + bonus;
+  const [maxTime, setMaxTime] = useState(start);
+
+  const time = !(count + bonus < 0) ? count + bonus : 0;
   const minutes = Math.floor(time / 60);
   const seconds = Math.floor(time % 60);
 
   useEffect(() => {
+    if (time > maxTime) setMaxTime(time);
+  }, [maxTime, time]);
+
+  useEffect(() => {
     const timer = setInterval(() => {
-      start -= 1;
-      setCount(start);
-      if (start === end) clearInterval(timer);
+      setCount((time) => {
+        if (time === 0) clearInterval(timer);
+        return time - 1;
+      });
     }, 1000);
     return function () {
       setCount(start);
@@ -37,7 +38,7 @@ export default function Timer({ bonus = 0 }: { bonus: number }) {
         <span>:</span>
         <span>{format(seconds)}</span>
       </span>
-      <ProgressVar progress={Math.floor((100 * time) / start)} />
+      <ProgressVar progress={Math.floor((100 * time) / maxTime)} />
     </div>
   );
 }

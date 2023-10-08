@@ -72,7 +72,7 @@ export default function Subjects({
 
   return (
     <Layout title="Asignaturas">
-      <SubjectsCards editMode={editMode} subjecsData={data} stats={stats} />
+      {/* <SubjectsCards editMode={editMode} subjecsData={data} stats={stats} /> */}
       {role === "ADMIN" && (
         <>
           <Buttons>

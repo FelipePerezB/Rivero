@@ -26,7 +26,7 @@ export default function Docs({
   return (
     <Layout title="Documentos">
       <Recomendations title="Asignaturas" link="/docs/subjects">
-        <SubjectsCards stats={stats} subjecsData={data} />
+        {/* <SubjectsCards stats={stats} subjecsData={data} /> */}
       </Recomendations>
       {!!savedDocs?.length && (
         <Recomendations title="Guardados" link="/">

@@ -17,6 +17,8 @@
   outline: 1px solid rgb(239, 239, 239);
 }
 
+.name:not(:checked)
+
 .name{
   display: inline-block;
   width: 100%;

@@ -1,9 +1,21 @@
 import styles from "./modal.module.css";
-import Blur from "./blur";
+// import Blur from "./blur";
 import { faClose } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
 import { ReactNode } from "react";
+
+const Blur = ({ show }: { show: boolean }) => (
+  <Link
+    key={"blur"}
+    href={"?"}
+    className={`cursor-default fixed z-40 top-0 left-0 opacity-0 h-full w-full bg-slate-900/50 transition-all duration-500
+  ${show ? "opacity-100" : "animate-hide"}`}
+  ></Link>
+);
+
+// }
+
 export default function Modal({
   searchParams,
   modalKey = "modal",
@@ -24,7 +36,7 @@ export default function Modal({
       <div
         className={`top-0 left-0 h-full fixed flex justify-center items-center z-40 rounded-md `}
       >
-        <Blur  show={show} />
+        <Blur show={show}/>
         <dialog
           open={show}
           className={`${
@@ -33,7 +45,7 @@ export default function Modal({
         >
           <div className="flex justify-between items-center">
             <h2 className="text-xl font-semibold">{title}</h2>
-            <Link href={'?'}>
+            <Link href={"?"}>
               <FontAwesomeIcon
                 className="h-5 w-5 cursor-pointer hover:text-red-500 hover:scale-110 transition-all duration-200"
                 icon={faClose}

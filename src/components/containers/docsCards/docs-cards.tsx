@@ -34,14 +34,14 @@ export default function DocsCards({
               </span>
             </div>
             <div className="absolute w-full h-full text-[4px] top-0 left-0 scale-[101%]">
-              {/* <GetComponent
+              <GetComponent
                 attrs={{
                   options: document?.file?.content?.options,
                   title: document?.file?.title,
                 }}
                 name={"document"}
                 folder="documents"
-              /> */}
+              />
             </div>
           </Card>
         );

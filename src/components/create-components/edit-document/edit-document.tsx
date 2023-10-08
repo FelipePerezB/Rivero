@@ -40,6 +40,7 @@ function removeIdFromObject(obj: Component) {
 }
 
 function removeIdFromJson(jsonStr: string) {
+  if (!jsonStr) return;
   const jsonObj = JSON.parse(jsonStr);
   removeIdFromObject(jsonObj);
 
@@ -88,14 +89,17 @@ const ConfigForm = ({
         onChange={({ content }) => setContent(content)}
       />
       <Buttons>
-        <Button onClick={()=>print()}>Descargar</Button>
+        <Button onClick={() => print()}>Descargar</Button>
         <Button
           onClick={() =>
             setSettings((settings) => ({
               ...settings,
               file: {
                 ...settings.file,
-                content: hydrateJSON(JSON.parse(content)),
+                content: hydrateJSON(
+                  settings.file.content.id as string,
+                  JSON.parse(content)
+                ),
               },
             }))
           }

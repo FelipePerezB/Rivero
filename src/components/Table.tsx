@@ -37,7 +37,7 @@ const Table: React.FC<TableProps> = ({ data, head, onClick }) => {
     <Card>
       <table className="flex flex-col">
         {head?.title && (
-          <caption className="w-full flex px-2 pb-2 justify-between items-center">
+          <caption className="w-full flex justify-between items-center">
             <h3 className="text-lg font-bold">{head.title}</h3>
             <div className="flex items-center gap-2.5 text-sm">
               {head.icons?.map((icon) => icon)}
@@ -45,7 +45,7 @@ const Table: React.FC<TableProps> = ({ data, head, onClick }) => {
           </caption>
         )}
         {!!data?.length && (
-          <thead>
+          <thead className="mt-2">
             <Row>
               {head?.keys.map(({ name, key }, i) => (
                 <th key={"th-" + i}>{name}</th>

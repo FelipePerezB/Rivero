@@ -1,6 +1,6 @@
 'use client'
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useRef, useState } from "react";
+// import React, { useEffect, useRef, useState } from "react";
 import StandardInput from "../StandardInput/StandardInput";
 import styles from "./OptionsInput.module.css";
 import capFirst from "src/utils/capFirst";
@@ -54,11 +54,11 @@ function LargeOptionsInput(props: props) {
 }
 
 function SmallOptionsInput(props: props) {
-  useEffect(() => {
-    if (!props.dontDefaultCheck) {
-      props.onChange(props.value ?? props.options[0]);
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (!props.dontDefaultCheck) {
+  //     props.onChange(props.value ?? props.options[0]);
+  //   }
+  // }, []);
   return (
     <article className={`${styles["options"]} ${props?.className}`}>
       <span className={styles.name}>{capFirst(props.name)}</span>
@@ -68,11 +68,11 @@ function SmallOptionsInput(props: props) {
             <input
               tabIndex={i === 0 ? props.tabIndex : undefined}
               id={option}
-              onClick={(event) => {
-                const { value } = event.target as HTMLInputElement;
-                if (!value) return;
-                props.onChange(value);
-              }}
+              // onClick={(event) => {
+              //   const { value } = event.target as HTMLInputElement;
+              //   if (!value) return;
+              //   props.onChange(value);
+              // }}
               value={option}
               defaultChecked={
                 (!props.dontDefaultCheck && !props.value && i === 0) ||

@@ -9,12 +9,12 @@ import { useRouter } from "next/router";
 import { DocumentJSON } from "src/models/document.model";
 import { Toaster } from "react-hot-toast";
 
-export interface ComponentOptions {
+interface ComponentOptions {
   children?: Component[];
   [key: string]: unknown;
 }
 
-export interface Component {
+interface Component {
   type: string;
   id?: string;
   options: ComponentOptions;
@@ -40,7 +40,10 @@ export default function EditDoc() {
       ...settings,
       file: {
         ...settings.file,
-        content: hydrateJSON(document.file.content),
+        content: hydrateJSON(
+          document?.file?.content?.id as string,
+          document.file.content
+        ),
         externalId: id,
       },
     });
@@ -59,7 +62,7 @@ export default function EditDoc() {
           {!!settings?.file.externalId && (
             <GetComponent
               folder="documents"
-              name={'document'}
+              name={"document"}
               attrs={{ ...settings.file.content, title: settings?.file?.title }}
             />
           )}
@@ -75,7 +78,7 @@ export default function EditDoc() {
           }}
         />
       )}
-      <Toaster/>
+      <Toaster />
     </Layout>
   );
 }

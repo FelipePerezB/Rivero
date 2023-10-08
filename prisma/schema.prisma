@@ -1,0 +1,140 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  ADMIN
+  STUDENT
+  TEACHER
+  DIRECTOR
+}
+
+model User {
+  id             Int          @id @default(autoincrement())
+  externalId     String       @unique
+  email          String       @unique
+  name           String
+  lastname       String
+  role           Role
+  Group          Group[]
+  Organization   Organization @relation(fields: [organizationId], references: [id])
+  organizationId Int
+  Score          Score[]
+  File           File[]
+  createdAt      DateTime?    @default(now())
+  updateAt       DateTime?    @updatedAt
+}
+
+model Group {
+  id             Int          @id @default(autoincrement())
+  name           String
+  Users          User[]
+  Organization   Organization @relation(fields: [organizationId], references: [id])
+  organizationId Int
+  createdAt      DateTime?    @default(now())
+  updateAt       DateTime?    @updatedAt
+}
+
+enum Privacity {
+  PUBLIC
+  PRIVATE
+}
+
+enum Types {
+  PRACTICE
+  DOCUMENT
+  EVALUATION
+}
+
+model Note {
+  id         Int       @id @default(autoincrement())
+  Subject    Subject?  @relation(fields: [subjectId], references: [id])
+  subjectId  Int?
+  Topic      Topic?    @relation(fields: [topicId], references: [id])
+  topicId    Int?
+  Subtopic   Subtopic? @relation(fields: [subtopicId], references: [id])
+  subtopicId Int?
+  File       File?
+  fileId     Int?
+  type       Types
+  Scores     Score[]
+  createdAt  DateTime? @default(now())
+  updateAt   DateTime? @updatedAt
+}
+
+model File {
+  id         Int       @id @default(autoincrement())
+  externalId String    @unique
+  privacity  Privacity
+  title      String
+  content    String
+  Author     User      @relation(fields: [authorId], references: [id])
+  authorId   Int
+  Note       Note?     @relation(fields: [noteId], references: [id])
+  noteId     Int?      @unique
+  createdAt  DateTime? @default(now())
+  updateAt   DateTime? @updatedAt
+}
+
+model Score {
+  id           Int       @id @default(autoincrement())
+  score        Int
+  userId       Int
+  alternatives String
+  User         User      @relation(fields: [userId], references: [id])
+  Note         Note?     @relation(fields: [noteId], references: [id])
+  noteId       Int?
+  createdAt    DateTime? @default(now())
+  updateAt     DateTime? @updatedAt
+}
+
+model Subject {
+  id        Int        @id @default(autoincrement())
+  name      String     @unique
+  color     String
+  Topics    Topic[]
+  Subtopic  Subtopic[]
+  Notes     Note[]
+  createdAt DateTime?  @default(now())
+  updateAt  DateTime?  @updatedAt
+}
+
+model Topic {
+  id        Int        @id @default(autoincrement())
+  name      String     @unique
+  Subject   Subject?   @relation(fields: [subjectId], references: [id])
+  subjectId Int?
+  Subtopics Subtopic[]
+  Notes     Note[]
+  createdAt DateTime?  @default(now())
+  updateAt  DateTime?  @updatedAt
+}
+
+model Subtopic {
+  id        Int       @id @default(autoincrement())
+  name      String    @unique
+  Subject   Subject?  @relation(fields: [subjectId], references: [id])
+  subjectId Int?
+  Topic     Topic     @relation(fields: [topicId], references: [id])
+  topicId   Int
+  Notes     Note[]
+  createdAt DateTime? @default(now())
+  updateAt  DateTime? @updatedAt
+}
+
+model Organization {
+  id        Int       @id @default(autoincrement())
+  name      String    @unique
+  Users     User[]
+  Groups    Group[]
+  createdAt DateTime? @default(now())
+  updateAt  DateTime? @updatedAt
+}
