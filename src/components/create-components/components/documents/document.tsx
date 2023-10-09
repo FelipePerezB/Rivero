@@ -1,6 +1,5 @@
+'use client'
 import GetComponent from "@components/create-components/edit-document/get-component";
-import React from "react";
-
 export default function Document({
   type,
   title,
@@ -18,18 +17,19 @@ export default function Document({
   };
   id: string;
 }) {
-  console.log("AAAAA")
   return (
     <div
       id="document-container"
       data-component={id}
       className="flex flex-col gap-4 print:gap-0 text-[0.95em]"
     >
+      {/* <p>AA</p> */}
       {options?.children?.map((child, i) => {
+
         console.log(child)
         return (
           <GetComponent
-            key={`doc-${id}}`}
+            key={`doc-${id}-${i}`}
             attrs={{
               ...child,
               document: {

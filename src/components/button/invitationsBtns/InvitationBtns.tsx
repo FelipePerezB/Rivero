@@ -10,7 +10,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState } from "react";
 import Modal from "src/app/components/modal/modal";
 import { Role } from "src/gql/graphql";
-import api from "src/service/api";
+// import api from "src/service/api";
 
 const regexEmail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
@@ -44,15 +44,15 @@ export default function InvitationBtns({
       Object.assign(invitations, { [email]: status });
       setInvitations({ ...invitations });
       try {
-        const data = await api("auth/sendInvitation", {
-          method: "POST",
-          body: JSON.stringify({
-            email,
-            organizationId,
-            groups: [groupId],
-            role,
-          }),
-        });
+        // const data = await api("auth/sendInvitation", {
+        //   method: "POST",
+        //   body: JSON.stringify({
+        //     email,
+        //     organizationId,
+        //     groups: [groupId],
+        //     role,
+        //   }),
+        // });
         status = "Enviada";
       } catch (error) {
         status = "Fallida";
@@ -74,10 +74,10 @@ export default function InvitationBtns({
       </CircleButton>
       <Modal id="invitation" searchParams={{}} title="Invitar">
         <StandardInput
-          onChange={({ emails }) => setEmails(emails)}
-          name="Correos"
-          dataKey="emails"
-          placeholder="felipe@gmail.com, alicia@gmail.com"
+          // onChange={({ emails }) => setEmails(emails)}
+          // name="Correos"
+          // dataKey="emails"
+          // placeholder="felipe@gmail.com, alicia@gmail.com"
         />
         <Button onClick={invitate}>Invitar</Button>
         {!!invitationsArray.length && (

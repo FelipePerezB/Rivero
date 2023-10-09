@@ -1,5 +1,5 @@
-import { Component } from "src/pages/docs/edit/[id]";
-import iterateObj from "./iterateObject";
+import { Component } from "../models/component";
+import iterateObj from "./iterateObj";
 
 export type onEditProps = {
   id: string;

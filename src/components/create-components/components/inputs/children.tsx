@@ -1,13 +1,12 @@
-'use client'
+import React, { useEffect, useState } from 'react'
 import OptionsInput from "@components/inputs/OptionsInput/OptionsInput";
 import { componentsNames } from "../../utils/schemas";
 import Modal from "@components/modals/modal/Modal";
-import { ReactNode, SetStateAction, useEffect, useMemo, useState } from "react";
-import { Component } from "src/pages/docs/edit/[id]";
 import generateRandomId from "src/utils/generateRandomId";
 import Buttons from "@components/button/buttons/Buttons";
 import Preview from "@components/create-components/edit-document/preview";
 import Form from "./form";
+import { Component } from "src/app/documents/edit/models/component";
 
 export default function Children({
   value,
@@ -22,9 +21,9 @@ export default function Children({
   parentId: string;
   onChange: (value: { [key: string]: Component[] }) => void;
 }) {
-  const [currentChildren, setCurrentChildren] = useState<Component[]>(
-    value || []
-  );
+  // const [currentChildren, setCurrentChildren] = useState<Component[]>(
+  //   value || []
+  // );
 
   const [modalState, setModalState] = useState(false);
   const [newChild, setNewChild] = useState<Component>({

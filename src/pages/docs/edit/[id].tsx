@@ -2,19 +2,19 @@
 import React, { useEffect, useRef, useState } from "react";
 import Layout from "@components/create-components/edit-document/edit-document";
 import GetComponent from "@components/create-components/edit-document/get-component";
-import { hydrateJSON } from "src/utils/create-doc/hydrate.JSON";
+import { hydrateJSON } from "src/utils/create-doc/hydrateJSON";
 import Menu from "@components/create-components/edit-document/menu";
 import useGetFile from "src/hooks/useGetFile";
 import { useRouter } from "next/router";
 import { DocumentJSON } from "src/models/document.model";
-import { Toaster } from "react-hot-toast";
+// import { Toaster } from "react-hot-toast";
 
-interface ComponentOptions {
+export interface ComponentOptions {
   children?: Component[];
   [key: string]: unknown;
 }
 
-interface Component {
+export interface Component {
   type: string;
   id?: string;
   options: ComponentOptions;
@@ -35,21 +35,33 @@ export default function EditDoc() {
     const fontSize = (pixels / width) * Number(containerWidth);
     $container.style.fontSize = fontSize + "px";
   };
+
   useEffect(() => {
     setSettings({
       ...settings,
       file: {
         ...settings.file,
-        content: hydrateJSON(
-          document?.file?.content?.id as string,
-          document.file.content
-        ),
+        content: hydrateJSON(document.file.content),
         externalId: id,
       },
     });
     resize();
     window.onresize = resize;
-  }, [id, document]);
+  }, [id]);
+  // useEffect(() => {
+  //   setSettings({
+  //     ...settings,
+  //     file: {
+  //       ...settings.file,
+  //       content: hydrateJSON(document.file.content),
+  //       externalId: id,
+  //     },
+  //   });
+  //   resize();
+  //   window.onresize = resize;
+  // }, [id, document]);
+
+  console.log(document);
 
   return (
     <Layout
@@ -78,7 +90,7 @@ export default function EditDoc() {
           }}
         />
       )}
-      <Toaster />
+      {/* <Toaster /> */}
     </Layout>
   );
 }

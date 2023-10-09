@@ -30,7 +30,7 @@ export default async function RootLayout({ children }: Props) {
         <header>
           <Navar />
         </header>
-        <main className="flex flex-col gap-3 p-4 pt-[70px] h-full w-full max-w-lg mx-auto">
+        <main className="flex flex-col gap-3 p-4 pt-[70px] h-full w-full mx-auto">
           <ClerkProvider>{children}</ClerkProvider>
           <NavSidebar/>
         </main>

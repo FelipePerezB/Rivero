@@ -4,16 +4,11 @@ import Options from "@components/Options";
 import Buttons from "@components/button/buttons/Buttons";
 import GetComponent from "@components/create-components/edit-document/get-component";
 import React, { ReactNode, SetStateAction, useEffect, useState } from "react";
-// import { Component } from "src/pages/docs/edit/[id]";
-// import getInputs from "src/utils/create-doc/getInputs";
-import getSchema from "../../utils/getSchema";
-// import { onDeleteProps } from "src/utils/create-doc/onDelete";
-// import { onEditProps } from "src/utils/create-doc/onEdit";
-import Children from "./children";
 import FormChildren from "@components/create-components/edit-document/form-children";
-import { Component } from "src/app/documents/edit/models/component";
-import { onEditProps } from "src/app/documents/edit/utils/onEdit";
-import { onDeleteProps } from "src/app/documents/edit/utils/onDelete";
+import { Component } from "../../models/component";
+import { onEditProps } from "../../utils/onEdit";
+import getSchema from "@components/create-components/utils/getSchema";
+import { onDeleteProps } from "../../utils/onDelete";
 
 type options = "Configuración" | "Hijos";
 

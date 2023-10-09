@@ -24,8 +24,8 @@ export default function Sidevar({
   visibility: boolean;
   setVisibility: any;
 }) {
-  const { user } = useUser();
-  const role = user?.publicMetadata?.role as string | undefined;
+  // const { user } = useUser();
+  // const role = user?.publicMetadata?.role as string | undefined;
 
   return (
     <div className="fixed z-40 top-0 left-0 h-full">
@@ -35,7 +35,7 @@ export default function Sidevar({
           visibility ? "-" : "-translate-x-96"
         } rounded-md p-4 h-[100dvh] w-80 bg-white fixed top-4 left-4 z-50 transition-transform duration-500`}
       >
-        {user?.firstName && (
+        {"" && (
           <>
             <Link
               className="flex items-center gap-3  p-2 hover:bg-slate-100 rounded-md"
@@ -44,15 +44,15 @@ export default function Sidevar({
               <img
                 alt="Perfil"
                 className="w-10 h-10 rounded-full"
-                src={user?.imageUrl}
+                // src={user?.imageUrl}
               ></img>
               <div className="flex flex-col">
                 <span className="text-lg">
-                  {(user?.firstName as string | undefined) &&
-                    capFirst(user?.firstName as string)}
+                  {/* {(user?.firstName as string | undefined) &&
+                    capFirst(user?.firstName as string)} */}
                 </span>
                 <span className="text-xs border w-max p-0.5 rounded font-bold">
-                  {role}
+                  {/* {role} */}
                 </span>
               </div>
             </Link>
@@ -62,16 +62,16 @@ export default function Sidevar({
         <section>
           <ul className="flex flex-col gap-1 text-slate-800 text-lg">
             <Option link={`/docs`} icon={faFolder} text="Documentos" />
-            {(role === "DIRECTOR" || role === "ADMIN") && (
+            {/* {(role === "DIRECTOR" || role === "ADMIN") && (
               <Option
-                link={`/dashboard/${user?.publicMetadata?.organizationId}`}
+                // link={`/dashboard/${user?.publicMetadata?.organizationId}`}
                 icon={faChartSimple}
                 text="Dashboard"
               />
             )}
             {role === "ADMIN" && (
               <Option link={`/edit`} icon={faPlus} text="Crear documentos" />
-            )}
+            )} */}
           </ul>
           <div
             // className={styles["close-menu"]}

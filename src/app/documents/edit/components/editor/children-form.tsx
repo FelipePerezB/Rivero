@@ -1,25 +1,19 @@
-import { SetStateAction, useEffect, useState } from "react";
-// import { Component } from "src/pages/docs/edit/[id]";
-// import { onEditProps } from "src/utils/create-doc/onEdit";
-import GetComponent from "./get-component";
+import { useEffect, useState } from "react";
 import CircleButton from "@components/button/circle-button/circle-button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClose, faPen } from "@fortawesome/free-solid-svg-icons";
-import ComponentModal from "./modal";
-import { Component } from "src/app/documents/edit/models/component";
+import { Component } from "../../models/component";
+import GetComponent from "src/app/components/edit-wraper/components/get-component";
+import ComponentModal from "./form-modal";
 
 const FormChildren = ({
   document,
-  // onEdit,
   children,
   onChange,
-}: // setChildren,
-{
+}: {
   onChange: (value: { [key: string]: Component[] }) => void;
-  // onEdit?: (props: onEditProps) => void;
   document: Component;
   children?: Component[];
-  // setChildren: React.Dispatch<SetStateAction<Component[]>>;
 }) => {
   const [modalState, setModalState] = useState(false);
   const [component, setComponent] = useState<Component>();

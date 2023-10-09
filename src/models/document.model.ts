@@ -1,5 +1,6 @@
+import { Component } from "src/app/documents/edit/models/component";
 import { Privacity, Types } from "src/gql/graphql";
-import { Component } from "src/pages/docs/edit/[id]";
+// import { Component } from "src/pages/docs/edit/[id]";
 
 export type File = {
   privacity: Privacity;

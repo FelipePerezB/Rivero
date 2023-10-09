@@ -2,16 +2,15 @@
 import styles from "./styles/menu.module.css";
 import onEdit from "src/utils/create-doc/onEdit";
 import React, { SetStateAction, useEffect, useState } from "react";
-import { createPortal } from "react-dom";
+// import { createPortal } from "react-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClose, faGear, faPlus } from "@fortawesome/free-solid-svg-icons";
 import onDelete from "src/utils/create-doc/onDelete";
-// import { Component } from "src/pages/docs/edit/[id]";
+import { Component } from "src/pages/docs/edit/[id]";
 import getNode from "src/utils/create-doc/getNode";
 import iterateObj from "src/utils/create-doc/iterateObject";
 import ComponentModal from "@components/create-components/edit-document/modal";
 import { DocumentJSON } from "src/models/document.model";
-import { ComponentObj } from "src/app/components/edit-wraper/edit-wraper";
 
 type props = { type: string; options: any; id: string };
 
@@ -32,7 +31,7 @@ export default function Menu({
   const [menuState, setMenuState] = useState(false);
   const [modalState, setModalState] = useState(false);
   const [modalType, setModalType] = useState<"edit" | "addChild">("edit");
-  const [component, setComponent] = useState<ComponentObj>();
+  const [component, setComponent] = useState<Component>();
   const [coords, setCoords] = useState<{ x?: number; y?: number }>({});
   const parentComponent = settings.file.content;
 
@@ -42,7 +41,7 @@ export default function Menu({
         const node = getNode(event.target as HTMLElement);
         const id = node?.dataset.component;
         if (id && parentComponent) {
-          const getComponent = (obj?: ComponentObj) => {
+          const getComponent = (obj?: Component) => {
             obj && setComponent(obj);
             setCoords({
               x: event.clientX,
@@ -52,7 +51,7 @@ export default function Menu({
           iterateObj(id, parentComponent, getComponent);
         }
       };
-  }, [divRef?.current, parentComponent]);
+  }, [divRef, parentComponent]);
 
   useEffect(() => {
     setMenuState(true);

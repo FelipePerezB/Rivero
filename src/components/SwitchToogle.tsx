@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import styles from "@styles/SwitchToogle.module.css";
+// import styles from "@styles/SwitchToogle.module.css";
 
 export default function SwitchToogle({
   createFormData,
@@ -13,7 +13,7 @@ export default function SwitchToogle({
   };
 
   return (
-    <button onClick={handleToogle} className={styles["switch-toogle-" + state]}>
+    <button onClick={handleToogle} className={"switch-toogle-"}>
       <div></div>
     </button>
   );

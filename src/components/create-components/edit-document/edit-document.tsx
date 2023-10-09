@@ -8,20 +8,20 @@ import { faBars, faShare, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { ReactNode, useState } from "react";
 import Image from "next/image";
-import { useUser } from "@clerk/nextjs";
+// import { useUser } from "@clerk/nextjs";
 import Sidevar from "src/layout/Sidevar";
 import Options from "@components/Options";
 import { Component } from "src/pages/docs/edit/[id]";
-import { useRouter } from "next/router";
-import { hydrateJSON } from "src/utils/create-doc/hydrate.JSON";
+import { useRouter } from "next/navigation";
+import { hydrateJSON } from "src/utils/create-doc/hydrateJSON";
 import {
   Privacity,
   RemoveFileDocument,
   UpsertFileDocument,
 } from "src/gql/graphql";
 import { DocumentJSON } from "src/models/document.model";
-import { client } from "src/service/client";
-import toast from "react-hot-toast";
+// import { client } from "src/service/client";
+// import toast from "react-hot-toast";
 
 export type configAttrs = {
   title: string;
@@ -40,7 +40,6 @@ function removeIdFromObject(obj: Component) {
 }
 
 function removeIdFromJson(jsonStr: string) {
-  if (!jsonStr) return;
   const jsonObj = JSON.parse(jsonStr);
   removeIdFromObject(jsonObj);
 
@@ -58,8 +57,9 @@ const ConfigForm = ({
 }) => {
   const optimizedContent = removeIdFromJson(JSON.stringify(document));
   const [content, setContent] = useState("");
-  const router = useRouter();
-  const { id } = router.query;
+  // const router = useRouter();
+  // const { id } = router.query;
+  const id = document?.id
   return (
     <>
       <OptionsInput
@@ -89,17 +89,14 @@ const ConfigForm = ({
         onChange={({ content }) => setContent(content)}
       />
       <Buttons>
-        <Button onClick={() => print()}>Descargar</Button>
+        <Button onClick={()=>print()}>Descargar</Button>
         <Button
           onClick={() =>
             setSettings((settings) => ({
               ...settings,
               file: {
                 ...settings.file,
-                content: hydrateJSON(
-                  settings.file.content.id as string,
-                  JSON.parse(content)
-                ),
+                content: hydrateJSON(JSON.parse(content)),
               },
             }))
           }
@@ -129,47 +126,47 @@ const Navar = ({
     subtopic,
     topic,
   } = settings ?? { file: {} };
-  const { user } = useUser();
+  // const { user } = useUser();
   const router = useRouter();
 
   const onRemove = async () => {
-    toast.promise(
-      client
-        .mutate({
-          mutation: RemoveFileDocument,
-          variables: {
-            where: {
-              externalId,
-            },
-          },
-        })
-        .then(() => {
-          localStorage.removeItem("doc-" + externalId);
-          router.push("/edit");
-        }),
-      {
-        error: "No se ha logrado eliminar",
-        loading: "Eliminando...",
-        success: "¡Eliminado!",
-      }
-    );
+    // toast.promise(
+    //   client
+    //     .mutate({
+    //       mutation: RemoveFileDocument,
+    //       variables: {
+    //         where: {
+    //           externalId,
+    //         },
+    //       },
+    //     })
+    //     .then(() => {
+    //       localStorage.removeItem("doc-" + externalId);
+    //       router.push("/edit");
+    //     }),
+    //   {
+    //     error: "No se ha logrado eliminar",
+    //     loading: "Eliminando...",
+    //     success: "¡Eliminado!",
+    //   }
+    // );
   };
 
   const remove = async () => {
-    toast((t) => (
-      <div className="flex flex-col gap-2">
-        <span>¿Seguro que quiere eliminar el documento?</span>
-        <Button
-          onClick={() => {
-            onRemove();
-            toast.dismiss(t.id);
-          }}
-          color={"red"}
-        >
-          Eliminar
-        </Button>
-      </div>
-    ));
+    // toast((t) => (
+    //   <div className="flex flex-col gap-2">
+    //     <span>¿Seguro que quiere eliminar el documento?</span>
+    //     <Button
+    //       onClick={() => {
+    //         // onRemove();
+    //         // toast.dismiss(t.id);
+    //       }}
+    //       color={"red"}
+    //     >
+    //       Eliminar
+    //     </Button>
+    //   </div>
+    // ));
   };
 
   const onSave = () => {
@@ -189,45 +186,45 @@ const Navar = ({
           },
         })
       );
-    toast.success("¡Guardado localmente!");
+    // toast.success("¡Guardado localmente!");
   };
 
   const upsert = async () => {
-    toast.promise(
-      client.mutate({
-        mutation: UpsertFileDocument,
-        variables: {
-          where: { externalId },
-          create: {
-            Author: {
-              connect: {
-                externalId: user?.id,
-              },
-            },
-            content: JSON.stringify(removeIdFromObject(content)),
-            privacity,
-            title,
-            externalId,
-          },
-          update: {
-            content: {
-              set: JSON.stringify(removeIdFromObject(content)),
-            },
-            privacity: {
-              set: privacity,
-            },
-            title: {
-              set: title,
-            },
-          },
-        },
-      }),
-      {
-        error: "Error al sincronizar",
-        loading: "Sincronizando",
-        success: "¡Sincronizado correctamente!",
-      }
-    );
+    // toast.promise(
+    //   client.mutate({
+    //     mutation: UpsertFileDocument,
+    //     variables: {
+    //       where: { externalId },
+    //       create: {
+    //         Author: {
+    //           connect: {
+    //             externalId: user?.id,
+    //           },
+    //         },
+    //         content: JSON.stringify(removeIdFromObject(content)),
+    //         privacity,
+    //         title,
+    //         externalId,
+    //       },
+    //       update: {
+    //         content: {
+    //           set: JSON.stringify(removeIdFromObject(content)),
+    //         },
+    //         privacity: {
+    //           set: privacity,
+    //         },
+    //         title: {
+    //           set: title,
+    //         },
+    //       },
+    //     },
+    //   }),
+    //   {
+    //     error: "Error al sincronizar",
+    //     loading: "Sincronizando",
+    //     success: "¡Sincronizado correctamente!",
+    //   }
+    // );
   };
 
   return (
@@ -292,7 +289,7 @@ const Navar = ({
             className="cursor-pointer flex items-center gap-1"
           >
             <CircleButton>
-              {user?.imageUrl ? (
+              {/* {user?.imageUrl ? (
                 <div className="rounded-full overflow-hidden">
                   <Image
                     width={25}
@@ -303,7 +300,7 @@ const Navar = ({
                 </div>
               ) : (
                 <FontAwesomeIcon icon={faBars} />
-              )}
+              )} */}
             </CircleButton>
             <span className="hidden md:inline-block">Menu</span>
           </div>

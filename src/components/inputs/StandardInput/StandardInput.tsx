@@ -1,11 +1,8 @@
-'use client'
-/* eslint-disable react-hooks/exhaustive-deps */
-import styles from "./StandardInput.module.css";
-// import React, { useEffect } from "react";
-import capFirst from "src/utils/capFirst";
 import { StandartInputAttrs } from "src/models/StandartInputAttr";
+import capFirst from "src/utils/capFirst";
 
-export default function StandardInput({
+export default function StandardInput(
+  {
   value,
   type,
   onChange,
@@ -13,26 +10,23 @@ export default function StandardInput({
   dataKey,
   attrs,
   placeholder,
-}: StandartInputAttrs) {
-  // useEffect(() => {
-  //   value && createFormData(value);
-  // }, []);
-  const createFormData = (data: string) => {
+  }: StandartInputAttrs
+) {
+    const createFormData = (data: string) => {
     const obj = {} as any;
     if (dataKey) obj[dataKey] = data;
     else if (name) obj[name] = data;
     onChange && onChange(obj);
   };
   return (
-    <label className={`${styles["standart-input"]}`}>
+    <label className="w-full mx-auto">
       {name && <span className="text-slate-700">{capFirst(name)}</span>}
       <input
-      className="shadow-md"
+        className="p-2 my-1 text-sm text-slate-700 card w-full focus:mb-0.5 focus:border-2 focus:border-blue-500 focus:outline-none focus:shadow focus:shadow-blue-500/10"
         {...(attrs as {})}
-        placeholder={placeholder}
         defaultValue={value}
         name={name}
-        // onChange={({ target }) => createFormData(target.value)}
+        onChange={({ target }) => createFormData(target.value)}
         type={type}
       />
     </label>

@@ -1,8 +1,23 @@
 import { ReactNode } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClose } from "@fortawesome/free-solid-svg-icons";
-import { createPortal } from "react-dom";
-import Blur from "../blur/blur";
+// import { createPortal } from "react-dom";
+const Blur = ({
+  setVisibility,
+  visibility,
+}: {
+  setVisibility: React.Dispatch<React.SetStateAction<boolean>>;
+  visibility: boolean;
+}) => {
+  return (
+    <div
+      // href={"?modal"}
+      className={`cursor-default fixed z-40 top-0 left-0 h-full w-full bg-slate-900/70 transition-all duration-500 
+        ${visibility ? "opacity-70 duration-500" : "opacity-0 hidden"}`}
+      onClick={() => setVisibility(false)}
+    ></div>
+  );
+};
 
 export default function Modal({
   modalState,
@@ -15,13 +30,12 @@ export default function Modal({
   setModalState: any;
   children?: ReactNode;
 }) {
-  return  (
-    // createPortal(
+  return modalState ? (
     <div
       key={title}
       className={`flex  z-40 fixed top-0 left-0 justify-center items-center w-full h-full print:hidden`}
     >
-      {/* <Blur {...{ setVisibility: setModalState, visibility: modalState }} /> */}
+      <Blur {...{ setVisibility: setModalState, visibility: modalState }} />
       <div
         className={`fixed max-w-md w-11/12 h-max bg-white z-50 p-4 rounded-md ${
           modalState ? "inline-block" : "hidden"
@@ -43,10 +57,12 @@ export default function Modal({
         </div>
       </div>
     </div>
+  ) : (
     // document?.querySelector("#modal") as HTMLDivElement
     // )
     // ) : (
     //   <></>
     // );
+    <></>
   );
 }

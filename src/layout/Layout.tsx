@@ -2,7 +2,7 @@ import React, { ReactNode, useState } from "react";
 import Navar from "./Navar";
 import Sidevar from "./Sidevar";
 import Head from "next/head";
-import { Toaster } from "react-hot-toast";
+// import { Toaster } from "react-hot-toast";
 
 export default function Layout({
   children,
@@ -26,7 +26,7 @@ export default function Layout({
       </main>
       <Sidevar visibility={visibility} setVisibility={setVisibility} />
       {/* <Var state={style} /> */}
-      <Toaster />
+      {/* <Toaster /> */}
     </div>
   );
 }

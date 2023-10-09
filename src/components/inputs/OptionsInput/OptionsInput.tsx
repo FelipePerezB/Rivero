@@ -1,8 +1,10 @@
-'use client'
-/* eslint-disable react-hooks/exhaustive-deps */
-// import React, { useEffect, useRef, useState } from "react";
-import StandardInput from "../StandardInput/StandardInput";
-import styles from "./OptionsInput.module.css";
+// 'use client'
+// /* eslint-disable react-hooks/exhaustive-deps */
+// // import React, { useEffect, useRef, useState } from "react";
+// import StandardInput from "../StandardInput/StandardInput";
+// import styles from "./OptionsInput.module.css";
+// import capFirst from "src/utils/capFirst";
+
 import capFirst from "src/utils/capFirst";
 
 type props = {
@@ -27,31 +29,32 @@ export default function OptionsInput(props: props) {
   return (props.options.join("").length <= 30 && !props.isLarge) ? (
     <SmallOptionsInput {...props} onChange={createFormData} />
   ) : (
-    <LargeOptionsInput {...props} onChange={props?.onChange} />
+    <></>
+    // <LargeOptionsInput {...props} onChange={props?.onChange} />
   );
 }
 
-function LargeOptionsInput(props: props) {
-  const id = `options-${props.options?.join()}`;
-  return (
-    <div>
-      <StandardInput
-        attrs={{ list: id }}
-        name={props.name}
-        dataKey={props.dataKey}
-        onChange={props?.onChange}
-        type="text"
-      />
-      <datalist id={id}>
-        {props.options.map((value: string) => (
-          <option key={value} value={value}>
-            {value}
-          </option>
-        ))}
-      </datalist>
-    </div>
-  );
-}
+// function LargeOptionsInput(props: props) {
+//   const id = `options-${props.options?.join()}`;
+//   return (
+//     <div>
+//       <StandardInput
+//         attrs={{ list: id }}
+//         name={props.name}
+//         dataKey={props.dataKey}
+//         onChange={props?.onChange}
+//         type="text"
+//       />
+//       <datalist id={id}>
+//         {props.options.map((value: string) => (
+//           <option key={value} value={value}>
+//             {value}
+//           </option>
+//         ))}
+//       </datalist>
+//     </div>
+//   );
+// }
 
 function SmallOptionsInput(props: props) {
   // useEffect(() => {
@@ -60,9 +63,9 @@ function SmallOptionsInput(props: props) {
   //   }
   // }, []);
   return (
-    <article className={`${styles["options"]} ${props?.className}`}>
-      <span className={styles.name}>{capFirst(props.name)}</span>
-      <fieldset className={styles["small-options-input"]}>
+    <article className={"options {props?.className"}>
+      <span className={"name"}>{capFirst(props.name)}</span>
+      <fieldset className="small-options-input">
         {props.options.map((option, i) => (
           <label key={option}>
             <input
@@ -81,7 +84,7 @@ function SmallOptionsInput(props: props) {
               name={props.name}
               type="radio"
             />
-            <span className={styles["small-options-input__text"]}>
+            <span className={"small-options-input__text"}>
               {capFirst(option)}
             </span>
           </label>

@@ -1,4 +1,4 @@
-import { Component } from "src/pages/docs/edit/[id]";
+import { Component } from "../models/component";
 
 const iterateObj = (
   expectedId: string,

@@ -1,3 +1,4 @@
+'use client'
 import GetComponent from "@components/create-components/edit-document/get-component";
 import Title from "./title";
 import capFirst from "src/utils/capFirst";

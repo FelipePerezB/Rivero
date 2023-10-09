@@ -1,4 +1,4 @@
-import styles from "@styles/ProgressVar.module.css";
+// import styles from "@styles/ProgressVar.module.css";
 
 export const ProgressVar = ({
   progress,
@@ -34,7 +34,7 @@ export const CompletedProgress = ({
         <ProgressVar color={color} progress={progress} />
         <span>{text}</span>
       </span>
-      {label && <p className={styles.label}>{label}</p>}
+      {label && <p className={""}>{label}</p>}
     </div>
   );
 };

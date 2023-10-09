@@ -4,12 +4,13 @@ import Buttons from "@components/button/buttons/Buttons";
 import Modal from "@components/modals/modal/Modal";
 import GetComponent from "./get-component";
 import { ReactNode, SetStateAction, useEffect, useState } from "react";
-import { Component } from "src/pages/docs/edit/[id]";
-import { onDeleteProps } from "src/utils/create-doc/onDelete";
-import { onEditProps } from "src/utils/create-doc/onEdit";
-import Options from "@components/Options";
-import getInputs from "src/utils/create-doc/getInputs";
+// import { Component } from "src/pages/docs/edit/[id]";
+// import { onDeleteProps } from "src/utils/create-doc/onDelete";
+// import { onEditProps } from "src/utils/create-doc/onEdit";
 import Form from "../components/inputs/form";
+import { Component } from "src/app/documents/edit/models/component";
+import { onDeleteProps } from "src/app/documents/edit/utils/onDelete";
+import { onEditProps } from "src/app/documents/edit/utils/onEdit";
 
 type options = "Modificar" | "Hijos";
 const types = {

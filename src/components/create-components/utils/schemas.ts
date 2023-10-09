@@ -5,7 +5,7 @@ export const childrenchenas = {
     expectedAns: "text",
     children: "child",
   },
-  page: [
+  section: [
     {
       type: "children",
       options: {
@@ -189,7 +189,7 @@ export const schemas: any = {
     subject: { type: "text", private: true },
     children: {
       type: "children",
-      child: "page",
+      child: "section",
     },
   },
 };
