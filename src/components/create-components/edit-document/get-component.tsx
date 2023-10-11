@@ -1,6 +1,5 @@
 // 'use client'
 import dynamic from "next/dynamic";
-import { Suspense, lazy } from "react";
 
 const GetComponent = ({
   folder,
@@ -11,13 +10,14 @@ const GetComponent = ({
   name: string;
   attrs: { [key: string]: unknown };
 }) => {
-  console.log(attrs);
+  console.log(name)
   const Component = dynamic(
-    () => import(`../components/${folder}/${name?.toLowerCase()}`)
+    () => import(`../components/${folder}/${name?.toLowerCase()}`),
+    { ssr: false}
   );
   return (
     // <Suspense fallback={<>Loading...</>}>
-      <Component {...{ ...attrs }} />
+    <Component {...{ ...attrs }} />
     // </Suspense>
   );
 };

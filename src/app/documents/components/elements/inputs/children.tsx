@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import OptionsInput from "@components/inputs/OptionsInput/OptionsInput";
-import { componentsNames } from "../../utils/schemas";
+// import { componentsNames } from "../../utils/schemas";
 import Modal from "@components/modals/modal/Modal";
 import generateRandomId from "src/utils/generateRandomId";
 import Buttons from "@components/button/buttons/Buttons";
@@ -8,6 +8,7 @@ import Buttons from "@components/button/buttons/Buttons";
 import Form from "./form";
 import { Component } from "src/app/documents/edit/models/component";
 import Preview from '@components/create-components/edit-document/preview';
+import { componentsNames } from '@components/create-components/utils/schemas';
 
 export default function Children({
   value,

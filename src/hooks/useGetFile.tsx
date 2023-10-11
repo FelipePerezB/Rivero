@@ -1,7 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useQuery } from "@apollo/client";
 import Button from "@components/Button";
+import { File } from "@prisma/client";
 import React, { useEffect, useState } from "react";
+import api from "src/app/utils/api";
 // import toast from "react-hot-toast";
 import { GetFileDocument, Privacity } from "src/gql/graphql";
 import { DocumentJSON } from "src/models/document.model";
@@ -21,13 +23,6 @@ export const getDefaultFile = (id: string) => {
               options: {
                 number: 1,
                 children: [
-                  {
-                    type: "title",
-                    options:{
-                      text: "AAAAAa",
-                      size:"h1"
-                    }
-                  }
                 ],
               },
             },
@@ -35,7 +30,7 @@ export const getDefaultFile = (id: string) => {
         },
       },
     },
-  };
+  } as any;
 };
 
 // const getToast = (
@@ -68,13 +63,28 @@ export const getDefaultFile = (id: string) => {
 //     </div>
 //   ));
 
-export default function useGetFile(id: string) {
+export default async function useGetFile(id: string) {
   // const { data, error } = useQuery(GetFileDocument, {
   //   variables: {
   //     where: { externalId: id },
   //   },
   // });
-  const defaultFile = getDefaultFile(id);
+  let defaultFile = getDefaultFile(id);
+  console.log(defaultFile);
+  try {
+    const { data } = (await api("files/" + id)) as { data: File };
+    if (data.externalId) {
+      defaultFile.file = {
+        ...data,
+        // },
+      };
+
+      // Object.assign(defaultFile, {})
+      console.log(defaultFile, data.content);
+    }
+  } catch (error) {
+    console.error(error);
+  }
   // const [file, setFile] = useState<DocumentJSON>(defaultFile);
 
   // useEffect(() => {

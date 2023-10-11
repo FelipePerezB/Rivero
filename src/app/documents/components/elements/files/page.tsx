@@ -1,16 +1,12 @@
-'use client'
-// import GetComponent from "@components/create-components/edit-document/get-component";
+import GetComponent from "@components/create-components/edit-document/get-component";
 import Title from "./title";
 import capFirst from "src/utils/capFirst";
-import { useEffect } from "react";
-import DynamicElement from "src/app/documents/components/elements/files/dynamic-file";
-// import DynamicElement from "src/app/documents/components/dymanics-import/dynamic-element";
 const DocumentHeader = ({ title = "" }: { title: string }) => {
   return (
     <div className="flex flex-col items-center pb-[1em] border-b-[0.1em] mb-[0.6em] text-em leading-normal">
       <Title options={{ size: "h1", text: capFirst(title) }} />
       <span className="flex gap-[0.3em] text-gray-500 rounded print:text-gray-300">
-        <span className="font-bold">--  --</span>
+        <span className="font-bold">-- A --</span>
       </span>
     </div>
   );
@@ -39,7 +35,6 @@ export default function Section({
     }[];
   };
 }) {
-  
   console.log(number)
   return (
     <div
@@ -52,10 +47,11 @@ export default function Section({
       <div className="relative flex flex-col h-full gap-[0.1em]">
         {number === 1 && <DocumentHeader {...{ title }} />}
         {children?.map((child, i) => (
-          <DynamicElement
+          <GetComponent
             key={`page-${number}-${child.type}-${i}`}
             attrs={child}
             name={child.type}
+            folder="documents"
           />
         ))}
         <span className="absolute font-light text-[0.8em] bottom-0 right-0">

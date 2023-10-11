@@ -6,6 +6,8 @@
 // import capFirst from "src/utils/capFirst";
 
 import capFirst from "src/utils/capFirst";
+import StandardInput from "../StandardInput/StandardInput";
+import { useEffect } from "react";
 
 type props = {
   name: string;
@@ -26,56 +28,54 @@ export default function OptionsInput(props: props) {
     props.onChange(obj);
   };
 
-  return (props.options.join("").length <= 30 && !props.isLarge) ? (
+  return props.options.join("").length <= 30 && !props.isLarge ? (
     <SmallOptionsInput {...props} onChange={createFormData} />
   ) : (
-    <></>
-    // <LargeOptionsInput {...props} onChange={props?.onChange} />
+    // <></>
+    <LargeOptionsInput {...props} onChange={props?.onChange} />
   );
 }
 
-// function LargeOptionsInput(props: props) {
-//   const id = `options-${props.options?.join()}`;
-//   return (
-//     <div>
-//       <StandardInput
-//         attrs={{ list: id }}
-//         name={props.name}
-//         dataKey={props.dataKey}
-//         onChange={props?.onChange}
-//         type="text"
-//       />
-//       <datalist id={id}>
-//         {props.options.map((value: string) => (
-//           <option key={value} value={value}>
-//             {value}
-//           </option>
-//         ))}
-//       </datalist>
-//     </div>
-//   );
-// }
+function LargeOptionsInput(props: props) {
+  const id = `options-${props.options?.join()}`;
+  return (
+    <div>
+      <StandardInput
+        attrs={{ list: id }}
+        name={props.name}
+        dataKey={props.dataKey}
+        onChange={props?.onChange}
+        type="text"
+      />
+      <datalist id={id}>
+        {props.options.map((value: string) => (
+          <option key={value} value={value}>
+            {value}
+          </option>
+        ))}
+      </datalist>
+    </div>
+  );
+}
 
 function SmallOptionsInput(props: props) {
-  // useEffect(() => {
-  //   if (!props.dontDefaultCheck) {
-  //     props.onChange(props.value ?? props.options[0]);
-  //   }
-  // }, []);
   return (
-    <article className={"options {props?.className"}>
-      <span className={"name"}>{capFirst(props.name)}</span>
-      <fieldset className="small-options-input">
+    <article className={"flex flex-col gap-1 {props?.className"}>
+      <span className={"w-full inline-block text-center"}>
+        {capFirst(props.name)}
+      </span>
+      <fieldset className="w-max bg-white rounded flex justify-around my-0 mx-auto overflow-hidden relative border">
         {props.options.map((option, i) => (
-          <label key={option}>
+          <label className="relative h-full flex group" key={option}>
             <input
+              className="cursor-pointer absolute top-0 left-0 h-full w-full opacity-0 peer"
               tabIndex={i === 0 ? props.tabIndex : undefined}
               id={option}
-              // onClick={(event) => {
-              //   const { value } = event.target as HTMLInputElement;
-              //   if (!value) return;
-              //   props.onChange(value);
-              // }}
+              onClick={(event) => {
+                const { value } = event.target as HTMLInputElement;
+                if (!value) return;
+                props.onChange(value);
+              }}
               value={option}
               defaultChecked={
                 (!props.dontDefaultCheck && !props.value && i === 0) ||
@@ -84,7 +84,11 @@ function SmallOptionsInput(props: props) {
               name={props.name}
               type="radio"
             />
-            <span className={"small-options-input__text"}>
+            <span
+              className={
+                "w-full h-ful py-1 px-3 transition-all duration-100 peer-checked:bg-blue-500 peer-checked:text-white group-hover:bg-gray-200/60 "
+              }
+            >
               {capFirst(option)}
             </span>
           </label>

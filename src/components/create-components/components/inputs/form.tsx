@@ -100,7 +100,13 @@ export default function Form({
               children,
             }}
           />
-          <GetComponent
+          <Children
+            document={document}
+            onChange={addFormData}
+            parentId={component?.id as string}
+            value={values.children}
+          />
+          {/* <GetComponent
             folder="inputs"
             attrs={{
               setParentModalState: setModalState,
@@ -112,7 +118,7 @@ export default function Form({
               onChange: addFormData,
             }}
             name="children"
-          />
+          /> */}
         </div>
       )}
       <div className="mt-2">

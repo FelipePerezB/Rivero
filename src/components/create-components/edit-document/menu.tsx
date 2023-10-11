@@ -6,11 +6,12 @@ import React, { SetStateAction, useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClose, faGear, faPlus } from "@fortawesome/free-solid-svg-icons";
 import onDelete from "src/utils/create-doc/onDelete";
-import { Component } from "src/pages/docs/edit/[id]";
+// import { Component } from "src/pages/docs/edit/[id]";
 import getNode from "src/utils/create-doc/getNode";
 import iterateObj from "src/utils/create-doc/iterateObject";
 import ComponentModal from "@components/create-components/edit-document/modal";
 import { DocumentJSON } from "src/models/document.model";
+import { Component } from "src/app/documents/edit/models/component";
 
 type props = { type: string; options: any; id: string };
 

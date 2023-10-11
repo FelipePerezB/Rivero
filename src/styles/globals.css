@@ -3,11 +3,23 @@
 @tailwind utilities;
 
 @layer components {
-  .card{
-    @apply bg-white p-2.5 shadow-md rounded-md border border-gray-300
+  .card {
+    @apply bg-white p-2.5 shadow-md rounded-md border border-gray-300;
   }
 }
 
-body{
-  font-family: 'nunito';
+body {
+  font-family: "nunito";
+}
+
+#document-container [data-component] [data-component]:hover{
+  outline: blue 2px solid;
+  border-radius: 2px;
+  cursor: pointer;
+}
+
+#document-container [data-component] [data-component] [data-component]:hover {
+  outline: blue 2px dashed;
+  border-radius: 2px;
+  cursor: pointer;
 }

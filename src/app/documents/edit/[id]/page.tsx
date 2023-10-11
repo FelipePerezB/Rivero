@@ -1,4 +1,4 @@
-"use client";
+// "use client";
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useRef, useState } from "react";
 import Layout from "@components/create-components/edit-document/edit-document";
@@ -8,6 +8,9 @@ import Menu from "@components/create-components/edit-document/menu";
 import useGetFile from "src/hooks/useGetFile";
 // import { useRouter } from "next/router";
 import { DocumentJSON } from "src/models/document.model";
+import Document from "@components/create-components/components/documents/document";
+import { Toaster } from "react-hot-toast";
+import EditWraper from "../components/edit-wraper";
 // import { Toaster } from "react-hot-toast";
 
 export interface ComponentOptions {
@@ -20,82 +23,12 @@ export interface Component {
   id?: string;
   options: ComponentOptions;
 }
-export default function EditDoc({
+export default async function EditFilePage({
   params: { id },
 }: {
   params: { id: string };
 }) {
-  // const router = useRouter();
-  // const id = router.query.id as string;
-  const document = useGetFile(id);
-  const [settings, setSettings] = useState<DocumentJSON>(document);
-  // const { content, privacity, title } = file.document;
-  const divRef = useRef<HTMLDivElement>(null);
-  const resize = () => {
-    const $container = divRef.current;
-    if (!$container) return;
-    const pixels = 13;
-    const width = 450;
-    const containerWidth = $container.clientWidth;
-    const fontSize = (pixels / width) * Number(containerWidth);
-    $container.style.fontSize = fontSize + "px";
-  };
+  const file = await useGetFile(id);
 
-  // useEffect(() => {
-  //   setSettings({
-  //     ...settings,
-  //     file: {
-  //       ...settings.file,
-  //       content: hydrateJSON(document.file.content),
-  //       externalId: id,
-  //     },
-  //   });
-  //   resize();
-  //   window.onresize = resize;
-  // }, []);
-  useEffect(() => {
-    setSettings({
-      ...settings,
-      file: {
-        ...settings.file,
-        content: hydrateJSON(document.file.content),
-        externalId: id,
-      },
-    });
-    resize();
-    window.onresize = resize;
-  }, [id]);
-  
-  console.log(document);
-
-  return (
-    <Layout
-      document={settings.file.content}
-      settings={settings}
-      setSettings={setSettings}
-    >
-      <div ref={divRef} className="fixed top-0 left-0 pt-[70px] w-[calc(100vw-32px)] max-w-xl translate-x-[calc(50vw-50%)]">
-        <div className="print:text-[calc(100vw*(13/450))]">
-          {!!settings?.file.externalId && (
-            <GetComponent
-              folder="documents"
-              name={"document"}
-              attrs={{ ...settings.file.content, title: settings?.file?.title }}
-            />
-          )}
-        </div>
-      </div>
-      {divRef.current && (
-        <Menu
-          divRef={divRef || undefined}
-          {...{
-            settings,
-            documentComponent: settings.file.content,
-            setSettings,
-          }}
-        />
-      )}
-      {/* <Toaster /> */}
-    </Layout>
-  );
+  return <EditWraper document={file} id={id} />;
 }

@@ -74,10 +74,10 @@ export default function InvitationBtns({
       </CircleButton>
       <Modal id="invitation" searchParams={{}} title="Invitar">
         <StandardInput
-          // onChange={({ emails }) => setEmails(emails)}
-          // name="Correos"
-          // dataKey="emails"
-          // placeholder="felipe@gmail.com, alicia@gmail.com"
+          onChange={({ emails }) => setEmails(emails)}
+          name="Correos"
+          dataKey="emails"
+          placeholder="felipe@gmail.com, alicia@gmail.com"
         />
         <Button onClick={invitate}>Invitar</Button>
         {!!invitationsArray.length && (

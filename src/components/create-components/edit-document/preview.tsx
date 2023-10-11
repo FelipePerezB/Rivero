@@ -2,12 +2,14 @@
 import React, { useMemo } from "react";
 import GetComponent from "./get-component";
 import { Component } from "src/app/documents/edit/models/component";
+// import DynamicInput from "src/app/documents/components/elements/inputs/dynamic-input";
+import DynamicElement from "src/app/documents/components/elements/files/dynamic-file";
 // import { Component } from "src/pages/docs/edit/[id]";
 
 export default function Preview({ attrs }: { attrs: Component }) {
   const node = useMemo(
     () => (
-      <GetComponent attrs={{ ...attrs }} folder="documents" name={attrs.type} />
+      <DynamicElement attrs={{ ...attrs }} name={attrs.type} />
     ),
     [attrs.options]
   );

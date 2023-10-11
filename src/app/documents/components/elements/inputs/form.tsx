@@ -4,11 +4,17 @@ import Options from "@components/Options";
 import Buttons from "@components/button/buttons/Buttons";
 import GetComponent from "@components/create-components/edit-document/get-component";
 import React, { ReactNode, SetStateAction, useEffect, useState } from "react";
+// import { Component } from "src/pages/docs/edit/[id]";
+// import getInputs from "src/utils/create-doc/getInputs";
+// import getSchema from "../../utils/getSchema";
+// import { onDeleteProps } from "src/utils/create-doc/onDelete";
+// import { onEditProps } from "src/utils/create-doc/onEdit";
+import Children from "./children";
 import FormChildren from "@components/create-components/edit-document/form-children";
-import { Component } from "../../models/component";
-import { onEditProps } from "../../utils/onEdit";
+import { Component } from "src/app/documents/edit/models/component";
+import { onEditProps } from "src/app/documents/edit/utils/onEdit";
+import { onDeleteProps } from "src/app/documents/edit/utils/onDelete";
 import getSchema from "@components/create-components/utils/getSchema";
-import { onDeleteProps } from "../../utils/onDelete";
 
 type options = "Configuración" | "Hijos";
 
@@ -95,7 +101,13 @@ export default function Form({
               children,
             }}
           />
-          <GetComponent
+          <Children
+            document={document}
+            onChange={addFormData}
+            parentId={component?.id as string}
+            value={values.children}
+          />
+          {/* <GetComponent
             folder="inputs"
             attrs={{
               setParentModalState: setModalState,
@@ -107,7 +119,7 @@ export default function Form({
               onChange: addFormData,
             }}
             name="children"
-          />
+          /> */}
         </div>
       )}
       <div className="mt-2">
