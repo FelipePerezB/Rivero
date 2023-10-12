@@ -1,85 +1,77 @@
-import { auth } from '@clerk/nextjs';
-import CircleButton from '@components/button/circle-button/circle-button';
-import { faBars } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import Image from 'next/image';
-import React from 'react'
-import { DocumentJSON } from 'src/models/document.model';
-import ShareBtn from './share-btn';
+import { auth, useAuth, useUser } from "@clerk/nextjs";
+import CircleButton from "@components/button/circle-button/circle-button";
+import { faBars } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Image from "next/image";
+import React from "react";
+import { DocumentJSON } from "src/models/document.model";
+import ShareBtn from "./share-btn";
+import Link from "next/link";
 
-export default function ToolBar({title}:{title: string}) {
-  const {user, getToken} = auth()
+export default function ToolBar({
+  title,
+  settings,
+  setSettings,
+}: {
+  title: string;
+  settings: DocumentJSON;
+  setSettings: React.Dispatch<React.SetStateAction<DocumentJSON>>;
+}) {
+  const { user } = useUser();
   return (
     <nav className="fixed z-40 top-0 left-0 w-full h-max border-b shadow-sm bg-white print:hidden">
-    <ul className="flex items-center justify-between h-full px-6 py-1.5">
-      <li className="flex flex-col">
-        <div
-          contentEditable
-          dangerouslySetInnerHTML={{ __html: `${title}` }}
-          // onBlur={({ target }) =>
-          //   setSettings({
-          //     ...settings,
-          //     file: { ...settings.file, title: target.innerText },
-          //   })
-          // }
-          className="text-lg font-bold"
-        ></div>
-        <div className="flex gap-2">
-          <span
-            // onClick={onSave}
-            className="text-xs cursor-pointer active:text-blue-500"
-          >
-            Guardar
-          </span>
-          <span
-            // onClick={upsert}
-            className="text-xs cursor-pointer active:text-blue-500"
-          >
-            Sincronizar
-          </span>
-        </div>
-      </li>
-      <li className="flex items-center gap-2.5 md:gap-5">
-        {/* <div
-          onClick={remove}
-          className=" cursor-pointer flex items-center gap-1"
-        >
-          <CircleButton>
-            <FontAwesomeIcon
-              className="flex items-center"
-              // size="1x"
-              icon={faTrash}
-            />
-          </CircleButton>
-          <span className="hidden md:inline-block">Eliminar</span>
-        </div> */}
-        <ShareBtn/>
-        <div
-          // onClick={() => setVisibility(true)}
-          className="cursor-pointer flex items-center gap-1"
-        >
-          <CircleButton>
-            {user?.imageUrl ? (
-              <div className="rounded-full overflow-hidden">
-                <Image
-                  width={25}
-                  height={25}
-                  alt="abrir menu"
-                  src={user?.imageUrl ?? ""}
-                />
-              </div>
-            ) : (
-              <FontAwesomeIcon icon={faBars} />
-            )}
-          </CircleButton>
-          <span className="hidden md:inline-block">Menu</span>
-        </div>
-      </li>
-    </ul>
-  </nav>
-  )
+      <ul className="flex items-center justify-between h-full px-6 py-1.5">
+        <li className="flex flex-col">
+          <div
+            contentEditable
+            dangerouslySetInnerHTML={{ __html: `${title}` }}
+            onBlur={({ target }) =>
+              setSettings({
+                ...settings,
+                file: { ...settings.file, title: target.innerText },
+              })
+            }
+            className="text-lg font-bold"
+          ></div>
+          <div className="flex gap-2">
+            <span
+              // onClick={onSave}
+              className="text-xs cursor-pointer active:text-blue-500"
+            >
+              Guardar
+            </span>
+            <span
+              // onClick={upsert}
+              className="text-xs cursor-pointer active:text-blue-500"
+            >
+              Sincronizar
+            </span>
+          </div>
+        </li>
+        <li className="flex items-center gap-2.5 md:gap-5">
+          <ShareBtn setSettings={setSettings} settings={settings} />
+          <div className="cursor-pointer flex items-center gap-1">
+            <Link href={"?sidebar=nav"}>
+              {user?.imageUrl ? (
+                <div className="rounded-full overflow-hidden">
+                  <Image
+                    width={25}
+                    height={25}
+                    alt="abrir menu"
+                    src={user.imageUrl}
+                  />
+                </div>
+              ) : (
+                <FontAwesomeIcon icon={faBars} />
+              )}
+            </Link>
+            <span className="hidden md:inline-block">Menu</span>
+          </div>
+        </li>
+      </ul>
+    </nav>
+  );
 }
-
 
 // const Navar = ({
 //   settings,

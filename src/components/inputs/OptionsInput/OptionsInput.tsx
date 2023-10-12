@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 // 'use client'
 // /* eslint-disable react-hooks/exhaustive-deps */
 // // import React, { useEffect, useRef, useState } from "react";
@@ -59,6 +60,10 @@ function LargeOptionsInput(props: props) {
 }
 
 function SmallOptionsInput(props: props) {
+  useEffect(() => {
+    console.log(props.value)
+    props?.value && props?.onChange('PRIVATE');
+  }, []);
   return (
     <article className={"flex flex-col gap-1 {props?.className"}>
       <span className={"w-full inline-block text-center"}>
@@ -74,7 +79,8 @@ function SmallOptionsInput(props: props) {
               onClick={(event) => {
                 const { value } = event.target as HTMLInputElement;
                 if (!value) return;
-                props.onChange(value);
+                console.log(value)
+                props.onChange((value));
               }}
               value={option}
               defaultChecked={

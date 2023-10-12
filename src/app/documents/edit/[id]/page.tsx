@@ -30,5 +30,7 @@ export default async function EditFilePage({
 }) {
   const file = await useGetFile(id);
 
-  return <EditWraper document={file} id={id} />;
+  return <>
+  <EditWraper document={file} id={id} />;
+  </>
 }

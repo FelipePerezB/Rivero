@@ -55,8 +55,6 @@ export default function EditWraper({
     window.onresize = resize;
   }, [id]);
 
-  console.log(document);
-
   return (
     <Layout
       document={settings.file.content}

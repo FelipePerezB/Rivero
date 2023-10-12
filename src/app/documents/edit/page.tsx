@@ -17,7 +17,6 @@ export default async function EditFilesPage() {
   })) as {
     data: any;
   };
-  console.log(files)
   return (
     <>
       <StandardInput className="sticky z-30 top-16" />
