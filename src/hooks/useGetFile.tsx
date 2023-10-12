@@ -1,8 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useQuery } from "@apollo/client";
 import Button from "@components/Button";
-import { File } from "@prisma/client";
+import { File, Types } from "@prisma/client";
 import React, { useEffect, useState } from "react";
+import { NoteWithComponent } from "src/app/documents/edit/models/component";
 import api from "src/app/utils/api";
 // import toast from "react-hot-toast";
 import { GetFileDocument, Privacity } from "src/gql/graphql";
@@ -10,6 +11,7 @@ import { DocumentJSON } from "src/models/document.model";
 
 export const getDefaultFile = (id: string) => {
   return {
+    type: Types.DOCUMENT,
     file: {
       externalId: id,
       title: "Nuevo documento",
@@ -22,15 +24,14 @@ export const getDefaultFile = (id: string) => {
               type: "section",
               options: {
                 number: 1,
-                children: [
-                ],
+                children: [],
               },
             },
           ],
         },
       },
     },
-  } as any;
+  } as NoteWithComponent;
 };
 
 // const getToast = (
@@ -64,11 +65,6 @@ export const getDefaultFile = (id: string) => {
 //   ));
 
 export default async function useGetFile(id: string) {
-  // const { data, error } = useQuery(GetFileDocument, {
-  //   variables: {
-  //     where: { externalId: id },
-  //   },
-  // });
   let defaultFile = getDefaultFile(id);
   console.log(defaultFile);
   try {
@@ -76,10 +72,8 @@ export default async function useGetFile(id: string) {
     if (data.externalId) {
       defaultFile.file = {
         ...data,
-        // },
+        content: JSON.parse(data.content),
       };
-
-      // Object.assign(defaultFile, {})
       console.log(defaultFile, data.content);
     }
   } catch (error) {

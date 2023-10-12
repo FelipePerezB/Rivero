@@ -2,15 +2,12 @@
 import Button from "@components/Button";
 import Table from "@components/Table";
 import CircleButton from "@components/button/circle-button/circle-button";
-import Form from "@components/forms/simpleForm/SimpleForm";
 import StandardInput from "@components/inputs/StandardInput/StandardInput";
-// import Modal from "@components/modals/modal/Modal";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState } from "react";
-import Modal from "src/app/components/modal/modal";
+import SearchModal from "src/app/components/modal/search-modal";
 import { Role } from "src/gql/graphql";
-// import api from "src/service/api";
 
 const regexEmail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
@@ -72,7 +69,7 @@ export default function InvitationBtns({
           }}
         />
       </CircleButton>
-      <Modal id="invitation" searchParams={{}} title="Invitar">
+      <SearchModal id="invitation" searchParams={{}} title="Invitar">
         <StandardInput
           onChange={({ emails }) => setEmails(emails)}
           name="Correos"
@@ -91,7 +88,7 @@ export default function InvitationBtns({
             data={invitationsArray}
           />
         )}
-      </Modal>
+      </SearchModal>
     </>
   );
 }

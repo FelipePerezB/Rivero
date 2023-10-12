@@ -1,12 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import Button from "@components/Button";
-import Buttons from "@components/button/buttons/Buttons";
 import Modal from "@components/modals/modal/Modal";
-import GetComponent from "./get-component";
-import { ReactNode, SetStateAction, useEffect, useState } from "react";
-// import { Component } from "src/pages/docs/edit/[id]";
-// import { onDeleteProps } from "src/utils/create-doc/onDelete";
-// import { onEditProps } from "src/utils/create-doc/onEdit";
+import { SetStateAction } from "react";
 import Form from "../components/inputs/form";
 import { Component } from "src/app/documents/edit/models/component";
 import { onDeleteProps } from "src/app/documents/edit/utils/onDelete";
@@ -21,7 +15,6 @@ const types = {
 export default function ComponentModal({
   setData,
   component,
-  modalType,
   modalState,
   setModalState,
   onDelete,
@@ -33,7 +26,6 @@ export default function ComponentModal({
   onEdit: (props: onEditProps) => void;
   document: Component;
   component: Component;
-  modalType: "addChild" | "edit";
   modalState: boolean;
   setModalState: React.Dispatch<SetStateAction<boolean>>;
 }) {

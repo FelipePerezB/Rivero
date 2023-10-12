@@ -11,7 +11,7 @@ export interface Component {
   options: ComponentOptions;
 }
 
-type fileWithoutContent = Omit<File, "content">;
+type fileWithoutContent = Partial<Omit<File, "content">>;
 
 export interface Component {
   type: string;
@@ -19,6 +19,6 @@ export interface Component {
   options: ComponentOptions;
 }
 
-export interface NoteWithComponent extends Note {
+export interface NoteWithComponent extends Partial<Note> {
   file: fileWithoutContent & { content: Component };
 }

@@ -1,14 +1,11 @@
+'use client'
 /* eslint-disable react-hooks/exhaustive-deps */
 import Button from "@components/Button";
 import Options from "@components/Options";
 import Buttons from "@components/button/buttons/Buttons";
 import GetComponent from "@components/create-components/edit-document/get-component";
 import React, { ReactNode, SetStateAction, useEffect, useState } from "react";
-// import { Component } from "src/pages/docs/edit/[id]";
-// import getInputs from "src/utils/create-doc/getInputs";
 import getSchema from "../../utils/getSchema";
-// import { onDeleteProps } from "src/utils/create-doc/onDelete";
-// import { onEditProps } from "src/utils/create-doc/onEdit";
 import Children from "./children";
 import FormChildren from "@components/create-components/edit-document/form-children";
 import { Component } from "src/app/documents/edit/models/component";
@@ -106,19 +103,6 @@ export default function Form({
             parentId={component?.id as string}
             value={values.children}
           />
-          {/* <GetComponent
-            folder="inputs"
-            attrs={{
-              setParentModalState: setModalState,
-              onEdit,
-              onDelete,
-              document,
-              parentId: component.id,
-              value: values?.children,
-              onChange: addFormData,
-            }}
-            name="children"
-          /> */}
         </div>
       )}
       <div className="mt-2">

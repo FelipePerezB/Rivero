@@ -1,21 +1,20 @@
-import { auth, useAuth, useUser } from "@clerk/nextjs";
-import CircleButton from "@components/button/circle-button/circle-button";
+import { useUser } from "@clerk/nextjs";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Image from "next/image";
 import React from "react";
-import { DocumentJSON } from "src/models/document.model";
 import ShareBtn from "./share-btn";
 import Link from "next/link";
+import { NoteWithComponent } from "src/app/documents/edit/models/component";
 
-export default function ToolBar({
+export default function Navar({
   title,
   settings,
   setSettings,
 }: {
   title: string;
-  settings: DocumentJSON;
-  setSettings: React.Dispatch<React.SetStateAction<DocumentJSON>>;
+  settings: NoteWithComponent;
+  setSettings: React.Dispatch<React.SetStateAction<NoteWithComponent>>;
 }) {
   const { user } = useUser();
   return (

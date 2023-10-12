@@ -9,6 +9,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Privacity } from "@prisma/client";
 import React, { useState } from "react";
 import ClientModal from "src/app/components/modal/client-modal";
+import { NoteWithComponent } from "src/app/documents/edit/models/component";
 import { hydrateJSON } from "src/app/documents/edit/utils/hydrateJSON";
 import { removeIdFromJson } from "src/app/documents/edit/utils/removeId";
 import { DocumentJSON } from "src/models/document.model";
@@ -17,8 +18,8 @@ export default function ShareBtn({
   settings,
   setSettings,
 }: {
-  settings: DocumentJSON;
-  setSettings: React.Dispatch<React.SetStateAction<DocumentJSON>>;
+  settings: NoteWithComponent;
+  setSettings: React.Dispatch<React.SetStateAction<NoteWithComponent>>;
 }) {
   const [state, setState] = useState(false);
   const options = ["Configuración"];

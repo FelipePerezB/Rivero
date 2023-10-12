@@ -1,4 +1,3 @@
-'use client'
 import { useSearchParams } from "next/navigation";
 import SearchCloseWrapper from "../common/search-close-wrapper";
 import Modal from "./modal";
@@ -8,14 +7,16 @@ export default function SearchModal({
   title,
   sidebarKey = "sidebar",
   id,
+  searchParams,
   children,
 }: {
   title: string;
   children: ReactNode;
   sidebarKey?: string;
+  searchParams: { [key: string]: string };
   id: string;
 }) {
-  const sidebarId = useSearchParams()?.get(sidebarKey);
+  const sidebarId = searchParams[sidebarKey];
   const show = sidebarId === id;
   return (
     <Modal

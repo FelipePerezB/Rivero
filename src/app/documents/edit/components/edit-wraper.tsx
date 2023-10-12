@@ -1,27 +1,14 @@
-"use client";
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { ReactNode, useEffect, useRef, useState } from "react";
-import Layout from "@components/create-components/edit-document/edit-document";
-import GetComponent from "@components/create-components/edit-document/get-component";
+"use client";
+import React, { useEffect, useRef, useState } from "react";
 import { hydrateJSON } from "src/utils/create-doc/hydrateJSON";
 import Menu from "@components/create-components/edit-document/menu";
-import useGetFile from "src/hooks/useGetFile";
-// import { useRouter } from "next/router";
-import { DocumentJSON } from "src/models/document.model";
 import Document from "@components/create-components/components/documents/document";
 import { Toaster } from "react-hot-toast";
-// import { Toaster } from "react-hot-toast";
+import { NoteWithComponent } from "../models/component";
+import Layout from "../components/layout";
+import Toolbar from "./toolbar";
 
-export interface ComponentOptions {
-  children?: Component[];
-  [key: string]: unknown;
-}
-
-export interface Component {
-  type: string;
-  id?: string;
-  options: ComponentOptions;
-}
 export default function EditWraper({
   id,
   document,
@@ -29,8 +16,7 @@ export default function EditWraper({
   id: string;
   document: any;
 }) {
-
-  const [settings, setSettings] = useState<DocumentJSON>(document);
+  const [settings, setSettings] = useState<NoteWithComponent>(document);
   const divRef = useRef<HTMLDivElement>(null);
   const resize = () => {
     const $container = divRef.current;
@@ -41,6 +27,10 @@ export default function EditWraper({
     const fontSize = (pixels / width) * Number(containerWidth);
     $container.style.fontSize = fontSize + "px";
   };
+  const {
+    file: { title, externalId },
+    type,
+  } = settings ?? {};
 
   useEffect(() => {
     setSettings({
@@ -56,34 +46,22 @@ export default function EditWraper({
   }, [id]);
 
   return (
-    <Layout
-      document={settings.file.content}
-      settings={settings}
-      setSettings={setSettings}
-    >
+    <Layout settings={settings} setSettings={setSettings}>
       <div
         ref={divRef}
         className="absolute top-0 left-0 pt-[70px] w-[calc(100vw-32px)] max-w-xl translate-x-[calc(50vw-50%)]"
       >
         <div className="print:text-[calc(100vw*(13/450))]">
-          {!!settings?.file.externalId && (
-            <Document
-              {...({
-                ...settings.file.content,
-                title: settings?.file?.title,
-              } as any)}
-            />
+          {externalId && title && type && (
+            <Document title={title} id={externalId} type={type} />
           )}
         </div>
       </div>
       {divRef.current && (
-        <Menu
-          divRef={divRef || undefined}
-          {...{
-            settings,
-            documentComponent: settings.file.content,
-            setSettings,
-          }}
+        <Toolbar
+          divRef={divRef ?? undefined}
+          setSettings={setSettings} 
+          settings={settings}
         />
       )}
       <Toaster />

@@ -1,11 +1,4 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-// 'use client'
-// /* eslint-disable react-hooks/exhaustive-deps */
-// // import React, { useEffect, useRef, useState } from "react";
-// import StandardInput from "../StandardInput/StandardInput";
-// import styles from "./OptionsInput.module.css";
-// import capFirst from "src/utils/capFirst";
-
 import capFirst from "src/utils/capFirst";
 import StandardInput from "../StandardInput/StandardInput";
 import { useEffect } from "react";
@@ -60,10 +53,6 @@ function LargeOptionsInput(props: props) {
 }
 
 function SmallOptionsInput(props: props) {
-  useEffect(() => {
-    console.log(props.value)
-    props?.value && props?.onChange('PRIVATE');
-  }, []);
   return (
     <article className={"flex flex-col gap-1 {props?.className"}>
       <span className={"w-full inline-block text-center"}>

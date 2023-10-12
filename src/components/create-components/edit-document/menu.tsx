@@ -1,32 +1,23 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import styles from "./styles/menu.module.css";
 import onEdit from "src/utils/create-doc/onEdit";
-import React, { SetStateAction, useEffect, useState } from "react";
-// import { createPortal } from "react-dom";
+import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClose, faGear, faPlus } from "@fortawesome/free-solid-svg-icons";
 import onDelete from "src/utils/create-doc/onDelete";
-// import { Component } from "src/pages/docs/edit/[id]";
 import getNode from "src/utils/create-doc/getNode";
 import iterateObj from "src/utils/create-doc/iterateObject";
 import ComponentModal from "@components/create-components/edit-document/modal";
-import { DocumentJSON } from "src/models/document.model";
-import { Component } from "src/app/documents/edit/models/component";
-
-type props = { type: string; options: any; id: string };
+import { Component, NoteWithComponent } from "src/app/documents/edit/models/component";
 
 export default function Menu({
-  // coords,
-  // component,
   divRef,
   settings,
-  // documentComponent,
   setSettings,
 }: {
-  settings: DocumentJSON;
+  settings: NoteWithComponent;
   divRef?: React.RefObject<HTMLDivElement>;
-  // documentComponent?: Component;
-  setSettings: React.Dispatch<React.SetStateAction<DocumentJSON>>;
+  setSettings: React.Dispatch<React.SetStateAction<NoteWithComponent>>;
   setModalData?: any;
 }) {
   const [menuState, setMenuState] = useState(false);
@@ -65,10 +56,8 @@ export default function Menu({
   }, [coords.x, coords.y]);
 
   const edit = (callback: () => void) => {
-    // if (!documentComponent?.id) return;
     callback();
     setSettings({ ...settings });
-    // setSettings((settings)=>({...settings, file:{settings.file, content:{...settings.file.content, ...documentComponent} }}));
   };
 
   if (coords?.x && coords?.y) {

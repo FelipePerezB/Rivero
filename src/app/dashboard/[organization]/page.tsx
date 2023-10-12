@@ -9,6 +9,7 @@ import UpdateForm from "./components/forms/update";
 import api from "src/app/utils/api";
 import { auth } from "@clerk/nextjs";
 import { Group, Organization, User } from "@prisma/client";
+import SearchModal from "src/app/components/modal/search-modal";
 
 interface GroupsWithUsers extends Group {
   Users: User[];
@@ -81,65 +82,9 @@ export default async function OrganizationDashboardPage({
           ]}
         />
       </section>
-      <Modal title="Modificar grupo" id="new-group" searchParams={searchParams}>
+      <SearchModal title="Modificar grupo" id="new-group" searchParams={searchParams}>
         <UpdateForm />
-      </Modal>
-      <Modal
-        title="Modificar grupo"
-        id="new-groupo"
-        searchParams={searchParams}
-      >
-        <UpdateForm />
-      </Modal>
-      <Modal
-        title="Modificar grupo"
-        id="new-grouqp"
-        searchParams={searchParams}
-      >
-        <UpdateForm />
-      </Modal>
-      <Modal
-        title="Modificar grupo"
-        id="new-grouep"
-        searchParams={searchParams}
-      >
-        <UpdateForm />
-      </Modal>
-      <Modal
-        title="Modificar grupo"
-        id="new-grtoup"
-        searchParams={searchParams}
-      >
-        <UpdateForm />
-      </Modal>
-      <Modal
-        title="Modificar grupo"
-        id="new-grfoup"
-        searchParams={searchParams}
-      >
-        <UpdateForm />
-      </Modal>
-      <Modal
-        title="Modificar grupo"
-        id="new-grodup"
-        searchParams={searchParams}
-      >
-        <UpdateForm />
-      </Modal>
-      <Modal
-        title="Modificar grupo"
-        id="new-grotup"
-        searchParams={searchParams}
-      >
-        <UpdateForm />
-      </Modal>
-      <Modal
-        title="Modificar grupo"
-        id="new-grtoup"
-        searchParams={searchParams}
-      >
-        <UpdateForm />
-      </Modal>
+      </SearchModal> 
     </>
   );
 }
