@@ -2,19 +2,14 @@
 import Button from "@components/Button";
 import Options from "@components/Options";
 import Buttons from "@components/button/buttons/Buttons";
-import GetComponent from "@components/create-components/edit-document/get-component";
 import React, { ReactNode, SetStateAction, useEffect, useState } from "react";
-// import { Component } from "src/pages/docs/edit/[id]";
-// import getInputs from "src/utils/create-doc/getInputs";
-// import getSchema from "../../utils/getSchema";
-// import { onDeleteProps } from "src/utils/create-doc/onDelete";
-// import { onEditProps } from "src/utils/create-doc/onEdit";
-import Children from "./children";
-import FormChildren from "@components/create-components/edit-document/form-children";
+import Children from "../../components/elements/inputs/children";
 import { Component } from "src/app/documents/edit/models/component";
 import { onEditProps } from "src/app/documents/edit/utils/onEdit";
 import { onDeleteProps } from "src/app/documents/edit/utils/onDelete";
-import getSchema from "@components/create-components/utils/getSchema";
+import getSchema from "../utils/getSchema";
+import FormChildren from "./children-form";
+import DynamicInput from "../../components/elements/inputs/dynamic-input";
 
 type options = "Configuración" | "Hijos";
 
@@ -22,6 +17,7 @@ export default function Form({
   setData,
   component,
   document,
+  modalState,
   setModalState,
   onDelete,
   onEdit,
@@ -31,6 +27,7 @@ export default function Form({
   onChange?: (data: { [key: string]: unknown }) => void;
   document: Component;
   component: Component;
+  modalState?:boolean;
   setModalState?: React.Dispatch<SetStateAction<boolean>>;
   onEdit?: (props: onEditProps) => void;
   onDelete?: (props: onDeleteProps) => void;
@@ -53,22 +50,25 @@ export default function Form({
 
   const children = values.children;
   useEffect(() => {
+    console.log(component)
     addFormData({ children: component.options.children });
     const schemas = getSchema(component.type);
     if (schemas?.length) {
       setInputs(
         schemas?.map(({ options: data, type }, i) => {
+          // TODO: Optimizar
+          setOptions(["Configuración"]);
+          setOption("Configuración");
           if (type === "children") {
             if (schemas.length === 1) {
               setOptions(["Hijos"]);
               setOption("Hijos");
             } else setOptions(["Configuración", "Hijos"]);
-            return;
           }
           if (!options.length) setOptions(["Configuración"]);
           const value = component.options[data.key];
           return (
-            <GetComponent
+            <DynamicInput
               key={"input-" + i}
               attrs={{
                 ...data,
@@ -76,15 +76,15 @@ export default function Form({
                 value,
                 parentId: component.id,
                 onChange: addFormData,
+                name: data.label,
               }}
-              folder="inputs"
               name={type as string}
             />
           );
         })
       );
     }
-  }, [component?.options, component?.type]);
+  }, [modalState, component.options, component.type]);
 
   return (
     <div className="flex flex-col gap-2">
@@ -107,19 +107,6 @@ export default function Form({
             parentId={component?.id as string}
             value={values.children}
           />
-          {/* <GetComponent
-            folder="inputs"
-            attrs={{
-              setParentModalState: setModalState,
-              onEdit,
-              onDelete,
-              document,
-              parentId: component.id,
-              value: values?.children,
-              onChange: addFormData,
-            }}
-            name="children"
-          /> */}
         </div>
       )}
       <div className="mt-2">
@@ -139,6 +126,7 @@ export default function Form({
                     page: document,
                     newProps: values,
                   });
+                  console.log(setModalState)
                 setModalState && setModalState(false);
               }}
               color="blue"

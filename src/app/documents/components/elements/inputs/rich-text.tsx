@@ -6,10 +6,10 @@ import { HistoryPlugin } from "@lexical/react/LexicalHistoryPlugin";
 import { MarkdownShortcutPlugin } from "@lexical/react/LexicalMarkdownShortcutPlugin";
 import { OnChangePlugin } from "@lexical/react/LexicalOnChangePlugin";
 import LexicalErrorBoundary from "@lexical/react/LexicalErrorBoundary";
-import EquationsPlugin from "@components/create-components/edit-document/lexical/ecuation-plugin";
-import { EquationNode } from "@components/create-components/edit-document/lexical/ecuation-node";
-import { PLAYGROUND_TRANSFORMERS } from "@components/create-components/edit-document/lexical/markdown-transformer";
-import decompressRichTextContent from "@components/create-components/utils/decompressRichTextJSON";
+// import EquationsPlugin from "@components/create-components/edit-document/lexical/ecuation-plugin";
+// import { EquationNode } from "@components/create-components/edit-document/lexical/ecuation-node";
+// import { PLAYGROUND_TRANSFORMERS } from "@components/create-components/edit-document/lexical/markdown-transformer";
+// import decompressRichTextContent from "@components/create-components/utils/decompressRichTextJSON";
 
 function onError(error: unknown) {
   console.error(error);
@@ -50,10 +50,10 @@ export default function Editor({
 
 
   const initialConfig = {
-    editorState: decompressRichTextContent(value),
+    // editorState: decompressRichTextContent(value),
     namespace: "MyEditor",
     onError,
-    nodes: [EquationNode],
+    // nodes: [EquationNode],
   };
 
   return (
@@ -67,8 +67,8 @@ export default function Editor({
           }
         />
         <HistoryPlugin />
-        <EquationsPlugin />
-        <MarkdownShortcutPlugin transformers={PLAYGROUND_TRANSFORMERS} />
+        {/* <EquationsPlugin />
+        <MarkdownShortcutPlugin transformers={PLAYGROUND_TRANSFORMERS} /> */}
         <OnChangePlugin
           onChange={(state) => {
             onChange({ [dataKey ?? label]: compressJSON(state.toJSON().root) });

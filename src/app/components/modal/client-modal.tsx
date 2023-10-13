@@ -1,7 +1,7 @@
+'use client'
 import ClientCloseWrapper from "../common/client-close-wrapper";
 import Modal from "./modal";
 import { Dispatch, ReactNode, SetStateAction } from "react";
-
 
 export default function ClientModal({
   state,

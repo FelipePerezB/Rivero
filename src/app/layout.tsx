@@ -33,6 +33,7 @@ export default async function RootLayout({ children }: Props) {
         <main className="flex flex-col gap-3 p-4 pt-[70px] h-full w-full mx-auto">
           <ClerkProvider>{children}</ClerkProvider>
           <NavSidebar/>
+          <div id="portal"></div>
         </main>
       </body>
     </html>

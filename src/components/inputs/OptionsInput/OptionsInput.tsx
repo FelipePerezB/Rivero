@@ -53,6 +53,7 @@ function LargeOptionsInput(props: props) {
 }
 
 function SmallOptionsInput(props: props) {
+  console.log(props.name)
   return (
     <article className={"flex flex-col gap-1 {props?.className"}>
       <span className={"w-full inline-block text-center"}>

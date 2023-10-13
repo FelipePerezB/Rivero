@@ -24,7 +24,15 @@ export const getDefaultFile = (id: string) => {
               type: "section",
               options: {
                 number: 1,
-                children: [],
+                children: [
+                  {
+                    type: "title",
+                    options: {
+                      text: "Título 1",
+                      size: "h1",
+                    },
+                  },
+                ],
               },
             },
           ],

@@ -5,7 +5,7 @@ import { faClose } from "@fortawesome/free-solid-svg-icons";
 import SwitchToogle from "./SwitchToogle";
 import Button from "./Button";
 import { useRouter } from "next/router";
-import Modal from "./modals/modal/Modal";
+// import Modal from "./modals/modal/Modal";
 
 type types = "select" | "boolean" | "text";
 
@@ -40,23 +40,7 @@ export default function CustomModal({
 
 
   return (
-    <Modal setModalState={setModalState} modalState={modalState} title={title}>
-      <ul className={styles.options}>
-        {options?.map((op, i) => (
-          <Op key={op.type + i} addFormData={addFormData} {...op} />
-        ))}
-      </ul>
-      {options && (
-        <Button
-          onClick={() => {
-            callback && callback(values);
-          }}
-        >
-          Save
-        </Button>
-      )}
-      {/* {children} */}
-    </Modal>
+<></>
   );
 }
 

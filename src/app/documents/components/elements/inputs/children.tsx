@@ -1,14 +1,13 @@
-import React, { useEffect, useState } from 'react'
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useEffect, useState } from "react";
 import OptionsInput from "@components/inputs/OptionsInput/OptionsInput";
-// import { componentsNames } from "../../utils/schemas";
-import Modal from "@components/modals/modal/Modal";
-import generateRandomId from "src/utils/generateRandomId";
 import Buttons from "@components/button/buttons/Buttons";
-// import Preview from "@components/create-components/edit-document/preview";
-import Form from "./form";
+import Form from "../../../edit/components/form";
 import { Component } from "src/app/documents/edit/models/component";
-import Preview from '@components/create-components/edit-document/preview';
-import { componentsNames } from '@components/create-components/utils/schemas';
+import ClientModal from "src/app/components/modal/client-modal";
+import { componentsNames } from "src/app/documents/edit/utils/schemas";
+import generateRandomId from "src/app/documents/utils/generateRandomId";
+import Preview from "src/app/documents/edit/components/preview";
 
 export default function Children({
   value,
@@ -23,9 +22,6 @@ export default function Children({
   parentId: string;
   onChange: (value: { [key: string]: Component[] }) => void;
 }) {
-  // const [currentChildren, setCurrentChildren] = useState<Component[]>(
-  //   value || []
-  // );
 
   const [modalState, setModalState] = useState(false);
   const [newChild, setNewChild] = useState<Component>({
@@ -54,7 +50,11 @@ export default function Children({
           Agregar hijo
         </button>
       </Buttons>
-      <Modal {...{ modalState, setModalState }} title="Nuevo componente">
+      <ClientModal
+        setState={setModalState}
+        state={modalState}
+        title="Nuevo componente"
+      >
         <OptionsInput
           name="Tipo de componente"
           dataKey="type"
@@ -68,6 +68,7 @@ export default function Children({
         {a?.type && <Preview {...{ attrs: a }} />}
         <Form
           {...{
+            modalState,
             setData: setNewComponent,
             component: newChild,
             document,
@@ -76,7 +77,7 @@ export default function Children({
             },
           }}
         />
-      </Modal>
+      </ClientModal>
     </div>
   );
 }

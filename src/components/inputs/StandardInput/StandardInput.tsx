@@ -1,6 +1,5 @@
-import Label from "@components/create-components/edit-document/label";
+import Label from "src/app/documents/edit/components/label";
 import { StandartInputAttrs } from "src/models/StandartInputAttr";
-import capFirst from "src/utils/capFirst";
 
 export default function StandardInput({
   value,
@@ -9,7 +8,6 @@ export default function StandardInput({
   name,
   dataKey,
   attrs,
-  placeholder,
 }: StandartInputAttrs) {
   const createFormData = (data: string) => {
     const obj = {} as any;

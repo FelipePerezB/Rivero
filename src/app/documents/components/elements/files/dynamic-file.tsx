@@ -7,6 +7,7 @@ const imports = {
   title: dynamic(() => import(`./title`)),
   section: dynamic(() => import(`./section`)),
   box: dynamic(() => import(`./box`)),
+  question: dynamic(() => import(`./question`)),
 } as any;
 
 export default function DynamicElement({

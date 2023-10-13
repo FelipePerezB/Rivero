@@ -1,8 +1,7 @@
 'use client'
-import GetComponent from "@components/create-components/edit-document/get-component";
+import DynamicElement from "./dynamic-file";
 import Title from "./title";
 import capFirst from "src/utils/capFirst";
-import { useEffect } from "react";
 const DocumentHeader = ({ title = "" }: { title: string }) => {
   return (
     <div className="flex flex-col items-center pb-[1em] border-b-[0.1em] mb-[0.6em] text-em leading-normal">
@@ -50,11 +49,10 @@ export default function Section({
       <div className="relative flex flex-col h-full gap-[0.1em]">
         {number === 1 && <DocumentHeader {...{ title }} />}
         {children?.map((child, i) => (
-          <GetComponent
+          <DynamicElement
             key={`page-${number}-${child.type}-${i}`}
             attrs={child}
             name={child.type}
-            folder="documents"
           />
         ))}
         <span className="absolute font-light text-[0.8em] bottom-0 right-0">

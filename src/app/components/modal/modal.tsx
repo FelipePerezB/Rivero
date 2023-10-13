@@ -1,6 +1,7 @@
 import styles from "./modal.module.css";
 import { faClose } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Link from "next/link";
 import { ReactNode } from "react";
 import Blur from "../common/blur";
 
@@ -25,7 +26,7 @@ export default function Modal({
           open={show}
           className={`${
             !show ? styles.hide : "animate-show-modal"
-          }  z-50 fixed justify-center items-center w-[calc(100vw-40px)] max-w-md h-max print:hidden p-4 card shadow-none`}
+          }  z-50 fixed justify-center items-center w-[calc(100vw-40px)] max-w-md h-max print:hidden p-4 rounded-md`}
         >
           <div className="flex justify-between items-center">
             <h2 className="text-xl font-semibold">{title}</h2>

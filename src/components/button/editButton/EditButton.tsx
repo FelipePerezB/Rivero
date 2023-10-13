@@ -1,7 +1,7 @@
 import { faPen } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
-import Modal from "@components/modals/modal/Modal";
+// import Modal from "@components/modals/modal/Modal";
 import Form from "@components/forms/simpleForm/SimpleForm";
 import { StandartInputAttrs } from "src/models/StandartInputAttr";
 import { FetchResult } from "@apollo/client";
@@ -121,9 +121,9 @@ export default function EditButton({
               icon={faPen}
             />
           </CircleButton>
-          <Modal {...{ modalState, setModalState, title }}>
+          {/* <Modal {...{ modalState, setModalState, title }}>
             <Form {...{ data }} />
-          </Modal>
+          </Modal> */}
         </>
       )}
     </>

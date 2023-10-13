@@ -1,6 +1,7 @@
-import GetComponent from "@components/create-components/edit-document/get-component";
+// import GetComponent from "@components/create-components/edit-document/get-component";
 import React from "react";
 import Title from "./title";
+import DynamicElement from "./dynamic-file";
 
 export default function excercises({
   id,
@@ -24,11 +25,11 @@ export default function excercises({
       <div className="flex flex-col gap-[0.8em] pb-[0.6em]">
         {children?.map((child, i) =>{ 
           return (
-          <GetComponent
+          <DynamicElement
             key={`child-${id}-${child.type}-${i}`}
             attrs={{ ...child, number: i + 1 }}
             name={child.type}
-            folder="documents"
+            // folder="documents"
           />
         )})}
       </div>

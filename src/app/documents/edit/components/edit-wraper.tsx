@@ -1,13 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 import React, { useEffect, useRef, useState } from "react";
-import { hydrateJSON } from "src/utils/create-doc/hydrateJSON";
-import Menu from "@components/create-components/edit-document/menu";
-import Document from "@components/create-components/components/documents/document";
 import { Toaster } from "react-hot-toast";
 import { NoteWithComponent } from "../models/component";
 import Layout from "../components/layout";
 import Toolbar from "./toolbar";
+import Document from "../../components/elements/files/document";
+import { hydrateJSON } from "../utils/hydrateJSON";
 
 export default function EditWraper({
   id,
@@ -28,7 +27,7 @@ export default function EditWraper({
     $container.style.fontSize = fontSize + "px";
   };
   const {
-    file: { title, externalId },
+    file: { title, externalId, content },
     type,
   } = settings ?? {};
 
@@ -53,7 +52,7 @@ export default function EditWraper({
       >
         <div className="print:text-[calc(100vw*(13/450))]">
           {externalId && title && type && (
-            <Document title={title} id={externalId} type={type} />
+            <Document options={content?.options} title={title} id={externalId} type={type} />
           )}
         </div>
       </div>

@@ -1,21 +1,12 @@
 /* eslint-disable @next/next/no-img-element */
-import React, { useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faChartSimple,
   faChevronRight,
-  faClose,
   faFolder,
-  faMoon,
-  faPlus,
-  faShieldDog,
   IconDefinition,
 } from "@fortawesome/free-solid-svg-icons";
 import Link from "next/link";
 import SwitchToogle from "@components/SwitchToogle";
-import { useUser } from "@clerk/nextjs";
-import capFirst from "src/utils/capFirst";
-import Blur from "@components/modals/blur/blur";
 
 export default function Sidevar({
   visibility,

@@ -6,15 +6,23 @@ export default function Label({
   dataKey,
   className,
   children,
+  align = "left",
 }: {
+  align?: "left" | "center";
   name: string;
   dataKey?: string;
   className?: string;
   children: ReactNode;
 }) {
+  const alignVariants = {
+    left: "",
+    center: "mx-auto",
+  };
   return (
     <label className={`w-full mx-auto ${className}`} htmlFor={dataKey ?? name}>
-      {name && <span>{capFirst(name)}</span>}
+      {name && (
+        <span className={`${alignVariants[align]}`}>{capFirst(name)}</span>
+      )}
       {children}
     </label>
   );

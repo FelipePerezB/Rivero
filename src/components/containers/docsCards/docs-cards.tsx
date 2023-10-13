@@ -1,6 +1,7 @@
 'use client'
 import Card from "@components/Card";
-import GetComponent from "@components/create-components/edit-document/get-component";
+import DynamicElement from "src/app/documents/components/elements/files/dynamic-file";
+// import GetComponent from "@components/create-components/edit-document/get-component";
 import useGetLocalDocs from "src/hooks/useGetLocalDocs";
 import { DocumentJSON } from "src/models/document.model";
 
@@ -34,13 +35,12 @@ export default function DocsCards({
               </span>
             </div>
             <div className="absolute w-full h-full text-[4px] top-0 left-0 scale-[101%]">
-              <GetComponent
+              <DynamicElement
                 attrs={{
                   options: document?.file?.content?.options,
                   title: document?.file?.title,
                 }}
                 name={"document"}
-                folder="documents"
               />
             </div>
           </Card>

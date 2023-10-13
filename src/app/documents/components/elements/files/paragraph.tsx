@@ -1,6 +1,6 @@
-import { EquationNode } from "@components/create-components/edit-document/lexical/ecuation-node";
-import EquationsPlugin from "@components/create-components/edit-document/lexical/ecuation-plugin";
-import decompressRichTextContent from "@components/create-components/utils/decompressRichTextJSON";
+// import { EquationNode } from "@components/create-components/edit-document/lexical/ecuation-node";
+// import EquationsPlugin from "@components/create-components/edit-document/lexical/ecuation-plugin";
+// import decompressRichTextContent from "@components/create-components/utils/decompressRichTextJSON";
 import { LexicalComposer } from "@lexical/react/LexicalComposer";
 import { ContentEditable } from "@lexical/react/LexicalContentEditable";
 import LexicalErrorBoundary from "@lexical/react/LexicalErrorBoundary";
@@ -22,14 +22,14 @@ export default function paragraph({
     <div data-component={id}>
       <LexicalComposer
         initialConfig={{
-          editorState: decompressRichTextContent(text),
+          // editorState: decompressRichTextContent(text),
           editable: false,
           onError,
-          nodes: [EquationNode],
+          // nodes: [EquationNode],
           namespace: "ViewContent",
         }}
       >
-        <EquationsPlugin />
+        {/* <EquationsPlugin /> */}
         <RichTextPlugin
           placeholder={<>AA</>}
           ErrorBoundary={LexicalErrorBoundary}

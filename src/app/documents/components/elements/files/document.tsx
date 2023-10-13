@@ -1,5 +1,4 @@
 "use client";
-import GetComponent from "@components/create-components/edit-document/get-component";
 import Section from "./section";
 export default function Document({
   type,

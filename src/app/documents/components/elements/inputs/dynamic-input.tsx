@@ -4,9 +4,7 @@ import React from "react";
 // Necesario en app router y nextjs > 13.5
 const imports = {
   children: dynamic(() => import(`./children`)),
-  form: dynamic(() => import(`./form`)),
   options: dynamic(() => import(`./options`)),
-  "rich-text": dynamic(() => import(`./rich-text`)),
   text: dynamic(() => import(`./text`)),
 } as any;
 
