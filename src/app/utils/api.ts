@@ -4,6 +4,9 @@ export default async function api(endpoint: string, init?: RequestInit) {
     // cache: "no-store",
     ...init,
   });
-  if (!res.ok) throw new Error("Failed to fetch data");
+  if (!res.ok) {
+    console.log(res);
+    throw new Error("Failed to fetch data");
+  }
   return res.json();
 }

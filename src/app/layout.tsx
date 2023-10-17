@@ -27,13 +27,12 @@ export default async function RootLayout({ children }: Props) {
   return (
     <html lang="es">
       <body className={`${font.className} min-h-screen bg-body`}>
-        <header>
+        <header className="print:hidden">
           <Navar />
         </header>
         <main className="flex flex-col gap-3 p-4 pt-[70px] h-full w-full mx-auto">
           <ClerkProvider>{children}</ClerkProvider>
           <NavSidebar/>
-          <div id="portal"></div>
         </main>
       </body>
     </html>

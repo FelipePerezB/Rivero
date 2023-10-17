@@ -1,57 +1,40 @@
-'use client'
+import { ReactNode } from "react";
 import DynamicElement from "./dynamic-file";
 import Title from "./title";
 import capFirst from "src/utils/capFirst";
-const DocumentHeader = ({ title = "" }: { title: string }) => {
-  return (
-    <div className="flex flex-col items-center pb-[1em] border-b-[0.1em] mb-[0.6em] text-em leading-normal">
-      <Title options={{ size: "h1", text: capFirst(title) }} />
-      <span className="flex gap-[0.3em] text-gray-500 rounded print:text-gray-300">
-        <span className="font-bold">-- A --</span>
-      </span>
-    </div>
-  );
-};
 
 export default function Section({
-  options: { children, number, lastPage } = {
-    children: [{ options: {}, type: "" }],
-    number: 1,
-    lastPage: false,
-  },
-  document: { title } = { title: "" },
+  options,
   id,
+  children,
+  number,
 }: {
-  document: {
-    title: string;
-  };
-  type: string;
-  id: string;
-  options: {
+  type?: string;
+  id?: string;
+  children?: ReactNode;
+  number?: number;
+  options?: {
     lastPage: boolean;
-    number: number;
     children: {
       options: any;
       type: string;
     }[];
   };
 }) {
-  
-  console.log(number)
   return (
     <div
       className={`bg-white border p-[1.6em] aspect-[210/297] w-full shadow-md hover:shadow-xl print:shadow-none ${
-        !lastPage ? "break-after-page" : ""
+        !options?.lastPage ? "break-after-page" : ""
       } }`}
       data-component={id}
       id={"page-" + number}
     >
       <div className="relative flex flex-col h-full gap-[0.1em]">
-        {number === 1 && <DocumentHeader {...{ title }} />}
-        {children?.map((child, i) => (
+        {children}
+        {options?.children?.map((child, i) => (
           <DynamicElement
             key={`page-${number}-${child.type}-${i}`}
-            attrs={child}
+            attrs={{ ...child, number: i + 1 }}
             name={child.type}
           />
         ))}

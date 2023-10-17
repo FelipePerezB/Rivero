@@ -1,18 +1,18 @@
 import { Component } from "../models/component";
 
-function removeIdFromObject(obj: Component) {
+export function removeIdFromObject(obj: Component) {
   if ("id" in obj) {
-    delete obj.id;
+    obj.id = obj.id?.split("-").at(-1);
   }
   for (const child of obj.options.children || []) {
     removeIdFromObject(child);
   }
+  console.log(obj)
   return obj;
 }
 
-export function removeIdFromJson(jsonStr: string) {
-  const jsonObj = JSON.parse(jsonStr);
-  removeIdFromObject(jsonObj);
+// export function removeIdFromJson(json: Component) {
+//   removeIdFromObject(json);
 
-  return JSON.stringify(jsonObj);
-}
+//   return JSON.stringify(json);
+// }

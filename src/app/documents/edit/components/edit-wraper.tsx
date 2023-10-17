@@ -7,6 +7,7 @@ import Layout from "../components/layout";
 import Toolbar from "./toolbar";
 import Document from "../../components/elements/files/document";
 import { hydrateJSON } from "../utils/hydrateJSON";
+import DynamicElement from "../../components/elements/files/dynamic-file";
 
 export default function EditWraper({
   id,
@@ -44,22 +45,21 @@ export default function EditWraper({
     window.onresize = resize;
   }, [id]);
 
+  console.log(settings);
   return (
     <Layout settings={settings} setSettings={setSettings}>
-      <div
-        ref={divRef}
-        className="absolute top-0 left-0 pt-[70px] w-[calc(100vw-32px)] max-w-xl translate-x-[calc(50vw-50%)]"
-      >
-        <div className="print:text-[calc(100vw*(13/450))]">
-          {externalId && title && type && (
-            <Document options={content?.options} title={title} id={externalId} type={type} />
-          )}
-        </div>
+      <div ref={divRef}>
+        {externalId && title && type && (
+          <DynamicElement
+            attrs={{ options: content.options, title, id: content.id, type }}
+            name={content.type}
+          />
+        )}
       </div>
       {divRef.current && (
         <Toolbar
           divRef={divRef ?? undefined}
-          setSettings={setSettings} 
+          setSettings={setSettings}
           settings={settings}
         />
       )}

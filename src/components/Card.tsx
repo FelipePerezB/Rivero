@@ -17,7 +17,7 @@ export default function Card({
 }) {
   const nodeClassName = `${className} w-full card ${
     interactive
-      ? "cursor-pointer hover:scale-[98%] transition-all duration-75"
+      ? "cursor-pointer hover:scale-[98%] hover:bg-slate-50 transition-all duration-75"
       : "duration-150"
   }  `;
 

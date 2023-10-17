@@ -1,11 +1,10 @@
-import { useSearchParams } from "next/navigation";
 import SearchCloseWrapper from "../common/search-close-wrapper";
 import Modal from "./modal";
 import { ReactNode } from "react";
 
 export default function SearchModal({
   title,
-  sidebarKey = "sidebar",
+  sidebarKey = "modal",
   id,
   searchParams,
   children,

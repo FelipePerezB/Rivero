@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useQuery } from "@apollo/client";
+import { auth, currentUser, useUser } from "@clerk/nextjs";
 import Button from "@components/Button";
 import { File, Types } from "@prisma/client";
 import React, { useEffect, useState } from "react";
@@ -7,7 +8,8 @@ import { NoteWithComponent } from "src/app/documents/edit/models/component";
 import api from "src/app/utils/api";
 // import toast from "react-hot-toast";
 import { GetFileDocument, Privacity } from "src/gql/graphql";
-import { DocumentJSON } from "src/models/document.model";
+import { DocumentJSON, IdLenght } from "src/models/document.model";
+import generateRandomId from "src/utils/generateRandomId";
 
 export const getDefaultFile = (id: string) => {
   return {
@@ -18,15 +20,18 @@ export const getDefaultFile = (id: string) => {
       privacity: Privacity.Private,
       content: {
         type: "document",
+        id: generateRandomId(IdLenght.sm),
         options: {
           children: [
             {
               type: "section",
+              id: generateRandomId(IdLenght.sm),
               options: {
                 number: 1,
                 children: [
                   {
                     type: "title",
+                    id: generateRandomId(IdLenght.sm),
                     options: {
                       text: "Título 1",
                       size: "h1",
@@ -76,7 +81,12 @@ export default async function useGetFile(id: string) {
   let defaultFile = getDefaultFile(id);
   console.log(defaultFile);
   try {
-    const { data } = (await api("files/" + id)) as { data: File };
+    const { getToken } = auth();
+    const token = await getToken();
+    const { data } = (await api("files/" + id, {
+      headers: { Authorization: `Bearer ${token}` },
+    })) as { data: File };
+    console.log(data);
     if (data.externalId) {
       defaultFile.file = {
         ...data,
@@ -85,7 +95,7 @@ export default async function useGetFile(id: string) {
       console.log(defaultFile, data.content);
     }
   } catch (error) {
-    console.error(error);
+    console.log(error);
   }
   // const [file, setFile] = useState<DocumentJSON>(defaultFile);
 

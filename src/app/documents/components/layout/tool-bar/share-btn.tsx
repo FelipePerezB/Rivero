@@ -11,6 +11,7 @@ import React, { useState } from "react";
 import ClientModal from "src/app/components/modal/client-modal";
 import { NoteWithComponent } from "src/app/documents/edit/models/component";
 import { hydrateJSON } from "src/app/documents/edit/utils/hydrateJSON";
+import { removeIdFromObject } from "src/app/documents/edit/utils/removeId";
 
 export default function ShareBtn({
   settings,
@@ -22,11 +23,12 @@ export default function ShareBtn({
   const [state, setState] = useState(false);
   const options = ["Configuración"];
   const [option, setOption] = useState(options[0]);
-  // const optimizedContent = removeIdFromJson((document));
-  const [content, setContent] = useState("");
+  const fileCopy =  JSON.parse(JSON.stringify(settings.file.content))
+  const optimizedContent = JSON.stringify(
+    removeIdFromObject(fileCopy)
+  );
   const id = settings.file?.externalId;
   const privacity = settings.file.privacity;
-  console.log(privacity)
   return (
     <>
       <div
@@ -63,28 +65,21 @@ export default function ShareBtn({
               name="Link del documento"
             />
             <StandardInput
-              // value={optimizedContent}
+              value={optimizedContent}
               name="Código del documento"
               dataKey="content"
-              onChange={({ content }) => setContent(content)}
+              onBlur={(content) =>
+                setSettings((settings) => ({
+                  ...settings,
+                  file: {
+                    ...settings.file,
+                    content: hydrateJSON(JSON.parse(content)),
+                  },
+                }))
+              }
             />
-            <Buttons>
-              <Button onClick={() => print()}>Descargar</Button>
-              <Button
-                onClick={() =>
-                  setSettings((settings) => ({
-                    ...settings,
-                    file: {
-                      ...settings.file,
-                      content: hydrateJSON(JSON.parse(content)),
-                    },
-                  }))
-                }
-                color="white"
-              >
-                Reemplazar
-              </Button>
-            </Buttons>{" "}
+            {/* <Buttons> */}
+            <Button onClick={() => print()}>Descargar</Button>
           </>
         )}
       </ClientModal>

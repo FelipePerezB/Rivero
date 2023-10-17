@@ -1,6 +1,7 @@
 import React, { ReactNode } from "react";
 import { NoteWithComponent } from "src/app/documents/edit/models/component";
 import Navar from "src/app/documents/components/layout/tool-bar/tool-bar";
+import { Toaster } from "react-hot-toast";
 
 export default function EditDocumentLayout({
   settings,

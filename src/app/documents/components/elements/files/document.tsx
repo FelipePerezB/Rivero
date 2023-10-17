@@ -1,7 +1,19 @@
-"use client";
+import capFirst from "src/utils/capFirst";
 import Section from "./section";
+import Title from "./title";
+import FileContainer from "../../layout/file-container/file-container";
+
+const DocumentHeader = ({ title = "" }: { title: string }) => {
+  return (
+    <div className="flex flex-col items-center pb-[1em] border-b-[0.1em] mb-[0.6em] text-em leading-normal">
+      <Title options={{ size: "h1", text: capFirst(title) }} />
+      <span className="flex gap-[0.3em] text-gray-500 rounded print:text-gray-300">
+        <span className="font-bold">-- A --</span>
+      </span>
+    </div>
+  );
+};
 export default function Document({
-  type,
   title,
   options,
   id,
@@ -18,17 +30,10 @@ export default function Document({
   id: string;
 }) {
   return (
-    <div
-      id="document-container"
-      data-component={id}
-      className="flex flex-col gap-4 print:gap-0 text-[0.95em]"
-    >
-      {/* <p>AA</p> */}
+    <FileContainer id={id}>
       {options?.children?.map((child, i) => {
-        console.log(child);
         return (
           <Section
-            document={{ title }}
             id={child?.id as string}
             options={
               {
@@ -39,25 +44,11 @@ export default function Document({
             }
             type="section"
             key={`doc-${id}-${i}`}
-          />
-          // <GetComponent
-          //   key={`doc-${id}-${i}`}
-          //   attrs={{
-          //     ...child,
-          //     document: {
-          //       title,
-          //     },
-          //     options: {
-          //       ...child?.options,
-          //       number: i + 1,
-          //       lastPage: i + 1 === options?.children?.length,
-          //     },
-          //   }}
-          //   name={child?.type}
-          //   folder="documents"
-          // />
+          >
+            {i === 0 && <DocumentHeader {...{ title }} />}
+          </Section>
         );
       })}
-    </div>
+    </FileContainer>
   );
 }

@@ -1,5 +1,6 @@
-import { Component } from "../models/component";
-import iterateObj from "./iterateObj";
+import iterateObj from "src/utils/create-doc/iterateObject";
+import { Component, ComponentOptions } from "../models/component";
+// import iterateObj from "./iterateObj";
 
 export type onDeleteProps = {
   id: string;
@@ -7,7 +8,7 @@ export type onDeleteProps = {
 };
 
 const onDelete = ({ id, page }: onDeleteProps) => {
-  iterateObj(id, page, (obj, parent) => {
+  iterateObj(id, page, (obj, parent: Component) => {
     parent.options.children = parent.options.children?.filter(
       (child) => child.id !== obj.id
     );

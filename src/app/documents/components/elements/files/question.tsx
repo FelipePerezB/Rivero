@@ -1,29 +1,38 @@
 "use client";
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
+import DynamicElement from "./dynamic-file";
+
+export type QuestionType = {
+  id: string;
+  number?: number;
+  onSuccess?: (question: string) => void;
+  onMistake?: (question: string) => void;
+  options: {
+    expectedAns: string;
+    check?: boolean;
+    question: string;
+    alternatives: string;
+    children: {
+      options: any;
+      type: string;
+    }[];
+  };
+};
 
 export default function Question({
   id,
   number = 1,
+  onSuccess,
+  onMistake,
   options: {
     question = "¿?",
     alternatives = "a,b,c",
-    setCheck,
     check,
     expectedAns,
+    children,
   },
-}: {
-  id: string;
-  number?: number;
-  options: {
-    addAnswer: (answer: { number: number; alternative: string }) => void;
-    setCheck: (bool: boolean) => boolean;
-    expectedAns: string;
-    check: boolean;
-    question: string;
-    alternatives: string;
-  };
-}) {
+}: QuestionType) {
   const [answer, setAnswer] = useState();
   const [classname, setClassname] = useState("");
 
@@ -31,15 +40,26 @@ export default function Question({
     if (!check) return;
     const name = answer === expectedAns ? "correct-ans" : "incorrect-ans";
     setClassname(name);
-    setCheck(false);
   }, [check]);
+  console.log(id)
   return (
     <div data-component={id}>
-      <article>
+      <article className="p-[0.5em] print:p-0 text-[0.8em]">
         <p>
           {number}.- {question}
         </p>
-        <ol className="text-[0.8em] flex flex-col gap-[0.4em] px-[1em] pt-[0.2em]">
+        {children?.toString() && (
+          <div className="text-xs my-2.5">
+            {children?.map((child, i) => (
+              <DynamicElement
+                key={`question-${number}-${child.type}-${i}`}
+                attrs={child}
+                name={child.type}
+              />
+            ))}
+          </div>
+        )}
+        <ol className="flex flex-col gap-[0.5em] print:gap-0 px-[1em] pt-[0.2em]">
           {alternatives.split(",").map((alternative, i) => {
             const letter = {
               0: "A",
@@ -52,8 +72,14 @@ export default function Question({
               <li
                 className="relative marker:hidden"
                 onClick={() => {
-                  setClassname("");
-                  setAnswer(letter[i]);
+                  if (
+                    letter[i].toLowerCase().trim() ===
+                    expectedAns.toLowerCase().trim()
+                  ) {
+                    onSuccess && onSuccess(alternative);
+                  } else {
+                    onMistake && onMistake(alternative);
+                  }
                 }}
                 key={alternative + i}
               >
@@ -62,7 +88,7 @@ export default function Question({
                   type="radio"
                   name={"alternative" + id}
                 />
-                <label className="inline-block p-1.5 w-full outline outline-gray-200 outline-[0.1em] rounded peer-checked:outline-blue-500 peer-checked:outline-[0.12em]">
+                <label className="inline-block p-1.5 print:p-1 w-full outline outline-gray-200 outline-[0.1em] rounded peer-checked:outline-blue-500 peer-checked:outline-[0.14em] print:outline-none">
                   <span>{`${letter[i]}) `}</span>
                   <span>{alternative}</span>
                 </label>
@@ -70,8 +96,6 @@ export default function Question({
             );
           })}
         </ol>
-        {/* {children?.length && (
-          )} */}
       </article>
     </div>
   );

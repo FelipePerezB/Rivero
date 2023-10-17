@@ -82,6 +82,14 @@ export const uiSchemas: any = {
         label: "Alternativa correcta",
       },
     },
+    {
+      type: "children",
+      options: {
+        types: ["question"],
+        key: "children",
+        label: "preguntas",
+      },
+    },
   ],
   title: [
     {
@@ -192,6 +200,37 @@ export const schemas: any = {
       child: "section",
     },
   },
+  practice: [
+    {
+      type: "text",
+      options: {
+        key: "maxTime",
+        label: "tiempo máximo",
+      },
+    },
+    {
+      type: "text",
+      options: {
+        key: "discount",
+        label: "Descuento por fallar",
+      },
+    },
+    {
+      type: "text",
+      options: {
+        key: "increase",
+        label: "Aumento por acertar",
+      },
+    },
+    {
+      type: "children",
+      options: {
+        types: ["question"],
+        key: "children",
+        label: "preguntas",
+      },
+    },
+  ],
 };
 
 export const componentsNames = Object.entries(uiSchemas).map(([name]) => name);

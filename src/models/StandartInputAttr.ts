@@ -6,5 +6,6 @@ export type StandartInputAttrs = {
   name: string;
   dataKey?: string;
   onChange?: (value: { [key: string]: string }) => void;
+  onBlur?: (value: string) => void;
   type?: React.HTMLInputTypeAttribute | undefined;
 };

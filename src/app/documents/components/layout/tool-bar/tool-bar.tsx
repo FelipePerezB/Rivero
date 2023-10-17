@@ -1,4 +1,4 @@
-import { useUser } from "@clerk/nextjs";
+import { useAuth, useUser } from "@clerk/nextjs";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Image from "next/image";
@@ -6,6 +6,9 @@ import React from "react";
 import ShareBtn from "./share-btn";
 import Link from "next/link";
 import { NoteWithComponent } from "src/app/documents/edit/models/component";
+import toast from "react-hot-toast";
+import api from "src/app/utils/api";
+import { removeIdFromObject } from "src/app/documents/edit/utils/removeId";
 
 export default function Navar({
   title,
@@ -17,6 +20,30 @@ export default function Navar({
   setSettings: React.Dispatch<React.SetStateAction<NoteWithComponent>>;
 }) {
   const { user } = useUser();
+  const { getToken } = useAuth();
+  const sync = async () => {
+    const {
+      file: { privacity, content, title, externalId },
+    } = settings;
+    const token = await getToken();
+    console.log(token);
+    toast.promise(
+       api("files/" + externalId, {
+        headers: { Authorization: `Bearer ${token}` },
+        method: "POST",
+        body: JSON.stringify({
+          title,
+          content: JSON.stringify(removeIdFromObject(content)),
+          privacity,
+        }),
+      }),
+      {
+        error: "Error al sincronizar",
+        loading: "Sincronizando",
+        success: "¡Sincronizado correctamente!",
+      }
+    );
+  };
   return (
     <nav className="fixed z-40 top-0 left-0 w-full h-max border-b shadow-sm bg-white print:hidden">
       <ul className="flex items-center justify-between h-full px-6 py-1.5">
@@ -40,7 +67,7 @@ export default function Navar({
               Guardar
             </span>
             <span
-              // onClick={upsert}
+              onClick={sync}
               className="text-xs cursor-pointer active:text-blue-500"
             >
               Sincronizar

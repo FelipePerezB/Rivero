@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import capFirst from "src/utils/capFirst";
 import StandardInput from "../StandardInput/StandardInput";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 type props = {
   name: string;
@@ -26,34 +26,34 @@ export default function OptionsInput(props: props) {
     <SmallOptionsInput {...props} onChange={createFormData} />
   ) : (
     // <></>
-    <LargeOptionsInput {...props} onChange={props?.onChange} />
+    <LargeOptionsInput {...props} onChange={createFormData} />
   );
 }
 
 function LargeOptionsInput(props: props) {
-  const id = `options-${props.options?.join()}`;
+  const id = `options-${props.options?.map((op) => op[1]).join()}`;
+  // useEffect(() => {
+  //   if (!props.dontDefaultCheck) {
+  //     props.onChange(props.value ?? props.options[0]);
+  //   }
+  // }, []);;
   return (
-    <div>
-      <StandardInput
-        attrs={{ list: id }}
-        name={props.name}
-        dataKey={props.dataKey}
-        onChange={props?.onChange}
-        type="text"
-      />
-      <datalist id={id}>
-        {props.options.map((value: string) => (
-          <option key={value} value={value}>
-            {value}
-          </option>
-        ))}
-      </datalist>
-    </div>
+    <select onChange={({target})=>{props.onChange(target.value)}} className="card focus:outline-blue-500" id={id}>
+      {props.options.map((op) => (
+        <option key={`${props.name}-${op}`}>{op}</option>
+      ))}
+    </select>
   );
 }
 
 function SmallOptionsInput(props: props) {
-  console.log(props.name)
+  const [currentValue, setCurrentValue] = useState("");
+  useEffect(() => {
+    if (!props.dontDefaultCheck) {
+      props.onChange(props.value ?? props.options[0]);
+      setCurrentValue(props.value ?? props.options[0]);
+    }
+  }, []);;
   return (
     <article className={"flex flex-col gap-1 {props?.className"}>
       <span className={"w-full inline-block text-center"}>
@@ -66,17 +66,19 @@ function SmallOptionsInput(props: props) {
               className="cursor-pointer absolute top-0 left-0 h-full w-full opacity-0 peer"
               tabIndex={i === 0 ? props.tabIndex : undefined}
               id={option}
-              onClick={(event) => {
+              onChange={(event) => {
                 const { value } = event.target as HTMLInputElement;
                 if (!value) return;
-                console.log(value)
-                props.onChange((value));
+                console.log(value);
+                props.onChange(value);
+                setCurrentValue(value);
               }}
               value={option}
-              defaultChecked={
-                (!props.dontDefaultCheck && !props.value && i === 0) ||
-                option?.toLowerCase() === props.value?.toLowerCase()
-              }
+              checked={currentValue === option}
+              // defaultChecked={
+              //   (!props.dontDefaultCheck && !props.value && i === 0) ||
+              //   option?.toLowerCase() === props.value?.toLowerCase()
+              // }
               name={props.name}
               type="radio"
             />

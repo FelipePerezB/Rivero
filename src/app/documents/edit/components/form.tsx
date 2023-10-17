@@ -47,10 +47,9 @@ export default function Form({
         options: { ...newData, ...values },
       });
   };
-
+  
   const children = values.children;
   useEffect(() => {
-    console.log(component)
     addFormData({ children: component.options.children });
     const schemas = getSchema(component.type);
     if (schemas?.length) {
@@ -126,7 +125,6 @@ export default function Form({
                     page: document,
                     newProps: values,
                   });
-                  console.log(setModalState)
                 setModalState && setModalState(false);
               }}
               color="blue"

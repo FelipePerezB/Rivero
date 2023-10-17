@@ -2,12 +2,18 @@
 import { ProgressVar } from "@components/ProgressVar";
 import { useEffect, useState } from "react";
 
-let start = 60 * 2;
+// let start = 60 * 2;
 const format = (time: number) => (`${time}`.length > 1 ? time : `0${time}`);
 
-export default function Timer({ bonus = 0 }: { bonus: number }) {
-  const [count, setCount] = useState(start);
-  const [maxTime, setMaxTime] = useState(start);
+export default function Timer({
+  bonus = 0,
+  startTime = 60 * 2,
+}: {
+  bonus: number;
+  startTime?: number;
+}) {
+  const [count, setCount] = useState(startTime);
+  const [maxTime, setMaxTime] = useState(startTime);
 
   const time = !(count + bonus < 0) ? count + bonus : 0;
   const minutes = Math.floor(time / 60);
@@ -25,7 +31,7 @@ export default function Timer({ bonus = 0 }: { bonus: number }) {
       });
     }, 1000);
     return function () {
-      setCount(start);
+      setCount(startTime);
       clearInterval(timer);
     };
   }, []);

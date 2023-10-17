@@ -37,6 +37,8 @@ export default function Toolbar({
       };
   }, [divRef, parentComponent]);
 
+  console.log(component);
+  
   const edit = (callback: () => void) => {
     callback();
     setSettings({ ...settings });

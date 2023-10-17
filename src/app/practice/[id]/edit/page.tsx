@@ -1,15 +1,11 @@
-import React from "react";
 import getFile from "src/app/utils/getFile";
-import { DocumentJSON } from "src/models/document.model";
 
 export default async function Page(props: {
   searchParams: { [key: string]: string };
   params: { id: string };
 }) {
-  console.log("AA");
-  const { file } = (await getFile(props.params.id)) as DocumentJSON;
-  return (
-    <></>
+  const { file } = (await getFile(props.params.id));
+  return (<></>
     // <Practice
     //   type="document"
     //   id=""

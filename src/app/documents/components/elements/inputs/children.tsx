@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import OptionsInput from "@components/inputs/OptionsInput/OptionsInput";
 import Buttons from "@components/button/buttons/Buttons";
 import Form from "../../../edit/components/form";
@@ -31,7 +31,7 @@ export default function Children({
   });
 
   const [newComponent, setNewComponent] = useState<Component | any>();
-
+console.log("AAAAAA")
   useEffect(() => {
     if (a?.type) onChange && onChange({ children: [...(value || []), a] });
     setModalState(false);

@@ -1,10 +1,9 @@
-'use client'
+"use client";
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Mafs, Coordinates, Plot, labelPi } from "mafs";
 // import CustomComponent from "./CustomComponent";
 // import getID from "src/getDoc/utils/getId";
 import { useEffect, useRef, useState } from "react";
-
 
 export default function LineChart({
   id,
@@ -67,6 +66,7 @@ export default function LineChart({
   } as any;
 
   const ec = `(x) => ${ecuation}`;
+  console.log(ec);
 
   const n = parseInt(String(0 / 5)) * -5 + 0;
 
@@ -74,7 +74,7 @@ export default function LineChart({
     <div data-component={id} style={{ width: "max-content", margin: "0 auto" }}>
       <div
         style={{ width: heights[size], height: heights[size] }}
-        className="rounded-md overflow-hidden"
+        // className="rounded-md overflow-hidden"
         ref={divRef}
       >
         {height && lines && (
@@ -97,17 +97,12 @@ export default function LineChart({
               yAxis={lines.y}
               subdivisions={1.001}
             />
-            {/* {ecua.map(({ ecuation }, i) => { */}
-
-            {/* return ( */}
             <Plot.OfX
-              color={colors[n]}
+              color={"red"}
               key={ec}
               weight={height / 75}
               y={eval(ec)}
             />
-            {/* ); */}
-            {/* })} */}
           </Mafs>
         )}
       </div>
