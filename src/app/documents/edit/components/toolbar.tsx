@@ -1,9 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import styles from "./menu.module.css";
 import React, { useEffect, useState } from "react";
 import ClientModal from "src/app/components/modal/client-modal";
-import onEdit from "../utils/onEdit";
-import onDelete from "../utils/onDelete";
 import getNode from "../utils/getNode";
 import iterateObj from "../utils/iterateObj";
 import { Component, NoteWithComponent } from "../models/component";
@@ -21,7 +18,6 @@ export default function Toolbar({
   const [modalState, setModalState] = useState(false);
   const [component, setComponent] = useState<Component>();
   const parentComponent = settings.file.content;
-
   useEffect(() => {
     if (divRef?.current)
       divRef.current.onclick = (event) => {
@@ -37,13 +33,28 @@ export default function Toolbar({
       };
   }, [divRef, parentComponent]);
 
-  console.log(component);
-  
-  const edit = (callback: () => void) => {
-    callback();
+  const updateDocument = (component: Component) => {
+    component.id &&
+      iterateObj(
+        component?.id,
+        parentComponent,
+        (obj) => (obj.options = { ...obj.options, ...component.options })
+      );
     setSettings({ ...settings });
+    setModalState(false);
   };
 
+  const deleteComponent = (component: Component) => {
+    component.id &&
+      iterateObj(component.id, parentComponent, (obj, parent) => {
+        if (!parent?.options.children?.length) return;
+        parent.options.children = parent.options.children?.filter(
+          (child) => child.id !== obj.id
+        );
+      });
+    setSettings({ ...settings });
+    setModalState(false);
+  };
   return parentComponent?.id && component?.id ? (
     <ClientModal
       setState={setModalState}
@@ -51,18 +62,13 @@ export default function Toolbar({
       title="Editar componente"
     >
       <Form
+        defaultValues={{...component.options}}
         modalState={modalState}
         setModalState={setModalState}
-        component={component}
-        document={parentComponent}
-        onEdit={(data) => {
-          edit(() => {
-            component.id && onEdit(data);
-          });
-        }}
-        onDelete={(data) => {
-          edit(() => onDelete(data));
-        }}
+        type={component.type}
+        id={component.id}
+        onSave={updateDocument}
+        onDelete={deleteComponent}
       />
       <></>
     </ClientModal>

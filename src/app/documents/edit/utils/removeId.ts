@@ -7,7 +7,6 @@ export function removeIdFromObject(obj: Component) {
   for (const child of obj.options.children || []) {
     removeIdFromObject(child);
   }
-  console.log(obj)
   return obj;
 }
 

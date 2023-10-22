@@ -1,8 +1,9 @@
-'use client'
+"use client";
 import Card from "@components/Card";
 import { CompletedProgress } from "@components/ProgressVar";
 import React, { ReactNode, useEffect, useState } from "react";
 import styles from "./ProgressCard.module.css";
+import EditableLabel from "src/app/documents/[subject]/[topic]/components/editable-label";
 
 export default function ProgressCard({
   color = "var(--primary-color)",
@@ -41,8 +42,8 @@ export default function ProgressCard({
   };
 
   return topic ? (
-    <Card className="flex flex-col items-start">
-      {children && <span className={styles.title}>{children}</span>}
+    <Card className="flex flex-col items-start max-w-lg">
+      {children}
       <div className={styles.stats}>
         <CompletedProgress color={color} progress={getProgress()} />
         <span className={styles.count}>{count} documentos</span>

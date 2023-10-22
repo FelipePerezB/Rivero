@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import 'server-only'
+import "server-only";
 import { GetFileDocument, GetFileQuery, Privacity } from "src/gql/graphql";
 // import { client } from "src/service/client";
 export const getDefaultFile = (id: string) => {
@@ -14,10 +14,7 @@ export const getDefaultFile = (id: string) => {
           children: [
             {
               type: "page",
-              options: {
-                number: 1,
-                children: [{ type: "title", options: { text: "AAA" } }],
-              },
+              options: {},
             },
           ],
         },
@@ -28,7 +25,6 @@ export const getDefaultFile = (id: string) => {
 
 const fetchFile = async (id: string) => {
   // const res = await fetch(`${process.env.BACKEND_URL}/files/${id}`);
-
   // console.log(res);
   // if (!res.ok) throw new Error("Failed to fetch data");
   // const contentLength = res.headers.get("Content-Length");
@@ -38,11 +34,11 @@ const fetchFile = async (id: string) => {
   // } else return null;
 };
 
-export default async function getFile(id: string) {
+export default function getFile(id: string) {
   // const localFile = localStorage.getItem("doc-" + id);
   const defaultFile = getDefaultFile(id);
   // const dbFile = await fetchFile(id);
   // if(dbFile) return dbFile
-  return defaultFile
+  return defaultFile;
   // else return defaultFile
 }

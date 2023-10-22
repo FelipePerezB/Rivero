@@ -48,7 +48,7 @@ export default function EditButton({
     if (!onRemove) return;
     toast.promise(onRemove(), {
       loading: `Eliminando ${label}...`,
-      error: `No se ha logrado remover`,
+      error: `No se ha logrado eliminar`,
       success: `¡${capFirst(label)} eliminado correctamente!`,
     });
     setModalState(false);

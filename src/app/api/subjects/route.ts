@@ -1,19 +1,13 @@
 import { NextResponse } from "next/server";
 import prisma from "src/app/utils/prisma";
-import { auth } from "@clerk/nextjs";
 
 export async function GET(request: Request) {
   const subjects = await prisma.subject.findMany({
     include: {
-      Topics: {
-        select: {
-          id: true,
-          name: true,
-        },
-      },
+      Topics: true,
     },
   });
-  
+
   return NextResponse.json(
     { subjects },
     {

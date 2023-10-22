@@ -5,7 +5,6 @@ export default function PracticePage(props: {
   searchParams: { [key: string]: string };
   params: { id: string };
 }) {
-  console.log("AA");
   // const { file } = (await getFile(props.params.id)) as DocumentJSON;
   return (
     <></>

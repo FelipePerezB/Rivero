@@ -8,6 +8,7 @@ export type ButtonAttrs = {
   size?: "sm" | "lg" | "xs";
   href?: string;
   className?: string;
+  title?: string;
 };
 
 export default function Button({
@@ -17,6 +18,7 @@ export default function Button({
   size = "sm",
   href,
   className = "",
+  title,
 }: ButtonAttrs) {
   const colorVariants = {
     blue: "bg-blue-500 hover:bg-blue-400 text-white shadow-blue-500/40",
@@ -27,7 +29,7 @@ export default function Button({
   };
 
   const sizeVariants = {
-    xs: "w-max px-2 text-sm",
+    xs: "shadow-none text-black text-xs",
     sm: "w-max px-2.5 py-1 text-sm",
     lg: "w-5/6 py-1.5 my-0 mx-auto max-w-sm text-md",
   };
@@ -35,11 +37,11 @@ export default function Button({
   className += ` ${colorVariants[color]} ${sizeVariants[size]} shadow-md rounded-md cursor-pointer hover:scale-95 transition-all duration-150 flex justify-center items-center gap-2`;
 
   return !href ? (
-    <button type="button" onClick={onClick} className={className}>
+    <button title={title} type="button" onClick={onClick} className={className}>
       {children}
     </button>
   ) : (
-    <Link className={`${className}`} href={href}>
+    <Link title={title} className={`${className}`} href={href}>
       {children}
     </Link>
   );

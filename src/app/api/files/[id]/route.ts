@@ -8,7 +8,6 @@ export async function POST(
 ) {
   const res = await request.json();
   const { userId } = auth();
-  console.log(res);
   if (!userId) throw new Error("Failed to fetch data");
   const id = params.id;
   const { content, privacity, title } = res;

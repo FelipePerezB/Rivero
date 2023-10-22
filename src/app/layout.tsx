@@ -1,8 +1,6 @@
-import {
-  Nunito,
-} from "next/font/google";
+import { Nunito } from "next/font/google";
 import "./components/globals.css";
-import { ReactNode } from "react";
+import { ReactNode, Suspense } from "react";
 import { ClerkProvider } from "@clerk/nextjs";
 import Navar from "./components/navar/navar";
 import NavSidebar from "./components/navar/nav-sidebar";
@@ -30,9 +28,11 @@ export default async function RootLayout({ children }: Props) {
         <header className="print:hidden">
           <Navar />
         </header>
-        <main className="flex flex-col gap-3 p-4 pt-[70px] h-full w-full mx-auto">
-          <ClerkProvider>{children}</ClerkProvider>
-          <NavSidebar/>
+        <main className="flex flex-col gap-3 p-4 pt-[70px] h-full w-full mx-auto max-w-5xl">
+          <ClerkProvider>
+            {children}
+            <NavSidebar />
+          </ClerkProvider>
         </main>
       </body>
     </html>

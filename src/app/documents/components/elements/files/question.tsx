@@ -41,7 +41,6 @@ export default function Question({
     const name = answer === expectedAns ? "correct-ans" : "incorrect-ans";
     setClassname(name);
   }, [check]);
-  console.log(id)
   return (
     <div data-component={id}>
       <article className="p-[0.5em] print:p-0 text-[0.8em]">

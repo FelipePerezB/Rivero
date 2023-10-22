@@ -66,7 +66,6 @@ export default function LineChart({
   } as any;
 
   const ec = `(x) => ${ecuation}`;
-  console.log(ec);
 
   const n = parseInt(String(0 / 5)) * -5 + 0;
 

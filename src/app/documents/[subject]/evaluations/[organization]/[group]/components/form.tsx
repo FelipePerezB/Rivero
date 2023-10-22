@@ -20,14 +20,16 @@ export default function Form({
   const usersNames = users.map(({ email }) => email);
   const router = useRouter();
   const addScore = async () => {
-    console.log(token)
+    const min = 500;
+    const max = 1000;
+    const score = Math.floor(Math.random() * (max - min + 1)) + min;
     if (!user || !token) return;
     toast.promise(
       api("scores", {
         body: JSON.stringify({
           userId: users.find(({ email }) => email === user)?.id,
           fileId,
-          score: 800,
+          score,
           alternatives: "a,c,b,e,c,a,c,a,c,d,a,a,d,c,a,a",
         }),
         method: "POST",

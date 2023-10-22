@@ -1,7 +1,28 @@
-import React from 'react'
+import { auth, currentUser } from "@clerk/nextjs";
+import { Role } from "@prisma/client";
+import React from "react";
+import api from "src/app/utils/api";
+import CreateBtn from "./components/create-btn";
+import DynamicElement from "../../components/elements/files/dynamic-file";
+import { NoteWithFile } from "../../models/note";
 
-export default function page() {
-  return (
-    <div>page</div>
-  )
+export default async function PracticePage({
+  params: { subject },
+}: {
+  params: { subject: string };
+}) {
+  const { getToken } = auth();
+  const user = await currentUser();
+  const token = await getToken();
+  const { data } = (await api("notes/practice/" + subject, {
+    headers: { Authorization: `Bearer ${token}` },
+  })) as { data: NoteWithFile };
+
+  return data.id ? (
+    <DynamicElement attrs={JSON.parse(data.File.content)} name="practice" />
+  ) : user?.publicMetadata.role === Role.ADMIN && token ? (
+    <CreateBtn subject={subject} token={token} />
+  ) : (
+    <></>
+  );
 }

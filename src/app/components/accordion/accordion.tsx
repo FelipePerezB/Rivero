@@ -11,7 +11,7 @@ export default function Accordion({
   summary: string | React.ReactNode;
 }) {
   return (
-    <Card>
+    <Card className="max-w-lg">
       <details className="group cursor-pointer">
         <summary className="flex justify-between items-center list-none h-max px-2">
           {summary}

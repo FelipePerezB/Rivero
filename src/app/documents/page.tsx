@@ -11,7 +11,9 @@ export default async function DocumentsPage() {
   };
   return (
     <>
-      <h2 className={"text-2xl font-bold pb-0.5"}>Asignaturas</h2>
+      <div className="w-full flex justify-between items-center">
+        <h2 className={"text-2xl font-bold pb-0.5"}>Asignaturas</h2>
+      </div>
       <ItemsBox>
         <SubjectsCards subjects={subjects} />
       </ItemsBox>

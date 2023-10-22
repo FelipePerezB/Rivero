@@ -4,53 +4,67 @@ import Options from "@components/Options";
 import Buttons from "@components/button/buttons/Buttons";
 import React, { ReactNode, SetStateAction, useEffect, useState } from "react";
 import Children from "../../components/elements/inputs/children";
-import { Component } from "src/app/documents/edit/models/component";
-import { onEditProps } from "src/app/documents/edit/utils/onEdit";
-import { onDeleteProps } from "src/app/documents/edit/utils/onDelete";
+import {
+  Component,
+  ComponentOptions,
+} from "src/app/documents/edit/models/component";
+import { componentsNames } from "src/app/documents/edit/utils/schemas";
 import getSchema from "../utils/getSchema";
 import FormChildren from "./children-form";
 import DynamicInput from "../../components/elements/inputs/dynamic-input";
+import generateRandomId from "src/utils/generateRandomId";
+import { IdLenght } from "src/models/document.model";
+import OptionsInput from "@components/inputs/OptionsInput/OptionsInput";
+import Preview from "./preview";
 
 type options = "Configuración" | "Hijos";
 
 export default function Form({
-  setData,
-  component,
-  document,
+  type,
+  defaultValues,
+  id,
   modalState,
-  setModalState,
   onDelete,
-  onEdit,
-  onChange,
-}: {
-  setData?: React.Dispatch<SetStateAction<{ [key: string]: unknown }>>;
-  onChange?: (data: { [key: string]: unknown }) => void;
-  document: Component;
-  component: Component;
-  modalState?:boolean;
+  onSave,
+}: // onChange,
+{
+  // onChange?: (data: { [key: string]: unknown }) => void;
+  type?: string;
+  defaultValues: ComponentOptions;
+  id?: string;
+  modalState?: boolean;
   setModalState?: React.Dispatch<SetStateAction<boolean>>;
-  onEdit?: (props: onEditProps) => void;
-  onDelete?: (props: onDeleteProps) => void;
+  onSave?: (props: Component) => void;
+  onDelete?: (props: Component) => void;
 }) {
   const [inputs, setInputs] = useState<ReactNode[] | undefined>([]);
-  const [values, setValues] = useState<{ children?: Component[] }>({});
-
   const [options, setOptions] = useState<string[]>([]);
   const [option, setOption] = useState<options | undefined>("Configuración");
 
+  const [component, setComponent] = useState({
+    type: type ?? "",
+    options: defaultValues,
+    id: id ?? generateRandomId(IdLenght.sm),
+  });
   const addFormData = (newData: { [key: string]: unknown }) => {
-    Object.assign(values, newData);
-    setValues({ ...values });
-    onChange &&
-      onChange({
-        ...component,
-        options: { ...newData, ...values },
-      });
+    setComponent((component) => ({
+      ...component,
+      options: { ...component.options, ...newData },
+    }));
   };
-  
-  const children = values.children;
+
   useEffect(() => {
-    addFormData({ children: component.options.children });
+    setComponent((component) => ({
+      ...component,
+      id: id ?? "",
+      type: type ?? component.type,
+      options: { ...defaultValues },
+    }));
+  }, [defaultValues]);
+
+  const children = component.options.children;
+  useEffect(() => {
+    if (!component.type) return;
     const schemas = getSchema(component.type);
     if (schemas?.length) {
       setInputs(
@@ -65,7 +79,7 @@ export default function Form({
             } else setOptions(["Configuración", "Hijos"]);
           }
           if (!options.length) setOptions(["Configuración"]);
-          const value = component.options[data.key];
+          const value = defaultValues[data.key];
           return (
             <DynamicInput
               key={"input-" + i}
@@ -73,59 +87,61 @@ export default function Form({
                 ...data,
                 dataKey: data?.key,
                 value,
-                parentId: component.id,
+                parentId: id,
                 onChange: addFormData,
                 name: data.label,
               }}
-              name={type as string}
+              name={type}
             />
           );
         })
       );
     }
-  }, [modalState, component.options, component.type]);
+  }, [component.type, defaultValues]);
 
   return (
     <div className="flex flex-col gap-2">
+      {!type && (
+        <OptionsInput
+          name="Tipo de componente"
+          dataKey="type"
+          value={type}
+          onChange={({ type }) => {
+            const isValid = componentsNames.includes(type);
+            if (!isValid) return;
+            setComponent((props) => ({ ...props, type }));
+          }}
+          options={componentsNames}
+        />
+      )}
+      {component.type && component.type !== "section" && (
+        <Preview {...{ attrs: component }} />
+      )}
       <Options {...{ option, setOption, options: options }} />
       {option === "Configuración" && <>{inputs?.map((input) => input)}</>}
-
       {option === "Hijos" && (
         <div>
           <FormChildren
+            onChange={addFormData}
             {...{
-              document,
-              onChange: addFormData,
-              parentId: component.id,
+              // onChange: addFormData,
+              parentId: id,
               children,
             }}
           />
           <Children
-            document={document}
+            value={children}
             onChange={addFormData}
-            parentId={component?.id as string}
-            value={values.children}
+            parentId={id as string}
           />
         </div>
       )}
       <div className="mt-2">
         <Buttons>
-          {(onEdit || setData) && (
+          {onSave && component.type && (
             <Button
               onClick={() => {
-                setData &&
-                  setData((data) => ({
-                    ...component,
-                    options: { ...data, ...values },
-                  }));
-                component?.id &&
-                  onEdit &&
-                  onEdit({
-                    id: component.id,
-                    page: document,
-                    newProps: values,
-                  });
-                setModalState && setModalState(false);
+                onSave(component);
               }}
               color="blue"
             >
@@ -135,8 +151,7 @@ export default function Form({
           {onDelete && (
             <Button
               onClick={() => {
-                component?.id && onDelete({ id: component.id, page: document });
-                setModalState && setModalState(false);
+                id && type && onDelete(component);
               }}
               color="red"
             >

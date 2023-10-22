@@ -53,8 +53,6 @@ function SmallOptionsInput(props: props) {
   //   if (!props.dontDefaultCheck) {
   //     props.onChange(props.value ?? props.options[0]);
   //   }
-  console.log(props.name)
-  // }, []);
   return (
     <article className={`flex flex-col gap-1 ${props?.className}`}>
       <span className={"inline-block w-full text-center"}>{capFirst(props.name)}</span>

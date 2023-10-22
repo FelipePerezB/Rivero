@@ -19,7 +19,7 @@ export default function Label({
     center: "mx-auto",
   };
   return (
-    <label className={`w-full mx-auto ${className}`} htmlFor={dataKey ?? name}>
+    <label className={`flex flex-col w-full mx-auto ${className}`} htmlFor={dataKey ?? name}>
       {name && (
         <span className={`${alignVariants[align]}`}>{capFirst(name)}</span>
       )}

@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Component } from "src/app/documents/edit/models/component";
 import DynamicElement from "../../components/elements/files/dynamic-file";
 import StandardInput from "@components/inputs/StandardInput/StandardInput";
@@ -7,27 +7,18 @@ import ClientModal from "src/app/components/modal/client-modal";
 import Form from "./form";
 
 const FormChildren = ({
-  document,
   children,
   onChange,
 }: {
   onChange: (value: { [key: string]: Component[] }) => void;
-  document: Component;
   children?: Component[];
 }) => {
-  console.log("AAAAAA");
   const [filter, setFilter] = useState("");
   const [modalState, setModalState] = useState(false);
   const [component, setComponent] = useState<Component>();
-  const [data, setData] = useState({});
-  const onEdit = (data: any) => {};
-  const onDelete = (data: any) => {
-    if (!children?.length || !component?.id) return;
-    children = children?.filter(({ id }) => id !== component?.id);
-    onChange && onChange({ children });
-  };
-  useEffect(() => {
-    const newChild = data as { id?: string; options: {}; type: string };
+
+  const changeChild = (component: Component) => {
+    const newChild = component as { id?: string; options: {}; type: string };
     if (!children?.length || !newChild?.id) return;
     const newChildIndex = children?.findIndex(
       (child) => child.id === newChild.id
@@ -35,7 +26,20 @@ const FormChildren = ({
     if (!newChildIndex && newChildIndex === -1) return;
     children[newChildIndex] = newChild;
     onChange && onChange({ children });
-  }, [data]);
+    setModalState(false);
+  };
+
+  const deleteChild = (component: Component) => {
+    const newChild = component as { id?: string; options: {}; type: string };
+    if (!children?.length || !newChild?.id) return;
+    const newChildIndex = children?.findIndex(
+      (child) => child.id === newChild.id
+    );
+    if (!newChildIndex && newChildIndex === -1) return;
+    children.splice(newChildIndex, 1);
+    onChange && onChange({ children });
+    setModalState(false);
+  };
 
   const filteredChildren = children?.filter(({ options }) => {
     if (!filter) return true;
@@ -47,16 +51,18 @@ const FormChildren = ({
     return childValue?.toLowerCase()?.includes(expectedValue);
   });
 
-  console.log(component)
-
   return (
     <section className="flex flex-col gap-2">
-      <StandardInput
-        attrs={{ placeholder: "Atributo: valor" }}
-        name=""
-        dataKey="filter"
-        onBlur={(search) => setFilter(search)}
-      />
+      {children?.length ? (
+        <StandardInput
+          attrs={{ placeholder: "Atributo: valor" }}
+          name=""
+          dataKey="filter"
+          onBlur={(search) => setFilter(search)}
+        />
+      ) : (
+        <></>
+      )}
       {children &&
         filteredChildren?.map(({ type, id, options }) => (
           <article
@@ -77,16 +83,11 @@ const FormChildren = ({
           title="Editar componente"
         >
           <Form
-            {...{
-              setData,
-              document,
-              modalState,
-              setModalState,
-              component,
-              modalType: "edit",
-              onEdit,
-              onDelete,
-            }}
+            defaultValues={{ ...component?.options }}
+            id={component?.id}
+            type={component.type}
+            onDelete={deleteChild}
+            onSave={changeChild}
           />
         </ClientModal>
       )}

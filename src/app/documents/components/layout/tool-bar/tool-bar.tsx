@@ -26,7 +26,6 @@ export default function Navar({
       file: { privacity, content, title, externalId },
     } = settings;
     const token = await getToken();
-    console.log(token);
     toast.promise(
        api("files/" + externalId, {
         headers: { Authorization: `Bearer ${token}` },
@@ -60,12 +59,6 @@ export default function Navar({
             className="text-lg font-bold"
           ></div>
           <div className="flex gap-2">
-            <span
-              // onClick={onSave}
-              className="text-xs cursor-pointer active:text-blue-500"
-            >
-              Guardar
-            </span>
             <span
               onClick={sync}
               className="text-xs cursor-pointer active:text-blue-500"

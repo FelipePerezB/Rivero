@@ -3,8 +3,10 @@ import React from "react";
 export default function Options({
   options,
   option,
+  customPath,
 }: // setOption,
 {
+  customPath?: string;
   options?: {
     key: string | number;
     title: string;
@@ -20,9 +22,16 @@ export default function Options({
             String(key)?.toLowerCase() === option?.toLowerCase() ||
             (!option && i === 0);
           return (
-            <Link key={"option-" + key} href={String(key)}>
+            <Link
+              key={"option-" + key}
+              href={
+                !customPath
+                  ? String(key)
+                  : customPath.replace("[key]", String(key))
+              }
+            >
               <li
-                className={`cursor-pointer py-0.5 px-2 flex-shrink-0 font-semibold hover:text-slate-800 ${
+                className={`cursor-pointer py-0.5 px-2 flex-shrink-0 font-semibold hover:text-slate-800  w-max  ${
                   isActive
                     ? "text-slate-800 border-b-2 border-slate-800"
                     : "text-slate-500"

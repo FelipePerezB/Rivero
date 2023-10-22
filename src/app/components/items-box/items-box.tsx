@@ -14,7 +14,7 @@ export default function ItemsBox({
   }
 
   return (
-    <section className={"w-full mx-auto grid justify-items-center gap-3 gap-y-4" + " " + sizeVariants[size]}>
+    <section className={"w-full mx-auto grid justify-items-center gap-4" + " " + sizeVariants[size]}>
       {children}
     </section>
   );

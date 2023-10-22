@@ -1,6 +1,6 @@
 'use client'
 import Button from "@components/Button";
-import Table from "@components/Table";
+import Table from "@components/table/Table";
 import CircleButton from "@components/button/circle-button/circle-button";
 import StandardInput from "@components/inputs/StandardInput/StandardInput";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";

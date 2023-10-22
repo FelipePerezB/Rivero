@@ -79,20 +79,17 @@ export const getDefaultFile = (id: string) => {
 
 export default async function useGetFile(id: string) {
   let defaultFile = getDefaultFile(id);
-  console.log(defaultFile);
   try {
     const { getToken } = auth();
     const token = await getToken();
     const { data } = (await api("files/" + id, {
       headers: { Authorization: `Bearer ${token}` },
     })) as { data: File };
-    console.log(data);
     if (data.externalId) {
       defaultFile.file = {
         ...data,
         content: JSON.parse(data.content),
       };
-      console.log(defaultFile, data.content);
     }
   } catch (error) {
     console.log(error);

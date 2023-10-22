@@ -1,5 +1,5 @@
 import Link from "next/link";
-import React from "react";
+import React, { Suspense } from "react";
 import {
   FontAwesomeIcon,
   FontAwesomeIconProps,
@@ -13,50 +13,40 @@ import {
 import SearchSidebar from "../sidebar/search-sidebar";
 import { currentUser } from "@clerk/nextjs";
 import Image from "next/image";
+// import UserInfo from "./user-info";
+import dynamic from "next/dynamic";
+import UserInfo from "./user-info";
 
-export default async function NavSidebar() {
-  let user;
-  try {
-    user = await currentUser();
-  } catch (error) {
-    console.error(error);
-  }
-  const firstName = user?.firstName;
-  const lastName = user?.lastName;
-  const imageUrl = user?.imageUrl;
-  const role = user?.publicMetadata?.role as string | undefined;
+export default function NavSidebar() {
+  // const UserInfo = dynamic(()=>import('./user-info'), {ssr:false})
   return (
     <SearchSidebar id="nav">
-      {firstName && (
-        <section>
-          <Link
-            className="flex items-center gap-3  p-2 hover:bg-slate-100 rounded-md"
-            href={"/profile"}
-          >
-            {imageUrl && (
-              <Image
-                width={100}
-                height={100}
-                alt="Perfil"
-                className="w-10 h-10 rounded-full"
-                src={imageUrl}
-              />
-            )}
-            <div className="flex flex-col">
-              <span className="text-lg">{`${firstName} ${lastName}`}</span>
-              <span className="text-xs border w-max p-0.5 rounded font-bold">
-                {role}
-              </span>
-            </div>
-          </Link>
-          <hr className="my-2" />
-        </section>
-      )}
+      {/* {firstName && ( */}
+      <section>
+        <Link
+          className="flex items-center gap-3  p-2 hover:bg-slate-100 rounded-md"
+          href={"/profile"}
+        >
+          <Suspense fallback={<>Loading...</>}>
+            <UserInfo />
+          </Suspense>
+        </Link>
+        <hr className="my-2" />
+      </section>
+      {/* )} */}
       <section>
         <ul className="flex flex-col gap-1 text-slate-800 text-md">
           <Option icon={faBook} link="documents" name="Asignaturas" />
-          <Option icon={faChartSimple} link="dashboard" name="Dashboard" />
-          <Option icon={faPlus} link="documents/edit/all" name="Crear documentos" />
+          {/* <Option
+            icon={faChartSimple}
+            link={`dashboard/${organization}`}
+            name="Dashboard"
+          /> */}
+          <Option
+            icon={faPlus}
+            link="documents/edit/all"
+            name="Crear documentos"
+          />
         </ul>
       </section>
     </SearchSidebar>

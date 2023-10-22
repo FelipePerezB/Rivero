@@ -1,5 +1,6 @@
 "use client";
 import { ProgressVar } from "@components/ProgressVar";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 // let start = 60 * 2;
@@ -14,8 +15,14 @@ export default function Timer({
 }) {
   const [count, setCount] = useState(startTime);
   const [maxTime, setMaxTime] = useState(startTime);
+  const router = useRouter()
 
-  const time = !(count + bonus < 0) ? count + bonus : 0;
+  const time = !(count + bonus < 0) ? count + bonus : 0
+
+  useEffect(()=>{
+    if(time>0)return
+    router.push('practice/results')
+  }, [time])
   const minutes = Math.floor(time / 60);
   const seconds = Math.floor(time % 60);
 

@@ -33,7 +33,7 @@ export default function Practice({
     ? undefined
     : Number(options?.maxTime);
     
-  const question = options.children[index] as unknown as QuestionAttrs;
+  const question = options?.children[index] as unknown as QuestionAttrs;
 
   return (
     <div
@@ -50,8 +50,6 @@ export default function Practice({
             if(!isLastQuestion){
               setIndex(index + 1);
               setBonus(bonus + 30);
-            } else {
-              console.log("AAAAA")
             }
           }}
           number={index + 1}

@@ -8,6 +8,7 @@ import Toolbar from "./toolbar";
 import Document from "../../components/elements/files/document";
 import { hydrateJSON } from "../utils/hydrateJSON";
 import DynamicElement from "../../components/elements/files/dynamic-file";
+import ScreenLayout from "../../components/layout/screen-layout";
 
 export default function EditWraper({
   id,
@@ -45,15 +46,20 @@ export default function EditWraper({
     window.onresize = resize;
   }, [id]);
 
-  console.log(settings);
+  useEffect(() => {
+    localStorage.setItem(`document-${externalId}`, JSON.stringify(settings));
+  }, [settings]);
+
   return (
     <Layout settings={settings} setSettings={setSettings}>
       <div ref={divRef}>
         {externalId && title && type && (
-          <DynamicElement
-            attrs={{ options: content.options, title, id: content.id, type }}
-            name={content.type}
-          />
+          <ScreenLayout>
+            <DynamicElement
+              attrs={{ options: content.options, title, id: content.id, type }}
+              name={content.type}
+            />
+          </ScreenLayout>
         )}
       </div>
       {divRef.current && (

@@ -2,6 +2,7 @@
 import capFirst from "src/utils/capFirst";
 import StandardInput from "../StandardInput/StandardInput";
 import { useEffect, useState } from "react";
+import Label from "src/app/documents/edit/components/label";
 
 type props = {
   name: string;
@@ -22,27 +23,30 @@ export default function OptionsInput(props: props) {
     props.onChange(obj);
   };
 
+
   return props.options.join("").length <= 30 && !props.isLarge ? (
     <SmallOptionsInput {...props} onChange={createFormData} />
   ) : (
-    // <></>
     <LargeOptionsInput {...props} onChange={createFormData} />
   );
 }
 
 function LargeOptionsInput(props: props) {
   const id = `options-${props.options?.map((op) => op[1]).join()}`;
-  // useEffect(() => {
-  //   if (!props.dontDefaultCheck) {
-  //     props.onChange(props.value ?? props.options[0]);
-  //   }
-  // }, []);;
   return (
-    <select onChange={({target})=>{props.onChange(target.value)}} className="card focus:outline-blue-500" id={id}>
-      {props.options.map((op) => (
-        <option key={`${props.name}-${op}`}>{op}</option>
-      ))}
-    </select>
+    <Label  name={props?.name}>
+      <select
+        onChange={({ target }) => {
+          props.onChange(target.value);
+        }}
+        className="card focus:outline-blue-500"
+        id={id}
+      >
+        {props.options.map((op) => (
+          <option key={`${props.name}-${op}`}>{op}</option>
+        ))}
+      </select>
+    </Label>
   );
 }
 
@@ -53,7 +57,7 @@ function SmallOptionsInput(props: props) {
       props.onChange(props.value ?? props.options[0]);
       setCurrentValue(props.value ?? props.options[0]);
     }
-  }, []);;
+  }, []);
   return (
     <article className={"flex flex-col gap-1 {props?.className"}>
       <span className={"w-full inline-block text-center"}>
@@ -69,7 +73,6 @@ function SmallOptionsInput(props: props) {
               onChange={(event) => {
                 const { value } = event.target as HTMLInputElement;
                 if (!value) return;
-                console.log(value);
                 props.onChange(value);
                 setCurrentValue(value);
               }}

@@ -1,9 +1,11 @@
+'use client'
 import { ReactNode } from "react";
-import Card from "./Card";
+import Card from "../Card";
+import Link from "next/link";
 
 interface TableProps {
   head?: {
-    title?: string;
+    title?: string | ReactNode;
     icons?: ReactNode[];
     keys: { name: string; key?: string }[];
   };
@@ -32,7 +34,7 @@ const Row = ({
   );
 };
 
-const Table: React.FC<TableProps> = ({ data, head, onClick }) => {
+const Table: React.FC<TableProps> = ({ data, head }) => {
   return (
     <Card>
       <table className="flex flex-col">
@@ -55,10 +57,7 @@ const Table: React.FC<TableProps> = ({ data, head, onClick }) => {
         )}
         <tbody className="inline-block w-full max-h-52 overflow-y-scroll">
           {data?.map((row, rowIndex) => (
-            <Row
-              key={"row-" + rowIndex}
-              // onClick={onClick && (() => !!onClick && onClick(row))}
-            >
+            <Row key={"row-" + rowIndex}>
               {row.map((cell, cellIndex) => (
                 <td
                   className="w-full overflow-hidden text-center text-ellipsis whitespace-nowrap"
