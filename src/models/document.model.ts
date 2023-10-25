@@ -1,3 +1,4 @@
+// import { Component } from "src/app/subjects/edit/models/component";
 import { Component } from "src/app/documents/edit/models/component";
 import { Privacity, Types } from "src/gql/graphql";
 // import { Component } from "src/pages/docs/edit/[id]";
@@ -5,7 +6,7 @@ import { Privacity, Types } from "src/gql/graphql";
 export type File = {
   privacity: Privacity;
   externalId: string;
-  title: string;
+  name: string;
   content: Component;
 };
 

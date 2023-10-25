@@ -21,7 +21,7 @@ export default function DeleteBtn({
   tags?: string[];
 }) {
   const isSm = size === "sm";
-  const router = useRouter();
+  // const router = useRouter();
 
   const deleteHandler = () => {
     toast((t) => (

@@ -12,6 +12,18 @@ export async function GET(
     where: { id },
     include: {
       Topics: true,
+      Notes: {
+        select: {
+          File: {
+            select: {
+              externalId: true,
+            },
+          },
+        },
+        where: {
+          type: "PRACTICE",
+        },
+      },
     },
   });
 
@@ -22,7 +34,6 @@ export async function GET(
     }
   );
 }
-
 
 export async function PATCH(
   request: Request,

@@ -1,0 +1,138 @@
+import type { IncomingHttpHeaders } from "http";
+import type { NextApiRequest, NextApiResponse } from "next";
+import type { WebhookRequiredHeaders } from "svix";
+import type { WebhookEvent } from "@clerk/nextjs/server";
+import { Webhook } from "svix";
+import { client } from "src/service/client";
+import {
+  CreateUserDocument,
+  RemoveUserDocument,
+  Role,
+  // UpdateUserDocument,
+  // UserCreateInput,
+} from "src/gql/graphql";
+import prisma from "src/app/utils/prisma";
+import { User } from "@prisma/client";
+import { revalidateTag } from "next/cache";
+
+const webhookSecret = process.env.WEBHOOK_SECRET;
+
+export default async function Handler(
+  req: NextApiRequestWithSvixRequiredHeaders,
+  res: NextApiResponse
+) {
+  console.log("AAAAAAaa")
+  const payload = JSON.stringify(req.body);
+  const headers = req.headers;
+  if (!webhookSecret) return;
+  // Create a new Webhook instance with your webhook secret
+  const wh = new Webhook(webhookSecret);
+  
+  let evt: WebhookEvent;
+  console.log(wh)
+  try {
+    // Verify the webhook payload and headers
+    evt = wh.verify(payload, headers) as WebhookEvent;
+  } catch (_) {
+    // If the verification fails, return a 400 error
+    return res.status(400).json({});
+  }
+  console.log(evt)
+
+  const eventType = evt.type;
+
+  console.log(evt.type)
+  
+  if (eventType === "user.created" || eventType === "user.updated") {
+    const {
+      id,
+      last_name,
+      first_name,
+      email_addresses,
+      public_metadata: { groups, organizationId, role },
+    } = evt.data;
+    if (!id) {
+      res.status(400).json({});
+      return;
+    }
+    console.log(evt.data)
+    const userGroups = groups as number[];
+    if (
+      !id ||
+      !last_name ||
+      !first_name ||
+      !email_addresses[0]?.email_address ||
+      !groups ||
+      !organizationId ||
+      !role
+    ) {
+      res.status(400).json({});
+      return;
+    }
+
+    console.log(userGroups)
+
+    const data = await prisma.user.upsert({
+      update: {
+        email: {
+          set: email_addresses[0].email_address,
+        },
+        Group: {
+          connect: userGroups.map((id) => ({
+            id,
+          })),
+        },
+        lastname: { set: last_name },
+        name: { set: first_name },
+        role: { set: role as Role },
+        organizationId: { set: Number(organizationId) },
+      },
+      where: {
+        externalId: id,
+      },
+      create: {
+        Group: {
+          connect: userGroups.map((id) => ({
+            id,
+          })),
+        },
+        email: email_addresses[0].email_address,
+        externalId: id,
+        lastname: last_name,
+        name: first_name,
+        role: role as Role,
+        organizationId: Number(organizationId),
+      },
+    });
+
+    console.log(data)
+
+    // revalidateTag("users");
+    revalidateTag("groups");
+    revalidateTag(`groups/${organizationId}`);
+    res.status(201).json({ data });
+    return;
+  } else if (eventType === "user.deleted") {
+    const { id } = evt.data;
+    if (!id) {
+      res.status(400).json({});
+      return;
+    }
+    const data = await prisma.user.delete({
+      where: {
+        externalId: id,
+      },
+    });
+
+    if (!data.id) {
+      res.status(400).json({});
+      return;
+    }
+    res.status(201).json({ data });
+    return;
+  }
+}
+
+type NextApiRequestWithSvixRequiredHeaders = NextApiRequest & {
+  headers: IncomingHttpHeaders & WebhookRequiredHeaders;
+};

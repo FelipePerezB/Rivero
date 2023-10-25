@@ -3,19 +3,23 @@ import Button from "@components/Button";
 import Options from "@components/Options";
 import Buttons from "@components/button/buttons/Buttons";
 import React, { ReactNode, SetStateAction, useEffect, useState } from "react";
-import Children from "../../components/elements/inputs/children";
-import {
-  Component,
-  ComponentOptions,
-} from "src/app/documents/edit/models/component";
-import { componentsNames } from "src/app/documents/edit/utils/schemas";
+// import Children from "../../components/elements/inputs/children";
+// import {
+//   Component,
+//   ComponentOptions,
+// } from "src/app/subjects/edit/models/component";
+// import { componentsNames } from "src/app/subjects/edit/utils/schemas";
 import getSchema from "../utils/getSchema";
 import FormChildren from "./children-form";
-import DynamicInput from "../../components/elements/inputs/dynamic-input";
+// import DynamicInput from "../../components/elements/inputs/dynamic-input";
 import generateRandomId from "src/utils/generateRandomId";
 import { IdLenght } from "src/models/document.model";
 import OptionsInput from "@components/inputs/OptionsInput/OptionsInput";
 import Preview from "./preview";
+import { Component, ComponentOptions } from "../models/component";
+import Children from "src/app/subjects/components/elements/inputs/children";
+import DynamicInput from "src/app/subjects/components/elements/inputs/dynamic-input";
+import { componentsNames } from "../utils/schemas";
 
 type options = "Configuración" | "Hijos";
 

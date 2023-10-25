@@ -1,6 +1,6 @@
 import React, { ReactNode } from "react";
-import { NoteWithComponent } from "src/app/documents/edit/models/component";
-import Navar from "src/app/documents/components/layout/tool-bar/tool-bar";
+import { NoteWithComponent } from "src/app/subjects/edit/models/component";
+import Navar from "src/app/subjects/components/layout/tool-bar/tool-bar";
 import { Toaster } from "react-hot-toast";
 
 export default function EditDocumentLayout({
@@ -17,7 +17,7 @@ export default function EditDocumentLayout({
       <Navar
         setSettings={setSettings}
         settings={settings}
-        title={settings?.file.title as string}
+        name={settings?.file.name as string}
       />
       {children}
     </div>

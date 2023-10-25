@@ -28,12 +28,11 @@ export async function GET(request: NextRequest) {
     include: {
       Notes: {
         include: {
-          File: { select: { title: true, externalId: true, id: true } },
+          File: { select: { name: true, externalId: true, id: true } },
         },
       },
     },
   });
-  console.log(data);
   return NextResponse.json({ data }, { status: 200 });
 }
 

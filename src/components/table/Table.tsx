@@ -1,9 +1,10 @@
-'use client'
+"use client";
 import { ReactNode } from "react";
 import Card from "../Card";
 import Link from "next/link";
 
 interface TableProps {
+  handlers?: ReactNode;
   head?: {
     title?: string | ReactNode;
     icons?: ReactNode[];
@@ -11,22 +12,20 @@ interface TableProps {
   };
 
   data?: (ReactNode | string | number)[][];
-  onClick?: (row: unknown[]) => void;
+  onClickHref?: string;
 }
 
 const Row = ({
   children,
-}: // onClick,
-{
+  onClickHref,
+}: {
   children: ReactNode | string;
-  // onClick?: () => void;
+  onClickHref?: string;
 }) => {
   return (
     <tr
-      // onClick={() => !!onClick && onClick()}
-      className={`w-full flex justify-around py-2 p-2 border-t ${
-        ""
-        // !!onClick ? "cursor-pointer" : ""
+      className={`w-full flex justify-around border-t ${
+        onClickHref ? "cursor-pointer hover:bg-slate-50" : ""
       }`}
     >
       {children}
@@ -34,12 +33,13 @@ const Row = ({
   );
 };
 
-const Table: React.FC<TableProps> = ({ data, head }) => {
+const Table: React.FC<TableProps> = ({ data, head, onClickHref, handlers }) => {
+  console.log(onClickHref);
   return (
-    <Card>
+    <Card className="p-0">
       <table className="flex flex-col">
         {head?.title && (
-          <caption className="w-full flex justify-between items-center">
+          <caption className="w-full flex justify-between items-center pt-2 px-2">
             <h3 className="text-lg font-bold">{head.title}</h3>
             <div className="flex items-center gap-2.5 text-sm">
               {head.icons?.map((icon) => icon)}
@@ -50,20 +50,37 @@ const Table: React.FC<TableProps> = ({ data, head }) => {
           <thead className="mt-2">
             <Row>
               {head?.keys.map(({ name, key }, i) => (
-                <th key={"th-" + i}>{name}</th>
+                <th className="py-2" key={"th-" + i}>
+                  {name}
+                </th>
               ))}
             </Row>
           </thead>
         )}
         <tbody className="inline-block w-full max-h-52 overflow-y-scroll">
           {data?.map((row, rowIndex) => (
-            <Row key={"row-" + rowIndex}>
+            <Row onClickHref={onClickHref} key={"row-" + rowIndex}>
               {row.map((cell, cellIndex) => (
                 <td
                   className="w-full overflow-hidden text-center text-ellipsis whitespace-nowrap"
                   key={`column-${cellIndex}-r${rowIndex} `}
                 >
-                  {cell}
+                  {onClickHref ? (
+                    <Link
+                      className="inline-block w-full py-2"
+                      href={`${onClickHref}${row
+                        ?.map((cell, i) => {
+                          const separator = i !== 0 ? `&` : "";
+                          const key = head?.keys[i].key;
+                          return `${separator}${key}=${cell}`;
+                        })
+                        .join("")}`}
+                    >
+                      {cell}
+                    </Link>
+                  ) : (
+                    <span className="inline-block w-full py-2">{cell}</span>
+                  )}
                 </td>
               ))}
             </Row>

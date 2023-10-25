@@ -12,16 +12,31 @@ export async function GET(
   const data = await prisma.topic.findUnique({
     where: { id },
     include: {
-      Subtopics: { select: { name: true } },
+      Subject: {
+        select: {
+          id: true,
+          name: true,
+          Topics: { select: { id: true, name: true } },
+          Notes: {
+            select: {
+              type: true,
+              File: {
+                select: {
+                  externalId: true,
+                },
+              },
+            },
+            where: {
+              type: "PRACTICE",
+            },
+          },
+        },
+      },
+      Subtopics: { select: { name: true, id: true } },
     },
   });
 
-  return NextResponse.json(
-    { data },
-    {
-      status: 200,
-    }
-  );
+  return NextResponse.json({ data }, { status: 200 });
 }
 export async function PATCH(
   request: Request,

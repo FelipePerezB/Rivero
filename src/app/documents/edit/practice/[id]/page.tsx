@@ -1,6 +1,6 @@
 import getFile from "src/app/utils/getFile";
 import getPractice from "../utils/getPractice";
-import Practice from "src/app/documents/components/elements/files/practice";
+import Practice from "src/app/subjects/components/elements/files/practice";
 import EditWraper from "../../components/edit-wraper";
 
 export default async function Page(props: {

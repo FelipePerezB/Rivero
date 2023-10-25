@@ -1,7 +1,7 @@
 import { auth } from "@clerk/nextjs";
 import { Privacity, Types } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
-import generateRandomId from "src/app/documents/utils/generateRandomId";
+import generateRandomId from "src/app/subjects/utils/generateRandomId";
 import prisma from "src/app/utils/prisma";
 
 export async function GET(

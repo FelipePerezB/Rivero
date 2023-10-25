@@ -2,6 +2,8 @@
 
 import { Component } from "src/app/documents/edit/models/component";
 
+// import { Component } from "src/app/subjects/edit/models/component";
+
 const iterateObj = (
   expectedId: string,
   obj: Component,

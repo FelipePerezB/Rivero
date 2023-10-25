@@ -31,28 +31,6 @@ export async function PATCH(
     }
   );
 }
-export async function DELETE(
-  request: Request,
-  { params }: { params: { id: string } }
-) {
-  const id = Number(params.id);
-  const data = await prisma.group.delete({
-    where: {
-      id,
-    },
-  });
-
-  if (data.id) {
-    revalidateTag(`groups`);
-  }
-
-  return NextResponse.json(
-    { data },
-    {
-      status: 200,
-    }
-  );
-}
 
 export async function GET(
   request: NextRequest,
@@ -68,9 +46,9 @@ export async function GET(
     where: {
       id: Number(params?.id),
     },
-    include: {
-      Users: true,
-    },
+    // include: {
+    //   Users: true,
+    // },
   });
   return NextResponse.json({ data }, { status: 200 });
 }
@@ -85,4 +63,28 @@ export async function POST(
     data: { name, organizationId: Number(organization) },
   });
   return NextResponse.json({ data }, { status: 200 });
+}
+
+export async function DELETE(
+  request: Request,
+  { params }: { params: { id: string } }
+) {
+  const id = Number(params.id);
+  const data = await prisma.group.delete({
+    where: {
+      id,
+    },
+  });
+
+  if (data.organizationId) {
+    revalidateTag(`groups/${data.organizationId}`);
+  }
+  revalidateTag(`groups`);
+
+  return NextResponse.json(
+    { data },
+    {
+      status: 200,
+    }
+  );
 }

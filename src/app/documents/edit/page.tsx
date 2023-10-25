@@ -1,9 +1,10 @@
 import { auth } from "@clerk/nextjs";
 import DocsCards from "@components/containers/docsCards/docs-cards";
+import StandardInput from "@components/inputs/StandardInput/StandardInput";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import FloatingBtn from "src/app/components/floating-btn/floating-btn";
-import StandardInput from "src/app/components/inputs/standard";
+// import StandardInput from "src/app/components/inputs/standard";
 import ItemsBox from "src/app/components/items-box/items-box";
 import Options from "src/app/components/options/options";
 import api from "src/app/utils/api";
@@ -17,35 +18,16 @@ export default async function EditFilesPage() {
   })) as {
     data: any;
   };
+  console.log(files);
   return (
     <>
-      <StandardInput className="sticky z-30 top-16" />
-      <Options
-        options={[
-          {
-            key: "all",
-            title: "Todos",
-          },
-          {
-            key: "notes",
-            title: "Apuntes",
-          },
-          {
-            key: "evaluations",
-            title: "Evaluaciones",
-          },
-          {
-            key: "practice",
-            title: "Ejercitacion",
-          },
-        ]}
-      />
+      <StandardInput name="" dataKey="" attrs={{placeholder: "Buscar..."}}  className="sticky z-30 top-16 max-w-sm" />
       {/* <hr></hr> */}
       <ItemsBox size="sm">
         <DocsCards />
       </ItemsBox>
-      <FloatingBtn href={`edit/${generateRandomId(32)}`} >
-        <FontAwesomeIcon className="h-8 w-8" icon={faPlus}/>
+      <FloatingBtn href={`edit/${generateRandomId(32)}`}>
+        <FontAwesomeIcon className="h-8 w-8" icon={faPlus} />
       </FloatingBtn>
     </>
   );

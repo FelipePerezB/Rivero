@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-'use client'
+"use client";
 import { useEffect, useState } from "react";
 import Label from "src/app/documents/edit/components/label";
 import { StandartInputAttrs } from "src/models/StandartInputAttr";
@@ -11,6 +11,7 @@ export default function StandardInput({
   onBlur,
   name,
   dataKey,
+  className,
   attrs,
 }: StandartInputAttrs) {
   const [currentValue, setCurrentValue] = useState("");
@@ -26,10 +27,10 @@ export default function StandardInput({
   };
 
   return (
-    <Label name={name} dataKey={dataKey}>
+    <Label className={className} name={name} dataKey={dataKey}>
       <input
         id={dataKey}
-        className="p-2 my-1 text-sm text-slate-700 card w-full focus:border-blue-500 focus:shadow-lg focus:outline-none"
+        className={`p-2 my-1 text-sm text-slate-700 card w-full focus:border-blue-500 focus:shadow-lg focus:outline-none`}
         {...(attrs as {})}
         value={currentValue}
         name={name}

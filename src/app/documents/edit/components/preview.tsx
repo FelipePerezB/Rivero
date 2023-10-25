@@ -1,8 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 import React, { useMemo } from "react";
-import { Component } from "src/app/documents/edit/models/component";
-import DynamicElement from "src/app/documents/components/elements/files/dynamic-file";
+import { Component } from "src/app/subjects/edit/models/component";
+import DynamicElement from "src/app/subjects/components/elements/files/dynamic-file";
 
 export default function Preview({ attrs }: { attrs: Component }) {
   return attrs.type ? (

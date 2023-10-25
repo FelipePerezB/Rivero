@@ -216,7 +216,6 @@ async function main() {
 
   await prisma.note.upsert({
     create: {
-      type: 'DOCUMENT',
       subtopicId: 1,
       File: {
         create: {
@@ -224,8 +223,6 @@ async function main() {
           content:
             '{"type":"document","options":{"children":[{"type":"page","options":{"number":1,"children":[{"type":"title","options":{"text":"Titulo 1","size":"h1"}}]}},{"type":"page","options":{"number":1,"children":[{"type":"title","options":{"text":"Sistema ecuaciones","size":"h1"}}]}}]}}',
           externalId: 'qbxoYMthcK7XlTWyt6L8u7ZdXTEMHUXf',
-          title: 'Documento 1',
-          privacity: 'PRIVATE',
         },
       },
     },
@@ -235,7 +232,6 @@ async function main() {
 
   await prisma.note.upsert({
     create: {
-      type: 'DOCUMENT',
       subtopicId: 1,
       File: {
         create: {
@@ -243,8 +239,6 @@ async function main() {
           content:
             '{"type":"document","options":{"children":[{"type":"page","options":{"number":1,"children":[{"type":"title","options":{"text":"Titulo 1","size":"h1"}}]}},{"type":"page","options":{"number":1,"children":[{"type":"title","options":{"text":"Sistema ecuaciones","size":"h1"}}]}}]}}',
           externalId: 'uixhuihxihuiij',
-          title: 'Documento 2',
-          privacity: 'PRIVATE',
         },
       },
     },
@@ -254,7 +248,6 @@ async function main() {
 
   await prisma.note.upsert({
     create: {
-      type: 'DOCUMENT',
       subtopicId: 1,
       File: {
         create: {
@@ -262,8 +255,6 @@ async function main() {
           content:
             '{"type":"document","options":{"children":[{"type":"page","options":{"number":1,"children":[{"type":"title","options":{"text":"Titulo 1","size":"h1"}}]}},{"type":"page","options":{"number":1,"children":[{"type":"title","options":{"text":"Sistema ecuaciones","size":"h1"}}]}}]}}',
           externalId: 'HIUIUXHWIUHWIUXHWB',
-          title: 'Documento 3',
-          privacity: 'PRIVATE',
         },
       },
     },
@@ -284,7 +275,7 @@ async function main() {
       File: {
         create: {
           privacity: 'PRIVATE',
-          title: 'ENSAYO N°1',
+          name: 'ENSAYO N°1',
           content: 'aaaaaaaaaaaaaaa',
           externalId: 'NWJQKXKXQJKXNQJKXW',
           Author: {

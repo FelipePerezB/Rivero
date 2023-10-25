@@ -10,14 +10,14 @@ export async function POST(
   const { userId } = auth();
   if (!userId) throw new Error("Failed to fetch data");
   const id = params.id;
-  const { content, privacity, title } = res;
+  const { content, privacity, name } = res;
 
   const data = await prisma.file.upsert({
     where: { externalId: id },
     create: {
       content,
       privacity,
-      title,
+      name,
       externalId: id,
       Author: {
         connect: {
@@ -27,7 +27,7 @@ export async function POST(
     },
     update: {
       content,
-      title,
+      name,
       privacity,
     },
   });

@@ -8,19 +8,19 @@ export default function LinksAccordion({
 }: {
   summary: string | React.ReactNode;
   content?: {
-    title: string;
+    name: string;
     href: string;
   }[];
 }) {
   return (
     <Accordion summary={summary}>
       <ul className="border-t mt-2 pt-2.5">
-        {content?.map(({ href, title }) => (
+        {content?.map(({ href, name }) => (
           <li
-            key={"accordion-item-" + title}
+            key={"accordion-item-" + name}
             className="p-2 px-3 hover:bg-slate-100 rounded-sm"
           >
-            <Link href={href}>{title}</Link>
+            <Link href={href}>{name}</Link>
           </li>
         ))}
       </ul>

@@ -14,7 +14,6 @@ export async function GET(
   // if (!userGroups.length) throw new Error("Failed to fetch data");
 
   const data = await prisma.group.findMany({
-    // where: role !== Role.ADMIN ? { id: { in: userGroups } } : undefined,
     where: {
       organizationId: Number(params?.organization),
     },
@@ -22,18 +21,6 @@ export async function GET(
     include: {
       Users: true,
     },
-  });
-  return NextResponse.json({ data }, { status: 200 });
-}
-
-export async function POST(
-  request: Request,
-  { params: { organization } }: { params: { organization: string } }
-) {
-  const res = await request.json();
-  const { name } = res;
-  const data = await prisma.group.create({
-    data: { name, organizationId: Number(organization) },
   });
   return NextResponse.json({ data }, { status: 200 });
 }

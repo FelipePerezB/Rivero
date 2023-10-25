@@ -1,10 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useState } from "react";
 import { Component } from "src/app/documents/edit/models/component";
-import DynamicElement from "../../components/elements/files/dynamic-file";
+// import DynamicElement from "../../components/elements/files/dynamic-file";
 import StandardInput from "@components/inputs/StandardInput/StandardInput";
 import ClientModal from "src/app/components/modal/client-modal";
 import Form from "./form";
+import DynamicElement from "src/app/subjects/components/elements/files/dynamic-file";
 
 const FormChildren = ({
   children,

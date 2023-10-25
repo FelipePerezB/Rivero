@@ -5,6 +5,7 @@ import Button from "@components/Button";
 import { File, Types } from "@prisma/client";
 import React, { useEffect, useState } from "react";
 import { NoteWithComponent } from "src/app/documents/edit/models/component";
+// import { NoteWithComponent } from "src/app/subjects/edit/models/component";
 import api from "src/app/utils/api";
 // import toast from "react-hot-toast";
 import { GetFileDocument, Privacity } from "src/gql/graphql";
@@ -16,7 +17,7 @@ export const getDefaultFile = (id: string) => {
     type: Types.DOCUMENT,
     file: {
       externalId: id,
-      title: "Nuevo documento",
+      name: "Nuevo documento",
       privacity: Privacity.Private,
       content: {
         type: "document",

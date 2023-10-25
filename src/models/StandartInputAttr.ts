@@ -4,6 +4,7 @@ export type StandartInputAttrs = {
   placeholder?: string;
   value?: string;
   name: string;
+  className?: string;
   dataKey?: string;
   onChange?: (value: { [key: string]: string }) => void;
   onBlur?: (value: string) => void;

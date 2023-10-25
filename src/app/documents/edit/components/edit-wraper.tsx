@@ -3,12 +3,15 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Toaster } from "react-hot-toast";
 import { NoteWithComponent } from "../models/component";
-import Layout from "../components/layout";
+import Layout from "./layout";
 import Toolbar from "./toolbar";
-import Document from "../../components/elements/files/document";
 import { hydrateJSON } from "../utils/hydrateJSON";
-import DynamicElement from "../../components/elements/files/dynamic-file";
-import ScreenLayout from "../../components/layout/screen-layout";
+import ScreenLayout from "src/app/subjects/components/layout/screen-layout";
+import DynamicElement from "src/app/subjects/components/elements/files/dynamic-file";
+// import Document from "../../components/elements/files/document";
+// import { hydrateJSON } from "../utils/hydrateJSON";
+// import DynamicElement from "../../components/elements/files/dynamic-file";
+// import ScreenLayout from "../../components/layout/screen-layout";
 
 export default function EditWraper({
   id,
@@ -29,7 +32,7 @@ export default function EditWraper({
     $container.style.fontSize = fontSize + "px";
   };
   const {
-    file: { title, externalId, content },
+    file: { name, externalId, content },
     type,
   } = settings ?? {};
 
@@ -47,16 +50,17 @@ export default function EditWraper({
   }, [id]);
 
   useEffect(() => {
+    console.log(settings)
     localStorage.setItem(`document-${externalId}`, JSON.stringify(settings));
   }, [settings]);
 
   return (
     <Layout settings={settings} setSettings={setSettings}>
       <div ref={divRef}>
-        {externalId && title && type && (
+        {externalId && name && type && (
           <ScreenLayout>
             <DynamicElement
-              attrs={{ options: content.options, title, id: content.id, type }}
+              attrs={{ options: content.options, name, id: content.id, type }}
               name={content.type}
             />
           </ScreenLayout>

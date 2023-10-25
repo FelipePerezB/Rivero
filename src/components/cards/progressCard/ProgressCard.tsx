@@ -3,7 +3,7 @@ import Card from "@components/Card";
 import { CompletedProgress } from "@components/ProgressVar";
 import React, { ReactNode, useEffect, useState } from "react";
 import styles from "./ProgressCard.module.css";
-import EditableLabel from "src/app/documents/[subject]/[topic]/components/editable-label";
+import EditableLabel from "src/app/subjects/[subject]/[topic]/components/editable-label";
 
 export default function ProgressCard({
   color = "var(--primary-color)",

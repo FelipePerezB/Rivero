@@ -7,6 +7,7 @@ export async function PATCH(
   request: Request,
   { params }: { params: { id: string } }
 ) {
+  console.log(request)
   const res = (await request.json()) as Partial<Topic>;
   const updateData = Object.fromEntries(
     Object.entries(res).map(([key, value]) => [key, { set: value }])
