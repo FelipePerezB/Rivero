@@ -1,12 +1,12 @@
 import { auth } from "@clerk/nextjs";
 import Table from "@components/table/Table";
+import TableBtn from "@components/table/table-btn/table-btn";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Group, Role, User } from "@prisma/client";
-import Link from "next/link";
 import React from "react";
 import DeleteBtn from "src/app/components/admin/delete-btn/delete-btn";
-import EditableLabel from "src/app/subjects/[subject]/[topic]/components/editable-label";
+import UpdateAlert from "src/app/components/admin/update-alert/update-alert";
 import api from "src/app/utils/api";
 import capFirst from "src/utils/capFirst";
 
@@ -26,6 +26,7 @@ export default async function GroupsTables({
   })) as { data: GroupsWithUsers[] };
   return groups.map(({ name, id, Users }) => (
     <Table
+      onClickHref={"?modal=update-user&"}
       key={`table-${name}`}
       data={Users.map(({ name, email, lastname }) => [
         capFirst(name),
@@ -33,30 +34,30 @@ export default async function GroupsTables({
         email,
       ])}
       head={{
-        title: (
-          <EditableLabel
-            endpoint={`groups/${organizationId}/${id}`}
-            text={name}
-          />
-        ),
+        title: capFirst(name),
         keys: [
           { name: "Nombre", key: "name" },
           { name: "Apellido", key: "lastname" },
           { name: "Correo", key: "email" },
         ],
         icons: [
-          <Link
-            className="flex gap-1 items-center hover:text-blue-500 p-1 rounded-sm"
+          <TableBtn
             href={`?modal=invite&groups=${id}&role=${Role.STUDENT}`}
-            key={"invite-btn"}
+            key={`invite-btn-${id}`}
           >
             <span>Invitar</span>
             <FontAwesomeIcon className="h-3 w-3" icon={faPlus} />
-          </Link>,
+          </TableBtn>,
+          <UpdateAlert
+            size="sm"
+            key={`edit-btn-${id}`}
+            endpoint={`groups/${organizationId}/${id}`}
+            value={name}
+          />,
           <DeleteBtn
             name={name}
+            key={`delete-btn-${id}`}
             endpoint={`groups/${organizationId}/${id}`}
-            key={`delete-table-${id}`}
           />,
         ],
       }}

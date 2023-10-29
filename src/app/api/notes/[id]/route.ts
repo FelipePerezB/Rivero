@@ -37,6 +37,7 @@ export async function PATCH(
     data: updateData,
   });
 
+
   if (data.subtopicId) {
     revalidateTag(`subtopics/${data.subtopicId}`);
   }

@@ -3,6 +3,11 @@ import Card from "@components/Card";
 import React, { useState } from "react";
 import Timer from "src/app/practice/timer";
 import Question, { QuestionType } from "./question";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCheck, faMarker, faXmark } from "@fortawesome/free-solid-svg-icons";
+import Button from "@components/Button";
+import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 interface QuestionAttrs {
   options: QuestionType["options"];
@@ -13,7 +18,9 @@ export default function Practice({
   name,
   options,
   id,
+  editMode,
 }: {
+  editMode?: boolean;
   name: string;
   type: string;
   options: {
@@ -28,34 +35,43 @@ export default function Practice({
 }) {
   const [index, setIndex] = useState(0);
   const [bonus, setBonus] = useState(0);
-  const isLastQuestion = index + 1 === options.children?.length
+  const isLastQuestion = index + 1 === options.children?.length;
   const maxTime = isNaN(Number(options?.maxTime))
     ? undefined
     : Number(options?.maxTime);
-    
+  const router = useRouter();
+
+  const finishPractice = () => {
+    router.push("/home");
+    toast.success(`¡Felicidades! Llegaste hasta la pregunta N°${index + 1}.`, {duration: 5 * 1000});
+  };
+
   const question = options?.children[index] as unknown as QuestionAttrs;
 
   return (
     <div
       data-component={id}
-      className="mx-auto flex flex-col gap-3 justify-center items-center w-full p-2 max-w-lg"
+      className="mx-auto flex flex-col gap-4 justify-center items-center w-full p-2 max-w-lg h-full"
     >
-      <h1 className="text-2xl font-bold w-full text-left">{name}</h1>
-
-      <Timer startTime={maxTime} bonus={bonus} />
-      <Card key={question?.id} className="p-4">
+      {/* <h2 className=" text-3xl font-semibold w-full">Práctica</h2> */}
+      <Timer onFinish={finishPractice} editMode={editMode} startTime={maxTime} bonus={bonus} />
+      {/* <div className="text-md w-full"> */}
+      <Card className="p-1">
         <Question
-          onMistake={() => setBonus(bonus - 15)}
+          onMistake={() => !editMode && setBonus(bonus - 15)}
           onSuccess={() => {
-            if(!isLastQuestion){
+            if (!isLastQuestion) {
               setIndex(index + 1);
-              setBonus(bonus + 30);
+              !editMode && setBonus(bonus + 30);
             }
           }}
           number={index + 1}
           {...question}
         />
       </Card>
+      <div className="w-full ">
+        <Button onClick={finishPractice}>Finalizar</Button>
+      </div>
     </div>
   );
 }

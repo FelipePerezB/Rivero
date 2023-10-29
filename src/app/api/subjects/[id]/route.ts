@@ -10,29 +10,9 @@ export async function GET(
   const id = Number(params.id);
   const data = await prisma.subject.findUnique({
     where: { id },
-    include: {
-      Topics: true,
-      Notes: {
-        select: {
-          File: {
-            select: {
-              externalId: true,
-            },
-          },
-        },
-        where: {
-          type: "PRACTICE",
-        },
-      },
-    },
   });
 
-  return NextResponse.json(
-    { data },
-    {
-      status: 200,
-    }
-  );
+  return NextResponse.json({ data }, { status: 200 });
 }
 
 export async function PATCH(

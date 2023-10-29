@@ -11,16 +11,16 @@ export default async function DocumentsPage() {
   };
   return (
     <>
-      <div className="w-full flex justify-between items-center">
-        <h2 className={"text-2xl font-bold pb-0.5"}>Asignaturas</h2>
-      </div>
+      {/* <div className="w-full flex justify-between items-center"> */}
+      <h2 className={"text-2xl font-bold pb-0.5"}>Asignaturas</h2>
+      {/* </div> */}
       <ItemsBox>
         <SubjectsCards subjects={subjects} />
       </ItemsBox>
-      <h2 className={"text-2xl font-bold pb-0.5 pt-1"}>Mis documentos</h2>
+      {/* <h2 className={"text-2xl font-bold pb-0.5 pt-1"}>Mis documentos</h2>
       <ItemsBox size="sm">
         <DocsCards />
-      </ItemsBox>
+      </ItemsBox> */}
     </>
   );
 }

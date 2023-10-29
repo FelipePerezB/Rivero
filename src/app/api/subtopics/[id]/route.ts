@@ -7,7 +7,6 @@ export async function PATCH(
   request: Request,
   { params }: { params: { id: string } }
 ) {
-  console.log(request)
   const res = (await request.json()) as Partial<Topic>;
   const updateData = Object.fromEntries(
     Object.entries(res).map(([key, value]) => [key, { set: value }])
@@ -21,9 +20,8 @@ export async function PATCH(
     data: updateData,
   });
 
-  
-  if(data.id){
-    revalidateTag('subtopics')
+  if (data.id) {
+    revalidateTag(`topics/${data.topicId}`);
   }
 
   return NextResponse.json(
@@ -44,7 +42,7 @@ export async function DELETE(
       id,
     },
   });
-  
+
   if (data.topicId) {
     revalidateTag(`topics/${data.topicId}`);
   }
@@ -56,4 +54,3 @@ export async function DELETE(
     }
   );
 }
-

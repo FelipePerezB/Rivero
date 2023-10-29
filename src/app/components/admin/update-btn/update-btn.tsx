@@ -9,7 +9,7 @@ export default function UpdateBtn({
   endpoint,
   values,
 }: {
-  values: { [key: string]: string };
+  values: { [key: string]: unknown };
   name?: string;
   endpoint: string;
 }) {

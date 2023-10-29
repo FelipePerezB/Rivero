@@ -30,11 +30,7 @@ import GroupsList from "../components/groups-list";
 import ScoresStats from "./components/scores-stats/scores-stats";
 import RowSkeleton from "src/app/components/loading-skeleton/row-skeleton/row-skeleton";
 import TableSkeleton from "src/app/components/loading-skeleton/table-skeleton/table-skeleton";
-
-// Ver estadísticas (tabla)
-// Agregar puntaje (tabla)
-// Descargar ensayo
-// Editar ensayo
+import AddScoreForm from "../components/form";
 
 export default async function EvaluationPage({
   searchParams,
@@ -43,48 +39,11 @@ export default async function EvaluationPage({
   params: { [key: string]: string };
   searchParams: { [key: string]: string };
 }) {
-  // const { getToken } = auth();
-  // const token = await getToken();
-
-  const { data: note } = (await api("notes/" + evaluation, {
-    // headers: { Authorization: `Bearer ${token}` },
-  })) as { data: NoteWithFile[] };
-
-  // const { data: groups } = (await api("groups/1", {
-  //   headers: { Authorization: `Bearer ${token}` },
-  // })) as { data: Group[] };
-
-  // const { data: scores } = (await api(`scores/${evaluation}/${group}`, {
-  //   headers: { Authorization: `Bearer ${token}` },
-  // })) as { data: Score[] };
+  const { data: note } = (await api("notes/" + evaluation, {}, [
+    "evaluations/" + subject,
+  ])) as { data: NoteWithFile[] };
 
   const { File } = note[0] ?? {};
-  // const group = groups.find(({ id }) => Number(id) === Number(groupId));
-  // console.log(groups, group)
-
-  // const tableData = group?.Users?.map(({ name, lastname, email, id }) => {
-  //   const score = scores.find(({ userId }) => userId === Number(id))?.score;
-  //   return [`${name} ${lastname}`, email, score ?? "---"];
-  // });
-
-  // const scoresNums = scores.map(({ score }) => score);
-  // const { length } = scores;
-  // const sortedScore = scoresNums.sort((a, b) => a - b);
-  // const maxScore = sortedScore.at(1);
-  // const minScore = sortedScore.at(-1);
-  // const avg = Number(
-  //   (scoresNums.reduce((a, b) => a + b, 0) / length).toFixed(2)
-  // );
-  // const n = length % 2 === 0 ? length : length + 1;
-  // const quartile = (k: number) => {
-  //   if (length <= 2) {
-  //     return scoresNums.at(k <= 2 ? k - 1 : 1);
-  //   }
-  //   const index = (k * n) / 4;
-  //   return index % 2 === 0
-  //     ? scoresNums[index]
-  //     : (scoresNums[Math.floor(index)] + scoresNums[Math.floor(index) + 1]) / 2;
-  // };
 
   return (
     <>
@@ -105,15 +64,11 @@ export default async function EvaluationPage({
       </div>
       <Suspense fallback={<LargeSkeleton />}>
         <GroupsList
-          customPath={`/documents/${subject}/evaluations/${organization}/[key]/${evaluation}`}
+          customPath={`/subjects/${subject}/evaluations/${organization}/[key]/${evaluation}`}
           group={group}
           organization={organization}
         />
       </Suspense>
-      {/* <Options
-        option={groupId}
-        options={groups?.map(({ name, id }) => ({ title: name, key: id }))}
-      /> */}
       <Suspense fallback={<TableSkeleton />}>
         <ScoresTable
           organization={organization}
@@ -121,8 +76,6 @@ export default async function EvaluationPage({
           group={group}
         />
       </Suspense>
-
-      {/* <section className="grid md:grid-cols-2 gap-4 my-2"> */}
       <Suspense
         fallback={
           <section className="grid md:grid-cols-2 gap-4 p-6">
@@ -133,17 +86,7 @@ export default async function EvaluationPage({
       >
         <ScoresStats evaluation={evaluation} group={group} />
       </Suspense>
-      {/* <Card className="flex justify-around ">
-          <CardItem title="Puntaje menor" value={String(minScore)} />
-          <CardItem title="Promedio" value={String(avg)} />
-          <CardItem title="Puntaje mayor" value={String(maxScore)} />
-        </Card>
-        <Card className="flex justify-around ">
-          <CardItem title="Q1" value={String(quartile(1))} />
-          <CardItem title="Q2" value={String(quartile(2))} />
-          <CardItem title="Q3" value={String(quartile(3))} />
-        </Card> */}
-      {/* </section> */}
+
       <Button color="black" size="lg">
         Generar reporte
         <FontAwesomeIcon className="max-h-4 w-4" icon={faFileArrowDown} />
@@ -153,13 +96,7 @@ export default async function EvaluationPage({
         title="Nuevo puntaje"
         searchParams={searchParams}
       >
-        {/* {!!group?.Users?.length && token && (
-          <Form
-            fileId={evaluation}
-            token={token}
-            users={group?.Users?.map(({ email, id }) => ({ email, id }))}
-          />
-        )} */}
+        <AddScoreForm token="" id={searchParams?.id} fileId={evaluation} />
       </SearchModal>
       <Toaster />
     </>

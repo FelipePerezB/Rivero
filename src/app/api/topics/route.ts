@@ -1,10 +1,12 @@
 import { auth } from "@clerk/nextjs";
 import { revalidateTag } from "next/cache";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import prisma from "src/app/utils/prisma";
 
-export async function GET(request: Request) {
-  const data = await prisma.topic.findMany({});
+export async function GET(request: NextRequest) {
+  const searchParams = request.nextUrl.searchParams;
+  const subject = Number(searchParams.get("subject")) as number | undefined;
+  const data = await prisma.topic.findMany({ where: { subjectId: subject } });
 
   return NextResponse.json(
     { data },
@@ -24,7 +26,9 @@ export async function POST(request: Request) {
   });
 
   if (data.id) {
-    revalidateTag(`topics/${data.id}`);
+    revalidateTag(`subjects/${data?.subjectId}`);
+    revalidateTag('subjects')
+    revalidateTag('topics')
   }
 
   return NextResponse.json({ data }, { status: 200 });

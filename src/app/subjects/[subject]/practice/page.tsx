@@ -17,12 +17,7 @@ export default async function PracticePage({
   const { data } = (await api("notes/practice/" + subject, {
     headers: { Authorization: `Bearer ${token}` },
   })) as { data: NoteWithFile };
-
   return data.id ? (
     <DynamicElement attrs={JSON.parse(data.File.content)} name="practice" />
-  ) : user?.publicMetadata.role === Role.ADMIN && token ? (
-    <CreateBtn subject={subject} token={token} />
-  ) : (
-    <></>
-  );
+  ) : <></>
 }

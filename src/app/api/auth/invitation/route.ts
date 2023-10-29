@@ -16,7 +16,6 @@ export async function POST(request: Request) {
     },
   });
 
-  console.log(invitation)
   revalidateTag(`groups/${organizationId}`);
 
   return NextResponse.json({ invitation }, { status: 200 });

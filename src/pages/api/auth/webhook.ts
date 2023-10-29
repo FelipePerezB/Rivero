@@ -21,15 +21,14 @@ export default async function Handler(
   req: NextApiRequestWithSvixRequiredHeaders,
   res: NextApiResponse
 ) {
-  console.log("AAAAAAaa")
+  console.log("AAAAAAaa");
   const payload = JSON.stringify(req.body);
   const headers = req.headers;
   if (!webhookSecret) return;
   // Create a new Webhook instance with your webhook secret
   const wh = new Webhook(webhookSecret);
-  
+
   let evt: WebhookEvent;
-  console.log(wh)
   try {
     // Verify the webhook payload and headers
     evt = wh.verify(payload, headers) as WebhookEvent;
@@ -37,12 +36,8 @@ export default async function Handler(
     // If the verification fails, return a 400 error
     return res.status(400).json({});
   }
-  console.log(evt)
-
   const eventType = evt.type;
 
-  console.log(evt.type)
-  
   if (eventType === "user.created" || eventType === "user.updated") {
     const {
       id,
@@ -55,11 +50,10 @@ export default async function Handler(
       res.status(400).json({});
       return;
     }
-    console.log(evt.data)
+    console.log(evt.data);
     const userGroups = groups as number[];
     if (
       !id ||
-      !last_name ||
       !first_name ||
       !email_addresses[0]?.email_address ||
       !groups ||
@@ -70,7 +64,7 @@ export default async function Handler(
       return;
     }
 
-    console.log(userGroups)
+    console.log(userGroups);
 
     const data = await prisma.user.upsert({
       update: {
@@ -105,7 +99,7 @@ export default async function Handler(
       },
     });
 
-    console.log(data)
+    console.log(data);
 
     // revalidateTag("users");
     revalidateTag("groups");

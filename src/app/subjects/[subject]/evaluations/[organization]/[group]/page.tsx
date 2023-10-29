@@ -2,26 +2,16 @@ import Button from "@components/Button";
 import NavigationCard from "@components/cards/navigationCard/NavigationCard";
 import { faFileArrowDown } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-// import SearchModal from "src/app/components/modal/search-modal";
-// import Form from "../../../components/form";
-import { auth } from "@clerk/nextjs";
 import { Toaster } from "react-hot-toast";
 import api from "src/app/utils/api";
-import { Group, Types } from "@prisma/client";
+import { Types } from "@prisma/client";
 import Card from "@components/Card";
 import ItemsBox from "src/app/components/items-box/items-box";
-// import { NoteWithFile } from "../../../../../models/note";
-import { ChartComponent } from "src/app/components/charts/line/linechart";
-import Options from "src/app/components/options/options";
-import OpenCreateModal from "src/app/components/admin/open-create-modal/open-create-modal";
-import DeleteBtn from "src/app/components/admin/delete-btn/delete-btn";
 import GroupStats from "./components/group-stats";
 import GroupsList from "./components/groups-list";
 import { Suspense } from "react";
 import LargeSkeleton from "src/app/components/loading-skeleton/large-skeleton/large-skeleton";
 import { NoteWithFile } from "src/app/subjects/models/note";
-import CreateAlert from "src/app/components/admin/create-alert/create-alert";
-// import Options from "@components/Options";
 
 export default async function EvaluationsPage({
   params: { subject, group, organization },
@@ -31,62 +21,17 @@ export default async function EvaluationsPage({
   searchParams: { [key: string]: string };
 }) {
   const { data: notes } = (await api(
-    `notes?subject=${subject}&type=${Types.EVALUATION}`
+    `notes?subject=${subject}&type=${Types.EVALUATION}`,
+    {},
+    [`evaluations/${subject}`]
   )) as { data: NoteWithFile[] };
-
-  // const { data: groups } = (await api(`groups/${organization}`, {
-  //   // headers: { Authorization: `Bearer ${token}` },
-  // })) as { data: Group[] };
-  // console.log(groups);
-
-  // const { data: scores } = (await api(`scores`, {
-  //   headers: { Authorization: `Bearer ${token}` },
-  // })) as {
-  //   data: {
-  //     [x: string]: {
-  //       value: number;
-  //       time: string;
-  //     }[];
-  //   };
-  // };
-
-  const canDelete = searchParams?.mode === "delete";
-  // console.log(sco);
-
-  // const series =
-  //   group === "all"
-  //     ? Object.values(scores).map((data) => ({ data }))
-  //     : [{ data: scores[Number(group)] }];
-  // const groupsData = groups.map(({ name, id }) => ({ name, id }));
 
   return (
     <>
-      <div className="flex mt- justify-between items-center">
-        <h2 className="text-xl font-semibold py-2">Evaluaciones</h2>
-        <CreateAlert
-            endpoint="notes"
-            values={{ subjectId: subject, type: Types.EVALUATION }}
-            key={"create-topic-alert"}
-          />
-        {/* <div className="flex gap-3">
-          <OpenCreateModal />
-          {!canDelete ? (
-            <Button href="?mode=delete" color="red">
-              Eliminar
-            </Button>
-          ) : (
-            <Button href="?" color="white">
-              Dejar de eliminar
-            </Button>
-          )}
-        </div> */}
-      </div>
+      <h2 className="text-xl font-semibold py-2">Evaluaciones</h2>
       <ItemsBox>
         {notes.map(({ File: { name, externalId }, id }) => (
-          <NavigationCard
-            key={name}
-            href={!canDelete ? `${group}/${externalId}` : ""}
-          >
+          <NavigationCard key={name} href={`${group}/${externalId}`}>
             {name}
           </NavigationCard>
         ))}
@@ -109,20 +54,13 @@ export default async function EvaluationsPage({
             </div>
           }
         >
-          <GroupStats group={group} />
+          <GroupStats organization={organization} group={group} />
         </Suspense>
       </Card>
       <Button>
         Generar reporte{" "}
         <FontAwesomeIcon className="w-4 h-4" icon={faFileArrowDown} />
       </Button>
-      {/* <SearchModal
-        searchParams={searchParams}
-        title="Crear evaluación"
-        id="create"
-      > */}
-      {/* <Form subject={subject} token={token} /> */}
-      {/* </SearchModal> */}
       <Toaster />
     </>
   );

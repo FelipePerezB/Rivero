@@ -34,8 +34,6 @@ export default async function Organizations({
   const totalUsers = organizations
     .map(({ _count: { Users } }) => Users)
     .reduce((a, b) => a + b);
-
-  console.log(totalUsers);
   return (
     <>
       <div className="flex justify-between">

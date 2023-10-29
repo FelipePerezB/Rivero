@@ -45,13 +45,8 @@ export async function PATCH(
   });
 
   if (data.id) {
-    revalidateTag(`organizations`);
+    revalidateTag(`organizations/${data.id}`);
   }
 
-  return NextResponse.json(
-    { data },
-    {
-      status: 200,
-    }
-  );
+  return NextResponse.json({ data }, { status: 200 });
 }

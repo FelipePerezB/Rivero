@@ -2,6 +2,7 @@ import Link from "next/link";
 import { ReactNode } from "react";
 
 export type ButtonAttrs = {
+  prefetch?: boolean,
   color?: "blue" | "white" | "red" | "black" | "transparent";
   children?: ReactNode;
   onClick?: any;
@@ -12,6 +13,7 @@ export type ButtonAttrs = {
 };
 
 export default function Button({
+  prefetch,
   children,
   onClick,
   color = "blue",
@@ -41,7 +43,7 @@ export default function Button({
       {children}
     </button>
   ) : (
-    <Link title={title} className={`${className}`} href={href}>
+    <Link prefetch={prefetch} title={title} className={`${className}`} href={href}>
       {children}
     </Link>
   );

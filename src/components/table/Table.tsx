@@ -1,4 +1,4 @@
-"use client";
+// "use client";
 import { ReactNode } from "react";
 import Card from "../Card";
 import Link from "next/link";
@@ -34,12 +34,11 @@ const Row = ({
 };
 
 const Table: React.FC<TableProps> = ({ data, head, onClickHref, handlers }) => {
-  console.log(onClickHref);
   return (
     <Card className="p-0">
       <table className="flex flex-col">
         {head?.title && (
-          <caption className="w-full flex justify-between items-center pt-2 px-2">
+          <caption className="w-full flex justify-between items-center py-2 px-2">
             <h3 className="text-lg font-bold">{head.title}</h3>
             <div className="flex items-center gap-2.5 text-sm">
               {head.icons?.map((icon) => icon)}
@@ -47,7 +46,7 @@ const Table: React.FC<TableProps> = ({ data, head, onClickHref, handlers }) => {
           </caption>
         )}
         {!!data?.length && (
-          <thead className="mt-2">
+          <thead>
             <Row>
               {head?.keys.map(({ name, key }, i) => (
                 <th className="py-2" key={"th-" + i}>

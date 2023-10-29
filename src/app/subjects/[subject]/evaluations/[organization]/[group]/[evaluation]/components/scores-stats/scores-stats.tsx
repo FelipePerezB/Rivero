@@ -10,7 +10,7 @@ export default async function ScoresStats({evaluation, group}:{evaluation: strin
   const { getToken } = auth();
   const token = await getToken();
 
-  const { data: scores } = (await api(`scores/${evaluation}/${group}`, {
+  const { data: scores } = (await api(`scores/${evaluation}`, {
     headers: { Authorization: `Bearer ${token}` },
   })) as { data: Score[] };
 

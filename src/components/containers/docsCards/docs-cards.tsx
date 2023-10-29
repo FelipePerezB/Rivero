@@ -13,7 +13,6 @@ export default function DocsCards({
   search?: string;
 }) {
   const savedDocs = [...useGetLocalDocs(10)];
-  console.log(savedDocs)
   return (
     <>
       {savedDocs?.map((doc, i) => {

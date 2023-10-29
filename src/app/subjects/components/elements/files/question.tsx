@@ -42,13 +42,13 @@ export default function Question({
     setClassname(name);
   }, [check]);
   return (
-    <div data-component={id}>
-      <article className="p-[0.5em] print:p-0 text-[0.8em]">
-        <p>
+    <div data-component={id} className="w-full">
+      <article className="p-[0.5em] print:p-0">
+        <p className="text-[1.1em] Ñ">
           {number}.- {question}
         </p>
         {children?.toString() && (
-          <div className="text-xs my-2.5">
+          <div className="my-2.5">
             {children?.map((child, i) => (
               <DynamicElement
                 key={`question-${number}-${child.type}-${i}`}
@@ -58,7 +58,7 @@ export default function Question({
             ))}
           </div>
         )}
-        <ol className="flex flex-col gap-[0.5em] print:gap-0 px-[1em] pt-[0.2em]">
+        <ol className="flex flex-col gap-[0.6em] print:gap-0 px-[1em] pt-[0.65em]">
           {alternatives.split(",").map((alternative, i) => {
             const letter = {
               0: "A",
@@ -87,9 +87,12 @@ export default function Question({
                   type="radio"
                   name={"alternative" + id}
                 />
-                <label className="inline-block p-1.5 print:p-1 w-full outline outline-gray-200 outline-[0.1em] rounded peer-checked:outline-blue-500 peer-checked:outline-[0.14em] print:outline-none">
+                <label className="inline-block p-[0.5em] print:p-1 w-full outline outline-gray-200 outline-[0.05em] rounded peer-checked:outline-blue-500 peer-checked:outline-[0.14em] print:outline-none bg-white peer-hover:bg-slate-50">
+                  <span className="text-[0.95em]">
+
                   <span>{`${letter[i]}) `}</span>
                   <span>{alternative}</span>
+                  </span>
                 </label>
               </li>
             );

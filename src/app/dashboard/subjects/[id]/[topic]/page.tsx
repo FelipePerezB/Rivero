@@ -1,21 +1,24 @@
 import Button from "@components/Button";
 import Table from "@components/table/Table";
-import { faPen, faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faPen } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { File, Note, Privacity } from "@prisma/client";
+import { Privacity, Subject, Subtopic, Topic } from "@prisma/client";
 import React from "react";
 import { Toaster } from "react-hot-toast";
 import SearchModal from "src/app/components/modal/search-modal";
 import Options from "src/app/components/options/options";
 import api from "src/app/utils/api";
 import capFirst from "src/utils/capFirst";
-import CreateAlert from "src/app/components/admin/create-alert/create-alert";
 import TableBtn from "@components/table/table-btn/table-btn";
 import UpdateForm from "src/app/components/admin/update-form/update-form";
 import CreateFileBtn from "./components/create-file-btn/create-file-btn";
-import Link from "next/link";
-import generateRandomId from "src/app/subjects/utils/generateRandomId";
-import { IdLenght } from "src/models/document.model";
+import ItemsBox from "src/app/components/items-box/items-box";
+import { NoteWithFile } from "src/app/subjects/models/note";
+import DeleteBtn from "src/app/components/admin/delete-btn/delete-btn";
+import NavigationCard from "@components/cards/navigationCard/NavigationCard";
+import CreateTopicBtn from "./components/create-topic-btn/create-topic-btn";
+import CreateSubtopic from "./components/create-subtopic/create-subtopic";
+import CreateEvaluationBtn from "./components/create-evaluation-btn/create-evaluation-btn";
 
 export default async function SubjectDashboard({
   params: { id, topic: topicId },
@@ -25,39 +28,29 @@ export default async function SubjectDashboard({
   searchParams: { [key: string]: string };
 }) {
   const { data: topic } = (await api(`topics/${topicId}`, {}, [
-    `subjects/${id}`,
     `topics/${topicId}`,
   ])) as {
-    data:
-      | ({
-          Subject: {
-            Notes: Note[] & File;
-            id: number;
-            name: string;
-            Topics: {
-              id: number;
-              name: string;
-            }[];
-          } | null;
-          Subtopics: {
-            name: string;
-            id: number;
-          }[];
-        } & {
-          id: number;
-          name: string;
-          subjectId: number | null;
-          createdAt: Date | null;
-          updateAt: Date | null;
-        })
-      | null;
+    data: Topic;
+  };
+  const { data: subtopics } = (await api(`subtopics?topic=${topicId}`, {}, [
+    `subtopics/${topicId}`,
+  ])) as { data: Subtopic[] };
+
+  const { data: subject } = (await api(`subjects/${id}`, {}, [
+    `subjects/${id}`,
+  ])) as { data: Subject };
+
+  const { data: topics } = (await api(`topics?subject=${id}`, {}, [
+    `subjects/${id}`,
+  ])) as {
+    data: Topic[];
   };
 
-  const subject = topic?.Subject;
-  const topics = subject?.Topics;
-  const subtopics = topic?.Subtopics.map(({ name, id }) => ({ name, id }));
-
-  const Note = subject?.Notes[0] as unknown as { File?: File };
+  const { data: evaluations } = (await api(
+    `notes/evaluations?subject=${id}`,
+    {},
+    ["evaluations/" + subject?.id]
+  )) as { data: NoteWithFile[] };
 
   return (
     <>
@@ -67,11 +60,7 @@ export default async function SubjectDashboard({
         </h2>
         <span className="flex gap-2">
           <Button href={"?modal=modify-subject"}>Modificar</Button>
-          <CreateAlert
-            endpoint="topics"
-            values={{ subjectId: subject?.id }}
-            key={"create-topic-alert"}
-          />
+          <CreateTopicBtn subjectId={Number(subject?.id)} />
         </span>
       </div>
       <Options
@@ -86,13 +75,17 @@ export default async function SubjectDashboard({
         data={subtopics?.map(({ name, id }) => [id, capFirst(name), "Público"])}
         head={{
           icons: [
-            <TableBtn href="?modal=modify-topic" key={"edit-btn"}>
-              Editar <FontAwesomeIcon className="h-2.5 w-2.5" icon={faPen} />
-            </TableBtn>,
-            <CreateAlert
-              endpoint="subtopics"
-              values={{ topicId: topic?.id }}
+            <CreateSubtopic
               key={"create-topic-alert"}
+              topicId={Number(topic?.id)}
+            />,
+            <TableBtn href="?modal=modify-topic" key={"edit-btn"}>
+              <FontAwesomeIcon className="h-2.5 w-2.5" icon={faPen} />
+            </TableBtn>,
+            <DeleteBtn
+              key={"delete-topic"}
+              endpoint={`topics/${topic?.id}`}
+              name={topic?.name}
             />,
           ],
           title: capFirst(topic?.name),
@@ -103,13 +96,50 @@ export default async function SubjectDashboard({
           ],
         }}
       />
-      <Button
-        href={`/subjects/${subject?.id}/practice/${
-          Note?.File?.externalId ?? generateRandomId(IdLenght.lg)
-        }`}
+      <div className="flex justify-between">
+        <h2 className="font-semibold text-xl">Evaluaciones</h2>
+        <CreateEvaluationBtn subject={String(subject?.id)} />
+      </div>
+      <ItemsBox>
+        {evaluations?.map(({ File: {id, name} }) => (
+          <NavigationCard
+            key={`evaluation-${id}`}
+            href={`?modal=modify&id=${id}&name=${name}`}
+          >
+            {name}
+          </NavigationCard>
+        ))}
+      </ItemsBox>
+      <SearchModal
+        title="Modificar evaluación"
+        searchParams={searchParams}
+        id="modify"
       >
-        Editar práctica
-      </Button>
+        <UpdateForm
+          endpoint={`files/${searchParams?.id}`}
+          id={String(searchParams?.id)}
+          name={searchParams?.name}
+          privacity={(Privacity.PRIVATE as Privacity) ?? undefined}
+          secondaryBtn={
+            <DeleteBtn endpoint={`notes/${searchParams?.id}`} size="md" />
+          }
+        />
+      </SearchModal>
+      <SearchModal
+        title="Modificar evaluación"
+        searchParams={searchParams}
+        id="modify"
+      >
+        <UpdateForm
+          endpoint={`files/${searchParams?.id}`}
+          id={String(searchParams?.id)}
+          name={searchParams?.name}
+          privacity={(Privacity.PRIVATE as Privacity) ?? undefined}
+          secondaryBtn={
+            <DeleteBtn endpoint={`notes/${searchParams?.id}`} size="md" />
+          }
+        />
+      </SearchModal>
       <SearchModal
         title="Modificar subtópico"
         searchParams={searchParams}

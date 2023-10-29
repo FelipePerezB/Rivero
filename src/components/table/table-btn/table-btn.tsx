@@ -10,10 +10,10 @@ export default function TableBtn({
   onClick?: () => void;
   children: ReactNode | string;
 }) {
-  const className = "hover:bg-gray-50 flex items-center gap-2 p-0.5 rounded-sm";
+  const className = "flex items-center gap-2 p-0.5 rounded-sm hover:text-blue-500";
   if (href)
     return (
-      <Link className={className} href={href}>
+      <Link prefetch className={className} href={href}>
         {children}
       </Link>
     );

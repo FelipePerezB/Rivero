@@ -13,7 +13,6 @@ export default function create(
       message="¿Seguro que quieres crearlo?"
       t={t}
       callback={() => {
-        console.log(endpoint);
         toast.promise(
           api(endpoint, {
             method: "POST",

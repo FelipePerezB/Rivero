@@ -19,7 +19,6 @@ export default async function GroupsList({
     headers: { Authorization: `Bearer ${token}` },
   })) as { data: Group[] };
   const groupsData = groups.map(({ name, id }) => ({ name, id }));
-  console.log(group);
   return (
     <Options
       customPath={customPath}

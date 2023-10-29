@@ -5,9 +5,8 @@ import api from "src/app/utils/api";
 
 export default function update(
   endpoint: string,
-  values: { [key: string]: string }
+  values: { [key: string]: unknown }
 ) {
-  console.log(endpoint, values);
   toast((t) => (
     <Alert
       t={t}

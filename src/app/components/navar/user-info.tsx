@@ -3,12 +3,7 @@ import Image from "next/image";
 import React from "react";
 
 export default async function UserInfo() {
-  const { user } = auth();
-  // try {
-  //   user = await auth();
-  // } catch (error) {
-  //   console.error(error);
-  // }
+  const user = await currentUser();
   const firstName = user?.firstName;
   const lastName = user?.lastName;
   const imageUrl = user?.imageUrl;

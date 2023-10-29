@@ -4,14 +4,15 @@ import { auth, currentUser, useUser } from "@clerk/nextjs";
 import Button from "@components/Button";
 import { File, Types } from "@prisma/client";
 import React, { useEffect, useState } from "react";
-import { NoteWithComponent } from "src/app/subjects/edit/models/component";
+// import { NoteWithComponent } from "src/app/subjects/edit/models/component";
 import api from "src/app/utils/api";
 // import toast from "react-hot-toast";
 import { GetFileDocument, Privacity } from "src/gql/graphql";
 import { DocumentJSON, IdLenght } from "src/models/document.model";
 import generateRandomId from "src/utils/generateRandomId";
+import { NoteWithComponent } from "../../models/component";
 
-export const getDefaultFile = (id: string) => {
+export const getDefaultPractice = (id: string) => {
   return {
     type: Types.PRACTICE,
     file: {
@@ -62,7 +63,7 @@ export const getDefaultFile = (id: string) => {
 };
 
 export default async function getPractice(id: string) {
-  let defaultFile = getDefaultFile(id);
+  let defaultFile = getDefaultPractice(id);
   try {
     const { getToken } = auth();
     const token = await getToken();

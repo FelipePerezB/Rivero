@@ -50,7 +50,6 @@ export default function EditWraper({
   }, [id]);
 
   useEffect(() => {
-    console.log(settings)
     localStorage.setItem(`document-${externalId}`, JSON.stringify(settings));
   }, [settings]);
 
@@ -60,7 +59,7 @@ export default function EditWraper({
         {externalId && name && type && (
           <ScreenLayout>
             <DynamicElement
-              attrs={{ options: content.options, name, id: content.id, type }}
+              attrs={{ options: content.options, name, id: content.id, type, editMode: true }}
               name={content.type}
             />
           </ScreenLayout>

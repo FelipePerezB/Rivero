@@ -1,5 +1,7 @@
-import { Group } from "@prisma/client";
+import { currentUser } from "@clerk/nextjs";
+import { Group, Role } from "@prisma/client";
 import { revalidateTag } from "next/cache";
+import { redirect } from "next/navigation";
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "src/app/utils/prisma";
 
@@ -36,7 +38,7 @@ export async function GET(
   request: NextRequest,
   { params }: { params: { organization: string; id: string } }
 ) {
-  // const user = await currentUser();
+  const user = await currentUser();
   // const userGroups = user?.publicMetadata?.groups as number[];
   // const role = user?.publicMetadata?.role as Role;
 
@@ -46,9 +48,9 @@ export async function GET(
     where: {
       id: Number(params?.id),
     },
-    // include: {
-    //   Users: true,
-    // },
+    include: {
+      Users: true,
+    },
   });
   return NextResponse.json({ data }, { status: 200 });
 }

@@ -9,12 +9,12 @@ export default function ItemsBox({
 }) {
 
   const sizeVariants = {
-    md: "grid-cols-[repeat(auto-fit,minmax(200px,1fr))]",
-    sm: "grid-cols-[repeat(auto-fit,minmax(120px,1fr))]"
+    md: "grid-cols-[repeat(auto-fit,minmax(150px,1fr))] gap-5",
+    sm: "grid-cols-[repeat(auto-fit,minmax(120px,1fr))] gap-10 sm:gap-4"
   }
 
   return (
-    <section className={"w-full mx-auto grid justify-items-center gap-4" + " " + sizeVariants[size]}>
+    <section className={"w-full mx-auto grid" + " " + sizeVariants[size]}>
       {children}
     </section>
   );

@@ -18,7 +18,6 @@ export default async function EditFilesPage() {
   })) as {
     data: any;
   };
-  console.log(files);
   return (
     <>
       <StandardInput name="" dataKey="" attrs={{placeholder: "Buscar..."}}  className="sticky z-30 top-16 max-w-sm" />

@@ -11,7 +11,6 @@ export default function createAlert(
       <StandardInput
         onBlur={(data) => {
           if (!data) return;
-          console.log(data)
           create(endpoint, { name: data, ...values });
           toast.dismiss(t?.id);
         }}

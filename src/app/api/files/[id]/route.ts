@@ -1,4 +1,5 @@
 import { auth } from "@clerk/nextjs";
+import { revalidateTag } from "next/cache";
 import { NextResponse } from "next/server";
 import prisma from "src/app/utils/prisma";
 
@@ -42,6 +43,49 @@ export async function GET(
   const id = params.id;
   const data = await prisma.file.findUnique({
     where: { externalId: id },
+  });
+
+  return NextResponse.json(
+    { data },
+    {
+      status: 200,
+    }
+  );
+}
+
+export async function PATCH(
+  request: Request,
+  { params }: { params: { id: string } }
+) {
+  const res = (await request.json()) as Partial<File>;
+  const updateData = Object.fromEntries(
+    Object.entries(res).map(([key, value]) => [key, { set: value }])
+  );
+
+  const id = Number(params.id);
+  const data = await prisma.file.update({
+    where: {
+      id,
+    },
+    data: updateData,
+    include: { Note: true },
+  });
+  if (data?.Note?.subjectId && data?.Note?.type === "EVALUATION") {
+    revalidateTag("evaluations/" + data.Note.subjectId);
+  }
+
+  return NextResponse.json({ data }, { status: 200 });
+}
+
+export async function DELETE(
+  request: Request,
+  { params }: { params: { id: string } }
+) {
+  const id = Number(params.id);
+  const data = await prisma.file.delete({
+    where: {
+      id,
+    },
   });
 
   return NextResponse.json(

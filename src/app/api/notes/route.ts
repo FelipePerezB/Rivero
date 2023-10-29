@@ -54,7 +54,9 @@ export async function POST(request: Request) {
     },
   });
 
-  console.log(data);
+  if(data?.type === Types.EVALUATION && data?.subjectId){
+    revalidateTag("evaluations/" + data.subjectId);
+  } 
 
   if (data?.subjectId) {
     revalidateTag("subjects/" + data.subjectId);
@@ -74,8 +76,6 @@ export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams;
   const subject = Number(searchParams.get("subject")) as number | undefined;
   const type = searchParams.get("type") as Types | undefined;
-  console.log(type);
-
   const data = await prisma.note.findMany({
     where: { subjectId: subject, type },
     include: { File: true },

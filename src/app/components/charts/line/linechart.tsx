@@ -46,7 +46,7 @@ export const ChartComponent = (
         height: 300,
       });
       chart.timeScale().fitContent();
-      series.map(({ data, colors }) => {
+      series.forEach(({ data, colors }) => {
         const serie = chart.addLineSeries();
         serie.setData(data);
       });

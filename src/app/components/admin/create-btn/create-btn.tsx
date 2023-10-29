@@ -1,12 +1,8 @@
+'use client'
 import Button from "@components/Button";
-import Alert from "@components/alert/alert";
-import { createMessages } from "@components/alert/alert-message";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useRouter } from "next/navigation";
 import React from "react";
-import toast from "react-hot-toast";
-import api from "src/app/utils/api";
 import create from "./create";
 
 export default function CreateBtn({
@@ -20,13 +16,13 @@ export default function CreateBtn({
   values: { [key: string]: unknown };
   size?: "md" | "sm";
 }) {
-  const router = useRouter();
+  // const router = useRouter();
 
   return (
     <Button
       onClick={() => {
         create(endpoint, values);
-        router.back();
+        // router.back();
       }}
       color={size === "sm" ? "transparent" : "blue"}
       size={size == "md" ? "sm" : "xs"}
