@@ -8,7 +8,7 @@ export async function POST(request: Request) {
   const { role, organizationId, groups, email } = res;
   const invitation = await clerkClient.invitations.createInvitation({
     emailAddress: email,
-    redirectUrl: "https://https://rivero.vercel.app/sign-up",
+    redirectUrl: "https://rivero.vercel.app/sign-up",
     publicMetadata: {
       role,
       organizationId,
