@@ -1,7 +1,7 @@
 import capFirst from "src/utils/capFirst";
 
 const Tag = ({ children }: { children: JSX.Element | string }) => (
-  <li className="border text-gray-600 rounded px-1 py-0.5 font-light text-xs h-max">
+  <li className="whitespace-nowrap border text-gray-600 rounded px-1 py-0.5 font-light text-xs h-max">
     {children}
   </li>
 );

@@ -28,7 +28,9 @@ export default async function EvaluationsPage({
 
   return (
     <>
-      <h2 className="text-xl font-semibold py-2">Evaluaciones</h2>
+      {!!notes.length && (
+        <h2 className="text-xl font-semibold py-2">Evaluaciones</h2>
+      )}
       <ItemsBox>
         {notes.map(({ File: { name, externalId }, id }) => (
           <NavigationCard key={name} href={`${group}/${externalId}`}>
@@ -54,7 +56,7 @@ export default async function EvaluationsPage({
             </div>
           }
         >
-          <GroupStats organization={organization} group={group} />
+          <GroupStats subject={subject} organization={organization} group={group} />
         </Suspense>
       </Card>
       <Button>

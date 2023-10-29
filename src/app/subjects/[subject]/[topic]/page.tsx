@@ -93,12 +93,12 @@ export default async function TopictPage({
             }))}
           />
         </div>
-        <div className="sm:row-start-2 sm:col-start-2">
+        <div className="flex justify-center sm:row-start-2 sm:col-start-2">
           <ProgressCard color="red" subject="Matemática" topic="Algebra">
             Progreso:
           </ProgressCard>
         </div>
-        <div className="sm:row-start-1 sm:col-start-1 sm:col-end-2 sm:row-end-2 flex flex-col gap-2.5 mt-2 w-full max-w-lg">
+        <div className="sm:row-start-1 sm:col-start-1 sm:col-end-2 sm:row-end-2 flex flex-col gap-2.5 mt-2 w-full">
           <div className="flex pb-2.5 justify-between items-center">
             <h3 className="text-xl inline-block w-max font-semibold">Temas</h3>
             <div className="flex gap-4">

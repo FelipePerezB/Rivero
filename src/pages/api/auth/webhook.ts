@@ -99,10 +99,6 @@ export default async function Handler(
       },
     });
 
-    console.log(data);
-
-    // revalidateTag("users");
-    revalidateTag("groups");
     revalidateTag(`groups/${organizationId}`);
     res.status(201).json({ data });
     return;

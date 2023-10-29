@@ -49,7 +49,11 @@ export default async function EvaluationPage({
     <>
       <div className="flex justify-between items-center mb-2">
         <h1 className="text-xl">{File?.name}</h1>
-        <div className="flex gap-2">
+        <Button>
+          Generar reporte
+          <FontAwesomeIcon className="max-h-4 w-4" icon={faFileArrowDown} />
+        </Button>
+        {/* <div className="flex gap-2">
           <Button href={"/documents/download/" + evaluation}>
             Descargar
             <FontAwesomeIcon className="h-3 w-3" icon={faFileArrowDown} />
@@ -60,7 +64,7 @@ export default async function EvaluationPage({
           >
             <FontAwesomeIcon className="h-3 w-3" icon={faFileExcel} />
           </Button>
-        </div>
+        </div> */}
       </div>
       <Suspense fallback={<LargeSkeleton />}>
         <GroupsList
@@ -84,13 +88,13 @@ export default async function EvaluationPage({
           </section>
         }
       >
-        <ScoresStats evaluation={evaluation} group={group} />
+        <ScoresStats organization={organization} evaluation={evaluation} group={group} />
       </Suspense>
 
-      <Button color="black" size="lg">
+      {/* <Button color="black" size="lg">
         Generar reporte
         <FontAwesomeIcon className="max-h-4 w-4" icon={faFileArrowDown} />
-      </Button>
+      </Button> */}
       <SearchModal
         id="new-score"
         title="Nuevo puntaje"

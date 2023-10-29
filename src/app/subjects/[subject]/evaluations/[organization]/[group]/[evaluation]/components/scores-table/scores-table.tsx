@@ -23,12 +23,12 @@ export default async function ScoresTable({
 }) {
   // if(group)
   const { getToken } = auth();
-  const user = await currentUser()
-  if(user?.publicMetadata?.role === Role.STUDENT){
-    redirect('/')
+  const user = await currentUser();
+  if (user?.publicMetadata?.role === Role.STUDENT) {
+    redirect("/");
   }
   const token = await getToken();
-  const groupId = group === "all" ? "" : group
+  const groupId = group === "all" ? "" : group;
   const { data: selectedGroup } = (await api(
     `groups/${organization}/${groupId}`,
     {
@@ -36,7 +36,7 @@ export default async function ScoresTable({
     }
   )) as { data: GroupWithUsers };
 
-  const { data: scores } = (await api(`scores/${evaluation}`, {
+  const { data: scores } = (await api(`scores/${organization}/${evaluation}`, {
     headers: { Authorization: `Bearer ${token}` },
   })) as { data: Score[] };
 
@@ -48,7 +48,7 @@ export default async function ScoresTable({
   ]);
   return (
     <Table
-    onClickHref="?modal=new-score&"
+      onClickHref="?modal=new-score&"
       head={{
         title: selectedGroup?.name,
         keys: [

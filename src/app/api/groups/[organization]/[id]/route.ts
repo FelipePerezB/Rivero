@@ -22,10 +22,6 @@ export async function PATCH(
     data: updateData,
   });
 
-  if (data.id) {
-    revalidateTag(`groups`);
-  }
-
   return NextResponse.json(
     { data },
     {
@@ -81,7 +77,6 @@ export async function DELETE(
   if (data.organizationId) {
     revalidateTag(`groups/${data.organizationId}`);
   }
-  revalidateTag(`groups`);
 
   return NextResponse.json(
     { data },

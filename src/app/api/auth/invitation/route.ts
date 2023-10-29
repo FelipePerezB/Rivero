@@ -1,6 +1,6 @@
 import { clerkClient } from "@clerk/nextjs";
 import { revalidateTag } from "next/cache";
-import {  NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {
   const res = await request.json();
@@ -8,7 +8,7 @@ export async function POST(request: Request) {
   const { role, organizationId, groups, email } = res;
   const invitation = await clerkClient.invitations.createInvitation({
     emailAddress: email,
-    redirectUrl: "https://rivero.vercel.app/sign-up",
+    redirectUrl: `${process.env.NEXT_PUBLIC_BASE_URL}/sign-up`,
     publicMetadata: {
       role,
       organizationId,

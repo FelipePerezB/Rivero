@@ -3,7 +3,7 @@ export default function CardItem({
   value,
 }: {
   title: string;
-  value: string;
+  value: string | number;
 }) {
   return <div className="flex flex-col items-center">
     <h3 className="font-bold">{title}</h3>

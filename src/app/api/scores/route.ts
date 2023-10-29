@@ -21,48 +21,74 @@ export async function POST(request: Request) {
       score,
       alternatives,
     },
-    include: {User: true}
+    include: { User: true },
   });
-  if(data.id) revalidateTag(`scores/organizations/${data.User.organizationId}`)
+  if (data.id)
+    revalidateTag(`scores/organizations/${data.User.organizationId}`);
   return NextResponse.json({ data }, { status: 200 });
 }
 export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams;
   const group = searchParams.get("group");
-  const user = await currentUser();
-  const metadata = user?.publicMetadata;
-  const scores = await prisma.group.findMany({
-    orderBy: { createdAt: "asc" },
-    where: {
-      id: group ? Number(group) : undefined,
-    },
-    include: {
-      Users: {
-        include: {
-          Score: true,
+  const subject = searchParams.get("subject");
+  const evaluation = searchParams.get("evaluation");
+  const userQuery = group
+    ? {
+        User: {
+          Group: {
+            some: { id: Number(group) },
+          },
         },
+      }
+    : {};
+  const fileQuery = evaluation
+    ? { File: { externalId: { equals: String(evaluation) } } }
+    : {};
+  const subjectQuery = subject
+    ? { subjectId: Number(subject), }
+    : {};
+  const scores = await prisma.score.findMany({
+    where: {
+      Note: {
+        ...fileQuery,
+        ...subjectQuery
       },
+      ...userQuery,
     },
+    include: { User: { select: { Group: { select: { id: true } } } } },
+  });
+  const scoresByGroup = [] as {
+    groupId: number;
+    scores: { value: number; time: string }[];
+  }[];
+  scores.forEach(({ score, updateAt, User: { Group } }) => {
+    const time = updateAt?.toISOString().substring(0, 10) as string;
+    const newScore = {
+      value: score,
+      time,
+    };
+    Group?.forEach(({ id }) => {
+      const group = scoresByGroup?.find(({ groupId }) => groupId === id);
+      if (!group) {
+        scoresByGroup.push({
+          groupId: id,
+          scores: [newScore],
+        });
+        return;
+      }
+      group?.scores.push(newScore);
+    });
   });
 
-  const unFormatedData = scores.map(({ id, Users }) => ({
-    groupId: String(id),
-    scores: Users.flatMap(({ Score }) =>
-      Score.map(({ score, createdAt }) => ({
-        score,
-        time: createdAt?.toISOString().substring(0, 10) as string,
-      }))
-    ),
-  }));
   const data = {};
-  unFormatedData.forEach(({ groupId, scores }) => {
+  scoresByGroup.forEach(({ groupId, scores }) => {
     const newScores = [] as { value: number; time: string }[];
     scores.forEach((score) => {
       const duplicatedScores = scores.filter(
         ({ time: timeFilter }) => timeFilter === score.time
       );
       if (duplicatedScores.length === 1) {
-        newScores.push({ time: score.time, value: score.score });
+        newScores.push({ time: score.time, value: score.value });
         return;
       }
       const isInNewScores =
@@ -70,7 +96,7 @@ export async function GET(request: NextRequest) {
       if (!isInNewScores) {
         newScores.push({
           value:
-            duplicatedScores.map(({ score }) => score).reduce((a, b) => a + b) /
+            duplicatedScores.map(({ value }) => value).reduce((a, b) => a + b) /
             duplicatedScores.length,
           time: score.time,
         });
