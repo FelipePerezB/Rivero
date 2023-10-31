@@ -12,6 +12,7 @@ const imports = {
   box: dynamic(() => import(`./box`)),
   question: dynamic(() => import(`./question`)),
   linechart: dynamic(() => import(`./linechart`)),
+  paragraph: dynamic(() => import(`./paragraph`)),
 } as any;
 
 export default function DynamicElement({

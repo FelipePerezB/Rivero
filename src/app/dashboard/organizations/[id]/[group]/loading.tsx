@@ -7,7 +7,6 @@ export default function Loading() {
     <>
       <LargeSkeleton />
       <TableSkeleton />
-      <TableSkeleton />
     </>
   );
 }

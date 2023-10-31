@@ -20,8 +20,8 @@ export default async function EditFilesPage() {
   };
   return (
     <>
+    {/* <h1 className="text-3xl font-bold">Documentos</h1> */}
       <StandardInput name="" dataKey="" attrs={{placeholder: "Buscar..."}}  className="sticky z-30 top-16 max-w-sm" />
-      {/* <hr></hr> */}
       <ItemsBox size="sm">
         <DocsCards />
       </ItemsBox>

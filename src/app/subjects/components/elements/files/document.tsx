@@ -3,16 +3,16 @@ import Section from "./section";
 import Title from "./title";
 import FileContainer from "../../layout/file-container/file-container";
 
-const DocumentHeader = ({ name = "" }: { name: string }) => {
-  return (
-    <div className="flex flex-col items-center pb-[1em] border-b-[0.1em] mb-[0.6em] text-em leading-normal">
-      <Title options={{ size: "h1", text: capFirst(name) }} />
-      <span className="flex gap-[0.3em] text-gray-500 rounded print:text-gray-300">
-        <span className="font-bold">-- A --</span>
-      </span>
-    </div>
-  );
-};
+// const DocumentHeader = ({ name = "" }: { name: string }) => {
+//   return (
+//     <div className="flex flex-col items-center py-[1.2em] border-b-[0.15em] border-t-[0.15em] border-black mb-[1em] text-em leading-normal">
+//       <Title options={{ size: "h1", text: capFirst(name) }} />
+//       <span className="flex gap-[0.3em] text-gray-600 rounde">
+//         <span className="font-bold">-- Rivero --</span>
+//       </span>
+//     </div>
+//   );
+// };
 export default function Document({
   name,
   options,
@@ -45,7 +45,7 @@ export default function Document({
             type="section"
             key={`doc-${id}-${i}`}
           >
-            {i === 0 && <DocumentHeader {...{ name }} />}
+            {/* {i === 0 && <DocumentHeader {...{ name }} />} */}
           </Section>
         );
       })}

@@ -103,6 +103,8 @@ export default function Form({
     }
   }, [component.type, defaultValues]);
 
+  console.log(component)
+
   return (
     <div className="flex flex-col gap-2">
       {!type && (

@@ -22,15 +22,15 @@ export default function EditWraper({
 }) {
   const [settings, setSettings] = useState<NoteWithComponent>(document);
   const divRef = useRef<HTMLDivElement>(null);
-  const resize = () => {
-    const $container = divRef.current;
-    if (!$container) return;
-    const pixels = 13;
-    const width = 450;
-    const containerWidth = $container.clientWidth;
-    const fontSize = (pixels / width) * Number(containerWidth);
-    $container.style.fontSize = fontSize + "px";
-  };
+  // const resize = () => {
+  //   const $container = divRef.current;
+  //   if (!$container) return;
+  //   const pixels = 13;
+  //   const width = 450;
+  //   const containerWidth = $container.clientWidth;
+  //   const fontSize = (pixels / width) * Number(containerWidth);
+  //   $container.style.fontSize = fontSize + "px";
+  // };
   const {
     file: { name, externalId, content },
     type,
@@ -45,8 +45,8 @@ export default function EditWraper({
         externalId: id,
       },
     });
-    resize();
-    window.onresize = resize;
+    // resize();
+    // window.onresize = resize;
   }, [id]);
 
   useEffect(() => {

@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import { LexicalComposer } from "@lexical/react/LexicalComposer";
 import { ContentEditable } from "@lexical/react/LexicalContentEditable";
 import { RichTextPlugin } from "@lexical/react/LexicalRichTextPlugin";
@@ -9,6 +9,10 @@ import LexicalErrorBoundary from "@lexical/react/LexicalErrorBoundary";
 // import EquationsPlugin from "@components/create-components/edit-document/lexical/ecuation-plugin";
 // import { EquationNode } from "@components/create-components/edit-document/lexical/ecuation-node";
 // import { PLAYGROUND_TRANSFORMERS } from "@components/create-components/edit-document/lexical/markdown-transformer";
+import decompressRichTextContent from "src/app/subjects/utils/lexical/decompressRichTextContent";
+import { EquationNode } from "src/app/subjects/utils/lexical/katex/equation-node";
+import EquationsPlugin from "src/app/subjects/utils/lexical/katex/equation-plugin";
+import { PLAYGROUND_TRANSFORMERS } from "src/app/subjects/utils/lexical/markdown-transformer";
 // import decompressRichTextContent from "@components/create-components/utils/decompressRichTextJSON";
 
 function onError(error: unknown) {
@@ -47,31 +51,29 @@ export default function Editor({
   value: string;
   onChange: (value: { [key: string]: string }) => void;
 }) {
-
-
   const initialConfig = {
-    // editorState: decompressRichTextContent(value),
+    editorState: decompressRichTextContent(value),
     namespace: "MyEditor",
     onError,
-    // nodes: [EquationNode],
+    nodes: [EquationNode],
   };
 
   return (
     <div translate="no" className="relative">
       <LexicalComposer initialConfig={initialConfig}>
         <RichTextPlugin
-          placeholder={<div className="">Enter some text...</div>}
+          placeholder={<></>}
           ErrorBoundary={LexicalErrorBoundary}
           contentEditable={
             <ContentEditable className="min-h-[100px] border shadow focus:outline-blue-500 rounded p-1" />
           }
         />
         <HistoryPlugin />
-        {/* <EquationsPlugin />
-        <MarkdownShortcutPlugin transformers={PLAYGROUND_TRANSFORMERS} /> */}
+        <EquationsPlugin />
+        <MarkdownShortcutPlugin transformers={PLAYGROUND_TRANSFORMERS} />
         <OnChangePlugin
           onChange={(state) => {
-            onChange({ [dataKey ?? label]: compressJSON(state.toJSON().root) });
+            onChange({ text: compressJSON(state.toJSON().root) });
           }}
         />
       </LexicalComposer>

@@ -34,12 +34,6 @@ export async function GET(
   request: NextRequest,
   { params }: { params: { organization: string; id: string } }
 ) {
-  const user = await currentUser();
-  // const userGroups = user?.publicMetadata?.groups as number[];
-  // const role = user?.publicMetadata?.role as Role;
-
-  // if (!userGroups.length) throw new Error("Failed to fetch data");
-
   const data = await prisma.group.findUnique({
     where: {
       id: Number(params?.id),

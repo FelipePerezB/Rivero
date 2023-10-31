@@ -7,7 +7,7 @@ import { Role } from "@prisma/client";
 import React, { useState } from "react";
 import toast from "react-hot-toast";
 import api from "src/app/utils/api";
-import sendInvitation from "../../../utils/invitate";
+import sendInvitation from "../../../../utils/invitate";
 
 // {
 //   "email": "felipeeperez3@gmail.com",
@@ -21,18 +21,18 @@ const regexEmail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 export default function InviteForm({
   organization,
   role,
-  groups,
+  group,
 }: {
   organization: number;
   role: Role;
-  groups: number[];
+  group: number;
 }) {
   const [emails, setEmails] = useState<string>();
 
   const invitate = () => {
     const emailsArray = emails?.split(",")?.map((email) => email.trim());
     emailsArray?.forEach(async (email) =>
-      sendInvitation(email, organization, Role.STUDENT, groups)
+      sendInvitation(email, organization, Role.STUDENT, group)
     );
   };
   return (

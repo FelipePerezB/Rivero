@@ -1,7 +1,5 @@
 import { ReactNode } from "react";
 import DynamicElement from "./dynamic-file";
-import Title from "./title";
-import capFirst from "src/utils/capFirst";
 
 export default function Section({
   options,
@@ -23,7 +21,7 @@ export default function Section({
 }) {
   return (
     <div
-      className={`bg-white border p-[1.6em] aspect-[210/297] w-full shadow-md hover:shadow-xl print:shadow-none ${
+      className={`bg-white border p-[2.5em] aspect-[210/297] w-full shadow-md hover:shadow-xl print:shadow-none print:hover:shadow-none print:border-none ${
         !options?.lastPage ? "break-after-page" : ""
       } }`}
       data-component={id}

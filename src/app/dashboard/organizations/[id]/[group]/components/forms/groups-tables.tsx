@@ -42,7 +42,7 @@ export default async function GroupsTables({
         ],
         icons: [
           <TableBtn
-            href={`?modal=invite&groups=${id}&role=${Role.STUDENT}`}
+            href={`?modal=invite&group=${id}&role=${Role.STUDENT}`}
             key={`invite-btn-${id}`}
           >
             <span>Invitar</span>

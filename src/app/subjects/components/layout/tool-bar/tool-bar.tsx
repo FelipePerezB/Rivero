@@ -19,16 +19,17 @@ export default function Navar({
   settings: NoteWithComponent;
   setSettings: React.Dispatch<React.SetStateAction<NoteWithComponent>>;
 }) {
-  const { user } = useUser();
-  const { getToken } = useAuth();
+  // const { user } = useUser();
+  const user = undefined;
+  // const { getToken } = useAuth();
   const sync = async () => {
     const {
       file: { privacity, content, name, externalId },
     } = settings;
-    const token = await getToken();
+    // const token = await getToken();
     toast.promise(
        api("files/" + externalId, {
-        headers: { Authorization: `Bearer ${token}` },
+        // headers: { Authorization: `Bearer ${token}` },
         method: "POST",
         body: JSON.stringify({
           name,
@@ -71,7 +72,7 @@ export default function Navar({
           <ShareBtn setSettings={setSettings} settings={settings} />
           <div className="cursor-pointer flex items-center gap-1">
             <Link href={"?sidebar=nav"}>
-              {user?.imageUrl ? (
+              {/* {user?.imageUrl ? (
                 <div className="rounded-full overflow-hidden">
                   <Image
                     width={25}
@@ -79,10 +80,10 @@ export default function Navar({
                     alt="abrir menu"
                     src={user.imageUrl}
                   />
-                </div>
-              ) : (
+                </div> */}
+              {/* ) : (
                 <FontAwesomeIcon icon={faBars} />
-              )}
+              )} */}
             </Link>
             <span className="hidden md:inline-block">Menu</span>
           </div>

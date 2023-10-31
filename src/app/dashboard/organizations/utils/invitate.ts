@@ -8,7 +8,7 @@ export default function sendInvitation(
   email: string,
   organization: number,
   role: string = Role.STUDENT,
-  groups: number[] = [],
+  group: number,
 ) {
   const isValid = regexEmail.test(email);
   if (!isValid) return;
@@ -18,7 +18,7 @@ export default function sendInvitation(
       body: JSON.stringify({
         email,
         organizationId: organization,
-        groups,
+        group,
         role,
       }),
     }),

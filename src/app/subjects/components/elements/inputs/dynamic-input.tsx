@@ -6,6 +6,7 @@ const imports = {
   children: dynamic(() => import(`./children`)),
   options: dynamic(() => import(`./options`)),
   text: dynamic(() => import(`./text`)),
+  "rich-text": dynamic(() => import(`./rich-text`)),
 } as any;
 
 export default function DynamicInput({
