@@ -11,6 +11,7 @@ import Form from "src/app/documents/edit/components/form";
 export default function Children({
   value,
   onChange,
+  types,
   parentId,
 }: {
   types?: string[];
@@ -24,7 +25,7 @@ export default function Children({
   useEffect(() => {
     setId(`${parentId}-${generateRandomId(IdLenght.sm)}`);
   }, [value]);
-
+  console.log(types);
   return (
     <div>
       <Buttons>
@@ -42,6 +43,7 @@ export default function Children({
         title="Nuevo componente"
       >
         <Form
+          types={types}
           modalState={modalState}
           defaultValues={{}}
           id={id}

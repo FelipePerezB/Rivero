@@ -162,6 +162,13 @@ export const uiSchemas: any = {
     {
       type: "text",
       options: {
+        key: "equation",
+        label: "ecuación",
+      },
+    },
+    {
+      type: "text",
+      options: {
         key: "rangeX",
         label: "Rango en X",
       },
@@ -171,13 +178,6 @@ export const uiSchemas: any = {
       options: {
         key: "rangeY",
         label: "Rango en Y",
-      },
-    },
-    {
-      type: "text",
-      options: {
-        key: "ecuation",
-        label: "ecuación",
       },
     },
   ],

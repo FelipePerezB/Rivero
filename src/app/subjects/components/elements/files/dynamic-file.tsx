@@ -13,6 +13,7 @@ const imports = {
   question: dynamic(() => import(`./question`)),
   linechart: dynamic(() => import(`./linechart`)),
   paragraph: dynamic(() => import(`./paragraph`)),
+  excercises: dynamic(() => import(`./excercises`)),
 } as any;
 
 export default function DynamicElement({

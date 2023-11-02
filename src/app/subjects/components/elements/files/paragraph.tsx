@@ -1,12 +1,9 @@
-// import { EquationNode } from "@components/create-components/edit-document/lexical/ecuation-node";
-// import EquationsPlugin from "@components/create-components/edit-document/lexical/ecuation-plugin";
-// import decompressRichTextContent from "@components/create-components/utils/decompressRichTextJSON";
+"use client"
 import { LexicalComposer } from "@lexical/react/LexicalComposer";
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 import { ContentEditable } from "@lexical/react/LexicalContentEditable";
 import LexicalErrorBoundary from "@lexical/react/LexicalErrorBoundary";
 import { RichTextPlugin } from "@lexical/react/LexicalRichTextPlugin";
-import { EditorState } from "lexical";
 import React from "react";
 import decompressRichTextContent from "src/app/subjects/utils/lexical/decompressRichTextContent";
 import { EquationNode } from "src/app/subjects/utils/lexical/katex/equation-node";
@@ -24,16 +21,12 @@ function UpdatePlugin({ content }: { content: string }) {
 
 export default function paragraph({
   id,
-  options: { text },
+  options: { text } = { text: "" },
 }: {
   id: string;
-  options: { texto: string; text: string };
+  options: { text: string };
 }) {
-  const content = decompressRichTextContent(
-    text
-    // text ?? JSON.stringify([[{ c: "hhhhh", f: 1 }]])
-    ) as unknown as string;
-    console.log(content)
+  const content = decompressRichTextContent(text) as unknown as string;
   return (
     <div data-component={id}>
       <LexicalComposer

@@ -20,6 +20,8 @@ import { Component, ComponentOptions } from "../models/component";
 import Children from "src/app/subjects/components/elements/inputs/children";
 import DynamicInput from "src/app/subjects/components/elements/inputs/dynamic-input";
 import { componentsNames } from "../utils/schemas";
+import SelectCategory from "./select-category";
+import SelectComponent from "./select-component";
 
 type options = "Configuración" | "Hijos";
 
@@ -27,11 +29,12 @@ export default function Form({
   type,
   defaultValues,
   id,
-  modalState,
+  types,
   onDelete,
   onSave,
 }: // onChange,
 {
+  types?: string[];
   // onChange?: (data: { [key: string]: unknown }) => void;
   type?: string;
   defaultValues: ComponentOptions;
@@ -42,6 +45,7 @@ export default function Form({
   onDelete?: (props: Component) => void;
 }) {
   const [inputs, setInputs] = useState<ReactNode[] | undefined>([]);
+  const [childrenTypes, setChildrenTypes] = useState([]);
   const [options, setOptions] = useState<string[]>([]);
   const [option, setOption] = useState<options | undefined>("Configuración");
 
@@ -83,6 +87,9 @@ export default function Form({
             } else setOptions(["Configuración", "Hijos"]);
           }
           if (!options.length) setOptions(["Configuración"]);
+          if (type === "children") {
+            setChildrenTypes(data?.types);
+          }
           const value = defaultValues[data.key];
           return (
             <DynamicInput
@@ -103,26 +110,15 @@ export default function Form({
     }
   }, [component.type, defaultValues]);
 
-  console.log(component)
-
   return (
     <div className="flex flex-col gap-2">
       {!type && (
-        <OptionsInput
-          name="Tipo de componente"
-          dataKey="type"
-          value={type}
-          onChange={({ type }) => {
-            const isValid = componentsNames.includes(type);
-            if (!isValid) return;
-            setComponent((props) => ({ ...props, type }));
-          }}
-          options={componentsNames}
-        />
+        <>
+          <SelectComponent types={types} setComponent={setComponent} />
+          <hr className="py-1" />
+        </>
       )}
-      {component.type && component.type !== "section" && (
-        <Preview {...{ attrs: component }} />
-      )}
+      {type && type !== "section" && <Preview {...{ attrs: component }} />}
       <Options {...{ option, setOption, options: options }} />
       {option === "Configuración" && <>{inputs?.map((input) => input)}</>}
       {option === "Hijos" && (
@@ -136,6 +132,7 @@ export default function Form({
             }}
           />
           <Children
+            types={childrenTypes}
             value={children}
             onChange={addFormData}
             parentId={id as string}

@@ -1,109 +1,97 @@
 "use client";
-/* eslint-disable react-hooks/exhaustive-deps */
-import { Mafs, Coordinates, Plot, labelPi } from "mafs";
-// import CustomComponent from "./CustomComponent";
-// import getID from "src/getDoc/utils/getId";
+import styles from "../../styles/linechart.module.css";
+import { Mafs, Coordinates, Plot } from "mafs";
 import { useEffect, useRef, useState } from "react";
+
+const getLarge = (ranges: string = "-10/10") => {
+  const rangeArray = ranges?.split("/").map((range) => Number(range));
+  const large = rangeArray[1] - rangeArray[0];
+  return large;
+};
+const getViewBox = (range: string = "-10/10") =>
+  range.split("/").map((range) => Number(range)) as [number, number];
 
 export default function LineChart({
   id,
-  options: {
-    size = "s",
-    rangeX = "-10/10",
-    rangeY = "-10/40",
-    ecuation = "2 * x",
+  options: { equation, rangeX, rangeY, size } = {
+    size: "xs",
+    rangeX: "-10/10",
+    rangeY: "-10/40",
+    equation: "2 * x",
   },
 }: {
   options: {
     size: "xs" | "s" | "m" | "l";
     rangeX: string;
     rangeY: string;
-    ecuation: string;
+    equation: string;
   };
   id: string;
 }) {
+  const regex = /^([-+/().]?[0-9]*\*?x?[\s]*)*$/;
   const divRef = useRef<HTMLDivElement>(null);
-  const [height, setHeight] = useState<number>();
-  const [lines, setLines] = useState<{
-    x: { lines: number };
-    y: { lines: number };
-  }>();
+  const [height, setHeight] = useState<number>(100);
+
   const heights = {
-    xs: "7em",
+    xs: "6em",
     s: "10em",
-    m: "15em",
+    m: "12em",
     l: "20em",
   };
 
+  const defaultequation = (x: number) => x * 0;
+  let eq: (num: number) => number;
+  try {
+    if (!regex.test(equation)) throw new Error("Invalid equation");
+    if (typeof eval(`(x) => ${equation}`)(0) !== "number")
+      throw new Error("Invalid equation");
+    eq = eval(`(x) => ${equation}`);
+  } catch (error) {
+    eq = defaultequation;
+  }
+
   useEffect(() => {
-    divRef.current && setHeight(divRef.current?.clientHeight);
+    const reSize = () => setHeight(divRef?.current?.clientHeight ?? 0);
+    reSize();
+    window.addEventListener("resize", reSize);
+    return () => window.removeEventListener("resize", reSize);
+  }, [size]);
 
-    let linesNum;
-    Object.keys(heights).forEach((string, i) => {
-      if (string == size) {
-        linesNum = (i + 2) * 2;
-      }
-    });
-    const rangeXArray = rangeX.split("/").map((range) => Number(range));
-    const rangeYArray = rangeY.split("/").map((range) => Number(range));
+  let linesNum = 4;
+  Object.keys(heights).forEach((string, i) => {
+    if (string == size) {
+      linesNum = (i + 2) * 2;
+    }
+  });
 
-    const largeX = rangeXArray[1] - rangeXArray[0];
-    const largeY = rangeYArray[1] - rangeYArray[0];
-    const range = largeX > largeY ? largeX : largeY;
-    linesNum &&
-      setLines({
-        x: { lines: Number((range / linesNum).toFixed(0)) },
-        y: { lines: Number((range / linesNum).toFixed(0)) },
-      });
-  }, [size, divRef.current?.clientHeight]);
-
-  const colors = {
-    0: "var(--mafs-indigo)",
-    1: "var(--mafs-violet)",
-    2: "var(--mafs-green)",
-    3: "var(--mafs-red)",
-    4: "var(--mafs-yellow)",
-  } as any;
-
-  const ec = `(x) => ${ecuation}`;
-
-  const n = parseInt(String(0 / 5)) * -5 + 0;
+  const largeX = getLarge(rangeX);
+  const largeY = getLarge(rangeY);
+  const range = largeX > largeY ? largeX : largeY;
 
   return (
-    <div data-component={id} style={{ width: "max-content", margin: "0 auto" }}>
+    <div ref={divRef} data-component={id} className={`w-max`}>
       <div
+        className={styles.linechart}
         style={{ width: heights[size], height: heights[size] }}
-        // className="rounded-md overflow-hidden"
-        ref={divRef}
       >
-        {height && lines && (
+        <div style={{ fontSize: size === "xs" ? "60%" : "100%" }}>
           <Mafs
             height={height}
-            viewBox={{
-              x: rangeX.split("/").map((range) => Number(range)) as [
-                number,
-                number
-              ],
-              y: rangeY.split("/").map((range) => Number(range)) as [
-                number,
-                number
-              ],
-            }}
+            viewBox={{ x: getViewBox(rangeX), y: getViewBox(rangeY) }}
             width={height}
           >
             <Coordinates.Cartesian
-              xAxis={lines.x}
-              yAxis={lines.y}
-              subdivisions={1.001}
+              xAxis={{ lines: Number((range / linesNum).toFixed(0)) }}
+              yAxis={{ lines: Number((range / linesNum).toFixed(0)) }}
+              subdivisions={1.0005}
             />
             <Plot.OfX
-              color={"red"}
-              key={ec}
-              weight={height / 75}
-              y={eval(ec)}
+              weight={size === "xs" ? 1.5 : 2.5}
+              color="var(--mafs-blue)"
+              y={eq}
             />
           </Mafs>
-        )}
+        </div>
       </div>
     </div>
   );

@@ -8,6 +8,7 @@ export type QuestionType = {
   number?: number;
   onSuccess?: (question: string) => void;
   onMistake?: (question: string) => void;
+  setAnswer?: (answer: { [number: number]: string }) => void;
   options: {
     expectedAns: string;
     check?: boolean;
@@ -24,27 +25,25 @@ export default function Question({
   id,
   number = 1,
   onSuccess,
+  setAnswer,
   onMistake,
-  options: {
-    question = "¿?",
-    alternatives = "a,b,c",
-    check,
-    expectedAns,
-    children,
+  options: { question, alternatives, check, expectedAns, children } = {
+    alternatives: "Alternativa A",
+    expectedAns: "A",
+    question: "Pregunta",
+    children: [],
   },
 }: QuestionType) {
-  const [answer, setAnswer] = useState();
-  const [classname, setClassname] = useState("");
 
   useEffect(() => {
     if (!check) return;
-    const name = answer === expectedAns ? "correct-ans" : "incorrect-ans";
-    setClassname(name);
+    // const name = answer === expectedAns ? "correct-ans" : "incorrect-ans";
+    // setClassname(name);
   }, [check]);
   return (
     <div data-component={id} className="w-full">
-      <article className="p-[0.5em] print:p-0">
-        <p className="text-[1em] print:text-[0.9em]">
+      <article className="p-[0.5em]">
+        <p className="text-[1em]">
           {number}.- {question}
         </p>
         {children?.toString() && (
@@ -58,7 +57,7 @@ export default function Question({
             ))}
           </div>
         )}
-        <ol className="flex flex-col gap-[0.6em] print:gap-0 px-[1em] pt-[0.65em] print:pt-0">
+        <ol className="flex flex-col gap-[0.6em] print:gap-1 px-[1em] pt-[0.65em] print:pt-[0.4em]">
           {alternatives.split(",").map((alternative, i) => {
             const letter = {
               0: "A",
@@ -71,6 +70,7 @@ export default function Question({
               <li
                 className="relative marker:hidden"
                 onClick={() => {
+                  setAnswer && setAnswer({ [number]: letter[i] });
                   if (
                     letter[i].toLowerCase().trim() ===
                     expectedAns.toLowerCase().trim()
@@ -87,11 +87,10 @@ export default function Question({
                   type="radio"
                   name={"alternative" + id}
                 />
-                <label className="inline-block p-[0.32em] print:p-[0] w-full outline outline-gray-200 outline-[0.05em] rounded peer-checked:outline-blue-500 peer-checked:outline-[0.14em] print:outline-none bg-white peer-hover:bg-slate-50">
-                  <span className="text-[0.8em]">
-
-                  <span>{`${letter[i]}) `}</span>
-                  <span>{alternative}</span>
+                <label className="inline-block p-[0.32em] print:p-0 w-full outline outline-gray-200 outline-[0.05em] rounded peer-checked:outline-blue-500 peer-checked:outline-[0.14em] print:outline-none bg-white peer-hover:bg-slate-50">
+                  <span className="text-[0.8em] print:text-[1em]">
+                    <span>{`${letter[i]}) `}</span>
+                    <span>{alternative}</span>
                   </span>
                 </label>
               </li>

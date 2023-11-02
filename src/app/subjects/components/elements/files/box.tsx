@@ -5,7 +5,7 @@ import DynamicElement from "./dynamic-file";
 export default function Box({
   id,
   options: { children, separator, direction, align } = {
-    children: [{ options: { text: "AhuihiA", size: "h1" }, type: "title" }],
+    children: [{ options: { text: "Box", size: "h1" }, type: "title" }],
     separator: "",
     direction: "row",
     align: "start",

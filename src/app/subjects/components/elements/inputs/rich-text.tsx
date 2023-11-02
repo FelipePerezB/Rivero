@@ -6,14 +6,10 @@ import { HistoryPlugin } from "@lexical/react/LexicalHistoryPlugin";
 import { MarkdownShortcutPlugin } from "@lexical/react/LexicalMarkdownShortcutPlugin";
 import { OnChangePlugin } from "@lexical/react/LexicalOnChangePlugin";
 import LexicalErrorBoundary from "@lexical/react/LexicalErrorBoundary";
-// import EquationsPlugin from "@components/create-components/edit-document/lexical/ecuation-plugin";
-// import { EquationNode } from "@components/create-components/edit-document/lexical/ecuation-node";
-// import { PLAYGROUND_TRANSFORMERS } from "@components/create-components/edit-document/lexical/markdown-transformer";
 import decompressRichTextContent from "src/app/subjects/utils/lexical/decompressRichTextContent";
 import { EquationNode } from "src/app/subjects/utils/lexical/katex/equation-node";
 import EquationsPlugin from "src/app/subjects/utils/lexical/katex/equation-plugin";
 import { PLAYGROUND_TRANSFORMERS } from "src/app/subjects/utils/lexical/markdown-transformer";
-// import decompressRichTextContent from "@components/create-components/utils/decompressRichTextJSON";
 
 function onError(error: unknown) {
   console.error(error);
