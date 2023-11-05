@@ -14,6 +14,8 @@ const imports = {
   linechart: dynamic(() => import(`./linechart`)),
   paragraph: dynamic(() => import(`./paragraph`)),
   excercises: dynamic(() => import(`./excercises`)),
+  header: dynamic(() => import(`./header`)),
+  set: dynamic(() => import(`./set`)),
 } as any;
 
 export default function DynamicElement({
@@ -23,6 +25,7 @@ export default function DynamicElement({
   name: string;
   attrs: { [key: string]: unknown };
 }) {
+  console.log(name, attrs)
   const Component = imports[name];
-  return <Component {...{ ...attrs }} />;
+  return <Component {...{ ...attrs }} key={`dynamic-component-${attrs?.id}`} />;
 }

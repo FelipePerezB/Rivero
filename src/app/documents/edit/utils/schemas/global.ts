@@ -13,7 +13,14 @@ const basics = {
       options: {
         key: "align",
         label: "Alinear",
-        options: ["start", "center", "end"],
+        options: ["start", "center", "end", "around"],
+      },
+    },
+    {
+      type: "boolean",
+      options: {
+        key: "highlight",
+        label: "Destacar",
       },
     },
     {
@@ -56,6 +63,29 @@ const basics = {
         label: "texto",
       },
     },
+    {
+      type: "boolean",
+      options: {
+        key: "indent",
+        label: "Indentar",
+      },
+    },
+  ],
+  header: [
+    {
+      type: "text",
+      options: {
+        key: "title",
+        label: "Título",
+      },
+    },
+    {
+      type: "text",
+      options: {
+        key: "subtitle",
+        label: "Subtítulo",
+      },
+    },
   ],
 };
 
@@ -76,6 +106,30 @@ const math = {
       },
     },
   ],
+  set: [
+    {
+      type: "text",
+      options: {
+        key: "name",
+        label: "Nombre",
+      },
+    },
+    {
+      type: "text",
+      options: {
+        key: "set",
+        label: "Conjunto",
+      },
+    },
+    {
+      type: "children",
+      options: {
+        types: ["set"],
+        key: "children",
+        label: "Subconjuntos",
+      },
+    },
+  ],
   linechart: [
     {
       type: "options",
@@ -83,6 +137,13 @@ const math = {
         key: "size",
         label: "tamaño",
         options: ["xs", "m", "l"],
+      },
+    },
+    {
+      type: "text",
+      options: {
+        key: "equation",
+        label: "ecuación",
       },
     },
     {
@@ -97,13 +158,6 @@ const math = {
       options: {
         key: "rangeY",
         label: "Rango en Y",
-      },
-    },
-    {
-      type: "text",
-      options: {
-        key: "ecuation",
-        label: "ecuación",
       },
     },
   ],

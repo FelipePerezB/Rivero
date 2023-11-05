@@ -3,15 +3,12 @@ import Table from "@components/table/Table";
 import { faPen } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Privacity, Subject, Subtopic, Topic } from "@prisma/client";
-import React from "react";
-import { Toaster } from "react-hot-toast";
 import SearchModal from "src/app/components/modal/search-modal";
 import Options from "src/app/components/options/options";
 import api from "src/app/utils/api";
 import capFirst from "src/utils/capFirst";
 import TableBtn from "@components/table/table-btn/table-btn";
 import UpdateForm from "src/app/components/admin/update-form/update-form";
-import CreateFileBtn from "./components/create-file-btn/create-file-btn";
 import ItemsBox from "src/app/components/items-box/items-box";
 import { NoteWithFile } from "src/app/subjects/models/note";
 import DeleteBtn from "src/app/components/admin/delete-btn/delete-btn";
@@ -33,7 +30,7 @@ export default async function SubjectDashboard({
     data: Topic;
   };
   const { data: subtopics } = (await api(`subtopics?topic=${topicId}`, {}, [
-    `subtopics/${topicId}`,
+    `topics/${topicId}`,
   ])) as { data: Subtopic[] };
 
   const { data: subject } = (await api(`subjects/${id}`, {}, [
@@ -58,10 +55,7 @@ export default async function SubjectDashboard({
         <h2 className="text-2xl text-semibold w-max">
           {capFirst(subject?.name)}
         </h2>
-        <span className="flex gap-2">
-          <Button href={"?modal=modify-subject"}>Modificar</Button>
-          <CreateTopicBtn subjectId={Number(subject?.id)} />
-        </span>
+        <Button>Práctica <FontAwesomeIcon className="h-3 w-3" icon={faPen}/></Button>
       </div>
       <Options
         options={topics?.map(({ name, id }) => ({
@@ -71,7 +65,7 @@ export default async function SubjectDashboard({
         option={topicId}
       />
       <Table
-        onClickHref="?modal=modify-subtopic&"
+        onClickHref={`${topicId}/[id]`}
         data={subtopics?.map(({ name, id }) => [id, capFirst(name), "Público"])}
         head={{
           icons: [
@@ -82,11 +76,6 @@ export default async function SubjectDashboard({
             <TableBtn href="?modal=modify-topic" key={"edit-btn"}>
               <FontAwesomeIcon className="h-2.5 w-2.5" icon={faPen} />
             </TableBtn>,
-            <DeleteBtn
-              key={"delete-topic"}
-              endpoint={`topics/${topic?.id}`}
-              name={topic?.name}
-            />,
           ],
           title: capFirst(topic?.name),
           keys: [
@@ -101,7 +90,7 @@ export default async function SubjectDashboard({
         <CreateEvaluationBtn subject={String(subject?.id)} />
       </div>
       <ItemsBox>
-        {evaluations?.map(({ File: {id, name} }) => (
+        {evaluations?.map(({ File: { id, name } }) => (
           <NavigationCard
             key={`evaluation-${id}`}
             href={`?modal=modify&id=${id}&name=${name}`}
@@ -141,19 +130,6 @@ export default async function SubjectDashboard({
         />
       </SearchModal>
       <SearchModal
-        title="Modificar subtópico"
-        searchParams={searchParams}
-        id="modify-subtopic"
-      >
-        <UpdateForm
-          endpoint={`subtopics/${searchParams?.id}`}
-          id={searchParams?.id}
-          name={searchParams?.name}
-          privacity={searchParams.privacity as Privacity | undefined}
-          secondaryBtn={<CreateFileBtn subtopicId={searchParams?.id} />}
-        />
-      </SearchModal>
-      <SearchModal
         title="Modificar tópico"
         searchParams={searchParams}
         id="modify-topic"
@@ -163,6 +139,9 @@ export default async function SubjectDashboard({
           id={String(topic?.id)}
           name={topic?.name}
           privacity={(Privacity.PRIVATE as Privacity) ?? undefined}
+          secondaryBtn={
+            <DeleteBtn endpoint={`topics/${searchParams?.id}`} size="md" />
+          }
         />
       </SearchModal>
       <SearchModal
@@ -177,7 +156,6 @@ export default async function SubjectDashboard({
           privacity={(Privacity.PRIVATE as Privacity) ?? undefined}
         />
       </SearchModal>
-      <Toaster />
     </>
   );
 }

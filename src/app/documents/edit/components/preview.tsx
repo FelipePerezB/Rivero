@@ -6,9 +6,8 @@ import DynamicElement from "src/app/subjects/components/elements/files/dynamic-f
 import { Component } from "../models/component";
 
 export default function Preview({ attrs }: { attrs: Component }) {
-  console.log(attrs)
   return attrs.type ? (
-    <section>
+    <section className="text-xs">
       <span className="text-slate-700">Previsualización</span>
       <div className="overflow-y-scroll flex justify-center">
         <DynamicElement attrs={{ ...attrs }} name={attrs.type} />

@@ -56,33 +56,33 @@ const Table: React.FC<TableProps> = ({ data, head, onClickHref, handlers }) => {
           </thead>
         )}
         <tbody className="inline-block w-full max-h-52 overflow-y-scroll">
-          {data?.map((row, rowIndex) => (
-            <Row onClickHref={onClickHref} key={"row-" + rowIndex}>
-              {row.map((cell, cellIndex) => (
-                <td
-                  className="w-full overflow-hidden text-center text-ellipsis whitespace-nowrap"
-                  key={`column-${cellIndex}-r${rowIndex} `}
-                >
-                  {onClickHref ? (
-                    <Link
-                      className="inline-block w-full py-2"
-                      href={`${onClickHref}${row
-                        ?.map((cell, i) => {
-                          const separator = i !== 0 ? `&` : "";
-                          const key = head?.keys[i].key;
-                          return `${separator}${key}=${cell}`;
-                        })
-                        .join("")}`}
+          {data?.map((row, rowIndex) => {
+            const obj = {} as any;
+            head?.keys.forEach(
+              ({ key, name }, i) => (obj[key ?? name] = row[i])
+            );
+            const regex = /\[(\w+)]/g;
+            const url =
+              onClickHref?.replace(regex, (match, key) => obj[key] ?? match) ??
+              "";
+
+            return (
+              <Row onClickHref={onClickHref} key={"row-" + rowIndex}>
+                {row.map((cell, cellIndex) => {
+                  return (
+                    <td
+                      className="w-full overflow-hidden text-center text-ellipsis whitespace-nowrap"
+                      key={`column-${cellIndex}-r${rowIndex} `}
                     >
-                      {cell}
-                    </Link>
-                  ) : (
-                    <span className="inline-block w-full py-2">{cell}</span>
-                  )}
-                </td>
-              ))}
-            </Row>
-          ))}
+                      <Link className="inline-block w-full py-2 px-2" href={url}>
+                        {cell}
+                      </Link>
+                    </td>
+                  );
+                })}
+              </Row>
+            );
+          })}
         </tbody>
       </table>
     </Card>

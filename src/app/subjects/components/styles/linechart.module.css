@@ -14,7 +14,7 @@
   --mafs-fg: rgb(31, 32, 34);
 
   --mafs-origin-color: var(--mafs-fg);
-  --grid-line-subdivision-color: rgba(10, 3, 45, 0.034);
+  --grid-line-subdivision-color: rgba(10, 3, 45, 0.025);
 
   --mafs-red: #f11d0e;
   --mafs-orange: #f14e0e;

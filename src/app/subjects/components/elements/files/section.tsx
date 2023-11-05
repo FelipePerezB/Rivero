@@ -1,5 +1,8 @@
 import { ReactNode } from "react";
 import DynamicElement from "./dynamic-file";
+import Button from "@components/Button";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faRightLong } from "@fortawesome/free-solid-svg-icons";
 
 export default function Section({
   options,
@@ -19,15 +22,16 @@ export default function Section({
     }[];
   };
 }) {
+  console.log(number);
   return (
     <div
-      className={`bg-white border p-[2.5em] aspect-[210/297] w-full shadow-md hover:shadow-xl print:shadow-none print:hover:shadow-none print:border-none ${
+      className={`relative flex justify-center bg-white p-[1em] sm:p-[2em] print:p-0 w-full h-full ${
         !options?.lastPage ? "break-after-page" : ""
       } }`}
       data-component={id}
       id={"page-" + number}
     >
-      <div className="relative flex flex-col h-full gap-[0.1em]">
+      <div className="w-full flex flex-col h-full gap-[0.6em] max-w-4xl print:max-w-none">
         {children}
         {options?.children?.map((child, i) => (
           <DynamicElement
@@ -36,9 +40,6 @@ export default function Section({
             name={child.type}
           />
         ))}
-        <span className="absolute font-light text-[0.8em] bottom-0 right-0">
-          {number}
-        </span>
       </div>
     </div>
   );

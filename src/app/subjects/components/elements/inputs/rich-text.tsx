@@ -10,32 +10,27 @@ import decompressRichTextContent from "src/app/subjects/utils/lexical/decompress
 import { EquationNode } from "src/app/subjects/utils/lexical/katex/equation-node";
 import EquationsPlugin from "src/app/subjects/utils/lexical/katex/equation-plugin";
 import { PLAYGROUND_TRANSFORMERS } from "src/app/subjects/utils/lexical/markdown-transformer";
+import compressJSON from "src/app/subjects/utils/lexical/compress-JSON";
 
 function onError(error: unknown) {
   console.error(error);
 }
 
-type RootChildren = {
-  children?: RootChildren[];
-  format?: 0 | 1 | 2 | string;
-  type?: "paragraph" | "text" | "equation" | "root" | string;
-  text?: string;
-  equation?: string;
-};
 
-function compressJSON(json: RootChildren) {
-  return JSON.stringify(
-    json?.children?.map(({ children }) =>
-      children?.map(({ format, text, type, equation }) => {
-        let t;
-        let f;
-        if (format) f = format;
-        if (type === "equation") t = 1;
-        return { f, c: text ?? equation, t };
-      })
-    )
-  );
-}
+
+// function compressJSON(json: RootChildren) {
+//   return JSON.stringify(
+//     json?.children?.map(({ children }) =>
+//       children?.map(({ format, text, type, equation }) => {
+//         let t;
+//         let f;
+//         if (format) f = format;
+//         if (type === "equation") t = 1;
+//         return { f, c: text ?? equation, t };
+//       })
+//     )
+//   );
+// }
 export default function Editor({
   label,
   dataKey,
@@ -69,7 +64,8 @@ export default function Editor({
         <MarkdownShortcutPlugin transformers={PLAYGROUND_TRANSFORMERS} />
         <OnChangePlugin
           onChange={(state) => {
-            onChange({ text: compressJSON(state.toJSON().root) });
+            console.log(state.toJSON().root)
+            onChange({ [dataKey ?? label]: compressJSON(state.toJSON().root) });
           }}
         />
       </LexicalComposer>

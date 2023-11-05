@@ -49,6 +49,9 @@ export default function LineChart({
   } catch (error) {
     eq = defaultequation;
   }
+  
+  console.log(equation)
+
 
   useEffect(() => {
     const reSize = () => setHeight(divRef?.current?.clientHeight ?? 0);
@@ -74,7 +77,7 @@ export default function LineChart({
         className={styles.linechart}
         style={{ width: heights[size], height: heights[size] }}
       >
-        <div style={{ fontSize: size === "xs" ? "60%" : "100%" }}>
+        <div style={{ fontSize: size !== "l" ? "80%" : "100%" }}>
           <Mafs
             height={height}
             viewBox={{ x: getViewBox(rangeX), y: getViewBox(rangeY) }}
@@ -87,7 +90,7 @@ export default function LineChart({
             />
             <Plot.OfX
               weight={size === "xs" ? 1.5 : 2.5}
-              color="var(--mafs-blue)"
+              color="var(--mafs-indigo)"
               y={eq}
             />
           </Mafs>

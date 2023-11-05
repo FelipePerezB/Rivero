@@ -17,19 +17,19 @@ import Image from "next/image";
 import { Role } from "@prisma/client";
 
 export default async function NavSidebar() {
-  // const user = await currentUser();
-  // const firstName = user?.firstName;
-  // const lastName = user?.lastName;
-  // const imageUrl = user?.imageUrl;
-  // const role = user?.publicMetadata?.role as string | undefined;
-  // const organization = user?.publicMetadata?.organizationId as
-  //   | string
-  //   | undefined;
+  const user = await currentUser();
+  const firstName = user?.firstName;
+  const lastName = user?.lastName;
+  const imageUrl = user?.imageUrl;
+  const role = user?.publicMetadata?.role as string | undefined;
+  const organization = user?.publicMetadata?.organizationId as
+    | string
+    | undefined;
   return (
     <SearchSidebar id="nav">
-      {/* {firstName && ( */}
+      {firstName && (
       <section>
-        {/* <Link
+        <Link
           className="flex items-center gap-3  p-2 hover:bg-slate-100 rounded-md"
           href={"/profile"}
         >
@@ -48,12 +48,12 @@ export default async function NavSidebar() {
               {role}
             </span>
           </div>
-        </Link> */}
+        </Link>
         <hr className="my-2" />
       </section>
-      {/* )} */}
+      )} 
       <section>
-        {/* <ul className="flex flex-col gap-1 text-slate-800 text-md">
+        <ul className="flex flex-col gap-1 text-slate-800 text-md">
           <Option icon={faHome} link="home" name="Home" />
           <Option
             icon={faChartSimple}
@@ -73,7 +73,7 @@ export default async function NavSidebar() {
           ) : (
             <></>
           )}
-        </ul> */}
+        </ul>
       </section>
     </SearchSidebar>
   );

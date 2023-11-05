@@ -21,6 +21,8 @@ export default function SelectComponent({
 }) {
   const globalsSchemas = schemas as any; // Perdoname Dios
   const categories = Object.keys(globalsSchemas);
+
+  console.log(globalsSchemas)
   // const newNames = types?.map((type) => specifics[type]);
 
   // console.log(newNames);

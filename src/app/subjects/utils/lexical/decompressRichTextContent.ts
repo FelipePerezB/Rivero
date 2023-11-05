@@ -1,3 +1,5 @@
+import GetCompressedText from "./get-compressed-text";
+
 export default function decompressRichTextContent(text: string) {
   let JSONContent;
   try {
@@ -7,7 +9,7 @@ export default function decompressRichTextContent(text: string) {
       t?: 0 | 1 | string;
     }[][];
   } catch (error) {
-    return '{"root":{"children":[{"children":[{"text":"Escribe tu parrafo...","direction":null,"format":0,"indent":0,"type":"text","version":1}],"direction":null,"format":"","indent":0,"type":"paragraph","version":1}],"direction":null,"format":"","indent":0,"type":"root","version":1}}';
+    return GetCompressedText('Escribe tu párrafo...');
   }
   if (!JSONContent) return;
   const initialState = {

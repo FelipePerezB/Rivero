@@ -1,11 +1,11 @@
 import Link from "next/link";
-import { ReactNode } from "react";
+import { MouseEventHandler, ReactNode } from "react";
 
 export type ButtonAttrs = {
   prefetch?: boolean,
   color?: "blue" | "white" | "red" | "black" | "transparent";
   children?: ReactNode;
-  onClick?: any;
+  onClick?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>)=>void;
   size?: "sm" | "lg" | "xs";
   href?: string;
   className?: string;

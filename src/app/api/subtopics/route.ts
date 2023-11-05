@@ -15,6 +15,7 @@ export async function POST(request: Request) {
 
   if (data.id) {
     revalidateTag(`topics/${topicId}`);
+    revalidateTag(`subtopics/${topicId}`);
   }
 
   return NextResponse.json({ data }, { status: 200 });
@@ -34,27 +35,4 @@ export async function GET(request: NextRequest) {
     },
   });
   return NextResponse.json({ data }, { status: 200 });
-}
-
-export async function DELETE(
-  request: Request,
-  { params }: { params: { id: string } }
-) {
-  const id = Number(params.id);
-  const data = await prisma.subtopic.delete({
-    where: {
-      id,
-    },
-  });
-
-  if (data.id) {
-    revalidateTag(`subtopics`);
-  }
-
-  return NextResponse.json(
-    { data },
-    {
-      status: 200,
-    }
-  );
 }

@@ -23,6 +23,7 @@ export default function EditWraper({
   const [settings, setSettings] = useState<NoteWithComponent>(document);
   const divRef = useRef<HTMLDivElement>(null);
   // const resize = () => {
+
   //   const $container = divRef.current;
   //   if (!$container) return;
   //   const pixels = 13;
@@ -49,6 +50,8 @@ export default function EditWraper({
     // window.onresize = resize;
   }, [id]);
 
+  console.log(document)
+
   useEffect(() => {
     localStorage.setItem(`document-${externalId}`, JSON.stringify(settings));
   }, [settings]);
@@ -59,7 +62,7 @@ export default function EditWraper({
         {externalId && name && type && (
           <ScreenLayout>
             <DynamicElement
-              attrs={{ options: content.options, name, id: content.id, type, editMode: true }}
+              attrs={{ ...content, name,type, editMode: true }}
               name={content.type}
             />
           </ScreenLayout>

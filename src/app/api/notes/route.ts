@@ -54,9 +54,11 @@ export async function POST(request: Request) {
     },
   });
 
-  if(data?.type === Types.EVALUATION && data?.subjectId){
+  console.log(data)
+
+  if (data?.type === Types.EVALUATION && data?.subjectId) {
     revalidateTag("evaluations/" + data.subjectId);
-  } 
+  }
 
   if (data?.subjectId) {
     revalidateTag("subjects/" + data.subjectId);
@@ -74,11 +76,14 @@ export async function POST(request: Request) {
 
 export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams;
-  const subject = Number(searchParams.get("subject")) as number | undefined;
+  const subject = searchParams.get("subject");
+  const subtopic = searchParams.get("subtopic");
   const type = searchParams.get("type") as Types | undefined;
+  console.log(subject ? Number(subject) : undefined, subtopic, type)
   const data = await prisma.note.findMany({
-    where: { subjectId: subject, type },
+    where: { subjectId: subject ? Number(subject) : undefined , type, subtopicId: Number(subtopic) },
     include: { File: true },
   });
+  console.log(data.filter(({subtopicId})=>subtopicId))
   return NextResponse.json({ data }, { status: 200 });
 }

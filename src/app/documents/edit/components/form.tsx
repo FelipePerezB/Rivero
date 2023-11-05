@@ -19,9 +19,10 @@ import Preview from "./preview";
 import { Component, ComponentOptions } from "../models/component";
 import Children from "src/app/subjects/components/elements/inputs/children";
 import DynamicInput from "src/app/subjects/components/elements/inputs/dynamic-input";
-import { componentsNames } from "../utils/schemas";
+// import { componentsNames } from "../utils/schemas";
 import SelectCategory from "./select-category";
 import SelectComponent from "./select-component";
+import specifics from "../utils/schemas/specifics";
 
 type options = "Configuración" | "Hijos";
 
@@ -74,6 +75,7 @@ export default function Form({
   useEffect(() => {
     if (!component.type) return;
     const schemas = getSchema(component.type);
+    console.log(schemas);
     if (schemas?.length) {
       setInputs(
         schemas?.map(({ options: data, type }, i) => {
@@ -110,6 +112,8 @@ export default function Form({
     }
   }, [component.type, defaultValues]);
 
+  console.log(component);
+
   return (
     <div className="flex flex-col gap-2">
       {!type && (
@@ -118,19 +122,14 @@ export default function Form({
           <hr className="py-1" />
         </>
       )}
-      {type && type !== "section" && <Preview {...{ attrs: component }} />}
+      {type && type !== "section" && type !== "document" && (
+        <Preview {...{ attrs: component }} />
+      )}
       <Options {...{ option, setOption, options: options }} />
       {option === "Configuración" && <>{inputs?.map((input) => input)}</>}
       {option === "Hijos" && (
         <div>
-          <FormChildren
-            onChange={addFormData}
-            {...{
-              // onChange: addFormData,
-              parentId: id,
-              children,
-            }}
-          />
+          <FormChildren onChange={addFormData} {...{ children }} />
           <Children
             types={childrenTypes}
             value={children}

@@ -1,6 +1,7 @@
+import { auth } from "@clerk/nextjs";
 import { Topic } from "@prisma/client";
 import { revalidateTag } from "next/cache";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import prisma from "src/app/utils/prisma";
 
 export async function PATCH(
@@ -22,6 +23,7 @@ export async function PATCH(
 
   if (data.id) {
     revalidateTag(`topics/${data.topicId}`);
+    revalidateTag(`subtopics/${data.id}`);
   }
 
   return NextResponse.json(
@@ -32,11 +34,29 @@ export async function PATCH(
   );
 }
 
+export async function GET(
+  request: NextRequest,
+  { params: { id } }: { params: { [key: string]: string } }
+) {
+  const data = await prisma.subtopic.findUnique({
+    where: { id: Number(id) },
+    include: {
+      Notes: {
+        include: {
+          File: { select: { name: true, externalId: true, id: true } },
+        },
+      },
+    },
+  });
+  return NextResponse.json({ data }, { status: 200 });
+}
+
 export async function DELETE(
   request: Request,
   { params }: { params: { id: string } }
 ) {
   const id = Number(params.id);
+  console.log(id)
   const data = await prisma.subtopic.delete({
     where: {
       id,
@@ -45,6 +65,7 @@ export async function DELETE(
 
   if (data.topicId) {
     revalidateTag(`topics/${data.topicId}`);
+    revalidateTag(`subtopics/${data.id}`);
   }
 
   return NextResponse.json(

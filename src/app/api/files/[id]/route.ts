@@ -70,6 +70,10 @@ export async function PATCH(
     data: updateData,
     include: { Note: true },
   });
+  if(data?.id){
+    revalidateTag(`files/${data?.id}`)
+  }
+
   if (data?.Note?.subjectId && data?.Note?.type === "EVALUATION") {
     revalidateTag("evaluations/" + data.Note.subjectId);
   }

@@ -2,6 +2,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 import DynamicElement from "./dynamic-file";
+import Paragraph from "./paragraph";
+import GetCompressedText from "src/app/subjects/utils/lexical/get-compressed-text";
+import decompressRichTextContent from "src/app/subjects/utils/lexical/decompressRichTextContent";
+import compressJSON from "src/app/subjects/utils/lexical/compress-JSON";
 
 export type QuestionType = {
   id: string;
@@ -30,11 +34,10 @@ export default function Question({
   options: { question, alternatives, check, expectedAns, children } = {
     alternatives: "Alternativa A",
     expectedAns: "A",
-    question: "Pregunta",
+    question: "",
     children: [],
   },
 }: QuestionType) {
-
   useEffect(() => {
     if (!check) return;
     // const name = answer === expectedAns ? "correct-ans" : "incorrect-ans";
@@ -42,9 +45,9 @@ export default function Question({
   }, [check]);
   return (
     <div data-component={id} className="w-full">
-      <article className="p-[0.5em]">
-        <p className="text-[1em]">
-          {number}.- {question}
+      <article className="p-[0.5em] break-inside-avoid">
+        <p className="flex gap-[0.4em]">
+          {number}.- <Paragraph options={{ text: question, indent: false }} />
         </p>
         {children?.toString() && (
           <div className="my-2.5">
@@ -87,7 +90,7 @@ export default function Question({
                   type="radio"
                   name={"alternative" + id}
                 />
-                <label className="inline-block p-[0.32em] print:p-0 w-full outline outline-gray-200 outline-[0.05em] rounded peer-checked:outline-blue-500 peer-checked:outline-[0.14em] print:outline-none bg-white peer-hover:bg-slate-50">
+                <label className="inline-block p-[0.32em] w-full outline outline-gray-200 outline-[0.05em] rounded peer-checked:outline-blue-500 peer-checked:outline-[0.14em] print:outline-none bg-white peer-hover:bg-slate-50">
                   <span className="text-[0.8em] print:text-[1em]">
                     <span>{`${letter[i]}) `}</span>
                     <span>{alternative}</span>

@@ -1,11 +1,6 @@
-import Button from "@components/Button";
 import NavigationCard from "@components/cards/navigationCard/NavigationCard";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Privacity, Subject, Types } from "@prisma/client";
+import { Privacity } from "@prisma/client";
 import React from "react";
-import { Toaster } from "react-hot-toast";
-import CreateAlert from "src/app/components/admin/create-alert/create-alert";
 import DeleteBtn from "src/app/components/admin/delete-btn/delete-btn";
 import UpdateForm from "src/app/components/admin/update-form/update-form";
 import ItemsBox from "src/app/components/items-box/items-box";
@@ -24,9 +19,9 @@ export default async function SubjectDashboardPage({
   const { data: evaluations } = (await api(
     `notes/evaluations?subject=${subject}`
   )) as { data: NoteWithFile[] };
-  const { subjects } = (await api(`subjects`, {}, ["subjects"])) as {
-    subjects: Subject[];
-  };
+  // const { subjects } = (await api(`subjects`, {}, ["subjects"])) as {
+  //   subjects: Subject[];
+  // };
   return (
     <>
       <div className="flex justify-between">
@@ -58,7 +53,7 @@ export default async function SubjectDashboardPage({
           }
         />
       </SearchModal>
-      <Toaster />
+      {/* <Toaster /> */}
     </>
   );
 }
