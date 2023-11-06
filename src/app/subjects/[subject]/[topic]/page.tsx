@@ -68,7 +68,7 @@ export default async function TopictPage({
       <h3 className="text-2xl font-bold">{capFirst(subject?.name)}</h3>
       <div className="flex gap-4 w-full md:gap-8 lg:gap-16">
         <Suspense
-          fallback={<NavigationCard href="/">Evaluaciones</NavigationCard>}
+          fallback={<NavigationCard href="">Evaluaciones</NavigationCard>}
         >
           <EvaluationsBtn />
         </Suspense>
@@ -112,7 +112,7 @@ export default async function TopictPage({
               key={"AA"}
               content={Notes?.map(({ File: { externalId, name }, id }) => ({
                 name,
-                href: externalId,
+                href: `document/${externalId}`,
               }))}
               summary={capFirst(name)}
             />

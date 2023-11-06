@@ -46,9 +46,9 @@ export default function Question({
   return (
     <div data-component={id} className="w-full">
       <article className="p-[0.5em] break-inside-avoid">
-        <p className="flex gap-[0.4em]">
+        <div className="flex gap-[0.4em]">
           {number}.- <Paragraph options={{ text: question, indent: false }} />
-        </p>
+        </div>
         {children?.toString() && (
           <div className="my-2.5">
             {children?.map((child, i) => (
