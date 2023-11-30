@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+:root{
+  --primary-color: "#216AD9"
+}
+
 /* @import "mafs/core.css"; */
 /* @import "mafs/font.css"; */
 
@@ -33,6 +37,9 @@ body {
 }
 
 @media print {
+  * {
+    -webkit-print-color-adjust: exact;
+}
   @page:first {
     margin: 6mm;
   }

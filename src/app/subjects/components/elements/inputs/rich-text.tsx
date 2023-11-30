@@ -11,12 +11,11 @@ import { EquationNode } from "src/app/subjects/utils/lexical/katex/equation-node
 import EquationsPlugin from "src/app/subjects/utils/lexical/katex/equation-plugin";
 import { PLAYGROUND_TRANSFORMERS } from "src/app/subjects/utils/lexical/markdown-transformer";
 import compressJSON from "src/app/subjects/utils/lexical/compress-JSON";
+import Label from "./label";
 
 function onError(error: unknown) {
   console.error(error);
 }
-
-
 
 // function compressJSON(json: RootChildren) {
 //   return JSON.stringify(
@@ -51,6 +50,7 @@ export default function Editor({
 
   return (
     <div translate="no" className="relative">
+      <span>Texto</span>
       <LexicalComposer initialConfig={initialConfig}>
         <RichTextPlugin
           placeholder={<></>}
@@ -64,7 +64,7 @@ export default function Editor({
         <MarkdownShortcutPlugin transformers={PLAYGROUND_TRANSFORMERS} />
         <OnChangePlugin
           onChange={(state) => {
-            console.log(state.toJSON().root)
+            console.log(state.toJSON().root);
             onChange({ [dataKey ?? label]: compressJSON(state.toJSON().root) });
           }}
         />

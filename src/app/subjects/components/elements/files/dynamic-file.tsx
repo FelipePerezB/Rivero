@@ -16,6 +16,10 @@ const imports = {
   excercises: dynamic(() => import(`./excercises`)),
   header: dynamic(() => import(`./header`)),
   set: dynamic(() => import(`./set`)),
+  svg: dynamic(() => import(`./svg`)),
+  plot: dynamic(() => import(`./box-plot`)),
+  venn: dynamic(() => import(`./venn`)),
+  table: dynamic(() => import(`./table`)),
 } as any;
 
 export default function DynamicElement({

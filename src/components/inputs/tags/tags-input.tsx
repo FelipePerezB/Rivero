@@ -10,7 +10,7 @@ export default function TagsInput({
   onChange: (tag: string) => void;
 }) {
   return (
-    <form className="flex gap-3 items-center w-full">
+    <form className="flex gap-3 items-center w-full overflow-x-auto">
       {tags.map(({ value, node }, i) => (
         <label className="relative" key={`${group}-${i}`}>
           <input

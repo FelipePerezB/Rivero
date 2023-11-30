@@ -7,6 +7,8 @@ const imports = {
   options: dynamic(() => import(`./options`)),
   text: dynamic(() => import(`./text`)),
   boolean: dynamic(() => import(`./boolean`)),
+  array: dynamic(() => import(`./array`)),
+  "sub-inputs": dynamic(() => import(`./sub-inputs`)),
   "rich-text": dynamic(() => import(`./rich-text`)),
 } as any;
 
@@ -18,6 +20,10 @@ export default function DynamicInput({
   attrs: { [key: string]: unknown };
 }) {
   const Component = imports[name];
-  console.log(attrs)
-  return <Component {...{ ...attrs }} key={`dynamic-input-${attrs.parentId}-${String(attrs.value)}`} />;
+  return (
+    <Component
+      {...{ ...attrs }}
+      key={`dynamic-input-${attrs.parentId}-${String(attrs.value)}`}
+    />
+  );
 }

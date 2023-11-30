@@ -23,11 +23,13 @@
     "@lexical/rich-text": "^0.12.2",
     "@lexical/utils": "^0.12.2",
     "@prisma/client": "^5.4.1",
+    "@types/d3": "^7.4.2",
     "@types/node": "18.14.2",
     "@types/react": "18.2.24",
     "@types/react-dom": "18.0.11",
     "axios": "^1.4.0",
     "chart.js": "^4.2.1",
+    "d3": "^7.8.5",
     "eslint": "8.35.0",
     "eslint-config-next": "14.0.1",
     "geist": "^1.0.0",
@@ -44,7 +46,8 @@
     "react-dom": "18.2.0",
     "react-hot-toast": "^2.4.1",
     "server-only": "^0.0.1",
-    "svix": "^1.8.1"
+    "svix": "^1.8.1",
+    "venn.js": "^0.2.20"
   },
   "devDependencies": {
     "@graphql-codegen/cli": "4.0.1",

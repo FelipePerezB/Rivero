@@ -57,6 +57,22 @@ const basics = {
   ],
   paragraph: [
     {
+      type: "options",
+      options: {
+        key: "fontSize",
+        label: "font size",
+        options: ["md", "lg", "sm"],
+      },
+    },
+    {
+      type: "options",
+      options: {
+        key: "align",
+        label: "alinear",
+        options: ["justify", "center", "left"],
+      },
+    },
+    {
       type: "rich-text",
       options: {
         key: "text",
@@ -84,6 +100,46 @@ const basics = {
       options: {
         key: "subtitle",
         label: "Subtítulo",
+      },
+    },
+  ],
+  svg: [
+    {
+      type: "options",
+      options: {
+        key: "size",
+        label: "tamaño",
+        options: ["sm", "md", "lg"],
+      },
+    },
+    {
+      type: "text",
+      options: {
+        key: "svg",
+        label: "svg",
+      },
+    },
+  ],
+  table: [
+    {
+      type: "text",
+      options: {
+        key: "title",
+        label: "título",
+      },
+    },
+    {
+      type: "array",
+      options: {
+        key: "cols",
+        label: "columnas",
+      },
+    },
+    {
+      type: "array",
+      options: {
+        key: "rows",
+        label: "filas",
       },
     },
   ],
@@ -130,6 +186,34 @@ const math = {
       },
     },
   ],
+  plot: [
+    {
+      type: "text",
+      options: {
+        key: "data",
+        label: "Datos",
+      },
+    },
+  ],
+  venn: [
+    {
+      type: "sub-inputs",
+      options: {
+        key: "data",
+        label: "Datos",
+        sets: [
+          {
+            key: "sets",
+            label: "sets",
+          },
+          {
+            key: "value",
+            label: "valor",
+          },
+        ],
+      },
+    },
+  ],
   linechart: [
     {
       type: "options",
@@ -140,10 +224,16 @@ const math = {
       },
     },
     {
-      type: "text",
+      type: "array",
       options: {
-        key: "equation",
-        label: "ecuación",
+        key: "equations",
+        label: "ecuaciones",
+        sets: [
+          {
+            key: "equation",
+            label: "ecuacion",
+          },
+        ],
       },
     },
     {

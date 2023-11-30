@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 import styles from "../../styles/linechart.module.css";
 import { Mafs, Coordinates, Plot } from "mafs";
@@ -13,21 +14,22 @@ const getViewBox = (range: string = "-10/10") =>
 
 export default function LineChart({
   id,
-  options: { equation, rangeX, rangeY, size } = {
+  options: { equations, rangeX, rangeY, size } = {
     size: "xs",
     rangeX: "-10/10",
     rangeY: "-10/40",
-    equation: "2 * x",
+    equations: ["2 * x"],
   },
 }: {
   options: {
     size: "xs" | "s" | "m" | "l";
     rangeX: string;
     rangeY: string;
-    equation: string;
+    equations: string[];
   };
   id: string;
 }) {
+  console.log(equations);
   const regex = /^([-+/().]?[0-9]*\*?x?[\s]*)*$/;
   const divRef = useRef<HTMLDivElement>(null);
   const [height, setHeight] = useState<number>(100);
@@ -40,18 +42,27 @@ export default function LineChart({
   };
 
   const defaultequation = (x: number) => x * 0;
-  let eq: (num: number) => number;
-  try {
-    if (!regex.test(equation)) throw new Error("Invalid equation");
-    if (typeof eval(`(x) => ${equation}`)(0) !== "number")
-      throw new Error("Invalid equation");
-    eq = eval(`(x) => ${equation}`);
-  } catch (error) {
-    eq = defaultequation;
-  }
-  
-  console.log(equation)
+  const [purifyEquations, setPurifyEquations] = useState<
+    ((num: number) => number)[]
+  >([]);
+  useEffect(() => {
+    try {
+      equations.forEach((equation) => {
+        if (!regex.test(equation)) throw new Error("Invalid equation");
+        if (typeof eval(`(x) => ${equation}`)(0) !== "number")
+          throw new Error("Invalid equation");
+        console.log(equation);
+        purifyEquations.push(eval(`(x) => ${equation}`));
+        setPurifyEquations([...purifyEquations]);
+      });
+    } catch (error) {
+      purifyEquations.push(defaultequation);
+      setPurifyEquations([...purifyEquations]);
+    }
+    // return () => setPurifyEquations([]);
+  }, []);
 
+  console.log(purifyEquations);
 
   useEffect(() => {
     const reSize = () => setHeight(divRef?.current?.clientHeight ?? 0);
@@ -88,11 +99,14 @@ export default function LineChart({
               yAxis={{ lines: Number((range / linesNum).toFixed(0)) }}
               subdivisions={1.0005}
             />
-            <Plot.OfX
-              weight={size === "xs" ? 1.5 : 2.5}
-              color="var(--mafs-indigo)"
-              y={eq}
-            />
+            {purifyEquations?.map((equation, i) => (
+              <Plot.OfX
+                key={`equation-${id}-${i}`}
+                weight={size === "xs" ? 1.5 : 2.5}
+                color="var(--mafs-indigo)"
+                y={equation}
+              />
+            ))}
           </Mafs>
         </div>
       </div>

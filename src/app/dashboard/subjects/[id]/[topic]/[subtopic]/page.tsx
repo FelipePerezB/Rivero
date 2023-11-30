@@ -64,7 +64,7 @@ export default async function SubtopicPage({
         head={{
           icons: [
             <CreateFileBtn key={"create-file-alert"} subtopicId={subtopicId} />,
-            <TableBtn href="?modal=modify-subtopic" key={"edit-btn"}>
+            <TableBtn href={`?modal=modify-subtopic&name=${subtopic?.name}&id=${subtopic?.id}`} key={"edit-btn"}>
               <FontAwesomeIcon className="h-2.5 w-2.5" icon={faPen} />
             </TableBtn>,
           ],

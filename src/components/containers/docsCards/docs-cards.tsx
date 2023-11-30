@@ -34,7 +34,7 @@ export default function DocsCards({
                 {document.file.name}
               </span>
             </div>
-            <div className="absolute w-full text-[5px] top-0 left-0 scale-[102%]">
+            <div className="absolute w-full text-[3px]/[5px] top-0 left-0 scale-[102%]">
               <DynamicElement
                 attrs={{
                   options: document?.file?.content?.options,

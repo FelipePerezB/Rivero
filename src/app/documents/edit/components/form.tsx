@@ -92,7 +92,7 @@ export default function Form({
           if (type === "children") {
             setChildrenTypes(data?.types);
           }
-          const value = defaultValues[data.key];
+          const value = defaultValues[data?.key];
           return (
             <DynamicInput
               key={"input-" + i}

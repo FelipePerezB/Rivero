@@ -32,7 +32,7 @@ export default function Set({
         gridTemplateColumns: `repeat(${COLS}, 1fr)`,
         gridTemplateRows: `repeat(${ROWS}, 1fr)`,
       }}
-      className="grid justify-center items-center w-11/12 h-full mx-auto aspect-[8/1] outline outline-[0.125em] outline-black rounded-sm p-[0.8em]"
+      className="grid justify-center items-center w-11/12 mx-auto aspect-[8/1] outline outline-[0.125em] outline-black rounded-sm p-[0.8em]"
       data-component={id}
     >
       {child?.id && (

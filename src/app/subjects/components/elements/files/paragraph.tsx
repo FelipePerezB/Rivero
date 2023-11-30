@@ -24,15 +24,30 @@ function UpdatePlugin({ content }: { content: string }) {
   return null;
 }
 
+type aligns = "center" | "justify" | "left";
+type sizes = "sm" | "md" | "lg";
+
+const fontsSizes = {
+  sm: "0.8em",
+  md: "1em",
+  lg: "1.2em",
+};
+
 export default function Paragraph({
   id,
-  options: { text, indent } = { text: "", indent: false },
+  options: { text, indent, align, fontSize } = {
+    text: "",
+    indent: false,
+    align: "justify",
+    fontSize: "md",
+  },
 }: {
   id?: string;
-  options: { text: string, indent: boolean };
+  options: { text: string; indent: boolean; align: aligns; fontSize: sizes };
 }) {
+  console.log(fontSize);
   const content = decompressRichTextContent(text) as unknown as string;
-  console.log(content, text)
+  console.log(content, text);
 
   try {
     return (
@@ -50,7 +65,16 @@ export default function Paragraph({
           <RichTextPlugin
             placeholder={<></>}
             ErrorBoundary={LexicalErrorBoundary}
-            contentEditable={<ContentEditable style={{textIndent: indent ? "1em" : "0" }} className="text-justify" />}
+            contentEditable={
+              <ContentEditable
+                style={{
+                  textIndent: indent ? "1em" : "0",
+                  textAlign: align,
+                  fontSize: fontsSizes[fontSize],
+                }}
+                // className="text-justify"
+              />
+            }
           />
           <UpdatePlugin content={content} />
         </LexicalComposer>

@@ -23,7 +23,7 @@ const Row = ({
 }) => {
   return (
     <tr
-      className={`w-full flex justify-around border-t ${
+      className={`w-full flex justify-around border-t h-max ${
         onClickHref ? "cursor-pointer hover:bg-slate-50" : ""
       }`}
     >
@@ -34,11 +34,11 @@ const Row = ({
 
 const Table: React.FC<TableProps> = ({ data, head, onClickHref, handlers }) => {
   return (
-    <Card className="p-0">
+    <Card className="p-0 rounded">
       <table className="flex flex-col">
         {head?.title && (
-          <caption className="w-full flex justify-between items-center py-2 px-2">
-            <h3 className="text-lg font-bold">{head.title}</h3>
+          <caption className="w-full flex justify-between items-center p-[0.6em]">
+            <h3 className="text-[1.2em] font-bold">{head.title}</h3>
             <div className="flex items-center gap-2.5 text-sm">
               {head.icons?.map((icon) => icon)}
             </div>
@@ -48,7 +48,7 @@ const Table: React.FC<TableProps> = ({ data, head, onClickHref, handlers }) => {
           <thead>
             <Row>
               {head?.keys.map(({ name, key }, i) => (
-                <th className="py-2" key={"th-" + i}>
+                <th className="py-[0.6em]" key={"th-" + i}>
                   {name}
                 </th>
               ))}
@@ -74,7 +74,7 @@ const Table: React.FC<TableProps> = ({ data, head, onClickHref, handlers }) => {
                       className="w-full overflow-hidden text-center text-ellipsis whitespace-nowrap"
                       key={`column-${cellIndex}-r${rowIndex} `}
                     >
-                      <Link className="inline-block w-full py-2 px-2" href={url}>
+                      <Link className="inline-block w-full p-[0.6em]" href={url}>
                         {cell}
                       </Link>
                     </td>

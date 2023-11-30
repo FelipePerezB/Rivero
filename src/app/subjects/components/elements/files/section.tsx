@@ -25,7 +25,7 @@ export default function Section({
   console.log(number);
   return (
     <div
-      className={`relative flex justify-center bg-white p-[1em] sm:p-[2em] print:p-0 w-full h-full ${
+      className={`flex justify-center bg-white p-[1em] sm:p-[2em] print:p-0 w-full ${
         !options?.lastPage ? "break-after-page" : ""
       } }`}
       data-component={id}

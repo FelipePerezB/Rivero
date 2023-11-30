@@ -14,7 +14,7 @@ export default function EditDocumentLayout({
   children: ReactNode;
 }) {
   return (
-    <div className="p-4 pt-16 max-w-2xl mx-auto print:max-w-none">
+    <div className="p-4 pt-16 max-w-2xl mx-auto  w-full h-full print:max-w-none">
       <Navar
         setSettings={setSettings}
         settings={settings}

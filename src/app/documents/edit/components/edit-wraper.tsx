@@ -58,7 +58,7 @@ export default function EditWraper({
 
   return (
     <Layout settings={settings} setSettings={setSettings}>
-      <div ref={divRef}>
+      <div className="h-full w-full" ref={divRef}>
         {externalId && name && type && (
           <ScreenLayout>
             <DynamicElement

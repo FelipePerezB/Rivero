@@ -7,7 +7,7 @@ export default function FileContainer({
   children: ReactNode;
 }) {
   return (
-    <div className="absolute w-full flex justify-center h-max top-0 left-0">
+    <div className="absolute w-full flex justify-center h-full top-0 left-0">
       <div
         id="document-container"
         data-component={id}
