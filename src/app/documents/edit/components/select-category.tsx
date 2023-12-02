@@ -1,4 +1,4 @@
-import TagsInput from "@components/inputs/tags/tags-input";
+import TagsInput from "@components/form/tags/tags-input";
 import React from "react";
 
 const Category = ({

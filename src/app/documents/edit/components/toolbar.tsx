@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
-import ClientModal from "src/app/components/modal/client-modal";
+import ClientModal from "@components/modal/client-modal";
 import getNode from "../utils/getNode";
 import iterateObj from "../utils/iterateObj";
 import { Component, NoteWithComponent } from "../models/component";

@@ -1,11 +1,11 @@
 "use client";
 import { currentUser } from "@clerk/nextjs";
-import Card from "@components/Card";
-import { createMessages } from "@components/alert/alert-message";
+import { createMessages } from "@components/common/alert/alert-message";
 import { Role } from "@prisma/client";
+import Card from "@components/cards/Card";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
-import api from "src/app/utils/api";
+import api from "src/utils/api";
 
 export default function CreatePracticeBtn({ subject }: { subject: string }) {
   const router = useRouter();

@@ -1,4 +1,4 @@
-import Button from "@components/Button";
+import Button from "@components/common/buttons/button/button";
 import {
   faFileArrowDown,
   faFileExcel,
@@ -6,7 +6,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import { NoteWithFile } from "src/app/subjects/models/note";
-import api from "src/app/utils/api";
+import api from "src/utils/api";
 import GroupsLinks from "../components/groups-links";
 import ScoresStats from "../../[group]/[evaluation]/components/scores-stats/scores-stats";
 

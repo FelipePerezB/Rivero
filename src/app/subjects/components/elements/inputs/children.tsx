@@ -1,9 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
-import Buttons from "@components/button/buttons/Buttons";
+import Buttons from "@components/common/buttons/buttons/Buttons";
 // import Form from "../../../edit/components/form";
 import { Component } from "src/app/documents/edit/models/component";
-import ClientModal from "src/app/components/modal/client-modal";
+import ClientModal from "@components/modal/client-modal";
 import generateRandomId from "src/app/subjects/utils/generateRandomId";
 import { IdLenght } from "src/models/document.model";
 import Form from "src/app/documents/edit/components/form";

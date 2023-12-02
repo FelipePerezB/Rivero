@@ -1,7 +1,7 @@
 import { auth } from "@clerk/nextjs";
 import React from "react";
-import { ChartComponent } from "src/app/components/charts/line/linechart";
-import api from "src/app/utils/api";
+import { ChartComponent } from "@components/dashboard/charts/line/linechart";
+import api from "src/utils/api";
 
 export default async function GroupStats({ group, organization, subject }: { group: string, organization: string, subject: string }) {
   const { getToken } = auth();

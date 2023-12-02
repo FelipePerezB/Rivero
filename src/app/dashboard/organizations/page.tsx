@@ -1,16 +1,17 @@
 import { auth } from "@clerk/nextjs";
-import Button from "@components/Button";
-import Card from "@components/Card";
-import CardItem from "@components/cards/card-item/card-item";
-import NavigationCard from "@components/cards/navigationCard/NavigationCard";
+import Button from "@components/common/buttons/button/button";
 import { faPerson, faPlus, faUser } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Group, Organization } from "@prisma/client";
 import React from "react";
-import ItemsBox from "src/app/components/items-box/items-box";
-import SearchModal from "src/app/components/modal/search-modal";
-import api from "src/app/utils/api";
+import SearchModal from "@components/modal/search-modal";
+import api from "src/utils/api";
 import CreateOrgForm from "./components/create-org";
+import ItemsBox from "@components/containers/items-box/items-box";
+import CardItem from "@components/cards/card-item";
+import NavigationCard from "@components/cards/NavigationCard";
+import Card from "@components/cards/Card";
+// import ItemsBox from "@components/dashboard/items-box/items-box";
 
 export default async function Organizations({
   searchParams,

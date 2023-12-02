@@ -2,7 +2,7 @@ import { auth, currentUser } from "@clerk/nextjs";
 import { Privacity, Types } from "@prisma/client";
 import { NoteWithFile } from "src/app/subjects/models/note";
 import generateRandomId from "src/app/subjects/utils/generateRandomId";
-import api from "src/app/utils/api";
+import api from "src/utils/api";
 import { IdLenght } from "src/models/document.model";
 
 export default async function getPractice({ subject }: { subject: string }) {

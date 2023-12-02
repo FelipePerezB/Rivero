@@ -1,5 +1,5 @@
-import { auth, currentUser } from "@clerk/nextjs";
-import NavigationCard from "@components/cards/navigationCard/NavigationCard";
+import { currentUser } from "@clerk/nextjs";
+import NavigationCard from "@components/cards/NavigationCard";
 import React from "react";
 
 export default async function EvaluationsBtn() {

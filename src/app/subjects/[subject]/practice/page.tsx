@@ -1,7 +1,7 @@
 import { auth, currentUser } from "@clerk/nextjs";
 import { Role } from "@prisma/client";
 import React from "react";
-import api from "src/app/utils/api";
+import api from "src/utils/api";
 import CreateBtn from "./components/create-btn";
 import DynamicElement from "../../components/elements/files/dynamic-file";
 import { NoteWithFile } from "../../models/note";

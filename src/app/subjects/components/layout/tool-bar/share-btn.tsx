@@ -1,17 +1,13 @@
-import Button from "@components/Button";
-import Options from "@components/Options";
-import Buttons from "@components/button/buttons/Buttons";
-import CircleButton from "@components/button/circle-button/circle-button";
-import OptionsInput from "@components/inputs/OptionsInput/OptionsInput";
-import StandardInput from "@components/inputs/StandardInput/StandardInput";
-import { faShare } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Button from "@components/common/buttons/button/button";
+import StandardInput from "@components/form/StandardInput/StandardInput";
 import { Privacity } from "@prisma/client";
 import React, { useState } from "react";
-import ClientModal from "src/app/components/modal/client-modal";
+import ClientModal from "@components/modal/client-modal";
 import { NoteWithComponent } from "src/app/documents/edit/models/component";
 import { hydrateJSON } from "src/app/documents/edit/utils/hydrateJSON";
 import { removeIdFromObject } from "src/app/documents/edit/utils/removeId";
+import OptionsInput from "@components/form/OptionsInput/OptionsInput";
+import Options from "@components/common/options";
 
 export default function ShareBtn({
   settings,
@@ -35,9 +31,9 @@ export default function ShareBtn({
         onClick={() => setState(true)}
         className=" cursor-pointer flex items-center gap-1"
       >
-        <CircleButton>
+        {/* <CircleButton>
           <FontAwesomeIcon className="flex items-center" icon={faShare} />
-        </CircleButton>
+        </CircleButton> */}
         <span className="hidden md:inline-block">Share</span>
       </div>
       <ClientModal setState={setState} state={state} title="Compartir">

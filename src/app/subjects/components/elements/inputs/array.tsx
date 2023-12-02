@@ -1,11 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import Button from "@components/Button";
-import StandardInput from "@components/inputs/StandardInput/StandardInput";
-import TableBtn from "@components/table/table-btn/table-btn";
+import Button from "@components/common/buttons/button/button";
+import StandardInput from "@components/form/StandardInput/StandardInput";
 import { faLeftLong, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect, useState } from "react";
-import capFirst from "src/utils/capFirst";
 
 export default function Array({
   label,

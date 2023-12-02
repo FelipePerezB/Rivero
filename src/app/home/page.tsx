@@ -1,12 +1,12 @@
-import { SubjectWithTopic } from "@components/containers/subjectsCards/SubjectsCards";
 import React, { Suspense } from "react";
-import api from "../utils/api";
-import Tags from "@components/tags/Tags";
-import DocsCards from "@components/containers/docsCards/docs-cards";
-import ItemsBox from "../components/items-box/items-box";
-import CardWithItem from "@components/cards/card-with-item/card-with-item";
+import api from "../../utils/api";
+import Tags from "@components/common/tags/Tags";
+import ItemsBox from "../../components/containers/items-box/items-box";
 import HomeTitle from "./components/home-title";
-import LargeSkeleton from "../components/loading-skeleton/large-skeleton/large-skeleton";
+import LargeSkeleton from "../../components/layout/loading-skeleton/large-skeleton/large-skeleton";
+import { SubjectWithTopic } from "../subjects/models/subject";
+import DocsCards from "@components/containers/docs-cards/docs-cards";
+import CardWithItem from "@components/cards/card-with-item";
 
 export default async function HomePage() {
   const { subjects } = (await api("subjects", {}, ["subjects"])) as {

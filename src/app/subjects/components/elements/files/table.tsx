@@ -1,5 +1,5 @@
+import Table from "@components/dashboard/table/Table";
 import React from "react";
-import Table from "@components/table/Table";
 import capFirst from "src/utils/capFirst";
 
 export default function TableElement({

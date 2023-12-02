@@ -3,16 +3,8 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import type { WebhookRequiredHeaders } from "svix";
 import type { WebhookEvent } from "@clerk/nextjs/server";
 import { Webhook } from "svix";
-import { client } from "src/service/client";
-import {
-  CreateUserDocument,
-  RemoveUserDocument,
-  Role,
-  // UpdateUserDocument,
-  // UserCreateInput,
-} from "src/gql/graphql";
-import prisma from "src/app/utils/prisma";
-import { User } from "@prisma/client";
+import prisma from "src/utils/prisma";
+import { Role, User } from "@prisma/client";
 import { revalidateTag } from "next/cache";
 
 const webhookSecret = process.env.WEBHOOK_SECRET;
@@ -21,7 +13,6 @@ export default async function Handler(
   req: NextApiRequestWithSvixRequiredHeaders,
   res: NextApiResponse
 ) {
-  console.log("AAAAAAaa");
   const payload = JSON.stringify(req.body);
   const headers = req.headers;
   if (!webhookSecret) return;
@@ -34,7 +25,7 @@ export default async function Handler(
     evt = wh.verify(payload, headers) as WebhookEvent;
   } catch (_) {
     // If the verification fails, return a 400 error
-    return res.status(400).json({});
+    return res.status(400).json({message: "verification fails"});
   }
   const eventType = evt.type;
 
@@ -47,7 +38,7 @@ export default async function Handler(
       public_metadata: { groups, organizationId, role },
     } = evt.data;
     if (!id) {
-      res.status(400).json({});
+      res.status(400).json({message: "missing user ID"});
       return;
     }
     console.log(evt.data);
@@ -60,7 +51,7 @@ export default async function Handler(
       !organizationId ||
       !role
     ) {
-      res.status(400).json({});
+      res.status(400).json({message: "missing data"});
       return;
     }
 
@@ -105,7 +96,7 @@ export default async function Handler(
   } else if (eventType === "user.deleted") {
     const { id } = evt.data;
     if (!id) {
-      res.status(400).json({});
+      res.status(400).json({message: "missing event id"});
       return;
     }
     const data = await prisma.user.delete({
@@ -115,7 +106,7 @@ export default async function Handler(
     });
 
     if (!data.id) {
-      res.status(400).json({});
+      res.status(400).json({message: "invalid user"});
       return;
     }
     res.status(201).json({ data });

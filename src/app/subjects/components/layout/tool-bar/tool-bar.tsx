@@ -7,11 +7,10 @@ import ShareBtn from "./share-btn";
 import Link from "next/link";
 import { Component, NoteWithComponent } from "src/app/documents/edit/models/component";
 import toast from "react-hot-toast";
-import api from "src/app/utils/api";
+import api from "src/utils/api";
 import { removeIdFromObject } from "src/app/documents/edit/utils/removeId";
-import ClientModal from "src/app/components/modal/client-modal";
+import ClientModal from "@components/modal/client-modal";
 import Form from "src/app/documents/edit/components/form";
-import iterateObj from "src/utils/create-doc/iterateObject";
 
 export default function Navar({
   name,

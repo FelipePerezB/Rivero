@@ -1,6 +1,6 @@
 import { Role } from "@prisma/client";
 import toast from "react-hot-toast";
-import api from "src/app/utils/api";
+import api from "src/utils/api";
 
 const regexEmail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 

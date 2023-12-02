@@ -1,5 +1,6 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 "use client";
-import { ProgressVar } from "@components/ProgressVar";
+import { ProgressVar } from "@components/dashboard/progress-bar/ProgressVar";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";

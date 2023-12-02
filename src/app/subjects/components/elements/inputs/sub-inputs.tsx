@@ -1,12 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 
-import Button from "@components/Button";
-import StandardInput from "@components/inputs/StandardInput/StandardInput";
-import TableBtn from "@components/table/table-btn/table-btn";
+import Button from "@components/common/buttons/button/button";
+import StandardInput from "@components/form/StandardInput/StandardInput";
 import { faLeftLong, faPlus, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
+import TableBtn from "@components/dashboard/table/table-btn/table-btn";
 import capFirst from "src/utils/capFirst";
 
 export default function TextInput({

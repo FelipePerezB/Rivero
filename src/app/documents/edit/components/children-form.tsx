@@ -2,12 +2,12 @@
 import { useState } from "react";
 import { Component } from "src/app/documents/edit/models/component";
 // import DynamicElement from "../../components/elements/files/dynamic-file";
-import StandardInput from "@components/inputs/StandardInput/StandardInput";
-import ClientModal from "src/app/components/modal/client-modal";
+import StandardInput from "@components/form/StandardInput/StandardInput";
+import ClientModal from "@components/modal/client-modal";
 import Form from "./form";
 import DynamicElement from "src/app/subjects/components/elements/files/dynamic-file";
 import iterateObj from "../utils/iterateObj";
-import Button from "@components/Button";
+import Button from "@components/common/buttons/button/button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronCircleUp, faUpLong } from "@fortawesome/free-solid-svg-icons";
 

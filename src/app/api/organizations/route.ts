@@ -2,7 +2,7 @@ import { clerkClient } from "@clerk/nextjs";
 import { Role } from "@prisma/client";
 import { revalidateTag } from "next/cache";
 import { NextResponse } from "next/server";
-import prisma from "src/app/utils/prisma";
+import prisma from "src/utils/prisma";
 
 export async function GET(request: Request) {
   const data = await prisma.organization.findMany({

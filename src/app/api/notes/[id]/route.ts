@@ -2,7 +2,7 @@ import { auth } from "@clerk/nextjs";
 import { Note } from "@prisma/client";
 import { revalidateTag } from "next/cache";
 import { NextResponse } from "next/server";
-import prisma from "src/app/utils/prisma";
+import prisma from "src/utils/prisma";
 
 export async function GET(
   request: Request,

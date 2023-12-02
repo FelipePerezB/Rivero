@@ -1,17 +1,18 @@
-import NavigationCard from "@components/cards/navigationCard/NavigationCard";
-import ProgressCard from "@components/cards/progressCard/ProgressCard";
-import { SubjectWithTopic } from "@components/containers/subjectsCards/SubjectsCards";
 import { Subtopic, Topic } from "@prisma/client";
-import LinksAccordion from "src/app/components/accordion/links-accordion";
-import Options from "src/app/components/options/options";
-import api from "src/app/utils/api";
-import capFirst from "src/utils/capFirst";
+import LinksAccordion from "@components/accordion/links-accordion";
+// import Options from "src/app/components/options/options";
+import api from "src/utils/api";
 import { NoteWithFile } from "../../models/note";
 import EvaluationsBtn from "./components/evaluations-btn";
 import { Suspense } from "react";
 import ModifyBtn from "./components/modify-btn";
 import PracticeBtn from "./components/practice-btn";
 import { Toaster } from "react-hot-toast";
+import ProgressCard from "./components/progress-card/progress-card";
+import Options from "@components/navigation/options/options";
+import { SubjectWithTopic } from "../../models/subject";
+import NavigationCard from "@components/cards/NavigationCard";
+import capFirst from "src/utils/capFirst";
 
 interface SubtopicWithNotes extends Subtopic {
   Notes: NoteWithFile[];

@@ -1,8 +1,8 @@
 import React from "react";
 import GroupList from "./GroupList/group-list";
-import UpdateAlert from "src/app/components/admin/update-alert/update-alert";
+import UpdateAlert from "@components/admin/update-alert/update-alert";
 import CreateGroupBtn from "../[group]/components/create-group-btn";
-import api from "src/app/utils/api";
+import api from "src/utils/api";
 import { Organization } from "@prisma/client";
 
 export default async function AllGroupsOrganizationPage({

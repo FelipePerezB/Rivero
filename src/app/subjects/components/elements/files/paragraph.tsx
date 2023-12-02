@@ -43,7 +43,7 @@ export default function Paragraph({
   },
 }: {
   id?: string;
-  options: { text: string; indent: boolean; align: aligns; fontSize: sizes };
+  options: { text: string; indent?: boolean; align?: aligns; fontSize?: sizes };
 }) {
   console.log(fontSize);
   const content = decompressRichTextContent(text) as unknown as string;
@@ -70,7 +70,7 @@ export default function Paragraph({
                 style={{
                   textIndent: indent ? "1em" : "0",
                   textAlign: align,
-                  fontSize: fontsSizes[fontSize],
+                  fontSize: fontsSizes[fontSize ?? "md"],
                 }}
                 // className="text-justify"
               />

@@ -1,10 +1,9 @@
 import { auth } from "@clerk/nextjs";
-import CardWithItem from "@components/cards/card-with-item/card-with-item";
-import NavigationCard from "@components/cards/navigationCard/NavigationCard";
 import { Group } from "@prisma/client";
+import CardWithItem from "@components/cards/card-with-item";
+import ItemsBox from "@components/containers/items-box/items-box";
 import React from "react";
-import ItemsBox from "src/app/components/items-box/items-box";
-import api from "src/app/utils/api";
+import api from "src/utils/api";
 
 export default async function GroupsLinks({
   subject,

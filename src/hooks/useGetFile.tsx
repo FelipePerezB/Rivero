@@ -1,16 +1,15 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useQuery } from "@apollo/client";
 import { auth, currentUser, useUser } from "@clerk/nextjs";
-import Button from "@components/Button";
-import { File, Types } from "@prisma/client";
+import Button from "@components/common/buttons/button/button";
+import { File, Privacity, Types } from "@prisma/client";
 import React, { useEffect, useState } from "react";
 import { NoteWithComponent } from "src/app/documents/edit/models/component";
 // import { NoteWithComponent } from "src/app/subjects/edit/models/component";
-import api from "src/app/utils/api";
-// import toast from "react-hot-toast";
-import { GetFileDocument, Privacity } from "src/gql/graphql";
-import { DocumentJSON, IdLenght } from "src/models/document.model";
+import api from "src/utils/api";
 import generateRandomId from "src/utils/generateRandomId";
+// import toast from "react-hot-toast";
+import { DocumentJSON, IdLenght } from "src/models/document.model";
 
 export const getDefaultFile = (id: string) => {
   return {
@@ -18,7 +17,7 @@ export const getDefaultFile = (id: string) => {
     file: {
       externalId: id,
       name: "Nuevo documento",
-      privacity: Privacity.Private,
+      privacity: Privacity.PRIVATE,
       content: {
         type: "document",
         id: generateRandomId(IdLenght.sm),

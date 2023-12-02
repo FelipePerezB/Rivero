@@ -1,11 +1,10 @@
 "use client";
 
-import Button from "@components/Button";
+import Button from "@components/common/buttons/button/button";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import toast from "react-hot-toast";
-import OptionsInput from "@components/inputs/OptionsInput/OptionsInput";
-import api from "src/app/utils/api";
+import api from "src/utils/api";
 
 export default function AddScoreForm({
   fileId,

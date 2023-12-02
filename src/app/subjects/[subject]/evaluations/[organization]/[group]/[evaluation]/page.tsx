@@ -1,8 +1,5 @@
 import { auth } from "@clerk/nextjs";
-import Button from "@components/Button";
-import Card from "@components/Card";
-import Table from "@components/table/Table";
-import StandardInput from "@components/inputs/StandardInput/StandardInput";
+import Button from "@components/common/buttons/button/button";
 import {
   faFileArrowDown,
   faFileExcel,
@@ -14,22 +11,19 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
 import { title } from "process";
 import React, { Suspense } from "react";
-import OptionsInput from "src/app/components/edit-wraper/components/inputs/options";
-import SearchModal from "src/app/components/modal/search-modal";
-import Options from "src/app/components/options/options";
+import OptionsInput from "src/app/documents/edit/components/edit-wraper/components/inputs/options";
+import SearchModal from "@components/modal/search-modal";
 import { NoteWithFile } from "src/app/subjects/models/note";
-import api from "src/app/utils/api";
-import { Group } from "src/gql/graphql";
-// import Form from "./[group]/components/form";
+import api from "src/utils/api";
 import { Toaster } from "react-hot-toast";
 import { Score } from "@prisma/client";
 // import GroupsList from "./[group]/components/groups-list";
-import LargeSkeleton from "src/app/components/loading-skeleton/large-skeleton/large-skeleton";
+import LargeSkeleton from "@components/layout/loading-skeleton/large-skeleton/large-skeleton";
 import ScoresTable from "./components/scores-table/scores-table";
 import GroupsList from "../components/groups-list";
 import ScoresStats from "./components/scores-stats/scores-stats";
-import RowSkeleton from "src/app/components/loading-skeleton/row-skeleton/row-skeleton";
-import TableSkeleton from "src/app/components/loading-skeleton/table-skeleton/table-skeleton";
+import RowSkeleton from "@components/layout/loading-skeleton/row-skeleton/row-skeleton";
+import TableSkeleton from "@components/layout/loading-skeleton/table-skeleton/table-skeleton";
 import AddScoreForm from "../components/form";
 
 export default async function EvaluationPage({

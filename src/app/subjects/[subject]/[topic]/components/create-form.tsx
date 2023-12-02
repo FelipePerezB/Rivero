@@ -1,7 +1,7 @@
 "use client";
-import Button from "@components/Button";
-import OptionsInput from "@components/inputs/OptionsInput/OptionsInput";
-import StandardInput from "@components/inputs/StandardInput/StandardInput";
+import Button from "@components/common/buttons/button/button";
+import OptionsInput from "@components/form/OptionsInput/OptionsInput";
+import StandardInput from "@components/form/StandardInput/StandardInput";
 import React from "react";
 
 export default function CreateForm() {

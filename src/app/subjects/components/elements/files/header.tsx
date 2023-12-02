@@ -1,6 +1,5 @@
 import React from "react";
 import Title from "./title";
-import Tags from "@components/tags/Tags";
 
 export default function Header({
   id,

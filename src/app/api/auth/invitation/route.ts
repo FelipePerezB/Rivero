@@ -2,7 +2,7 @@ import { clerkClient } from "@clerk/nextjs";
 import { Invitation } from "@clerk/nextjs/dist/types/server";
 import { revalidateTag } from "next/cache";
 import { NextResponse } from "next/server";
-import prisma from "src/app/utils/prisma";
+import prisma from "src/utils/prisma";
 
 export async function POST(request: Request) {
   const res = await request.json();
@@ -11,6 +11,7 @@ export async function POST(request: Request) {
   NextResponse.json({ message: "Failed to invite" }, { status: 500 });
   let invitation: Invitation;
   try {
+    console.log(res);
     invitation = await clerkClient.invitations.createInvitation({
       emailAddress: email,
       redirectUrl: `${process.env.NEXT_PUBLIC_BASE_URL}/sign-up`,
@@ -48,9 +49,18 @@ export async function POST(request: Request) {
 
   return NextResponse.json({ dbInvitation }, { status: 200 });
 }
-// export async function GET(request: Request) {
-//   const data = await prisma.user.delete({
-//     where: { externalId: "user_2XS7FRXKaydVYxFytuLNN7xkU3F" },
-//   });
-//   return NextResponse.json({ data }, { status: 200 });
-// }
+export async function GET(request: Request) {
+  const data = await clerkClient.invitations.getInvitationList({status: "pending"})
+  //  await clerkClient.invitations.createInvitation({
+  //   emailAddress: "felipe.perez3712@gmail.com",
+  //   publicMetadata: {
+  //     organizationId: 1,
+  //     group: [3],
+  //     role: "STUDENT",
+  //   },
+  // });
+  // const res = data.map(
+  //   async ({ id }) => await clerkClient.invitations.revokeInvitation(id)
+  // );
+  return NextResponse.json({ data }, { status: 200 });
+}

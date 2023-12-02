@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
-import DeleteBtn from "src/app/components/admin/delete-btn/delete-btn";
-import UpdateBtn from "src/app/components/admin/update-btn/update-btn";
+import DeleteBtn from "@components/admin/delete-btn/delete-btn";
+import UpdateBtn from "@components/admin/update-btn/update-btn";
 
 export default function ModifyForm({
   values,

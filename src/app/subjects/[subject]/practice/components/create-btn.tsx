@@ -1,11 +1,11 @@
 "use client";
-import Button from "@components/Button";
+import Button from "@components/common/buttons/button/button";
 import { File, Privacity, Types } from "@prisma/client";
 import React from "react";
 import toast, { Toaster } from "react-hot-toast";
-import api from "src/app/utils/api";
-import { IdLenght } from "src/models/document.model";
+import api from "src/utils/api";
 import generateRandomId from "src/utils/generateRandomId";
+import { IdLenght } from "src/models/document.model";
 
 const getDefaultContent = () => {
   return {

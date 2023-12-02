@@ -1,7 +1,7 @@
 import { auth } from "@clerk/nextjs";
 import { File } from "@prisma/client";
 import React from "react";
-import api from "src/app/utils/api";
+import api from "src/utils/api";
 import DynamicElement from "../../components/elements/files/dynamic-file";
 import DownloadBtn from "../components/download-btn";
 

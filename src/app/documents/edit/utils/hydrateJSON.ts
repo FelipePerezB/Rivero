@@ -1,4 +1,3 @@
-// import { Component } from "src/pages/docs/edit/[id]";
 import generateRandomId from "src/utils/generateRandomId";
 import { Component } from "../models/component";
 import { IdLenght } from "src/models/document.model";

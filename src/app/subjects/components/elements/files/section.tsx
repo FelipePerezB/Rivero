@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 import DynamicElement from "./dynamic-file";
-import Button from "@components/Button";
+import Button from "@components/common/buttons/button/button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faRightLong } from "@fortawesome/free-solid-svg-icons";
 

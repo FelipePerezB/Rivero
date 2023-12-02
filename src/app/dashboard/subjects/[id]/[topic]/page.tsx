@@ -1,21 +1,22 @@
-import Button from "@components/Button";
-import Table from "@components/table/Table";
+import Button from "@components/common/buttons/button/button";
 import { faPen } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Privacity, Subject, Subtopic, Topic } from "@prisma/client";
-import SearchModal from "src/app/components/modal/search-modal";
-import Options from "src/app/components/options/options";
-import api from "src/app/utils/api";
-import capFirst from "src/utils/capFirst";
-import TableBtn from "@components/table/table-btn/table-btn";
-import UpdateForm from "src/app/components/admin/update-form/update-form";
-import ItemsBox from "src/app/components/items-box/items-box";
+import SearchModal from "@components/modal/search-modal";
+// import Options from "src/app/components/options/options";
+import api from "src/utils/api";
+import UpdateForm from "@components/admin/update-form/update-form";
+// import ItemsBox from "src/app/components/items-box/items-box";
 import { NoteWithFile } from "src/app/subjects/models/note";
-import DeleteBtn from "src/app/components/admin/delete-btn/delete-btn";
-import NavigationCard from "@components/cards/navigationCard/NavigationCard";
-import CreateTopicBtn from "./components/create-topic-btn/create-topic-btn";
+import DeleteBtn from "@components/admin/delete-btn/delete-btn";
 import CreateSubtopic from "./components/create-subtopic/create-subtopic";
 import CreateEvaluationBtn from "./components/create-evaluation-btn/create-evaluation-btn";
+import Options from "@components/navigation/options/options";
+import Table from "@components/dashboard/table/Table";
+import TableBtn from "@components/dashboard/table/table-btn/table-btn";
+import ItemsBox from "@components/containers/items-box/items-box";
+import NavigationCard from "@components/cards/NavigationCard";
+import capFirst from "src/utils/capFirst";
 
 export default async function SubjectDashboard({
   params: { id, topic: topicId },

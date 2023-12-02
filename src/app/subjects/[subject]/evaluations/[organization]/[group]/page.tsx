@@ -1,17 +1,17 @@
-import Button from "@components/Button";
-import NavigationCard from "@components/cards/navigationCard/NavigationCard";
+import Button from "@components/common/buttons/button/button";
 import { faFileArrowDown } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Toaster } from "react-hot-toast";
-import api from "src/app/utils/api";
+import api from "src/utils/api";
 import { Types } from "@prisma/client";
-import Card from "@components/Card";
-import ItemsBox from "src/app/components/items-box/items-box";
 import GroupStats from "./components/group-stats";
 import GroupsList from "./components/groups-list";
 import { Suspense } from "react";
-import LargeSkeleton from "src/app/components/loading-skeleton/large-skeleton/large-skeleton";
+import LargeSkeleton from "@components/layout/loading-skeleton/large-skeleton/large-skeleton";
 import { NoteWithFile } from "src/app/subjects/models/note";
+import ItemsBox from "@components/containers/items-box/items-box";
+import NavigationCard from "@components/cards/NavigationCard";
+import Card from "@components/cards/Card";
 
 export default async function EvaluationsPage({
   params: { subject, group, organization },

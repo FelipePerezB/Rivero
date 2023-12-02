@@ -12,6 +12,6 @@ export default function SavedDocument({
   const [file, setFile] = useState();
   useEffect(() => {
     setFile(JSON.parse(localStorage.getItem(`document-${id}`) ?? "{}"));
-  }, []);
+  }, [id]);
   return file ? <EditWraper document={file} id={id} /> : <></>;
 }

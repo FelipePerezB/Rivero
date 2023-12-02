@@ -1,9 +1,9 @@
 import { auth } from "@clerk/nextjs";
-import Card from "@components/Card";
-import CardItem from "@components/cards/card-item/card-item";
 import { Score } from "@prisma/client";
+import Card from "@components/cards/Card";
+import CardItem from "@components/cards/card-item";
 import React from "react";
-import api from "src/app/utils/api";
+import api from "src/utils/api";
 
 export default async function ScoresStats({
   evaluation,

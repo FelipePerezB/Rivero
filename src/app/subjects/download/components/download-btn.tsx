@@ -1,5 +1,5 @@
 'use client'
-import Button from "@components/Button";
+import Button from "@components/common/buttons/button/button";
 import { faFileDownload } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";

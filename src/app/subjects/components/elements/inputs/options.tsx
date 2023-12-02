@@ -1,4 +1,4 @@
-import OptionsInput from "@components/inputs/OptionsInput/OptionsInput";
+import OptionsInput from "@components/form/OptionsInput/OptionsInput";
 import React from "react";
 
 export default function Options({

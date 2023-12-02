@@ -1,7 +1,7 @@
 import { auth } from '@clerk/nextjs';
 import { Group } from '@prisma/client';
 import React from 'react'
-import api from 'src/app/utils/api';
+import api from 'src/utils/api';
 import capFirst from 'src/utils/capFirst';
 
 export default async function GroupName({organization, group}: {organization: string, group: string}) {

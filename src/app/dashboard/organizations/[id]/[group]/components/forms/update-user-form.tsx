@@ -1,14 +1,14 @@
 "use client";
-import Button from "@components/Button";
-import StandardInput from "@components/inputs/StandardInput/StandardInput";
+import Button from "@components/common/buttons/button/button";
+import StandardInput from "@components/form/StandardInput/StandardInput";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import toast from "react-hot-toast";
-import CreateBtn from "src/app/components/admin/create-btn/create-btn";
-import DeleteBtn from "src/app/components/admin/delete-btn/delete-btn";
-import UpdateBtn from "src/app/components/admin/update-btn/update-btn";
+import CreateBtn from "@components/admin/create-btn/create-btn";
+import DeleteBtn from "@components/admin/delete-btn/delete-btn";
+import UpdateBtn from "@components/admin/update-btn/update-btn";
 // import StandardInput from "src/app/components/inputs/standard";
-import api from "src/app/utils/api";
+import api from "src/utils/api";
 
 export default function UpdateUserForm({
   email,

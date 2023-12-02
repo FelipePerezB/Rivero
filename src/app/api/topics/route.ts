@@ -1,7 +1,7 @@
 import { auth } from "@clerk/nextjs";
 import { revalidateTag } from "next/cache";
 import { NextRequest, NextResponse } from "next/server";
-import prisma from "src/app/utils/prisma";
+import prisma from "src/utils/prisma";
 
 export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams;

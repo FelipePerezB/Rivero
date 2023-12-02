@@ -1,10 +1,10 @@
 "use client";
 import React, { useState } from "react";
 import ModifyForm from "./modify-form";
-import StandardInput from "@components/inputs/StandardInput/StandardInput";
-import OptionsInput from "src/app/components/edit-wraper/components/inputs/options";
+import StandardInput from "@components/form/StandardInput/StandardInput";
+import OptionsInput from "src/app/documents/edit/components/edit-wraper/components/inputs/options";
 import { Privacity } from "@prisma/client";
-import CreateBtn from "src/app/components/admin/create-btn/create-btn";
+import CreateBtn from "@components/admin/create-btn/create-btn";
 
 export default function Form({
   searchParams,

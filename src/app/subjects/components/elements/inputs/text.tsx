@@ -1,4 +1,4 @@
-import StandardInput from "@components/inputs/StandardInput/StandardInput";
+import StandardInput from "@components/form/StandardInput/StandardInput";
 import React from "react";
 
 export default function TextInput({

@@ -1,13 +1,11 @@
 import { auth } from "@clerk/nextjs";
-import Table from "@components/table/Table";
-import TableBtn from "@components/table/table-btn/table-btn";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Group, Role, User } from "@prisma/client";
+import Table from "@components/dashboard/table/Table";
+import TableBtn from "@components/dashboard/table/table-btn/table-btn";
 import React from "react";
-import DeleteBtn from "src/app/components/admin/delete-btn/delete-btn";
-import UpdateAlert from "src/app/components/admin/update-alert/update-alert";
-import api from "src/app/utils/api";
+import api from "src/utils/api";
 import capFirst from "src/utils/capFirst";
 interface GroupWithUsers extends Group {
   Users: User[];

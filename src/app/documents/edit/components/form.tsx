@@ -1,7 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import Button from "@components/Button";
-import Options from "@components/Options";
-import Buttons from "@components/button/buttons/Buttons";
+import Button from "@components/common/buttons/button/button";
+import Buttons from "@components/common/buttons/buttons/Buttons";
 import React, { ReactNode, SetStateAction, useEffect, useState } from "react";
 // import Children from "../../components/elements/inputs/children";
 // import {
@@ -12,9 +11,7 @@ import React, { ReactNode, SetStateAction, useEffect, useState } from "react";
 import getSchema from "../utils/getSchema";
 import FormChildren from "./children-form";
 // import DynamicInput from "../../components/elements/inputs/dynamic-input";
-import generateRandomId from "src/utils/generateRandomId";
 import { IdLenght } from "src/models/document.model";
-import OptionsInput from "@components/inputs/OptionsInput/OptionsInput";
 import Preview from "./preview";
 import { Component, ComponentOptions } from "../models/component";
 import Children from "src/app/subjects/components/elements/inputs/children";
@@ -23,6 +20,8 @@ import DynamicInput from "src/app/subjects/components/elements/inputs/dynamic-in
 import SelectCategory from "./select-category";
 import SelectComponent from "./select-component";
 import specifics from "../utils/schemas/specifics";
+import Options from "@components/common/options";
+import generateRandomId from "src/utils/generateRandomId";
 
 type options = "Configuración" | "Hijos";
 

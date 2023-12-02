@@ -1,7 +1,7 @@
 'use client'
-import Button from "@components/Button";
+import Button from "@components/common/buttons/button/button";
 import React from "react";
-import createAlert from "src/app/components/admin/create-alert/create-alert";
+import createAlert from "@components/admin/create-alert/create-alert";
 
 export default function CreateGroupBtn({
   organizationId,

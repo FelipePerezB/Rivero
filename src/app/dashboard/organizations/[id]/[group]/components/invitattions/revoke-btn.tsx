@@ -1,10 +1,10 @@
 "use client";
 import { clerkClient } from "@clerk/nextjs";
-import Button from "@components/Button";
-import Alert from "@components/alert/alert";
+import Button from "@components/common/buttons/button/button";
+import Alert from "@components/common/alert/alert";
 import React from "react";
 import toast from "react-hot-toast";
-import api from "src/app/utils/api";
+import api from "src/utils/api";
 
 export default function RevokeBtn({ id }: { id: string }) {
   const  revoke = () => {

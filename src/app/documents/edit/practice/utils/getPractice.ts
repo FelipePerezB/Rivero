@@ -1,16 +1,15 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useQuery } from "@apollo/client";
 import { auth, currentUser, useUser } from "@clerk/nextjs";
-import Button from "@components/Button";
-import { File, Types } from "@prisma/client";
+import Button from "@components/common/buttons/button/button";
+import { File, Privacity, Types } from "@prisma/client";
 import React, { useEffect, useState } from "react";
 // import { NoteWithComponent } from "src/app/subjects/edit/models/component";
-import api from "src/app/utils/api";
+import api from "src/utils/api";
 // import toast from "react-hot-toast";
-import { GetFileDocument, Privacity } from "src/gql/graphql";
 import { DocumentJSON, IdLenght } from "src/models/document.model";
-import generateRandomId from "src/utils/generateRandomId";
 import { NoteWithComponent } from "../../models/component";
+import generateRandomId from "src/utils/generateRandomId";
 
 export const getDefaultPractice = (id: string) => {
   return {
@@ -18,7 +17,7 @@ export const getDefaultPractice = (id: string) => {
     file: {
       externalId: id,
       title: "Práctica",
-      privacity: Privacity.Private,
+      privacity: Privacity.PRIVATE,
       content: {
         type: "practice",
         id: generateRandomId(IdLenght.sm),

@@ -1,6 +1,6 @@
 import { Topic } from "@prisma/client";
 import { NextResponse } from "next/server";
-import prisma from "src/app/utils/prisma";
+import prisma from "src/utils/prisma";
 import { revalidatePath, revalidateTag } from "next/cache";
 import { auth } from "@clerk/nextjs";
 import { redirect } from "next/navigation";

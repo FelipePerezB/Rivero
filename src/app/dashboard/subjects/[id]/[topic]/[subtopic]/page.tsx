@@ -1,17 +1,15 @@
-import Button from "@components/Button";
-import Table from "@components/table/Table";
 import { File, Privacity, Subtopic, Topic, Types, Note } from "@prisma/client";
-import Options from "src/app/components/options/options";
-import api from "src/app/utils/api";
-import capFirst from "src/utils/capFirst";
+import api from "src/utils/api";
 import CreateFileBtn from "./components/create-file-btn/create-file-btn";
-import TableBtn from "@components/table/table-btn/table-btn";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPen } from "@fortawesome/free-solid-svg-icons";
-import DeleteBtn from "src/app/components/admin/delete-btn/delete-btn";
-import ModifySubtopic from "../components/modify-subtopic/modify-subtopic";
-import SearchModal from "src/app/components/modal/search-modal";
-import UpdateForm from "src/app/components/admin/update-form/update-form";
+import DeleteBtn from "@components/admin/delete-btn/delete-btn";
+import SearchModal from "@components/modal/search-modal";
+import UpdateForm from "@components/admin/update-form/update-form";
+import Table from "@components/dashboard/table/Table";
+import TableBtn from "@components/dashboard/table/table-btn/table-btn";
+import Options from "@components/navigation/options/options";
+import capFirst from "src/utils/capFirst";
 
 interface SubtopicWithFile extends Subtopic {
   File: File[];

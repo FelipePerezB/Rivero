@@ -1,12 +1,12 @@
 "use client";
-import Button from "@components/Button";
-import StandardInput from "@components/inputs/StandardInput/StandardInput";
+import Button from "@components/common/buttons/button/button";
+import StandardInput from "@components/form/StandardInput/StandardInput";
 import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Role } from "@prisma/client";
 import React, { useState } from "react";
 import toast from "react-hot-toast";
-import api from "src/app/utils/api";
+import api from "src/utils/api";
 import sendInvitation from "../../../../utils/invitate";
 
 // {

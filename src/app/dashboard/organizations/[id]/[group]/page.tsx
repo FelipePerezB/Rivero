@@ -1,24 +1,21 @@
 import React, { Suspense } from "react";
-import api from "src/app/utils/api";
+import api from "src/utils/api";
 import { Group, Organization, Role } from "@prisma/client";
-import SearchModal from "src/app/components/modal/search-modal";
+import SearchModal from "@components/modal/search-modal";
 import InviteForm from "./components/forms/invite";
 import { Toaster } from "react-hot-toast";
-import TableSkeleton from "src/app/components/loading-skeleton/table-skeleton/table-skeleton";
-import UpdateAlert from "src/app/components/admin/update-alert/update-alert";
+import TableSkeleton from "@components/layout/loading-skeleton/table-skeleton/table-skeleton";
+import UpdateAlert from "@components/admin/update-alert/update-alert";
 import UpdateUserForm from "./components/forms/update-user-form";
 import CreateGroupBtn from "./components/create-group-btn";
 import GroupsList from "src/app/subjects/[subject]/evaluations/[organization]/[group]/components/groups-list";
-import LargeSkeleton from "src/app/components/loading-skeleton/large-skeleton/large-skeleton";
+import LargeSkeleton from "@components/layout/loading-skeleton/large-skeleton/large-skeleton";
 import GroupTable from "./components/group-table";
 import Invitations from "./components/invitattions/invitations";
 import { auth } from "@clerk/nextjs";
+import DeleteBtn from "@components/admin/delete-btn/delete-btn";
+import UpdateBtn from "@components/admin/update-btn/update-btn";
 import capFirst from "src/utils/capFirst";
-import Button from "@components/Button";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPen, faXmark } from "@fortawesome/free-solid-svg-icons";
-import DeleteBtn from "src/app/components/admin/delete-btn/delete-btn";
-import UpdateBtn from "src/app/components/admin/update-btn/update-btn";
 
 export default async function OrganizationDashboardPage({
   searchParams,

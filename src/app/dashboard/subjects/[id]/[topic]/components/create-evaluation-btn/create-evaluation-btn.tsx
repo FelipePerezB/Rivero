@@ -1,10 +1,10 @@
 "use client";
-import Button from "@components/Button";
+import Button from "@components/common/buttons/button/button";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Types } from "@prisma/client";
 import React from "react";
-import createAlert from "src/app/components/admin/create-alert/create-alert";
+import createAlert from "@components/admin/create-alert/create-alert";
 // import createAlert from "src/app/components/admin/create-alert/create";
 
 export default function CreateEvaluationBtn({ subject }: { subject: string }) {

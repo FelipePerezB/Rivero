@@ -3,9 +3,6 @@
 import React, { useEffect, useState } from "react";
 import DynamicElement from "./dynamic-file";
 import Paragraph from "./paragraph";
-import GetCompressedText from "src/app/subjects/utils/lexical/get-compressed-text";
-import decompressRichTextContent from "src/app/subjects/utils/lexical/decompressRichTextContent";
-import compressJSON from "src/app/subjects/utils/lexical/compress-JSON";
 
 export type QuestionType = {
   id: string;

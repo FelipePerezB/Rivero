@@ -1,11 +1,10 @@
-import { Nunito, Noto_Sans } from "next/font/google";
-import "./components/globals.css";
+import { Nunito } from "next/font/google";
+import "../globals.css";
 import { ReactNode } from "react";
 import { ClerkProvider } from "@clerk/nextjs";
-import Navar from "./components/navar/navar";
-import NavSidebar from "./components/navar/nav-sidebar";
+import Navar from "../components/layout/navar/navar";
+import NavSidebar from "../components/layout/navar/nav-sidebar";
 import { Toaster } from "react-hot-toast";
-import { GeistSans } from "geist/font";
 
 export const metadata = {
   title: "Next.js",
@@ -14,7 +13,6 @@ export const metadata = {
 
 const font = Nunito({
   subsets: ["latin"],
-  // weight: ["400", "100", ],
   weight: ["300", "500", "600", "700"],
   display: "swap",
 });
@@ -27,14 +25,14 @@ export default async function RootLayout({ children }: Props) {
   return (
     <ClerkProvider>
       <html lang="es">
-        <body className={`${font.className} min-h-screen h-max bg-body text-black`}>
-          <header className="print:hidden">
-            <Navar />
-          </header>
-          <main className="flex flex-col gap-3 p-4 pt-[70px] h-full w-full mx-auto max-w-5xl">
+        <body
+          className={`${font.className} min-h-screen flex flex-col h-max bg-body text-black`}
+        >
+          <Navar />
+          <main className="flex flex-1 flex-col gap-3 p-4  h-full w-full mx-auto max-w-5xl">
             {children}
-            <NavSidebar />
           </main>
+          <NavSidebar />
           <Toaster />
         </body>
       </html>

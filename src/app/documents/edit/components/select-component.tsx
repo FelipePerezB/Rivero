@@ -2,9 +2,7 @@ import React, { useState } from "react";
 import schemas from "../utils/schemas/global";
 import DynamicElement from "src/app/subjects/components/elements/files/dynamic-file";
 import { ComponentOptions } from "../models/component";
-import TagsInput from "@components/inputs/tags/tags-input";
-import capFirst from "src/utils/capFirst";
-import specifics from "../utils/schemas/specifics";
+import TagsInput from "@components/form/tags/tags-input";import capFirst from "src/utils/capFirst";
 
 export default function SelectComponent({
   types,

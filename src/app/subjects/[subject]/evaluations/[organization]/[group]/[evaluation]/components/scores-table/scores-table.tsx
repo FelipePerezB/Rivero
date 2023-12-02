@@ -1,12 +1,12 @@
 import { auth, currentUser } from "@clerk/nextjs";
-import Table from "@components/table/Table";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Group, Role, Score, User } from "@prisma/client";
+import Table from "@components/dashboard/table/Table";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import React from "react";
-import api from "src/app/utils/api";
+import api from "src/utils/api";
 
 interface GroupWithUsers extends Group {
   Users: User[];

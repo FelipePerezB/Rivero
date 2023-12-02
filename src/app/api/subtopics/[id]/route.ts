@@ -2,7 +2,7 @@ import { auth } from "@clerk/nextjs";
 import { Topic } from "@prisma/client";
 import { revalidateTag } from "next/cache";
 import { NextRequest, NextResponse } from "next/server";
-import prisma from "src/app/utils/prisma";
+import prisma from "src/utils/prisma";
 
 export async function PATCH(
   request: Request,

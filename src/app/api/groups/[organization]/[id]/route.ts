@@ -3,7 +3,7 @@ import { Group, Role } from "@prisma/client";
 import { revalidateTag } from "next/cache";
 import { redirect } from "next/navigation";
 import { NextRequest, NextResponse } from "next/server";
-import prisma from "src/app/utils/prisma";
+import prisma from "src/utils/prisma";
 
 export async function PATCH(
   request: Request,

@@ -1,4 +1,4 @@
-import getFile from "src/app/utils/getFile";
+import getFile from "src/utils/getFile";
 import getPractice from "../utils/getPractice";
 import Practice from "src/app/subjects/components/elements/files/practice";
 import EditWraper from "../../components/edit-wraper";

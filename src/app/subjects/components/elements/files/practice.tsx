@@ -1,14 +1,15 @@
 "use client";
-import Card from "@components/Card";
 import React, { useState } from "react";
 // import Timer from "src/app/practice/timer";
 import Question, { QuestionType } from "./question";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faMarker, faXmark } from "@fortawesome/free-solid-svg-icons";
-import Button from "@components/Button";
+// import Button from "@components/buttons/button/button";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import Timer from "src/app/subjects/[subject]/practice/components/timer";
+import Button from "@components/common/buttons/button/button";
+import Card from "@components/cards/Card";
 
 interface QuestionAttrs {
   options: QuestionType["options"];

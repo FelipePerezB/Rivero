@@ -1,8 +1,8 @@
 import { auth } from "@clerk/nextjs";
 import { Group } from "@prisma/client";
+import Options from "@components/navigation/options/options";
 import React from "react";
-import Options from "src/app/components/options/options";
-import api from "src/app/utils/api";
+import api from "src/utils/api";
 
 export default async function GroupsList({
   group,

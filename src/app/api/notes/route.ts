@@ -3,8 +3,8 @@ import { Privacity, Types } from "@prisma/client";
 import { revalidateTag } from "next/cache";
 import { NextRequest, NextResponse } from "next/server";
 import generateRandomId from "src/app/subjects/utils/generateRandomId";
-import getFile from "src/app/utils/getFile";
-import prisma from "src/app/utils/prisma";
+import getFile from "src/utils/getFile";
+import prisma from "src/utils/prisma";
 import { IdLenght } from "src/models/document.model";
 
 export async function POST(request: Request) {

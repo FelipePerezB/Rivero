@@ -1,8 +1,7 @@
 import { auth } from "@clerk/nextjs";
 import { revalidateTag } from "next/cache";
 import { NextRequest, NextResponse } from "next/server";
-import prisma from "src/app/utils/prisma";
-import generateRandomId from "src/utils/generateRandomId";
+import prisma from "src/utils/prisma";
 
 export async function POST(request: Request) {
   const res = await request.json();

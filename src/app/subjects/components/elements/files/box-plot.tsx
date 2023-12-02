@@ -23,9 +23,6 @@ export default function BoxPlot({
       width = divRef.current?.clientWidth - margin.left - margin.right,
       height = divRef.current?.clientHeight - margin.top - margin.bottom;
 
-    console.log("AAA");
-    // if (divRef.current.childNodes.length) return;
-    // if(divRef.current?.clientHeight) return
     // append the svg object to the body of the page
     var svg = d3
       .select(divRef.current)
@@ -38,6 +35,7 @@ export default function BoxPlot({
     const recibedData = options?.data
       ?.split(",")
       ?.map((value) => Number(value));
+      
     // create dummy data
     var data = recibedData?.at(1)
       ? recibedData
@@ -100,6 +98,7 @@ export default function BoxPlot({
       .attr("stroke", "black");
     return () => {
       if (!divRef.current) return;
+      // eslint-disable-next-line react-hooks/exhaustive-deps
       divRef.current.innerHTML = "";
     };
   }, [options]);

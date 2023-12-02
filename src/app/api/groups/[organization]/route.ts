@@ -1,7 +1,7 @@
 import { auth, currentUser } from "@clerk/nextjs";
 import { Role } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
-import prisma from "src/app/utils/prisma";
+import prisma from "src/utils/prisma";
 
 export async function GET(
   request: NextRequest,

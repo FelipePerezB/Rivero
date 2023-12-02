@@ -1,9 +1,9 @@
 "use client";
-import Button from "@components/Button";
+import Button from "@components/common/buttons/button/button";
 import React, { FocusEventHandler } from "react";
 import toast from "react-hot-toast";
-import update from "src/app/components/admin/update-btn/update";
-import api from "src/app/utils/api";
+import update from "@components/admin/update-btn/update";
+import api from "src/utils/api";
 
 export default function EditableLabel({
   endpoint,

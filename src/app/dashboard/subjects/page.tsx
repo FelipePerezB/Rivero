@@ -1,19 +1,19 @@
-import Button from "@components/Button";
-import NavigationCard from "@components/cards/navigationCard/NavigationCard";
-import { SubjectWithTopic } from "@components/containers/subjectsCards/SubjectsCards";
+import Button from "@components/common/buttons/button/button";
 import { faPen } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Privacity } from "@prisma/client";
-import Link from "next/link";
 import React from "react";
-import UpdateForm from "src/app/components/admin/update-form/update-form";
-import ItemsBox from "src/app/components/items-box/items-box";
-import SearchModal from "src/app/components/modal/search-modal";
-import api from "src/app/utils/api";
-import capFirst from "src/utils/capFirst";
+import UpdateForm from "@components/admin/update-form/update-form";
+// import ItemsBox from "src/app/components/items-box/items-box";
+import SearchModal from "@components/modal/search-modal";
+import api from "src/utils/api";
 import CreateTopicBtn from "./[id]/[topic]/components/create-topic-btn/create-topic-btn";
 import CreateSubjectBtn from "./components/create-subject-btn";
 import { Toaster } from "react-hot-toast";
+import { SubjectWithTopic } from "src/app/subjects/models/subject";
+import ItemsBox from "@components/containers/items-box/items-box";
+import NavigationCard from "@components/cards/NavigationCard";
+import capFirst from "src/utils/capFirst";
 
 export default async function SubjectsPage({
   searchParams,

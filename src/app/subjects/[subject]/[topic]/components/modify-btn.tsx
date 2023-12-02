@@ -1,5 +1,5 @@
 import { currentUser } from "@clerk/nextjs";
-import Button from "@components/Button";
+import Button from "@components/common/buttons/button/button";
 import { faPen } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Role } from "@prisma/client";

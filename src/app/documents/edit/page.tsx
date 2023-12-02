@@ -1,13 +1,12 @@
 import { auth } from "@clerk/nextjs";
-import DocsCards from "@components/containers/docsCards/docs-cards";
-import StandardInput from "@components/inputs/StandardInput/StandardInput";
+import StandardInput from "@components/form/StandardInput/StandardInput";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import FloatingBtn from "src/app/components/floating-btn/floating-btn";
+import DocsCards from "@components/containers/docs-cards/docs-cards";
+import ItemsBox from "@components/containers/items-box/items-box";
+import FloatingBtn from "@components/common/buttons/floating-btn/floating-btn";
 // import StandardInput from "src/app/components/inputs/standard";
-import ItemsBox from "src/app/components/items-box/items-box";
-import Options from "src/app/components/options/options";
-import api from "src/app/utils/api";
+import api from "src/utils/api";
 import generateRandomId from "src/utils/generateRandomId";
 
 export default async function EditFilesPage() {

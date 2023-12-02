@@ -2,7 +2,7 @@ import { auth, currentUser } from "@clerk/nextjs";
 import { Role } from "@prisma/client";
 import { revalidateTag } from "next/cache";
 import { NextRequest, NextResponse } from "next/server";
-import prisma from "src/app/utils/prisma";
+import prisma from "src/utils/prisma";
 
 export async function POST(request: Request) {
   const res = await request.json();

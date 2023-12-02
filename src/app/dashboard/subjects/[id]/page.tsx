@@ -1,13 +1,13 @@
-import NavigationCard from "@components/cards/navigationCard/NavigationCard";
 import { Privacity } from "@prisma/client";
 import React from "react";
-import DeleteBtn from "src/app/components/admin/delete-btn/delete-btn";
-import UpdateForm from "src/app/components/admin/update-form/update-form";
-import ItemsBox from "src/app/components/items-box/items-box";
-import SearchModal from "src/app/components/modal/search-modal";
+import DeleteBtn from "@components/admin/delete-btn/delete-btn";
+import UpdateForm from "@components/admin/update-form/update-form";
+import SearchModal from "@components/modal/search-modal";
 import { NoteWithFile } from "src/app/subjects/models/note";
-import api from "src/app/utils/api";
+import api from "src/utils/api";
 import CreateEvaluationBtn from "./[topic]/components/create-evaluation-btn/create-evaluation-btn";
+import ItemsBox from "@components/containers/items-box/items-box";
+import NavigationCard from "@components/cards/NavigationCard";
 
 export default async function SubjectDashboardPage({
   searchParams,
