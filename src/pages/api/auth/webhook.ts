@@ -46,10 +46,10 @@ export default async function Handler(
     if (
       !id ||
       !first_name ||
-      !email_addresses[0]?.email_address ||
-      !groups ||
-      !organizationId ||
-      !role
+      !email_addresses[0]?.email_address 
+      // !groups ||
+      // !organizationId ||
+      // !role
     ) {
       res.status(400).json({message: "missing data"});
       return;
