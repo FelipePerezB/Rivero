@@ -63,7 +63,7 @@ export default async function Handler(
           set: email_addresses[0].email_address,
         },
         Group: {
-          connect: userGroups.map((id) => ({
+          connect: userGroups?.map((id) => ({
             id,
           })),
         },
@@ -77,7 +77,7 @@ export default async function Handler(
       },
       create: {
         Group: {
-          connect: userGroups.map((id) => ({
+          connect: userGroups?.map((id) => ({
             id,
           })),
         },
