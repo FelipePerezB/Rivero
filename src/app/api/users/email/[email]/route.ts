@@ -4,6 +4,20 @@ import { revalidateTag } from "next/cache";
 import { NextResponse } from "next/server";
 import prisma from "src/utils/prisma";
 
+export async function GET(
+  request: Request,
+  { params: { email } }: { params: { email: string } }
+) {
+  const data = await prisma.user.findFirst({
+    where: { email },
+  });
+
+  if (!data?.externalId)
+    return NextResponse.json({ message: "User not found" }, { status: 400 });
+
+  return NextResponse.json({ data }, { status: 200 });
+}
+
 export async function PATCH(
   request: Request,
   { params: { email } }: { params: { email: string } }
@@ -24,6 +38,7 @@ export async function PATCH(
   });
   return NextResponse.json({ data }, { status: 200 });
 }
+
 export async function DELETE(
   request: Request,
   { params: { email } }: { params: { email: string } }
@@ -32,10 +47,10 @@ export async function DELETE(
     where: { email },
     include: { Group: true },
   });
-  console.log(user)
+  console.log(user);
   if (!user?.externalId)
     return NextResponse.json({ message: "User not found" }, { status: 400 });
-  
+
   const data = await clerkClient.users.deleteUser(user.externalId);
   return NextResponse.json({ data }, { status: 200 });
 }

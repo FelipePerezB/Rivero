@@ -1,11 +1,12 @@
 import Link from "next/link";
-import { MouseEventHandler, ReactNode } from "react";
+import { ButtonHTMLAttributes, MouseEventHandler, ReactNode } from "react";
 
 export type ButtonAttrs = {
-  prefetch?: boolean,
+  type?: "button" | "submit" | "reset";
+  prefetch?: boolean;
   color?: "blue" | "white" | "red" | "black" | "transparent";
   children?: ReactNode;
-  onClick?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>)=>void;
+  onClick?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
   size?: "sm" | "lg" | "xs";
   href?: string;
   className?: string;
@@ -13,6 +14,7 @@ export type ButtonAttrs = {
 };
 
 export default function Button({
+  type = "button",
   prefetch,
   children,
   onClick,
@@ -39,11 +41,16 @@ export default function Button({
   className += ` ${colorVariants[color]} ${sizeVariants[size]} shadow-md rounded-md cursor-pointer hover:scale-95 transition-all duration-150 flex justify-center items-center gap-2`;
 
   return !href ? (
-    <button title={title} type="button" onClick={onClick} className={className}>
+    <button title={title} type={type} onClick={onClick} className={className}>
       {children}
     </button>
   ) : (
-    <Link prefetch={prefetch} title={title} className={`${className}`} href={href}>
+    <Link
+      prefetch={prefetch}
+      title={title}
+      className={`${className}`}
+      href={href}
+    >
       {children}
     </Link>
   );

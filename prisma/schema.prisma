@@ -6,8 +6,8 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url = env("POSTGRES_PRISMA_URL") // uses connection pooling
+  provider  = "postgresql"
+  url       = env("POSTGRES_PRISMA_URL") // uses connection pooling
   directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
 }
 
@@ -19,19 +19,19 @@ enum Role {
 }
 
 model User {
-  id             Int          @id @default(autoincrement())
-  externalId     String       @unique
-  email          String       @unique
+  id             Int           @id @default(autoincrement())
+  externalId     String        @unique
+  email          String        @unique
   name           String
   lastname       String
-  role           Role         @default(STUDENT)
+  role           Role          @default(STUDENT)
   Group          Group[]
-  Organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  organizationId Int
+  Organization   Organization? @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  organizationId Int?
   Score          Score[]
   File           File[]
-  createdAt      DateTime?    @default(now())
-  updateAt       DateTime?    @updatedAt
+  createdAt      DateTime?     @default(now())
+  updateAt       DateTime?     @updatedAt
 }
 
 model Group {

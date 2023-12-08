@@ -71,9 +71,9 @@ export default async function NavSidebar() {
             <></>
           )}
         </ul>
-        <div className=" w-full absolute bottom-8 p-2">
+        <div className="w-full absolute bottom-8 p-2">
           <span className="flex w-max items-center gap-2 hover:text-red-500">
-          <FontAwesomeIcon className="w-4 h-4" icon={faSignOut} />
+            <FontAwesomeIcon className="w-4 h-4" icon={faSignOut} />
             <SignOutButton />
           </span>
         </div>

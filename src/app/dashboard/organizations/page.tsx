@@ -40,9 +40,14 @@ export default async function Organizations({
     <>
       <div className="flex justify-between">
         <h2 className="text-xl font-semibold">Organizaciones</h2>
-        <Button href="?modal=create">
-          Crear <FontAwesomeIcon className="h-3 w-3" icon={faPlus} />
-        </Button>
+        <div className="flex gap-2.5">
+          <Button href="?modal=create">
+            Crear <FontAwesomeIcon className="h-3 w-3" icon={faPlus} />
+          </Button>
+          <Button href="admins" color="white">
+            Administradores
+          </Button>
+        </div>
       </div>
       <Card className="flex justify-around ">
         <CardItem
