@@ -13,7 +13,7 @@ export default function Alert({
   t: Toast;
   color?: ButtonAttrs["color"];
   message?: string;
-  callback: () => void;
+  callback?: () => void;
   name?: string;
 }) {
   return (
@@ -21,9 +21,10 @@ export default function Alert({
       {message}
       <div className="flex gap-3.5">
         <Button
+          type="submit"
           color={color}
           onClick={() => {
-            callback();
+            callback && callback();
             toast.dismiss(t.id);
           }}
         >

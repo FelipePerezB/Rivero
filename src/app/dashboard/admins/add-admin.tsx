@@ -10,6 +10,7 @@ import { Role, User } from "@prisma/client";
 import React from "react";
 import toast from "react-hot-toast";
 import api from "src/utils/api";
+import addAdmin from "./actions/add-admin";
 
 export default function AddAdminBtn() {
   const clickHandler = () => {
@@ -22,17 +23,17 @@ export default function AddAdminBtn() {
             const { data: user } = (await api(`users/email/${email}`)) as {
               data: User;
             };
+            console.log(user);
+            if (!user.externalId) return;
             toast((t) => (
-              <Alert
-                name="Añadir"
-                message="¿Seguro que quieres añadirlo?"
-                t={t}
-                callback={async () => {
-                  await clerkClient.users.updateUserMetadata(user.externalId, {
-                    publicMetadata: { role: Role.ADMIN },
-                  });
-                }}
-              />
+              <form action={() => addAdmin(user.externalId)}>
+                <Alert
+                  name="Añadir"
+                  message="¿Seguro que quieres añadirlo?"
+                  t={t}
+                  // callback={}
+                />
+              </form>
             ));
 
             console.log(email);

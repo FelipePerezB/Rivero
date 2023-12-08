@@ -1,4 +1,4 @@
-import { currentUser } from "@clerk/nextjs";
+import { SignOutButton, currentUser } from "@clerk/nextjs";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Role } from "@prisma/client";
@@ -10,8 +10,10 @@ export default async function Navar() {
   const role = user?.publicMetadata?.role;
   return (
     <header className="print:hidden z-40 sticky top-0 left-0">
-      <nav className="flex items-center justify-between py-3 px-5 bg-white text-black border-b">
-        <span></span>
+      <nav className="flex items-center justify-end py-3 px-5 bg-white text-black border-b gap-3.5">
+        {role === Role.STUDENT &&
+        <span className="text-red-500"><SignOutButton/></span>
+        }
         <Link
           prefetch={true}
           className="flex gap-3 items-center"
