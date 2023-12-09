@@ -64,9 +64,11 @@ export default async function upsertUser(evt: WebhookEvent) {
       organizationId: organizationId ? Number(organizationId) : undefined,
     },
   });
+
+  console.log(user)
   if (!user.externalId) {
     await clerkClient.users.deleteUser(id);
-    NextResponse.json({ msg: "upsert failed" }, { status: 400 });
+    return NextResponse.json({ msg: "upsert failed" }, { status: 400 });
   }
 
   revalidateTag(`groups/${organizationId}`);

@@ -18,7 +18,7 @@ export default async function AdminsPage({
   searchParams: { id: string };
 }) {
   console.log(searchParams);
-  const { data: admins } = (await api("users/admins")) as { data: User[] };
+  const { data: admins } = (await api("users/admins", {cache: "no-store"}, ["admins"])) as { data: User[] };
   const data = admins?.map(({ email, name, lastname, externalId }) => [
     externalId,
     `${name} ${lastname}`,
@@ -49,7 +49,7 @@ export default async function AdminsPage({
         <UpdateUserForm
           email={user?.email}
           name={user?.name}
-          lastname={user?.lastname}
+          lastname={user?.lastname ?? ""}
         />
       </SearchModal>
     </>

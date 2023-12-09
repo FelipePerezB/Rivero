@@ -23,7 +23,7 @@ model User {
   externalId     String        @unique
   email          String        @unique
   name           String
-  lastname       String
+  lastname       String?
   role           Role          @default(STUDENT)
   Group          Group[]
   Organization   Organization? @relation(fields: [organizationId], references: [id], onDelete: Cascade)
