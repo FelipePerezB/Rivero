@@ -33,7 +33,7 @@ export async function PATCH(
     return NextResponse.json({ message: "User not found" }, { status: 400 });
 
   const data = await clerkClient.users.updateUser(user.externalId, {
-    lastName: lastname,
+    lastName: lastname ?? undefined,
     firstName: name,
   });
   return NextResponse.json({ data }, { status: 200 });

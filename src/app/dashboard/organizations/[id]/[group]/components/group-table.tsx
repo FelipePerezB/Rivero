@@ -26,7 +26,7 @@ export default async function GroupTable({
   const { id, name, organizationId } = group;
   const users = group?.Users?.map(({ email, name, lastname }) => [
     capFirst(name),
-    capFirst(lastname),
+    capFirst(lastname ?? "---"),
     email,
   ]);
   return (

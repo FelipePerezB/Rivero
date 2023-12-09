@@ -30,7 +30,7 @@ export default async function GroupsTables({
       key={`table-${name}`}
       data={Users.map(({ name, email, lastname }) => [
         capFirst(name),
-        capFirst(lastname),
+        capFirst(lastname ?? "---"),
         email,
       ])}
       head={{
