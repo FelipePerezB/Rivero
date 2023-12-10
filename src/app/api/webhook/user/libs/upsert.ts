@@ -22,7 +22,7 @@ export default async function upsertUser(evt: WebhookEvent) {
     email_addresses,
     public_metadata: { groups, organizationId, role },
   } = evt.data ?? {};
-  const userGroups = (groups as number[]) || undefined;
+  const userGroups = (groups as number[]) ?? [];
 
   if (!id) return NextResponse.json({ msg: "Missing ID" }, { status: 400 });
   if (!first_name)
@@ -39,7 +39,7 @@ export default async function upsertUser(evt: WebhookEvent) {
       email: {
         set: email_addresses[0].email_address,
       },
-      Group: userGroups?.length ? { set: groupsId } : undefined,
+      Group: { set: groupsId },
       lastname: { set: last_name },
       name: { set: first_name },
       role: { set: (role as Role) ?? Role.STUDENT },

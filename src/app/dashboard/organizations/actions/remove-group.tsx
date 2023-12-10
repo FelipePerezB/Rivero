@@ -19,16 +19,17 @@ export default async function removeGroup(
   })) as {
     data: UserWithGroup;
   };
+  const newGroups = user.Group?.filter(
+    ({ id }) => id !== Number(metadata?.group)
+  ).map(({ id }) => id);
   const updatedUser = await clerkClient?.users?.updateUserMetadata(
     user?.externalId,
     {
       publicMetadata: {
-        groups: user.Group?.filter(
-          ({ id }) => id !== Number(metadata?.group)
-        ).map(({ id }) => id),
+        organizationId: newGroups.length ? null : user.organizationId,
+        groups: newGroups,
       },
     }
   );
-  console.log(updatedUser.id, metadata.group);
   if (updatedUser.id) revalidateTag(`groups/${metadata.group}`);
 }
