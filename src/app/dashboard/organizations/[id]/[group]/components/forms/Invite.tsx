@@ -1,5 +1,6 @@
 "use client";
 import Button from "@components/common/buttons/button/button";
+import Loading from "@components/common/loading-spinner/loadding-spinner";
 import StandardInput from "@components/form/StandardInput/StandardInput";
 import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -8,7 +9,7 @@ import React, { useState } from "react";
 import { useFormState, useFormStatus } from "react-dom";
 import toast from "react-hot-toast";
 import inviteUser from "src/app/dashboard/organizations/actions/invite-user";
-import Loading from "../../loading";
+// import Loading from "../../loading";
 
 
 const SendBtn = () => {

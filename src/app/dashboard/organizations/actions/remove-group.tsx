@@ -22,11 +22,12 @@ export default async function removeGroup(
   const newGroups = user.Group?.filter(
     ({ id }) => id !== Number(metadata?.group)
   ).map(({ id }) => id);
+  console.log(newGroups.length)
   const updatedUser = await clerkClient?.users?.updateUserMetadata(
     user?.externalId,
     {
       publicMetadata: {
-        organizationId: newGroups.length ? null : user.organizationId,
+        organizationId: !!newGroups.length ? null : user.organizationId,
         groups: newGroups,
       },
     }

@@ -43,9 +43,7 @@ export default async function upsertUser(evt: WebhookEvent) {
       lastname: { set: last_name },
       name: { set: first_name },
       role: { set: (role as Role) ?? Role.STUDENT },
-      organizationId: organizationId
-        ? { set: Number(organizationId) }
-        : undefined,
+      organizationId:{ set: Number(organizationId) }
     },
     where: {
       externalId: id,
