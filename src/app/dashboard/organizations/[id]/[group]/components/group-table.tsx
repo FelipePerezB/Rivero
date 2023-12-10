@@ -21,17 +21,17 @@ export default async function GroupTable({
   const { getToken } = auth();
   const token = await getToken();
   const { data: group } = (await api(`groups/${organization}/${groupId}`, {
-    headers: { Authorization: `Bearer ${token}` },
-  })) as { data: GroupWithUsers };
+    headers: { Authorization: `Bearer ${token}` }, cache: "no-store"
+  }, [`groups/${groupId}`])) as { data: GroupWithUsers };
   const { id, name, organizationId } = group;
   const users = group?.Users?.map(({ email, name, lastname }) => [
     capFirst(name),
-    capFirst(lastname ?? "---"),
+    capFirst(lastname ?? ""),
     email,
   ]);
   return (
     <Table
-      onClickHref="?modal=update-user&"
+      onClickHref="?modal=update-user&name=[name]&lastname=[lastname]&email=[email]"
       head={{
         icons: [
           <TableBtn

@@ -30,20 +30,16 @@ export default async function upsertUser(evt: WebhookEvent) {
   if (!email_addresses[0]?.email_address)
     return NextResponse.json({ msg: "Mssing email" }, { status: 400 });
 
-  const Group = userGroups?.length
-    ? {
-        connect: userGroups?.map((id) => ({
-          id,
-        })),
-      }
-    : undefined;
+  const groupsId = userGroups?.map((id) => ({
+    id,
+  }));
 
   const user = await prisma.user.upsert({
     update: {
       email: {
         set: email_addresses[0].email_address,
       },
-      Group,
+      Group: userGroups?.length ? { set: groupsId } : undefined,
       lastname: { set: last_name },
       name: { set: first_name },
       role: { set: (role as Role) ?? Role.STUDENT },
@@ -55,7 +51,7 @@ export default async function upsertUser(evt: WebhookEvent) {
       externalId: id,
     },
     create: {
-      Group,
+      Group: userGroups?.length ? { connect: groupsId } : undefined,
       email: email_addresses[0].email_address,
       externalId: id,
       lastname: last_name,
@@ -65,7 +61,7 @@ export default async function upsertUser(evt: WebhookEvent) {
     },
   });
 
-  console.log(user)
+  console.log(user);
   if (!user.externalId) {
     await clerkClient.users.deleteUser(id);
     return NextResponse.json({ msg: "upsert failed" }, { status: 400 });

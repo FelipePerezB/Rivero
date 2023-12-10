@@ -21,9 +21,10 @@ export async function POST(request: Request) {
         groups: [group as number],
       },
     });
+    console.log(invitation)
   } catch (error) {
     console.log(error);
-    return NextResponse.json({ message: "Failed to invite" }, { status: 500 });
+    return NextResponse.json({ message: "Failed to invite" }, { status: 400 });
   }
   let dbInvitation;
   try {
@@ -37,8 +38,6 @@ export async function POST(request: Request) {
       },
     });
   } catch (error) {
-    console.log(error);
-    console.log(group);
     clerkClient.invitations.revokeInvitation(invitation.id);
     return NextResponse.json({ message: "Failed to save" }, { status: 500 });
   }

@@ -7,8 +7,6 @@ import { Role, User } from "@prisma/client";
 import React, { use } from "react";
 import api from "src/utils/api";
 import UpdateUserForm from "../organizations/[id]/[group]/components/forms/update-user-form";
-import Button from "@components/common/buttons/button/button";
-import { clerkClient } from "@clerk/nextjs";
 import RemoveAdmin from "./remove-admin";
 import AddAdminBtn from "./add-admin";
 

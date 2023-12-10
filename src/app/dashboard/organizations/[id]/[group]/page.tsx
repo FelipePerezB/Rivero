@@ -2,7 +2,7 @@ import React, { Suspense } from "react";
 import api from "src/utils/api";
 import { Group, Organization, Role } from "@prisma/client";
 import SearchModal from "@components/modal/search-modal";
-import InviteForm from "./components/forms/invite";
+import InviteForm from "./components/forms/Invite";
 import { Toaster } from "react-hot-toast";
 import TableSkeleton from "@components/layout/loading-skeleton/table-skeleton/table-skeleton";
 import UpdateAlert from "@components/admin/update-alert/update-alert";
@@ -16,6 +16,8 @@ import { auth } from "@clerk/nextjs";
 import DeleteBtn from "@components/admin/delete-btn/delete-btn";
 import UpdateBtn from "@components/admin/update-btn/update-btn";
 import capFirst from "src/utils/capFirst";
+import Button from "@components/common/buttons/button/button";
+import RemoveGroupBtn from "./components/remove-group-btn";
 
 export default async function OrganizationDashboardPage({
   searchParams,
@@ -35,9 +37,13 @@ export default async function OrganizationDashboardPage({
   const token = await getToken();
   const {
     data: { name },
-  } = (await api(`groups/${organizationId}/${group}`, {
-    headers: { Authorization: `Bearer ${token}` },
-  })) as { data: Group };
+  } = (await api(
+    `groups/${organizationId}/${group}`,
+    {
+      headers: { Authorization: `Bearer ${token}` },
+    },
+    [`groups/${group}`]
+  )) as { data: Group };
 
   return (
     <>
@@ -55,7 +61,7 @@ export default async function OrganizationDashboardPage({
         </Suspense>
         <div className="flex gap-2">
           <DeleteBtn
-          size="md"
+            size="md"
             name={name}
             key={`delete-btn-${group}`}
             endpoint={`groups/${organizationId}/${group}`}
@@ -92,6 +98,9 @@ export default async function OrganizationDashboardPage({
         id="update-user"
         searchParams={searchParams}
       >
+        {searchParams?.email && (
+          <RemoveGroupBtn group={group} email={searchParams?.email} />
+        )}
         <UpdateUserForm
           email={searchParams?.email}
           name={searchParams?.name}

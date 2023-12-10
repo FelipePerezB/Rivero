@@ -12,7 +12,7 @@ export default async function api(
     },
   });
   if (!res.ok) {
-    console.log(res)
+    console.log(res.headers)
     throw new Error("Failed to fetch data");
   }
   return res.json();
