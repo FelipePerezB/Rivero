@@ -1,6 +1,6 @@
 import getFile from "src/utils/getFile";
 import getPractice from "../utils/getPractice";
-import Practice from "src/app/subjects/components/elements/files/practice";
+import Practice from "src/app/(main)/subjects/components/elements/files/practice";
 import EditWraper from "../../components/edit-wraper";
 
 export default async function Page(props: {
@@ -9,7 +9,7 @@ export default async function Page(props: {
 }) {
   const file = await getPractice(props.params.id);
   return (
-    <EditWraper document={file} id={props.params.id} />
+    <EditWraper document={file?.file} id={props.params.id} />
     // <Practice
     // searchParams={{}}
     // title="Prácticar"

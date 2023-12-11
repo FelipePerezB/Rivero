@@ -1,18 +1,28 @@
-
 import React from "react";
-import useGetFile from "src/hooks/useGetFile";
 import EditWraper from "../components/edit-wraper";
+import { File } from "@prisma/client";
+import api from "src/utils/api";
 
 export default async function EditFilePage({
   searchParams,
   params: { id },
 }: {
-  searchParams: {[key: string]: string}
+  searchParams: { [key: string]: string };
   params: { id: string };
 }) {
-  const file = await useGetFile(id, searchParams);
+  let file;
+  const { data } = (await api("files/" + id, {}, [`files/${id}`])) as {
+    data: File;
+  };
+  if (data?.content)
+    file = {
+      ...data,
+      content: { ...JSON.parse(data.content), searchParams },
+    };
 
-  return <>
-  <EditWraper document={file} id={id} />
-  </>
+  return (
+    <>
+      <EditWraper document={file} id={id} />
+    </>
+  );
 }

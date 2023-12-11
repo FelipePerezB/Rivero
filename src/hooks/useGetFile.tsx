@@ -10,42 +10,39 @@ import api from "src/utils/api";
 import generateRandomId from "src/utils/generateRandomId";
 // import toast from "react-hot-toast";
 import { DocumentJSON, IdLenght } from "src/models/document.model";
+import { hydrateJSON } from "src/app/documents/edit/utils/hydrateJSON";
 
-export const getDefaultFile = (id: string) => {
-  return {
-    type: Types.DOCUMENT,
-    file: {
-      externalId: id,
-      name: "Nuevo documento",
-      privacity: Privacity.PRIVATE,
-      content: {
-        type: "document",
-        id: generateRandomId(IdLenght.sm),
-        options: {
-          children: [
-            {
-              type: "section",
-              id: generateRandomId(IdLenght.sm),
-              options: {
-                number: 1,
-                children: [
-                  {
-                    type: "title",
-                    id: generateRandomId(IdLenght.sm),
-                    options: {
-                      text: "Título 1",
-                      size: "h1",
-                    },
+export const getDefaultFile = (id: string) =>
+  ({
+    externalId: id,
+    name: "Nuevo documento",
+    privacity: Privacity.PRIVATE,
+    content: hydrateJSON({
+      type: "document",
+      id: generateRandomId(IdLenght.sm),
+      options: {
+        children: [
+          {
+            type: "section",
+            id: generateRandomId(IdLenght.sm),
+            options: {
+              number: 1,
+              children: [
+                {
+                  type: "title",
+                  id: generateRandomId(IdLenght.sm),
+                  options: {
+                    text: "Título 1",
+                    size: "h1",
                   },
-                ],
-              },
+                },
+              ],
             },
-          ],
-        },
+          },
+        ],
       },
-    },
-  } as NoteWithComponent;
-};
+    }),
+  } as NoteWithComponent["file"]);
 
 // const getToast = (
 //   setFile: React.Dispatch<React.SetStateAction<DocumentJSON>>,
@@ -81,28 +78,27 @@ export default async function useGetFile(
   id: string,
   searchParams?: { [key: string]: string }
 ) {
-  let defaultFile = getDefaultFile(id);
-  try {
-    const { getToken } = auth();
-    const token = await getToken();
-    const { data } = (await api(
-      "files/" + id,
-      {
-        headers: { Authorization: `Bearer ${token}` },
-      },
-      [`files/${id}`]
-    )) as { data: File };
-    if (data.externalId) {
-      defaultFile.file = {
-        ...data,
-        content: { ...JSON.parse(data.content), searchParams },
-      };
-    }
-  } catch (error) {
-    console.log(error);
-  }
+  // let defaultFile = getDefaultFile(id);
+  // try {
+  //   const { getToken } = auth();
+  //   const token = await getToken();
+  //   const { data } = (await api(
+  //     "files/" + id,
+  //     {
+  //       headers: { Authorization: `Bearer ${token}` },
+  //     },
+  //     [`files/${id}`]
+  //   )) as { data: File };
+  //   if (data.externalId) {
+  //     defaultFile.file = {
+  //       ...data,
+  //       content: { ...JSON.parse(data.content), searchParams },
+  //     };
+  //   }
+  // } catch (error) {
+  //   console.log(error);
+  // }
   // const [file, setFile] = useState<DocumentJSON>(defaultFile);
-
   // useEffect(() => {
   //   const localFile = localStorage.getItem("doc-" + id);
   //   if (localFile) setFile(JSON.parse(localFile));
@@ -120,5 +116,5 @@ export default async function useGetFile(
   //     toast.success("Documento cargado correctamente");
   //   }
   // }, [data, id]);
-  return defaultFile;
+  // return defaultFile;
 }

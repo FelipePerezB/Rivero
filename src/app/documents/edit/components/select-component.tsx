@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import schemas from "../utils/schemas/global";
-import DynamicElement from "src/app/subjects/components/elements/files/dynamic-file";
+import DynamicElement from "src/app/(main)/subjects/components/elements/files/dynamic-file";
 import { ComponentOptions } from "../models/component";
 import TagsInput from "@components/form/tags/tags-input";import capFirst from "src/utils/capFirst";
 

@@ -1,10 +1,11 @@
-'use client'
+"use client";
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
+import { NoteWithComponent } from "src/app/documents/edit/models/component";
 import { DocumentJSON } from "src/models/document.model";
 
 export default function useGetLocalDocs(number: number = 10) {
-  const [savedDocs, setSavedDocs] = useState<DocumentJSON[]>([]);
+  const [savedDocs, setSavedDocs] = useState<NoteWithComponent["file"][]>([]);
   useEffect(() => {
     if (savedDocs?.length) return;
     const docs = [];
@@ -14,25 +15,25 @@ export default function useGetLocalDocs(number: number = 10) {
       index++
     ) {
       const key = localStorage.key(index);
+      console.log(key);
       const doc = key?.includes("document-") && localStorage.getItem(key);
+      console.log(doc);
       if (doc) {
-        const jsonDoc = JSON.parse(doc);
+        let jsonDoc = JSON.parse(doc);
+        if (jsonDoc.file) jsonDoc = jsonDoc.file;
         const newDoc = {
           ...jsonDoc,
-          file: {
-            ...jsonDoc.file,
-            content: {
-              ...jsonDoc.file.content,
-              options: {
-                ...jsonDoc.file.content.options,
-                children: [jsonDoc?.file?.content.options?.children[0]],
-              },
+          content: {
+            ...jsonDoc.content,
+            options: {
+              ...jsonDoc.content.options,
+              children: [jsonDoc?.content.options?.children[0]],
             },
           },
         };
         const isSaved = savedDocs
-          .map((doc) => doc.file.externalId)
-          .includes(newDoc.file.externalId);
+          .map((doc) => doc.externalId)
+          .includes(newDoc.externalId);
         if (isSaved) return;
         docs.push(newDoc);
       }

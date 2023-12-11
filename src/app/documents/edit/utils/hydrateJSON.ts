@@ -7,7 +7,6 @@ import { IdLenght } from "src/models/document.model";
 export function hydrateJSON(obj: Component, parentId?: string): Component {
   const options = obj?.options;
   if (options && obj.id && obj.id?.length === IdLenght.sm) {
-    const newId = generateRandomId(4);
     // El id se genera en base a los ids de los elementos padres
     const id = parentId ? `${parentId}-${obj.id}` : obj.id;
     Object.assign(obj, { id: `${id}` });

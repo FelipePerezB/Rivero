@@ -1,78 +1,129 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 import React, { useEffect, useRef, useState } from "react";
-import { Toaster } from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
 import { NoteWithComponent } from "../models/component";
 import Layout from "./layout";
 import Toolbar from "./toolbar";
 import { hydrateJSON } from "../utils/hydrateJSON";
-import ScreenLayout from "src/app/subjects/components/layout/screen-layout";
-import DynamicElement from "src/app/subjects/components/elements/files/dynamic-file";
-// import Document from "../../components/elements/files/document";
-// import { hydrateJSON } from "../utils/hydrateJSON";
-// import DynamicElement from "../../components/elements/files/dynamic-file";
-// import ScreenLayout from "../../components/layout/screen-layout";
+import ScreenLayout from "src/app/(main)/subjects/components/layout/screen-layout";
+import DynamicElement from "src/app/(main)/subjects/components/elements/files/dynamic-file";
+import { Types } from "@prisma/client";
+import { getDefaultFile } from "src/hooks/useGetFile";
+import Alert from "@components/common/alert/alert";
+import { removeIdFromObject } from "../utils/removeId";
+
+const hydrate = (document: NoteWithComponent["file"], id: string) => {
+  const copyDocument = JSON.parse(JSON.stringify(document));
+  return {
+    ...document,
+    content: hydrateJSON(copyDocument.content),
+    externalId: id,
+  };
+};
 
 export default function EditWraper({
   id,
   document,
 }: {
   id: string;
-  document: any;
+  document: NoteWithComponent["file"] | undefined;
 }) {
-  const [settings, setSettings] = useState<NoteWithComponent>(document);
+  const [isLocalFile, setIsLocalFile] = useState(false);
+  const [settings, setSettings] = useState<
+    NoteWithComponent["file"] | undefined
+  >(undefined);
   const divRef = useRef<HTMLDivElement>(null);
-  // const resize = () => {
-
-  //   const $container = divRef.current;
-  //   if (!$container) return;
-  //   const pixels = 13;
-  //   const width = 450;
-  //   const containerWidth = $container.clientWidth;
-  //   const fontSize = (pixels / width) * Number(containerWidth);
-  //   $container.style.fontSize = fontSize + "px";
-  // };
-  const {
-    file: { name, externalId, content },
-    type,
-  } = settings ?? {};
+  const { name, externalId, content } = settings ?? {};
+  const type = Types.DOCUMENT;
 
   useEffect(() => {
-    setSettings({
-      ...settings,
-      file: {
-        ...settings.file,
-        content: hydrateJSON(document.file.content),
-        externalId: id,
-      },
-    });
-    // resize();
-    // window.onresize = resize;
+    if ("serviceWorker" in navigator) {
+      console.log("AAA")
+        navigator.serviceWorker
+          .register("/service-worker.js")
+          .then((registration) => {
+            console.log("Service worker registered:", registration);
+          })
+          .catch((error) => {
+            console.log("Service worker registration failed:", error);
+          });
+    }
+  },[] );
+
+  useEffect(() => {
+    const storageDocument = JSON.parse(
+      localStorage.getItem(`document-${id}`) ?? "{}"
+    ) as NoteWithComponent["file"];
+    if (document?.content) {
+      if (
+        JSON.stringify(storageDocument) !== JSON.stringify(document) &&
+        storageDocument?.content?.id
+      ) {
+        setIsLocalFile(true);
+        setSettings(hydrate(storageDocument, id));
+        toast((t) => (
+          <Alert
+            name="Sobrescribir"
+            message="Error al sincronizar"
+            t={t}
+            callback={() => {
+              setIsLocalFile(false);
+              return setSettings(hydrate(document, id));
+            }}
+          />
+        ));
+        return;
+      } else return setSettings(hydrate(document, id));
+    } else if (storageDocument.externalId) {
+      setIsLocalFile(true);
+      return setSettings(hydrate(storageDocument, id));
+    } else return setSettings(getDefaultFile(id));
   }, [id]);
 
-  console.log(document)
-
   useEffect(() => {
-    localStorage.setItem(`document-${externalId}`, JSON.stringify(settings));
+    if (!content?.id) return;
+    localStorage.setItem(
+      `document-${externalId}`,
+      JSON.stringify({
+        ...settings,
+        content: removeIdFromObject(JSON.parse(JSON.stringify(content))),
+      })
+    );
   }, [settings]);
 
   return (
-    <Layout settings={settings} setSettings={setSettings}>
-      <div className="h-full w-full" ref={divRef}>
-        {externalId && name && type && (
+    <Layout
+      isLocalFile={isLocalFile}
+      settings={settings}
+      setSettings={
+        setSettings as React.Dispatch<
+          React.SetStateAction<NoteWithComponent["file"]>
+        >
+      }
+    >
+      <div
+        className="flex flex-1 flex-col gap-3 p-4  h-full w-full mx-auto max-w-5xl"
+        ref={divRef}
+      >
+        {externalId && name && content && type && (
           <ScreenLayout>
             <DynamicElement
-              attrs={{ ...content, name,type, editMode: true }}
+              attrs={{ ...content, name, type, editMode: true }}
               name={content.type}
             />
           </ScreenLayout>
         )}
       </div>
-      {divRef.current && (
+      {divRef.current && settings?.externalId && (
         <Toolbar
           divRef={divRef ?? undefined}
-          setSettings={setSettings}
-          settings={settings}
+          setSettings={
+            setSettings as React.Dispatch<
+              React.SetStateAction<NoteWithComponent["file"]>
+            >
+          }
+          settings={settings as NoteWithComponent["file"]}
         />
       )}
       <Toaster />

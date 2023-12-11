@@ -11,13 +11,13 @@ export default function Toolbar({
   settings,
   setSettings,
 }: {
-  settings: NoteWithComponent;
+  settings: NoteWithComponent['file'];
   divRef?: React.RefObject<HTMLDivElement>;
-  setSettings: React.Dispatch<React.SetStateAction<NoteWithComponent>>;
+  setSettings: React.Dispatch<React.SetStateAction<NoteWithComponent['file']>>;
 }) {
   const [modalState, setModalState] = useState(false);
   const [component, setComponent] = useState<Component>();
-  const parentComponent = settings.file.content;
+  const parentComponent = settings?.content;
   useEffect(() => {
     if (divRef?.current)
       divRef.current.onclick = (event) => {

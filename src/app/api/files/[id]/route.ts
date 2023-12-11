@@ -32,6 +32,7 @@ export async function POST(
       privacity,
     },
   });
+  if (data.externalId) revalidateTag(`files/${id}`);
 
   return NextResponse.json({ data }, { status: 200 });
 }
@@ -70,8 +71,8 @@ export async function PATCH(
     data: updateData,
     include: { Note: true },
   });
-  if(data?.id){
-    revalidateTag(`files/${data?.id}`)
+  if (data?.id) {
+    revalidateTag(`files/${data?.id}`);
   }
 
   if (data?.Note?.subjectId && data?.Note?.type === "EVALUATION") {

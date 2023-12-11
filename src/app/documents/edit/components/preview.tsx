@@ -2,7 +2,7 @@
 "use client";
 import React from "react";
 // import { Component } from "src/app/subjects/edit/models/component";
-import DynamicElement from "src/app/subjects/components/elements/files/dynamic-file";
+import DynamicElement from "src/app/(main)/subjects/components/elements/files/dynamic-file";
 import { Component } from "../models/component";
 
 export default function Preview({ attrs }: { attrs: Component }) {

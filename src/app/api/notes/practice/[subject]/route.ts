@@ -4,7 +4,7 @@ import { revalidateTag } from "next/cache";
 import { redirect } from "next/navigation";
 import { NextRequest, NextResponse } from "next/server";
 import { getDefaultPractice } from "src/app/documents/edit/practice/utils/getPractice";
-import generateRandomId from "src/app/subjects/utils/generateRandomId";
+import generateRandomId from "src/app/(main)/subjects/utils/generateRandomId";
 import prisma from "src/utils/prisma";
 import { IdLenght } from "src/models/document.model";
 

@@ -6,14 +6,21 @@ import Image from "next/image";
 import Link from "next/link";
 
 export default async function Navar() {
-  const user = await currentUser();
+  let user;
+  try {
+    user = await currentUser();
+  } catch (error) {
+    console.log(error);
+  }
   const role = user?.publicMetadata?.role;
   return (
     <header className="print:hidden z-40 sticky top-0 left-0">
       <nav className="flex items-center justify-end py-3 px-5 bg-white text-black border-b gap-3.5">
-        {role === Role.STUDENT &&
-        <span className="text-red-500"><SignOutButton/></span>
-        }
+        {role === Role.STUDENT && (
+          <span className="text-red-500">
+            <SignOutButton />
+          </span>
+        )}
         <Link
           prefetch={true}
           className="flex gap-3 items-center"

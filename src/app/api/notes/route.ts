@@ -2,7 +2,7 @@ import { auth } from "@clerk/nextjs";
 import { Privacity, Types } from "@prisma/client";
 import { revalidateTag } from "next/cache";
 import { NextRequest, NextResponse } from "next/server";
-import generateRandomId from "src/app/subjects/utils/generateRandomId";
+import generateRandomId from "src/app/(main)/subjects/utils/generateRandomId";
 import getFile from "src/utils/getFile";
 import prisma from "src/utils/prisma";
 import { IdLenght } from "src/models/document.model";

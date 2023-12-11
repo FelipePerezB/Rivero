@@ -1,6 +1,7 @@
 import { Component } from "../models/component";
 
-export function removeIdFromObject(obj: Component) {
+export function removeIdFromObject(obj?: Component) {
+  if(!obj?.id) return;
   if ("id" in obj) {
     obj.id = obj.id?.split("-").at(-1);
   }

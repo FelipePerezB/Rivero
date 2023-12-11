@@ -1,24 +1,32 @@
 import React, { ReactNode } from "react";
 // import { NoteWithComponent } from "src/app/subjects/edit/models/component";
-import Navar from "src/app/subjects/components/layout/tool-bar/tool-bar";
+import Navar from "src/app/(main)/subjects/components/layout/tool-bar/tool-bar";
 import { Toaster } from "react-hot-toast";
 import { NoteWithComponent } from "../models/component";
 
 export default function EditDocumentLayout({
+  isLocalFile,
   settings,
   children,
   setSettings,
 }: {
-  settings: NoteWithComponent;
-  setSettings: React.Dispatch<React.SetStateAction<NoteWithComponent>>;
+  isLocalFile: boolean,
+  settings?: NoteWithComponent["file"];
+  setSettings: React.Dispatch<React.SetStateAction<NoteWithComponent["file"]>>;
   children: ReactNode;
 }) {
   return (
-    <div className="p-4 pt-16 max-w-2xl mx-auto  w-full h-full print:max-w-none">
+    <div className="min-h-screen flex flex-col h-max bg-body text-black">
+      {/* <div className="flex flex-col bg-body text-black max-w-2xl mx-auto  w-full h-full print:max-w-none"> */}
       <Navar
-        setSettings={setSettings}
+      isLocalFile={isLocalFile}
+        setSettings={
+          setSettings as React.Dispatch<
+            React.SetStateAction<NoteWithComponent["file"]>
+          >
+        }
         settings={settings}
-        name={settings?.file.name as string}
+        name={settings?.name as string}
       />
       {children}
     </div>

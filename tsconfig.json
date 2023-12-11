@@ -32,6 +32,6 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "prisma/seed.mts"
-  ],
+, "src/app/service-worker.js"  ],
   "exclude": ["node_modules"]
 }
