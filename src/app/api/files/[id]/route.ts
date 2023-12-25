@@ -12,7 +12,6 @@ export async function POST(
   if (!userId) throw new Error("Failed to fetch data");
   const id = params.id;
   const { content, privacity, name } = res;
-
   const data = await prisma.file.upsert({
     where: { externalId: id },
     create: {
@@ -33,7 +32,6 @@ export async function POST(
     },
   });
   if (data.externalId) revalidateTag(`files/${id}`);
-
   return NextResponse.json({ data }, { status: 200 });
 }
 

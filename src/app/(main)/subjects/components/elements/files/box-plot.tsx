@@ -49,8 +49,6 @@ export default function BoxPlot({
     var min = data_sorted[0];
     var max = data_sorted?.at(-1) ?? 0
 
-    console.log(min)
-
     // Show the Y scale
     var y = d3
       .scaleLinear()

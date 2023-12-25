@@ -9,7 +9,7 @@ import { useEffect, useState } from "react";
 import TableBtn from "@components/dashboard/table/table-btn/table-btn";
 import capFirst from "src/utils/capFirst";
 
-export default function TextInput({
+export default function SubInputs({
   label,
   sets,
   dataKey,
@@ -19,7 +19,7 @@ export default function TextInput({
   sets: { key: string; label: string }[];
   dataKey: string;
   label: string;
-  value: { [key: string]: string }[];
+  value?: { [key: string]: string }[];
   onChange: (value: { [key: string]: unknown }) => void;
 }) {
   const [data, setData] = useState<{ [key: string]: string }[]>(
@@ -42,8 +42,6 @@ export default function TextInput({
   //   onChange && onChange({ children });
   //   setModalState(false);
   // };
-
-  console.log(data, newValue);
 
   return (
     <>
@@ -85,7 +83,7 @@ export default function TextInput({
         ))}
       </div>
       <div className="pl-3 flex flex-col gap-1">
-        {sets.map(({ key, label }) => (
+        {sets?.map(({ key, label }) => (
           <StandardInput
             key={`${key}-input`}
             name={label}

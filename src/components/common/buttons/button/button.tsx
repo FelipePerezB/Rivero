@@ -1,5 +1,10 @@
 import Link from "next/link";
-import { ButtonHTMLAttributes, MouseEventHandler, ReactNode } from "react";
+import {
+  ButtonHTMLAttributes,
+  CSSProperties,
+  MouseEventHandler,
+  ReactNode,
+} from "react";
 
 export type ButtonAttrs = {
   type?: "button" | "submit" | "reset";
@@ -10,6 +15,7 @@ export type ButtonAttrs = {
   size?: "sm" | "lg" | "xs";
   href?: string;
   className?: string;
+  style?: CSSProperties;
   title?: string;
 };
 
@@ -20,6 +26,7 @@ export default function Button({
   onClick,
   color = "blue",
   size = "sm",
+  style,
   href,
   className = "",
   title,
@@ -41,11 +48,18 @@ export default function Button({
   className += ` ${colorVariants[color]} ${sizeVariants[size]} shadow-md rounded-md cursor-pointer hover:scale-95 transition-all duration-150 flex justify-center items-center gap-2`;
 
   return !href ? (
-    <button title={title} type={type} onClick={onClick} className={className}>
+    <button
+      style={style}
+      title={title}
+      type={type}
+      onClick={onClick}
+      className={className}
+    >
       {children}
     </button>
   ) : (
     <Link
+      style={style}
       prefetch={prefetch}
       title={title}
       className={`${className}`}

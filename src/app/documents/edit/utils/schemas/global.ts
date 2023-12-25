@@ -256,6 +256,14 @@ const math = {
 const excercises = {
   excercises: [
     {
+      type: "boolean",
+      options: {
+        types: ["question"],
+        key: "isAnEvaluation",
+        label: "Evaluación?",
+      },
+    },
+    {
       type: "children",
       options: {
         types: ["question"],

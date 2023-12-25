@@ -22,9 +22,6 @@ export default async function AllGroupsEvaluationPage({
   const { data: note } = (await api("notes/" + evaluation, {}, [
     "evaluations/" + subject,
   ])) as { data: NoteWithFile[] };
-
-  console.log(evaluation, subject);
-
   const { File } = note[0] ?? {};
   return (
     <>

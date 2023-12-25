@@ -64,7 +64,6 @@ export default function Editor({
         <MarkdownShortcutPlugin transformers={PLAYGROUND_TRANSFORMERS} />
         <OnChangePlugin
           onChange={(state) => {
-            console.log(state.toJSON().root);
             onChange({ [dataKey ?? label]: compressJSON(state.toJSON().root) });
           }}
         />

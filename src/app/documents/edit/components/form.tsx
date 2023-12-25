@@ -74,7 +74,6 @@ export default function Form({
   useEffect(() => {
     if (!component.type) return;
     const schemas = getSchema(component.type);
-    console.log(schemas);
     if (schemas?.length) {
       setInputs(
         schemas?.map(({ options: data, type }, i) => {
@@ -110,8 +109,6 @@ export default function Form({
       );
     }
   }, [component.type, defaultValues]);
-
-  console.log(component);
 
   return (
     <div className="flex flex-col gap-2">

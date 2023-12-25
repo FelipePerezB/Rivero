@@ -93,7 +93,6 @@ export default async function inviteUser(
           if (!newUser?.id) {
             errors = { ...errors, ...{ [email]: "Error al añadir" } };
           }
-          console.log(newUser);
           break;
         case "duplicate_record":
           errors = { ...errors, ...{ [email]: "Invitación dúplicada" } };

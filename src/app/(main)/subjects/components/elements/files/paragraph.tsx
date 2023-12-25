@@ -33,6 +33,12 @@ const fontsSizes = {
   lg: "1.2em",
 };
 
+const lineHeight = {
+  sm: "",
+  md: "",
+  lg: "2em",
+};
+
 export default function Paragraph({
   id,
   options: { text, indent, align, fontSize } = {
@@ -45,9 +51,7 @@ export default function Paragraph({
   id?: string;
   options: { text: string; indent?: boolean; align?: aligns; fontSize?: sizes };
 }) {
-  console.log(fontSize);
   const content = decompressRichTextContent(text) as unknown as string;
-  console.log(content, text);
 
   try {
     return (
@@ -71,6 +75,7 @@ export default function Paragraph({
                   textIndent: indent ? "1em" : "0",
                   textAlign: align,
                   fontSize: fontsSizes[fontSize ?? "md"],
+                  lineHeight: lineHeight[fontSize ?? "md"],
                 }}
                 // className="text-justify"
               />

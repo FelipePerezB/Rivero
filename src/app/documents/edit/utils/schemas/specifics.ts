@@ -1,5 +1,18 @@
 const specifics = {
   document: [
+    // {
+    //   type: "sub-inputs",
+    //   options: {
+    //     key: "metadata",
+    //     label: "Metadata",
+    //     sets: [
+    //       {
+    //         key: "a",
+    //         label: "sets",
+    //       },
+    //     ],
+    //   },
+    // },
     {
       type: "children",
       options: {

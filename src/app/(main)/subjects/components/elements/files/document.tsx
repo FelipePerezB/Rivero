@@ -3,11 +3,12 @@ import FileContainer from "../../layout/file-container/file-container";
 import { Component } from "src/app/documents/edit/models/component";
 
 export default function Document({
-  name,
+  documentId,
   options,
   searchParams,
   id,
 }: {
+  documentId: string;
   searchParams: { [key: string]: string };
   name: string;
   type: string;
@@ -16,6 +17,7 @@ export default function Document({
   };
   id: string;
 }) {
+  console.log(documentId)
   // const sections = options?.children.filter((section, i)=>i===sw)
   // const sections = options?.children
   //   ?.map((element) =>
@@ -31,6 +33,7 @@ export default function Document({
       {options?.children?.map((child, i) => {
         return (
           <Section
+            documentId={documentId}
             id={child?.id as string}
             number={i + 1}
             options={

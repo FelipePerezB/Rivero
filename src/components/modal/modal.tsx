@@ -19,6 +19,7 @@ export default function Modal({
   return (
     <>
       <div
+      autoFocus
         className={`top-0 left-0 h-full fixed flex justify-center items-center z-40 rounded-md `}
       >
         <Blur CloseWrapper={CloseWrapper} show={show} />

@@ -87,7 +87,6 @@ export default async function OrganizationDashboardPage({
     {},
     [`groups/${group}`]
   )) as { data: GroupWithUsers };
-  console.log(groupData);
   const {
     data: { name },
   } = (await api(

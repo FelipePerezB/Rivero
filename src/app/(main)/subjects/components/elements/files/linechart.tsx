@@ -29,7 +29,6 @@ export default function LineChart({
   };
   id: string;
 }) {
-  console.log(equations);
   const regex = /^([-+/().]?[0-9]*\*?x?[\s]*)*$/;
   const divRef = useRef<HTMLDivElement>(null);
   const [height, setHeight] = useState<number>(100);
@@ -51,7 +50,6 @@ export default function LineChart({
         if (!regex.test(equation)) throw new Error("Invalid equation");
         if (typeof eval(`(x) => ${equation}`)(0) !== "number")
           throw new Error("Invalid equation");
-        console.log(equation);
         purifyEquations.push(eval(`(x) => ${equation}`));
         setPurifyEquations([...purifyEquations]);
       });
@@ -61,9 +59,7 @@ export default function LineChart({
     }
     // return () => setPurifyEquations([]);
   }, []);
-
-  console.log(purifyEquations);
-
+  
   useEffect(() => {
     const reSize = () => setHeight(divRef?.current?.clientHeight ?? 0);
     reSize();

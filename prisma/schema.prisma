@@ -74,6 +74,7 @@ model Note {
 
 model File {
   id         Int       @id @default(autoincrement())
+  // metadata   String?
   externalId String    @unique
   privacity  Privacity @default(PRIVATE)
   name       String    @default("Nuevo documento")

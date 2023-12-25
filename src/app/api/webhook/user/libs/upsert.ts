@@ -59,7 +59,6 @@ export default async function upsertUser(evt: WebhookEvent) {
     },
   });
 
-  console.log(user);
   if (!user.externalId) {
     await clerkClient.users.deleteUser(id);
     return NextResponse.json({ msg: "upsert failed" }, { status: 400 });

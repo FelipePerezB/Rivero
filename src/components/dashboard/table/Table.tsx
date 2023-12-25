@@ -34,7 +34,7 @@ const Row = ({
 
 const Table: React.FC<TableProps> = ({ data, head, onClickHref, handlers }) => {
   return (
-    <Card className="p-0 rounded">
+    <Card className="p-0 rounded-xl">
       <table className="flex flex-col">
         {head?.title && (
           <caption className="w-full flex justify-between items-center p-[0.6em]">
@@ -55,7 +55,7 @@ const Table: React.FC<TableProps> = ({ data, head, onClickHref, handlers }) => {
             </Row>
           </thead>
         )}
-        <tbody className="inline-block w-full max-h-52 overflow-y-scroll">
+        <tbody className="inline-block w-full max-h-52 overflow-y-auto">
           {data?.map((row, rowIndex) => {
             const obj = {} as any;
             head?.keys.forEach(

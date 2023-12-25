@@ -9,7 +9,6 @@ export async function GET(
     where: { id: id },
   });
   if(data?.id){
-    console.log(data.id)
     return NextResponse.json({ ok: true }, { status: 200 });
 
   }

@@ -56,7 +56,6 @@ export async function DELETE(
   { params }: { params: { id: string } }
 ) {
   const id = Number(params.id);
-  console.log(id)
   const data = await prisma.subtopic.delete({
     where: {
       id,

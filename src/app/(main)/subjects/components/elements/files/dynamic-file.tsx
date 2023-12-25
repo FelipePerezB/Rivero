@@ -29,7 +29,6 @@ export default function DynamicElement({
   name: string;
   attrs: { [key: string]: unknown };
 }) {
-  console.log(name, attrs)
   const Component = imports[name];
   return <Component {...{ ...attrs }} key={`dynamic-component-${attrs?.id}`} />;
 }

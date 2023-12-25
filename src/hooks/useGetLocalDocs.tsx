@@ -15,9 +15,7 @@ export default function useGetLocalDocs(number: number = 10) {
       index++
     ) {
       const key = localStorage.key(index);
-      console.log(key);
       const doc = key?.includes("document-") && localStorage.getItem(key);
-      console.log(doc);
       if (doc) {
         let jsonDoc = JSON.parse(doc);
         if (jsonDoc.file) jsonDoc = jsonDoc.file;

@@ -22,8 +22,6 @@ export default async function removeGroup(
   const newGroups = user.Group?.filter(
     ({ id }) => id !== Number(metadata?.group)
   ).map(({ id }) => id);
-  console.log(!newGroups.length)
-  console.log(!1)
   const updatedUser = await clerkClient?.users?.updateUserMetadata(
     user?.externalId,
     {

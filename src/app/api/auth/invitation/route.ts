@@ -11,7 +11,6 @@ export async function POST(request: Request) {
   NextResponse.json({ message: "Failed to invite" }, { status: 500 });
   let invitation: Invitation;
   try {
-    console.log(res);
     invitation = await clerkClient.invitations.createInvitation({
       emailAddress: email,
       redirectUrl: `${process.env.NEXT_PUBLIC_BASE_URL}/sign-up`,
@@ -21,9 +20,7 @@ export async function POST(request: Request) {
         groups: [group as number],
       },
     });
-    console.log(invitation)
   } catch (error) {
-    console.log(error);
     return NextResponse.json({ message: "Failed to invite" }, { status: 400 });
   }
   let dbInvitation;
@@ -41,8 +38,6 @@ export async function POST(request: Request) {
     clerkClient.invitations.revokeInvitation(invitation.id);
     return NextResponse.json({ message: "Failed to save" }, { status: 500 });
   }
-
-  console.log(invitation, dbInvitation);
 
   revalidateTag(`groups/${organizationId}`);
 

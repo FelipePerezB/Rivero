@@ -56,8 +56,6 @@ const FormChildren = ({
     return childValue?.toLowerCase()?.includes(expectedValue);
   });
 
-  console.log(children);
-
   return (
     <section className="flex flex-col gap-2">
       {children?.length ? (

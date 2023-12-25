@@ -25,7 +25,6 @@ export default function Children({
   useEffect(() => {
     setId(`${parentId}-${generateRandomId(IdLenght.sm)}`);
   }, [value]);
-  console.log(types);
   return (
     <div>
       <Buttons>

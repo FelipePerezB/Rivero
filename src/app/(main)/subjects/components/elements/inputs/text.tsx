@@ -5,12 +5,18 @@ export default function TextInput({
   label,
   dataKey,
   value,
+  placeholder,
   onChange,
 }: {
-  dataKey: string
+  placeholder?: string;
+  dataKey: string;
   label: string;
   value: string;
   onChange: (value: { [key: string]: string }) => void;
 }) {
-  return <StandardInput {...{ onChange, name: label, dataKey, value }} />;
+  return (
+    <StandardInput
+      {...{ onChange, name: label, dataKey, value, placeholder }}
+    />
+  );
 }

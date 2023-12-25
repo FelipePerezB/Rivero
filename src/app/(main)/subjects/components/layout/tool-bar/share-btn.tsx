@@ -8,9 +8,9 @@ import { hydrateJSON } from "src/app/documents/edit/utils/hydrateJSON";
 import { removeIdFromObject } from "src/app/documents/edit/utils/removeId";
 import OptionsInput from "@components/form/OptionsInput/OptionsInput";
 import Options from "@components/common/options";
-import { Item } from "./tool-bar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShare } from "@fortawesome/free-solid-svg-icons";
+import Item from "./item";
 
 const getOptimizedContent = (settings?: NoteWithComponent["file"]) => {
   if (!settings?.content) return "Error al cargar el documenti";
@@ -41,9 +41,6 @@ export default function ShareBtn({
         <Item title="Share">
           <FontAwesomeIcon className="flex items-center" icon={faShare} />
         </Item>
-        {/* <CircleButton>
-        </CircleButton> */}
-        {/* <span className="hidden md:inline-block">Share</span> */}
       </div>
       <ClientModal setState={setState} state={state} title="Compartir">
         <Options {...{ setOption, option, options }}></Options>
@@ -77,7 +74,6 @@ export default function ShareBtn({
                 }))
               }
             />
-            {/* <Buttons> */}
             <Button onClick={() => print()}>Descargar</Button>
           </>
         )}

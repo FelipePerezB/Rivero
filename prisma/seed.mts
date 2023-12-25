@@ -9,14 +9,6 @@ async function main() {
     },
   });
 
-  await prisma.organization.upsert({
-    where: { name: 'Colegio Alejandria' },
-    update: {},
-    create: {
-      name: 'Colegio Alejandria',
-    },
-  });
-
   await prisma.group.upsert({
     where: { id: 1 },
     update: {},

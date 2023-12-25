@@ -8,12 +8,10 @@ export async function GET(
   request: Request,
   { params: { email } }: { params: { email: string } }
 ) {
-  console.log(email);
   const data = await prisma.user.findFirst({
     where: { email },
     include: { Group: true },
   });
-  console.log(data)
   if (!data?.externalId)
     return NextResponse.json({ message: "User not found" }, { status: 400 });
 
@@ -49,7 +47,6 @@ export async function DELETE(
     where: { email },
     include: { Group: true },
   });
-  console.log(user);
   if (!user?.externalId)
     return NextResponse.json({ message: "User not found" }, { status: 400 });
 

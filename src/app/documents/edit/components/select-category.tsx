@@ -8,7 +8,6 @@ const Category = ({
   text: string;
   defaultChecked?: boolean;
 }) => {
-  console.log(defaultChecked);
   const group = "select-category";
   return (
     <label className="relative">

@@ -15,7 +15,6 @@ export default async function AdminsPage({
 }: {
   searchParams: { id: string };
 }) {
-  console.log(searchParams);
   const { data: admins } = (await api("users/admins", {cache: "no-store"}, ["admins"])) as { data: User[] };
   const data = admins?.map(({ email, name, lastname, externalId }) => [
     externalId,

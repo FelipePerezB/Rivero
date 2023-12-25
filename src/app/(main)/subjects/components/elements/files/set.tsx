@@ -21,7 +21,6 @@ export default function Set({
   const COLS = 8 ;
   const cols = COLS -skip
   const total = cols * ROWS;
-  console.log(children);
   const values = set.split(",");
   const ratio = Math.floor(total / (values.length - 1));
   const child = children?.at(0);
@@ -52,10 +51,8 @@ export default function Set({
       </span>
       {values?.map((_, i) => {
         const index = (i+1) * ratio;
-        // console.log(cols)
         // let col = (index % (COLS - skip)); // Posición en el eje X
         let col = index % cols+1; // Posición en el eje X
-        console.log(index);
         const row = Math.round(index / cols);
         const sigma = row % 2 === 0 ? 1 : 0;
         col+=sigma;

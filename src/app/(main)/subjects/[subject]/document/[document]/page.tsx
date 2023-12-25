@@ -9,7 +9,6 @@ export default async function SubjectDocumentPage({
   params: { [key: string]: string };
   searchParams: { [key: string]: string };
 }) {
-  console.log(documentId)
   const file = await useGetFile(documentId, searchParams);
   // const {
   //   file: { name, content },

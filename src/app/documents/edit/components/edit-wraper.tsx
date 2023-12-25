@@ -12,6 +12,7 @@ import { Types } from "@prisma/client";
 import { getDefaultFile } from "src/hooks/useGetFile";
 import Alert from "@components/common/alert/alert";
 import { removeIdFromObject } from "../utils/removeId";
+import styles from '../styles.module.css'
 
 const hydrate = (document: NoteWithComponent["file"], id: string) => {
   const copyDocument = JSON.parse(JSON.stringify(document));
@@ -37,19 +38,18 @@ export default function EditWraper({
   const { name, externalId, content } = settings ?? {};
   const type = Types.DOCUMENT;
 
-  useEffect(() => {
-    if ("serviceWorker" in navigator) {
-      console.log("AAA")
-        navigator.serviceWorker
-          .register("/service-worker.js")
-          .then((registration) => {
-            console.log("Service worker registered:", registration);
-          })
-          .catch((error) => {
-            console.log("Service worker registration failed:", error);
-          });
-    }
-  },[] );
+  // useEffect(() => {
+  //   if ("serviceWorker" in navigator) {
+  //       navigator.serviceWorker
+  //         .register("/service-worker.js", {scope: "./"})
+  //         .then((registration) => {
+  //           console.log("Service worker registered:", registration);
+  //         })
+  //         .catch((error) => {
+  //           console.log("Service worker registration failed:", error);
+  //         });
+  //   }
+  // },[] );
 
   useEffect(() => {
     const storageDocument = JSON.parse(
@@ -92,6 +92,8 @@ export default function EditWraper({
     );
   }, [settings]);
 
+
+
   return (
     <Layout
       isLocalFile={isLocalFile}
@@ -103,13 +105,14 @@ export default function EditWraper({
       }
     >
       <div
-        className="flex flex-1 flex-col gap-3 p-4  h-full w-full mx-auto max-w-5xl"
+      id="edit-wraper"
+        className={`flex flex-1 p-1 flex-col gap-3 h-full w-full mx-auto max-w-5xl`}
         ref={divRef}
       >
         {externalId && name && content && type && (
           <ScreenLayout>
             <DynamicElement
-              attrs={{ ...content, name, type, editMode: true }}
+              attrs={{ ...content, name, type, editMode: true, documentId: id }}
               name={content.type}
             />
           </ScreenLayout>

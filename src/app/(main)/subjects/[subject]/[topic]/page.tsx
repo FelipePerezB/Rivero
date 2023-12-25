@@ -13,6 +13,16 @@ import Options from "@components/navigation/options/options";
 import { SubjectWithTopic } from "../../models/subject";
 import NavigationCard from "@components/cards/NavigationCard";
 import capFirst from "src/utils/capFirst";
+import Button from "@components/common/buttons/button/button";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faBook,
+  faEye,
+  faFolder,
+  faFolderOpen,
+  faInfo,
+  faInfoCircle,
+} from "@fortawesome/free-solid-svg-icons";
 
 interface SubtopicWithNotes extends Subtopic {
   Notes: NoteWithFile[];
@@ -71,18 +81,15 @@ export default async function TopictPage({
         <Suspense
           fallback={<NavigationCard href="">Evaluaciones</NavigationCard>}
         >
-          <EvaluationsBtn />
+          <EvaluationsBtn subject={subjectId} topic={topicId} />
         </Suspense>
         {!!practice?.File?.externalId ? (
-          <NavigationCard href="practice">
-            Prácticar
-          </NavigationCard>
+          <NavigationCard href="practice">Prácticar</NavigationCard>
         ) : (
           <Suspense fallback={<div className="w-full"></div>}>
-            <PracticeBtn subject={subjectId}/>
+            <PracticeBtn subject={subjectId} />
           </Suspense>
         )}
-        
       </div>
       <section className="grid sm:grid-rows-[3rem,1fr] sm:grid-cols-2 md:gap-x-8 lg:gap-x-16 gap-x-4 gap-y-2 mt-2">
         <div className="h-max">
@@ -102,15 +109,14 @@ export default async function TopictPage({
         <div className="sm:row-start-1 sm:col-start-1 sm:col-end-2 sm:row-end-2 flex flex-col gap-2.5 mt-2 w-full">
           <div className="flex pb-2.5 justify-between items-center">
             <h3 className="text-xl inline-block w-max font-semibold">Temas</h3>
-            <div className="flex gap-4">
-              <Suspense>
-                <ModifyBtn subject={subjectId} topic={topicId} />
-              </Suspense>
-            </div>
+            <Button href="/">Resumen</Button>
+            {/* <Suspense>
+              <ModifyBtn subject={subjectId} topic={topicId} />
+            </Suspense> */}
           </div>
-          {subtopics?.map(({ name, Notes }) => (
+          {subtopics?.map(({ name, Notes }, i) => (
             <LinksAccordion
-              key={"AA"}
+              key={`topic-${name}-${i}`}
               content={Notes?.map(({ File: { externalId, name }, id }) => ({
                 name,
                 href: `document/${externalId}`,
@@ -120,7 +126,6 @@ export default async function TopictPage({
           ))}
         </div>
       </section>
-     
     </>
   );
 }

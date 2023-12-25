@@ -7,7 +7,6 @@ export async function GET(
 ) {
   const { searchParams } = request.nextUrl;
   const group = searchParams.get("group");
-  console.log(group)
   const groupQuery = group
     ? {
         User: {
@@ -27,6 +26,5 @@ export async function GET(
         },
       },
     });
-    console.log(data)
   return NextResponse.json({ data }, { status: 200 });
 }

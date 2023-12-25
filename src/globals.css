@@ -16,17 +16,10 @@ body {
   font-family: "nunito";
 }
 
-#document-container [data-component] [data-component]:hover {
+#edit-wraper [data-component]:hover {
   outline: blue 2px solid;
   border-radius: 2px;
   cursor: pointer;
-}
-
-#document-container [data-component] [data-component] [data-component]:hover {
-  outline: blue 2px dashed;
-  border-radius: 2px;
-  cursor: pointer;
-  /* grid-template-columns: repeat(9, 1fr); */
 }
 
 * {

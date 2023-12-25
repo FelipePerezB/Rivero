@@ -5,7 +5,6 @@ export async function GET(
   request: Request,
   { params: { group } }: { params: { [key: string]: string } }
 ) {
-  console.log(group);
   const data = await prisma.invitation.findMany({
     where: { Groups: { some: { id: Number(group) } }, status: "PENDING" },
   });

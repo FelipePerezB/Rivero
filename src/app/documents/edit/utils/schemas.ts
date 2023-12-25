@@ -236,6 +236,5 @@ export const schemas: any = {
 };
 const schemass = {};
 Object.values(globals).map((schema) => Object.assign({ ...schemass, ...schema }));
-console.log(schemass);
 
 export const componentsNames = Object.entries(uiSchemas).map(([name]) => name);

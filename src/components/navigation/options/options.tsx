@@ -15,7 +15,7 @@ export default function Options({
   // setOption: any;
 }) {
   return options && options?.length > 1 ? (
-    <div className="overflow-x-scroll sm:w-full sm:overflow-x-hidden pb-3 pt-0.5 sm:mx-auto sm:">
+    <div className="overflow-x-auto sm:w-full pt-0.5 sm:mx-auto sm:">
       <ul className="flex gap-4 w-1/2">
         {options?.map(({ key, title }, i) => {
           const isActive =
@@ -31,7 +31,7 @@ export default function Options({
               }
             >
               <li
-                className={`cursor-pointer py-0.5 px-2 flex-shrink-0 font-semibold hover:text-slate-800  w-max  ${
+                className={`cursor-pointer py-0.5 mb-1 px-2 flex-shrink-0 font-semibold hover:text-slate-800  w-max  ${
                   isActive
                     ? "text-slate-800 border-b-2 border-slate-800"
                     : "text-slate-500"

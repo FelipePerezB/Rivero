@@ -18,7 +18,12 @@ import { Role } from "@prisma/client";
 import SearchSidebar from "../sidebar/search-sidebar";
 
 export default async function NavSidebar() {
-  const user = await currentUser();
+  let user;
+  try {
+    user = await currentUser();
+  } catch (error) {
+    console.log(error);
+  }
   const firstName = user?.firstName;
   const lastName = user?.lastName;
   const imageUrl = user?.imageUrl;

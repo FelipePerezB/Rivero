@@ -1,0 +1,11 @@
+.container #document-container [data-component] [data-component]:hover {
+  outline: blue 2px solid;
+  border-radius: 2px;
+  cursor: pointer;
+}
+
+.container #document-container [data-component] [data-component] [data-component]:hover {
+  outline: blue 2px dashed;
+  border-radius: 2px;
+  cursor: pointer;
+}
