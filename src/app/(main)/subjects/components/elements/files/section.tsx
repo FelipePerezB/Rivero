@@ -11,7 +11,7 @@ export default function Section({
   children,
   number,
 }: {
-  documentId: string;
+  documentId?: string;
   type?: string;
   id?: string;
   children?: ReactNode;

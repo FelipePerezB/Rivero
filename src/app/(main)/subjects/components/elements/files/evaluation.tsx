@@ -21,7 +21,7 @@ export default function Evaluation({
 }) {
   return (
     <FileContainer id={id}>
-      <Section number={1}>
+      <Section  number={1}>
         <div className="py-8 flex justify-center">
           <Title type="title" options={{ size: "h1", text: name }} />
         </div>
