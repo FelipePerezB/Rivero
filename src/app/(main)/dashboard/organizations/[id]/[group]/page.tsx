@@ -19,6 +19,8 @@ import Table from "@components/dashboard/table/Table";
 import TableBtn from "@components/dashboard/table/table-btn/table-btn";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import UpdateSearchModal from "@components/admin/update-form/update-search-modal";
+import Button from "@components/common/buttons/button/button";
 interface GroupWithUsers extends Group {
   Users: User[];
 }
@@ -28,7 +30,7 @@ function GroupTable({
   role: tableRole,
   groupData,
 }: {
-  name: string
+  name: string;
   role: Role;
   groupData: GroupWithUsers;
 }) {
@@ -79,46 +81,32 @@ export default async function OrganizationDashboardPage({
   };
   params: { [key: string]: string };
 }) {
-  const { getToken } = auth();
-  const token = await getToken();
-
-  const { data: groupData } = (await api(
-    `groups/${organizationId}/${group}`,
-    {},
-    [`groups/${group}`]
-  )) as { data: GroupWithUsers };
-  const {
-    data: { name },
-  } = (await api(
-    `groups/${organizationId}/${group}`,
-    {
-      headers: { Authorization: `Bearer ${token}` },
-    },
-    [`groups/${group}`]
-  )) as { data: Group };
+  const TAG = `groups/${group}`;
+  const ENDPOINT = `groups/${organizationId}/${group}`;
+  const { data: groupData } = (await api(ENDPOINT, {}, [TAG])) as {
+    data: GroupWithUsers;
+  };
 
   return (
     <>
       <div className="flex items-center justify-between">
-        <Suspense fallback={<LargeSkeleton />}>
-          <div className="flex gap-2">
-            <h2 className="text-2xl font-semibold">{capFirst(name)}</h2>
-            <UpdateAlert
-              size="sm"
-              key={`edit-btn-${group}`}
-              endpoint={`groups/${organizationId}/${group}`}
-              value={name}
-            />
-          </div>
-        </Suspense>
-        <div className="flex gap-2">
-          <DeleteBtn
-            size="md"
-            name={name}
-            key={`delete-btn-${group}`}
-            endpoint={`groups/${organizationId}/${group}`}
+        <h2 className="text-2xl font-semibold">{capFirst(groupData?.name)}</h2>
+        <UpdateSearchModal
+          data={{ ...groupData }}
+          endpoint={ENDPOINT}
+          label="grupo"
+          searchParams={searchParams}
+          secondaryBtn={
+            <DeleteBtn size="md" name={groupData?.name} endpoint={ENDPOINT} />
+          }
+        >
+          <InviteForm
+            label="Correos a invitar"
+            organization={Number(organizationId)}
+            group={Number(group)}
           />
-        </div>
+          <hr />
+        </UpdateSearchModal>
       </div>
       <section className="flex flex-col gap-1">
         <Suspense fallback={<LargeSkeleton />}>
@@ -126,10 +114,18 @@ export default async function OrganizationDashboardPage({
         </Suspense>
         <div className="flex flex-col gap-5">
           <Suspense fallback={<TableSkeleton />}>
-            <GroupTable groupData={groupData} role={Role.STUDENT} name="Estudiantes" />
+            <GroupTable
+              groupData={groupData}
+              role={Role.STUDENT}
+              name="Estudiantes"
+            />
           </Suspense>
           <Suspense fallback={<TableSkeleton />}>
-            <GroupTable groupData={groupData} role={Role.TEACHER} name="Docentes" />
+            <GroupTable
+              groupData={groupData}
+              role={Role.TEACHER}
+              name="Docentes"
+            />
           </Suspense>
         </div>
       </section>
@@ -137,7 +133,7 @@ export default async function OrganizationDashboardPage({
         <Invitations group={group} organization={organizationId} />
       </section>
       {/* ------------------------------ */}
-      <SearchModal
+      {/* <SearchModal
         title="Invitar usuarios"
         id="invite"
         searchParams={searchParams}
@@ -149,7 +145,7 @@ export default async function OrganizationDashboardPage({
             group={Number(searchParams?.group)}
           />
         )}
-      </SearchModal>
+      </SearchModal> */}
       <SearchModal
         title="Actualizar usuario"
         id="update-user"
@@ -164,7 +160,6 @@ export default async function OrganizationDashboardPage({
           lastname={searchParams?.lastname}
         />
       </SearchModal>
-      <Toaster />
     </>
   );
 }

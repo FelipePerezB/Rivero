@@ -13,7 +13,7 @@ import { title } from "process";
 import React, { Suspense } from "react";
 import OptionsInput from "src/app/documents/edit/components/edit-wraper/components/inputs/options";
 import SearchModal from "@components/modal/search-modal";
-import { NoteWithFile } from "src/app/(main)/subjects/models/note";
+import { LessonWithFile } from "src/app/(main)/subjects/models/lesson";
 import api from "src/utils/api";
 import { Toaster } from "react-hot-toast";
 import { Score } from "@prisma/client";
@@ -35,7 +35,7 @@ export default async function EvaluationPage({
 }) {
   const { data: note } = (await api("notes/" + evaluation, {}, [
     "evaluations/" + subject,
-  ])) as { data: NoteWithFile[] };
+  ])) as { data: LessonWithFile[] };
 
   const { File } = note[0] ?? {};
 

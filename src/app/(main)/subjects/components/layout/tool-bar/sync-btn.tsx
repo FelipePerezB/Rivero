@@ -1,13 +1,13 @@
 import React from "react";
 import toast from "react-hot-toast";
-import { NoteWithComponent } from "src/app/documents/edit/models/component";
+import { LessonWithComponent } from "src/app/documents/edit/models/component";
 import { removeIdFromObject } from "src/app/documents/edit/utils/removeId";
 import api from "src/utils/api";
 
 export default function SyncBtn({
   settings,
 }: {
-  settings?: NoteWithComponent["file"];
+  settings?: LessonWithComponent["file"];
 }) {
   const sync = async () => {
     const { privacity, content, name, externalId } = settings ?? {};

@@ -1,30 +1,19 @@
-import { auth } from "@clerk/nextjs";
 import Button from "@components/common/buttons/button/button";
-import { faPerson, faPlus, faUser } from "@fortawesome/free-solid-svg-icons";
+import { faUser } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Group, Organization } from "@prisma/client";
 import React from "react";
-import SearchModal from "@components/modal/search-modal";
 import api from "src/utils/api";
-import CreateOrgForm from "./components/create-org";
 import ItemsBox from "@components/containers/items-box/items-box";
 import CardItem from "@components/cards/card-item";
 import NavigationCard from "@components/cards/NavigationCard";
 import Card from "@components/cards/Card";
-// import ItemsBox from "@components/dashboard/items-box/items-box";
+import CreateBtnWithName from "@components/admin/create-btn/create-btn-with-name";
 
-export default async function Organizations({
-  searchParams,
-}: {
-  searchParams: { [key: string]: string };
-}) {
-  const { getToken } = auth();
-  const token = await getToken();
-  const { data: organizations } = (await api(
+export default async function Organizations() {
+  const { data: organizations } = (await api("organizations", {}, [
     "organizations",
-    { headers: { Authorization: `Bearer ${token}` } },
-    ["organizations"]
-  )) as {
+  ])) as {
     data: ({
       Groups: Group[];
       _count: {
@@ -35,15 +24,14 @@ export default async function Organizations({
 
   const totalUsers = organizations
     .map(({ _count: { Users } }) => Users)
-    .reduce((a, b) => a + b);
+    .reduce((a, b) => a + b, 0);
+    
   return (
     <>
       <div className="flex justify-between">
         <h2 className="text-xl font-semibold">Organizaciones</h2>
         <div className="flex gap-2.5">
-          <Button href="?modal=create">
-            Crear <FontAwesomeIcon className="h-3 w-3" icon={faPlus} />
-          </Button>
+          <CreateBtnWithName endpoint="organizations"/>
           <Button href="admins" color="white">
             Administradores
           </Button>
@@ -74,13 +62,6 @@ export default async function Organizations({
           )
         )}
       </ItemsBox>
-      <SearchModal
-        title="Crear organización"
-        id="create"
-        searchParams={searchParams}
-      >
-        <CreateOrgForm />
-      </SearchModal>
     </>
   );
 }

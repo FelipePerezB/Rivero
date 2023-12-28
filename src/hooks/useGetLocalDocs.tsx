@@ -1,11 +1,11 @@
 "use client";
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
-import { NoteWithComponent } from "src/app/documents/edit/models/component";
+import { LessonWithComponent } from "src/app/documents/edit/models/component";
 import { DocumentJSON } from "src/models/document.model";
 
 export default function useGetLocalDocs(number: number = 10) {
-  const [savedDocs, setSavedDocs] = useState<NoteWithComponent["file"][]>([]);
+  const [savedDocs, setSavedDocs] = useState<LessonWithComponent["file"][]>([]);
   useEffect(() => {
     if (savedDocs?.length) return;
     const docs = [];

@@ -23,7 +23,7 @@ const Row = ({
 }) => {
   return (
     <tr
-      className={`w-full flex justify-around border-t h-max ${
+      className={`w-full border-t ${
         onClickHref ? "cursor-pointer hover:bg-slate-50" : ""
       }`}
     >
@@ -34,18 +34,20 @@ const Row = ({
 
 const Table: React.FC<TableProps> = ({ data, head, onClickHref, handlers }) => {
   return (
-    <Card className="p-0 rounded-xl">
-      <table className="flex flex-col">
+    <Card className="p-0 rounded-xl overflow-x-auto">
+      <table className="w-full">
         {head?.title && (
-          <caption className="w-full flex justify-between items-center p-[0.6em]">
-            <h3 className="text-[1.2em] font-bold">{head.title}</h3>
-            <div className="flex items-center gap-2.5 text-sm">
-              {head.icons?.map((icon) => icon)}
+          <caption className="p-[0.6em]">
+            <div className="flex w-full justify-between items-center">
+              <h3 className="text-[1.2em] font-bold">{head.title}</h3>
+              <div className="flex items-center gap-2.5 text-sm">
+                {head.icons?.map((icon) => icon)}
+              </div>
             </div>
           </caption>
         )}
         {!!data?.length && (
-          <thead>
+          <thead className="w-full">
             <Row>
               {head?.keys.map(({ name, key }, i) => (
                 <th className="py-[0.6em]" key={"th-" + i}>
@@ -55,7 +57,7 @@ const Table: React.FC<TableProps> = ({ data, head, onClickHref, handlers }) => {
             </Row>
           </thead>
         )}
-        <tbody className="inline-block w-full max-h-52 overflow-y-auto">
+        <tbody className=" w-full max-h-52 overflow-y-auto">
           {data?.map((row, rowIndex) => {
             const obj = {} as any;
             head?.keys.forEach(
@@ -71,10 +73,13 @@ const Table: React.FC<TableProps> = ({ data, head, onClickHref, handlers }) => {
                 {row.map((cell, cellIndex) => {
                   return (
                     <td
-                      className="w-full overflow-hidden text-center text-ellipsis whitespace-nowrap"
+                      className=" overflow-hidden text-center text-ellipsis whitespace-nowrap"
                       key={`column-${cellIndex}-r${rowIndex} `}
                     >
-                      <Link className="inline-block w-full p-[0.6em]" href={url}>
+                      <Link
+                        className="inline-block w-full p-[0.6em]"
+                        href={url}
+                      >
                         {cell}
                       </Link>
                     </td>

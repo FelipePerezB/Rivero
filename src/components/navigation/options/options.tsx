@@ -15,7 +15,7 @@ export default function Options({
   // setOption: any;
 }) {
   return options && options?.length > 1 ? (
-    <div className="overflow-x-auto sm:w-full pt-0.5 sm:mx-auto sm:">
+    <div className="overflow-x-auto h-max sm:w-full pt-0.5 sm:mx-auto w-full:">
       <ul className="flex gap-4 w-1/2">
         {options?.map(({ key, title }, i) => {
           const isActive =

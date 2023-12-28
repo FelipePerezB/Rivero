@@ -17,36 +17,13 @@ export default function Form({
 }) {
   const router = useRouter();
   const [title, setTitle] = useState("");
-  // const createEvaluation = async () => {
-  //   if (!title || !token) return;
-  //   toast.promise(
-  //     api("notes", {
-  //       body: JSON.stringify({
-  //         type: Types.EVALUATION,
-  //         subjectId: subject,
-  //         File: {
-  //           title,
-  //           content: JSON.stringify({}),
-  //         },
-  //       }),
-  //       method: "POST",
-  //       headers: { Authorization: `Bearer ${token}` },
-  //     }),
-  //     {
-  //       error: "Error al crear nueva evaluación",
-  //       loading: "Creando evaluación...",
-  //       success: "¡Evaluación creada correctamente!",
-  //     }
-  //   );
-  //   router.back();
-  // };
+
   return (
     <>
       <StandardInput name="Título" onBlur={setTitle} dataKey="title" />
       <CreateBtn
         size={"md"}
-        endpoint="notes"
-        // tags={["notes"]}
+        endpoint="lessons"
         values={{
           File: { title },
           subjectId: Number(subject),

@@ -22,23 +22,23 @@ function removeDuplicates<T>(array: T[]): T[] {
 export default async function inviteUser(
   metadata: {
     organization: number;
-    role: Role;
-    group: number;
+    group?: number;
   },
   prevState: any,
   formData: FormData
 ) {
   const emails = formData?.get("emails") as string;
+  const role = formData?.get("role") as Role;
+  // console.log(emails, metadata, rol)
   let errors: { [email: string]: string } = {};
   const emailsArray = emails?.split(",")?.map((email) => email.trim());
-  const { role, organizationId, group } = {
+  const { organizationId, group } = {
     group: metadata?.group,
-    role: metadata?.role,
     organizationId: metadata?.organization,
   };
 
   async function processEmail(email: string) {
-    if (!role || !organizationId || !group || !email) return;
+    if (!role || !organizationId || !email) return;
     const isValid = regexEmail.test(email);
     if (!isValid) {
       errors[email] = "Correo inválido";

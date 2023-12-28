@@ -3,7 +3,7 @@ import { faGear } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState } from "react";
 import ShareBtn from "./share-btn";
-import { NoteWithComponent } from "src/app/documents/edit/models/component";
+import { LessonWithComponent } from "src/app/documents/edit/models/component";
 import SettingsModal from "./settings-modal";
 import MenuBtn from "./menu-btn";
 import SyncAlert from "./syncAlert";
@@ -17,11 +17,13 @@ export default function Navar({
   setSettings,
 }: {
   isLocalFile: boolean;
-  settings?: NoteWithComponent["file"];
-  setSettings: React.Dispatch<React.SetStateAction<NoteWithComponent["file"]>>;
+  settings?: LessonWithComponent["file"];
+  setSettings: React.Dispatch<React.SetStateAction<LessonWithComponent["file"]>>;
 }) {
   const [modalState, setModalState] = useState(false);
   const { user } = useUser();
+
+  console.log(settings)
 
   return (
     <div className="print:hidden z-40 sticky top-0 left-0">

@@ -3,17 +3,19 @@ import StandardInput from "@components/form/StandardInput/StandardInput";
 import { Privacity } from "@prisma/client";
 import React, { useState } from "react";
 import ClientModal from "@components/modal/client-modal";
-import { NoteWithComponent } from "src/app/documents/edit/models/component";
+import { LessonWithComponent } from "src/app/documents/edit/models/component";
 import { hydrateJSON } from "src/app/documents/edit/utils/hydrateJSON";
 import { removeIdFromObject } from "src/app/documents/edit/utils/removeId";
-import OptionsInput from "@components/form/OptionsInput/OptionsInput";
+// import OptionsInput from "@components/form/OptionsInput/OptionsInput";
 import Options from "@components/common/options";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShare } from "@fortawesome/free-solid-svg-icons";
 import Item from "./item";
+import OptionsInput from "src/app/documents/edit/components/edit-wraper/components/inputs/options";
 
-const getOptimizedContent = (settings?: NoteWithComponent["file"]) => {
-  if (!settings?.content) return "Error al cargar el documenti";
+const getOptimizedContent = (settings?: LessonWithComponent["file"]) => {
+  console.log(settings)
+  if (!settings?.content || typeof settings?.content !== "object" ) return "Error al cargar el documento";
   const fileCopy = JSON.parse(JSON.stringify(settings?.content));
   const optimizedContent = JSON.stringify(removeIdFromObject(fileCopy));
   return optimizedContent;
@@ -23,8 +25,8 @@ export default function ShareBtn({
   settings,
   setSettings,
 }: {
-  settings?: NoteWithComponent["file"];
-  setSettings: React.Dispatch<React.SetStateAction<NoteWithComponent["file"]>>;
+  settings?: LessonWithComponent["file"];
+  setSettings: React.Dispatch<React.SetStateAction<LessonWithComponent["file"]>>;
 }) {
   const [state, setState] = useState(false);
   const options = ["Configuración"];
@@ -49,12 +51,13 @@ export default function ShareBtn({
             <OptionsInput
               value={privacity}
               dataKey="privacity"
-              onChange={({ privacity }) =>
+              onChange={({ privacity }) =>{
+                console.log(privacity)
                 setSettings((settings) => ({
                   ...settings,
                   privacity,
                 }))
-              }
+              }}
               name="Privacidad"
               options={Object.values(Privacity)}
             />

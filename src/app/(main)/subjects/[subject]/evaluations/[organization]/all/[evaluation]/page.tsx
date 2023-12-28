@@ -5,7 +5,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
-import { NoteWithFile } from "src/app/(main)/subjects/models/note";
+import { LessonWithFile } from "src/app/(main)/subjects/models/lesson";
 import api from "src/utils/api";
 import GroupsLinks from "../components/groups-links";
 import ScoresStats from "../../[group]/[evaluation]/components/scores-stats/scores-stats";
@@ -21,7 +21,7 @@ export default async function AllGroupsEvaluationPage({
 }) {
   const { data: note } = (await api("notes/" + evaluation, {}, [
     "evaluations/" + subject,
-  ])) as { data: NoteWithFile[] };
+  ])) as { data: LessonWithFile[] };
   const { File } = note[0] ?? {};
   return (
     <>

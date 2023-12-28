@@ -30,5 +30,9 @@ export default function DynamicElement({
   attrs: { [key: string]: unknown };
 }) {
   const Component = imports[name];
-  return <Component {...{ ...attrs }} key={`dynamic-component-${attrs?.id}`} />;
+  return Component ? (
+    <Component {...{ ...attrs }} key={`dynamic-component-${attrs?.id}`} />
+  ) : (
+    <></>
+  );
 }

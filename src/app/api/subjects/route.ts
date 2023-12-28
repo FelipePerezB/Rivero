@@ -6,6 +6,7 @@ import prisma from "src/utils/prisma";
 export async function GET(request: Request) {
   const subjects = await prisma.subject.findMany({
     include: {
+      _count: { select: { Lesson: true } },
       Topics: true,
     },
   });
@@ -23,7 +24,7 @@ export async function POST(request: Request) {
     data: { name, color: "fffff" },
   });
 
-  revalidateTag('subjects')
+  revalidateTag("subjects");
 
   return NextResponse.json({ data }, { status: 200 });
 }

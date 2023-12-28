@@ -4,8 +4,12 @@ import TextInput from "../../elements/inputs/text";
 import Form from "src/app/documents/edit/components/form";
 import {
   Component,
-  NoteWithComponent,
+  LessonWithComponent,
 } from "src/app/documents/edit/models/component";
+import toast from "react-hot-toast";
+import Alert from "@components/common/alert/alert";
+import api from "src/utils/api";
+import { deleteMessages } from "@components/common/alert/alert-message";
 
 export default function SettingsModal({
   modalState,
@@ -13,8 +17,10 @@ export default function SettingsModal({
   setSettings,
   setModalState,
 }: {
-  settings?: NoteWithComponent["file"];
-  setSettings: React.Dispatch<React.SetStateAction<NoteWithComponent["file"]>>;
+  settings?: LessonWithComponent["file"];
+  setSettings: React.Dispatch<
+    React.SetStateAction<LessonWithComponent["file"]>
+  >;
   modalState: boolean;
   setModalState: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
@@ -32,6 +38,22 @@ export default function SettingsModal({
       title="Editar archivo"
     >
       <Form
+        onDelete={() => {
+          toast((t) => (
+            <Alert
+              t={t}
+              callback={() => {
+                toast.promise(
+                  api(`files/${settings?.externalId}`, { method: "DELETE" }),
+                  deleteMessages
+                );
+              }}
+              color="red"
+              message="¿Seguro que quieres eliminar el archivo?"
+              name="Eliminar"
+            />
+          ));
+        }}
         id={content?.id}
         modalState={modalState}
         setModalState={setModalState}

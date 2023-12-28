@@ -75,21 +75,20 @@ export default function Form({
     if (!component.type) return;
     const schemas = getSchema(component.type);
     if (schemas?.length) {
+      setOptions(["Configuración"]);
+      if (
+        schemas.map(({ type }) => type).includes("children") &&
+        !options.includes("Hijos")
+      ) {
+        setOptions([...options, "Hijos"]);
+        schemas.length === 1 ? setOption("Hijos") : setOption("Configuración");
+      } else {
+        setOption("Configuración");
+      }
+      console.log(options)
+
       setInputs(
         schemas?.map(({ options: data, type }, i) => {
-          // TODO: Optimizar
-          setOptions(["Configuración"]);
-          setOption("Configuración");
-          if (type === "children") {
-            if (schemas.length === 1) {
-              setOptions(["Hijos"]);
-              setOption("Hijos");
-            } else setOptions(["Configuración", "Hijos"]);
-          }
-          if (!options.length) setOptions(["Configuración"]);
-          if (type === "children") {
-            setChildrenTypes(data?.types);
-          }
           const value = defaultValues[data?.key];
           return (
             <DynamicInput

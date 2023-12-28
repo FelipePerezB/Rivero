@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import ClientModal from "@components/modal/client-modal";
 import getNode from "../utils/getNode";
 import iterateObj from "../utils/iterateObj";
-import { Component, NoteWithComponent } from "../models/component";
+import { Component, LessonWithComponent } from "../models/component";
 import Form from "./form";
 
 export default function Toolbar({
@@ -11,9 +11,9 @@ export default function Toolbar({
   settings,
   setSettings,
 }: {
-  settings: NoteWithComponent['file'];
+  settings: LessonWithComponent['file'];
   divRef?: React.RefObject<HTMLDivElement>;
-  setSettings: React.Dispatch<React.SetStateAction<NoteWithComponent['file']>>;
+  setSettings: React.Dispatch<React.SetStateAction<LessonWithComponent['file']>>;
 }) {
   const [modalState, setModalState] = useState(false);
   const [component, setComponent] = useState<Component>();

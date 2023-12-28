@@ -2,12 +2,16 @@ import React from "react";
 import Section from "./section";
 import Title from "./title";
 import FileContainer from "../../layout/file-container/file-container";
+import DynamicElement from "./dynamic-file";
+import Header from "./header";
 
 export default function Evaluation({
+  documentId,
   name,
   options,
   id,
 }: {
+  documentId: string,
   name: string;
   type: string;
   options?: {
@@ -19,29 +23,21 @@ export default function Evaluation({
   };
   id: string;
 }) {
+
   return (
     <FileContainer id={id}>
       <Section  number={1}>
-        <div className="py-8 flex justify-center">
-          <Title type="title" options={{ size: "h1", text: name }} />
+        <div className="flex justify-center">
+          <Header options={{ title: name,  subtitle: "Ensayo PAES"}} />
         </div>
-      </Section>
-      {options?.children?.map((child, i) => {
-        return (
-          <Section
-            id={child?.id as string}
-            number={i + 2}
-            options={
-              {
-                ...child?.options,
-                lastPage: i + 2 === options?.children?.length,
-              } as any
-            }
-            type="section"
-            key={`doc-${id}-${i}`}
+        {options?.children?.map((child, i) => (
+          <DynamicElement
+            key={`page-${2}-${child.type}-${i}`}
+            attrs={{ ...child, number: i + 1, documentId }}
+            name={child.type}
           />
-        );
-      })}
+        ))}
+      </Section>
     </FileContainer>
   );
 }

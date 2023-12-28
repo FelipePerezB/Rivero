@@ -16,7 +16,7 @@ export default function CardWithItem({
   return (
     <Link
       href={href}
-      className="flex flex-col border rounded-md w-full h-48 p-0 overflow-hidden hover:scale-95 transition-all duration-150 cursor-pointer shadow-sm"
+      className="flex flex-col border rounded-md max-w-xs w-full h-48 p-0 overflow-hidden hover:scale-95 transition-all duration-150 cursor-pointer shadow-sm"
     >
       <div className="flex flex-col items-center justify-center w-full h-4/6 bg-blue-50/20 p-6">
         {children}

@@ -7,7 +7,7 @@ const cols = 3;
 const totalPoints = 11;
 
 // const coordinates = generateGridCoordinates(rows, cols, totalPoints);
-// console.log(coordinates);
+//  
 
 export default function Set({
   options: { name, set, children } = { name: "Conjunto", set: "1,5,2,7,12,23" },
@@ -24,7 +24,7 @@ export default function Set({
   const values = set.split(",");
   const ratio = Math.floor(total / (values.length - 1));
   const child = children?.at(0);
-  // console.log(coords);
+  //  
   return (
     <div
       style={{

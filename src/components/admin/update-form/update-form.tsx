@@ -3,6 +3,8 @@ import { Privacity } from "@prisma/client";
 import React, { ReactNode, useState } from "react";
 import UpdateBtn from "../update-btn/update-btn";
 import StandardInput from "@components/form/StandardInput/StandardInput";
+// import OptionsInput from "src/app/documents/edit/components/edit-wraper/components/inputs/options";
+import OptionsInput from "@components/form/OptionsInput/OptionsInput";
 
 export default function UpdateForm({
   id,
@@ -23,7 +25,9 @@ export default function UpdateForm({
 
   return (
     <>
-      {/* <OptionsInput options={Object.values(Privacity)} onChange={addValues} name="Privacidad" value={privacity} /> */}
+    {!!privacity && 
+      <OptionsInput options={Object.values(Privacity)} onChange={addValues} dataKey="privacity" name="Privacidad" value={privacity} />
+    }
       <StandardInput
         dataKey="name"
         onChange={addValues}

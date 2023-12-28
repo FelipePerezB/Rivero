@@ -41,7 +41,7 @@ export async function GET(
   const data = await prisma.subtopic.findUnique({
     where: { id: Number(id) },
     include: {
-      Notes: {
+      Lesson: {
         include: {
           File: { select: { name: true, externalId: true, id: true } },
         },

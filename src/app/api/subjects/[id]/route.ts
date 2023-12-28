@@ -34,6 +34,7 @@ export async function PATCH(
 
   if (data.id) {
     revalidateTag(`subjects/${data.id}`);
+    revalidateTag(`subjects`);
   }
 
   return NextResponse.json(

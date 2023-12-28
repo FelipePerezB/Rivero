@@ -1,10 +1,10 @@
 import { File, Types } from "@prisma/client";
 import React from "react";
 import DynamicElement from "src/app/(main)/subjects/components/elements/files/dynamic-file";
-import { NoteWithComponent } from "src/app/documents/edit/models/component";
+import { LessonWithComponent } from "src/app/documents/edit/models/component";
 import useGetFile from "src/hooks/useGetFile";
 import api from "src/utils/api";
-// import { NoteWithComponent } from "../edit/models/component";
+// import { LessonWithComponent } from "../edit/models/component";
 
 export default async function SubjectDocumentPage({
   params: { id },
@@ -27,12 +27,13 @@ export default async function SubjectDocumentPage({
     console.log(data)
     // const { name } = data ?? {};
     if(typeof file?.content !== "object") return <></>
-    const content = file.content as NoteWithComponent['file']['content']
+    const content = file.content as LessonWithComponent['file']['content']
+    console.log(content)
     
   return (
     <DynamicElement
-      attrs={{ ...content, name: type, type, documentId: id  }}
-      name={type}
+      attrs={{ ...file,...content, type, documentId: id  }}
+      name={content?.type}
     />
   );
 }

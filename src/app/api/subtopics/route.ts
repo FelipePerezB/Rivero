@@ -26,12 +26,13 @@ export async function GET(request: NextRequest) {
   const data = await prisma.subtopic.findMany({
     where: { topicId: topic },
     include: {
-      Notes: {
+      Lesson: {
         include: {
           File: { select: { name: true, externalId: true, id: true } },
         },
       },
     },
   });
+  console.log(data)
   return NextResponse.json({ data }, { status: 200 });
 }

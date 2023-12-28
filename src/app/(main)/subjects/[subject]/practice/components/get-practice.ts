@@ -1,6 +1,6 @@
 import { auth, currentUser } from "@clerk/nextjs";
 import { Privacity, Types } from "@prisma/client";
-import { NoteWithFile } from "src/app/(main)/subjects/models/note";
+import { LessonWithFile } from "src/app/(main)/subjects/models/lesson";
 import generateRandomId from "src/app/(main)/subjects/utils/generateRandomId";
 import api from "src/utils/api";
 import { IdLenght } from "src/models/document.model";
@@ -10,7 +10,7 @@ export default async function getPractice({ subject }: { subject: string }) {
   const token = await getToken();
   const { data } = (await api("notes/practice/" + subject, {
     headers: { Authorization: `Bearer ${token}` },
-  })) as { data: NoteWithFile };
+  })) as { data: LessonWithFile };
   if (data?.File?.name) return data;
   else {
     const newId = generateRandomId(IdLenght.lg);

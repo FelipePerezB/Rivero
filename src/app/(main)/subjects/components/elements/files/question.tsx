@@ -48,7 +48,7 @@ export default function Question({
     children: [],
   },
 }: QuestionType) {
-  console.log(check);
+   
   // const check = false
   const radioRef = useRef<HTMLInputElement>(null);
   const [isCorrect, setIsCorrect] = useState<boolean>();
@@ -58,7 +58,7 @@ export default function Question({
 
   // const name =
   //   answer === expectedAns ? "correct-ans" : "incorrect-ans";
-  // console.log(className);
+  //  
   // setClassname(name);
   // }, [className]);
   return (
@@ -79,7 +79,7 @@ export default function Question({
           </div>
         )}
         <fieldset className="flex flex-col gap-[0.6em] print:gap-0.5 px-[1em] pt-[0.65em] print:pt-2.5">
-          {alternatives.split(",").map((alternative, i) => {
+          {alternatives?.split(",")?.map((alternative, i) => {
             const letter = {
               0: "A",
               1: "B",

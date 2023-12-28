@@ -1,4 +1,4 @@
-import { File, Note } from "@prisma/client";
+import { File, Lesson } from "@prisma/client";
 
 export interface ComponentOptions {
   children?: Component[];
@@ -19,6 +19,6 @@ export interface Component {
   options: ComponentOptions;
 }
 
-export interface NoteWithComponent extends Partial<Note> {
+export interface LessonWithComponent extends Partial<Lesson> {
   file: fileWithoutContent & { content: Component };
 }

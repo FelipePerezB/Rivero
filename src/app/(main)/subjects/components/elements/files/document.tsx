@@ -1,23 +1,28 @@
 import Section from "./section";
 import FileContainer from "../../layout/file-container/file-container";
 import { Component } from "src/app/documents/edit/models/component";
+import { ReactNode } from "react";
 
 export default function Document({
   documentId,
+  metadata,
   options,
-  searchParams,
+  children,
+  // searchParams,
   id,
 }: {
-  documentId: string;
-  searchParams: { [key: string]: string };
-  name: string;
-  type: string;
+  children?: ReactNode;
+  metadata?: { [key: string]: unknown };
+  documentId?: string;
+  // searchParams: { [key: string]: string };
+  name?: string;
+  type?: string;
   options?: {
     children: Component[];
   };
-  id: string;
+  id?: string;
 }) {
-  console.log(documentId)
+   
   // const sections = options?.children.filter((section, i)=>i===sw)
   // const sections = options?.children
   //   ?.map((element) =>
@@ -27,12 +32,14 @@ export default function Document({
   //     )
   //   )
   //   .map((title) => title?.options?.text);
-  // console.log(sections);
+  //  
   return (
     <FileContainer id={id}>
+      {children}
       {options?.children?.map((child, i) => {
         return (
           <Section
+            metadata={metadata}
             documentId={documentId}
             id={child?.id as string}
             number={i + 1}

@@ -1,7 +1,11 @@
-import { Subject, Topic } from "@prisma/client";
-import { NoteWithFile } from "./note";
+import { Lesson, Subject, Topic } from "@prisma/client";
+import { LessonWithFile } from "./lesson";
+import { Count } from "@prisma/client/runtime/library";
 
 export interface SubjectWithTopic extends Subject {
   Topics: Topic[];
-  Notes: NoteWithFile[];
+  Lessons: LessonWithFile[];
+  _count: {
+    Lesson: number
+  }
 }

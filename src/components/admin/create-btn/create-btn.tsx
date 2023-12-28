@@ -4,14 +4,16 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import create from "./create";
-import Button from "../../common/buttons/button/button";
+import Button, { ButtonAttrs } from "../../common/buttons/button/button";
 
 export default function CreateBtn({
   endpoint,
   name,
   values,
+  color,
   size = "sm",
 }: {
+  color?: ButtonAttrs['color'],
   endpoint: string;
   name?: string;
   values: { [key: string]: unknown };
@@ -25,7 +27,7 @@ export default function CreateBtn({
         create(endpoint, values);
         // router.back();
       }}
-      color={size === "sm" ? "transparent" : "blue"}
+      color={color}
       size={size == "md" ? "sm" : "xs"}
     >
       Crear {name}

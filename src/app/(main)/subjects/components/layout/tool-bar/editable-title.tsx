@@ -1,13 +1,14 @@
 import React from "react";
-import { NoteWithComponent } from "src/app/documents/edit/models/component";
+import { LessonWithComponent } from "src/app/documents/edit/models/component";
 
 export default function EditableTitle({
   settings,
   setSettings,
 }: {
-  settings: NoteWithComponent["file"];
-  setSettings: React.Dispatch<React.SetStateAction<NoteWithComponent["file"]>>;
+  settings: LessonWithComponent["file"];
+  setSettings: React.Dispatch<React.SetStateAction<LessonWithComponent["file"]>>;
 }) {
+  console.log(settings)
   return (
     <div
       contentEditable

@@ -1,10 +1,5 @@
 import Link from "next/link";
-import {
-  ButtonHTMLAttributes,
-  CSSProperties,
-  MouseEventHandler,
-  ReactNode,
-} from "react";
+import { CSSProperties, ReactNode } from "react";
 
 export type ButtonAttrs = {
   type?: "button" | "submit" | "reset";
@@ -17,9 +12,11 @@ export type ButtonAttrs = {
   className?: string;
   style?: CSSProperties;
   title?: string;
+  isInactive?: boolean;
 };
 
 export default function Button({
+  isInactive,
   type = "button",
   prefetch,
   children,
@@ -32,10 +29,19 @@ export default function Button({
   title,
 }: ButtonAttrs) {
   const colorVariants = {
-    blue: "bg-blue-500 hover:bg-blue-400 text-white shadow-blue-500/40",
-    red: "bg-rose-500 hover:bg-rose-400 text-white shadow-rose-500/30",
-    white: "bg-white hover:bg-gray-100 text-black border shadow-gray-500/10",
-    black: "bg-black hover:bg-gray-900 text-white border shadow-gray-500/10",
+    blue: `hover:bg-blue-400 text-white shadow-blue-500/40 ${
+      !!isInactive ? "bg-blue-400" : "bg-blue-500"
+    }`,
+    red: `hover:bg-rose-400 text-white shadow-rose-500/30 ${
+      !!isInactive ? "bg-rose-400" : "bg-rose-500"
+    }`,
+    white: `hover:bg-gray-100 text-black border shadow-gray-500/10 ${
+      !!isInactive ? "bg-gray-100" : "bg-white"
+    }`,
+    black: `hover:bg-gray-900 text-black border shadow-gray-500/10 ${
+      !!isInactive ? "bg-gray-900" : "bg-black"
+    }`,
+    // black: "bg-black hover:bg-gray-900 text-white border shadow-gray-500/10",
     transparent: "shadow-none hover:text-slate-500",
   };
 
@@ -45,7 +51,11 @@ export default function Button({
     lg: "w-5/6 py-1.5 my-0 mx-auto max-w-sm text-md",
   };
 
-  className += ` ${colorVariants[color]} ${sizeVariants[size]} shadow-md rounded-md cursor-pointer hover:scale-95 transition-all duration-150 flex justify-center items-center gap-2`;
+  className += ` ${colorVariants[color]} ${
+    sizeVariants[size]
+  } shadow-md rounded-md cursor-pointer hover:scale-95 transition-all duration-150 flex justify-center items-center gap-2 ${
+    !!isInactive && "scale-95"
+  }`;
 
   return !href ? (
     <button

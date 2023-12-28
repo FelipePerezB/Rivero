@@ -19,22 +19,23 @@ export async function GET(request: Request) {
 }
 
 export async function POST(request: Request) {
-  const { email, name } = await request.json();
+  const { name } = await request.json();
   const organization = await prisma.organization.create({ data: { name } });
   if (!organization?.id)
     return NextResponse.json({ organization }, { status: 400 });
 
-  const invitation = await clerkClient.invitations.createInvitation({
-    emailAddress: email,
-    redirectUrl: "https://https://rivero.vercel.app/sign-up",
-    publicMetadata: {
-      role: Role.ADMIN,
-      organizationId: organization.id,
-      groups: [],
-    },
-  });
+  // const invitation = await clerkClient.invitations.createInvitation({
+  //   emailAddress: email,
+  //   redirectUrl: "https://https://rivero.vercel.app/sign-up",
+  //   publicMetadata: {
+  //     role: Role.ADMIN,
+  //     organizationId: organization.id,
+  //     groups: [],
+  //   },
+  // });
 
   revalidateTag(`groups/${organization.id}`);
+  revalidateTag(`organizations`);
 
-  return NextResponse.json({ organization, invitation }, { status: 200 });
+  return NextResponse.json({ organization }, { status: 200 });
 }

@@ -10,7 +10,7 @@ export default async function Navar() {
   try {
     user = await currentUser();
   } catch (error) {
-    console.log(error);
+     
   }
   const role = user?.publicMetadata?.role;
   return (

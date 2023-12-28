@@ -50,3 +50,21 @@ export async function PATCH(
 
   return NextResponse.json({ data }, { status: 200 });
 }
+
+export async function DELETE(
+  request: Request,
+  { params: { id } }: { params: { id: string } }
+) {
+  const data = await prisma.organization.delete({
+    where: {
+      id: Number(id),
+    },
+  });
+
+  if (data.id) {
+    revalidateTag(`organizations/${data.id}`);
+    revalidateTag(`organizations`);
+  }
+
+  return NextResponse.json({ data }, { status: 200 });
+}

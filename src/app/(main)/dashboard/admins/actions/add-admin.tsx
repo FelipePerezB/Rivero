@@ -11,7 +11,7 @@ export default async function addAdmin(formData: FormData) {
   const email = formData.get("email");
   const {
     data: { externalId },
-  } = (await api(`users/email/${email}`)) as {
+  } = (await api(`users/email/${email}`, { cache: "no-store" })) as {
     data: User;
   };
   if (!externalId) return;
@@ -21,7 +21,7 @@ export default async function addAdmin(formData: FormData) {
         random: generateRandomId(IdLenght.sm),
         role: Role.ADMIN,
       },
-    });;
+    });
     if (user.id) revalidateTag("admins");
   } catch (error) {
     console.log(error);

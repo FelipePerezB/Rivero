@@ -39,7 +39,7 @@ export default function CreateBtn({
 }) {
   const createPractice = () => {
     toast.promise(
-      api("notes", {
+      api("lessons", {
         body: JSON.stringify({
           type: Types.PRACTICE,
           subjectId: subject,

@@ -1,9 +1,7 @@
 import { Topic } from "@prisma/client";
 import { NextResponse } from "next/server";
 import prisma from "src/utils/prisma";
-import { revalidatePath, revalidateTag } from "next/cache";
-import { auth } from "@clerk/nextjs";
-import { redirect } from "next/navigation";
+import { revalidateTag } from "next/cache";
 
 export async function GET(
   request: Request,
@@ -18,7 +16,7 @@ export async function GET(
           id: true,
           name: true,
           Topics: { select: { id: true, name: true } },
-          Notes: {
+          Lesson: {
             select: {
               type: true,
               File: {
@@ -26,9 +24,6 @@ export async function GET(
                   externalId: true,
                 },
               },
-            },
-            where: {
-              type: "PRACTICE",
             },
           },
         },
@@ -58,6 +53,7 @@ export async function PATCH(
 
   if (data.id) {
     revalidateTag(`topics/${data.id}`);
+    revalidateTag(`subjects`);
   }
 
   return NextResponse.json(
@@ -79,7 +75,7 @@ export async function DELETE(
   if (data.subjectId) {
     revalidateTag(`subjects/${data.subjectId}`);
   }
-  const firstTopicId = data.Subject?.Topics[0]?.id
+  revalidateTag(`topics/${data?.id}`);
 
   return NextResponse.json(
     { data },

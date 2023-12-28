@@ -1,25 +1,17 @@
-import Button from "@components/common/buttons/button/button";
-import { faPen } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Privacity, Subject, Subtopic, Topic } from "@prisma/client";
-import SearchModal from "@components/modal/search-modal";
-// import Options from "src/app/components/options/options";
+import { Subject, Subtopic, Topic, Types } from "@prisma/client";
 import api from "src/utils/api";
-import UpdateForm from "@components/admin/update-form/update-form";
-// import ItemsBox from "src/app/components/items-box/items-box";
-import { NoteWithFile } from "src/app/(main)/subjects/models/note";
-import DeleteBtn from "@components/admin/delete-btn/delete-btn";
-import CreateSubtopic from "./components/create-subtopic/create-subtopic";
-import CreateEvaluationBtn from "./components/create-evaluation-btn/create-evaluation-btn";
 import Options from "@components/navigation/options/options";
 import Table from "@components/dashboard/table/Table";
-import TableBtn from "@components/dashboard/table/table-btn/table-btn";
+import capFirst from "src/utils/capFirst";
+import CreateFileBtn from "./[subtopic]/components/create-file-btn/create-file-btn";
+import { LessonWithFile } from "src/app/(main)/subjects/models/lesson";
 import ItemsBox from "@components/containers/items-box/items-box";
 import NavigationCard from "@components/cards/NavigationCard";
-import capFirst from "src/utils/capFirst";
+import UpdateTopic from "../../../components/update-topic";
+import UpdateSubject from "../../../components/update-subject";
 
 export default async function SubjectDashboard({
-  params: { id, topic: topicId },
+  params: { id: subjectId, topic: topicId },
   searchParams,
 }: {
   params: { id: string; topic: string };
@@ -30,25 +22,26 @@ export default async function SubjectDashboard({
   ])) as {
     data: Topic;
   };
+
   const { data: subtopics } = (await api(`subtopics?topic=${topicId}`, {}, [
     `topics/${topicId}`,
   ])) as { data: Subtopic[] };
 
-  const { data: subject } = (await api(`subjects/${id}`, {}, [
-    `subjects/${id}`,
+  const { data: subject } = (await api(`subjects/${subjectId}`, {}, [
+    `subjects/${subjectId}`,
   ])) as { data: Subject };
 
-  const { data: topics } = (await api(`topics?subject=${id}`, {}, [
-    `subjects/${id}`,
+  const { data: topics } = (await api(`topics?subject=${subjectId}`, {}, [
+    `subjects/${subjectId}`,
   ])) as {
     data: Topic[];
   };
 
   const { data: evaluations } = (await api(
-    `notes/evaluations?subject=${id}`,
+    `lessons/evaluations/${subjectId}`,
     {},
-    ["evaluations/" + subject?.id]
-  )) as { data: NoteWithFile[] };
+    [`lessons/${subject?.id}`]
+  )) as { data: LessonWithFile[] };
 
   return (
     <>
@@ -56,7 +49,10 @@ export default async function SubjectDashboard({
         <h2 className="text-2xl text-semibold w-max">
           {capFirst(subject?.name)}
         </h2>
-        <Button>Práctica <FontAwesomeIcon className="h-3 w-3" icon={faPen}/></Button>
+        <div className="flex gap-3">
+          <UpdateSubject searchParams={searchParams} subject={subject} />
+          <UpdateTopic searchParams={searchParams} topic={topic} />
+        </div>
       </div>
       <Options
         options={topics?.map(({ name, id }) => ({
@@ -67,17 +63,10 @@ export default async function SubjectDashboard({
       />
       <Table
         onClickHref={`${topicId}/[id]`}
-        data={subtopics?.map(({ name, id }) => [id, capFirst(name), "Público"])}
+        data={subtopics?.map(
+          ({ name, id, privacity }) => [id, capFirst(name), privacity] ?? []
+        )}
         head={{
-          icons: [
-            <CreateSubtopic
-              key={"create-topic-alert"}
-              topicId={Number(topic?.id)}
-            />,
-            <TableBtn href="?modal=modify-topic" key={"edit-btn"}>
-              <FontAwesomeIcon className="h-2.5 w-2.5" icon={faPen} />
-            </TableBtn>,
-          ],
           title: capFirst(topic?.name),
           keys: [
             { name: "Id", key: "id" },
@@ -88,75 +77,18 @@ export default async function SubjectDashboard({
       />
       <div className="flex justify-between">
         <h2 className="font-semibold text-xl">Evaluaciones</h2>
-        <CreateEvaluationBtn subject={String(subject?.id)} />
+        <CreateFileBtn subjectId={subjectId} type={Types.EVALUATION} />
       </div>
       <ItemsBox>
-        {evaluations?.map(({ File: { id, name } }) => (
+        {evaluations?.map(({ File: { id, name, externalId } }) => (
           <NavigationCard
             key={`evaluation-${id}`}
-            href={`?modal=modify&id=${id}&name=${name}`}
+            href={`/documents/evaluation/${externalId}`}
           >
             {name}
           </NavigationCard>
         ))}
       </ItemsBox>
-      <SearchModal
-        title="Modificar evaluación"
-        searchParams={searchParams}
-        id="modify"
-      >
-        <UpdateForm
-          endpoint={`files/${searchParams?.id}`}
-          id={String(searchParams?.id)}
-          name={searchParams?.name}
-          privacity={(Privacity.PRIVATE as Privacity) ?? undefined}
-          secondaryBtn={
-            <DeleteBtn endpoint={`notes/${searchParams?.id}`} size="md" />
-          }
-        />
-      </SearchModal>
-      <SearchModal
-        title="Modificar evaluación"
-        searchParams={searchParams}
-        id="modify"
-      >
-        <UpdateForm
-          endpoint={`files/${searchParams?.id}`}
-          id={String(searchParams?.id)}
-          name={searchParams?.name}
-          privacity={(Privacity.PRIVATE as Privacity) ?? undefined}
-          secondaryBtn={
-            <DeleteBtn endpoint={`notes/${searchParams?.id}`} size="md" />
-          }
-        />
-      </SearchModal>
-      <SearchModal
-        title="Modificar tópico"
-        searchParams={searchParams}
-        id="modify-topic"
-      >
-        <UpdateForm
-          endpoint={`topics/${topic?.id}`}
-          id={String(topic?.id)}
-          name={topic?.name}
-          privacity={(Privacity.PRIVATE as Privacity) ?? undefined}
-          secondaryBtn={
-            <DeleteBtn endpoint={`topics/${searchParams?.id}`} size="md" />
-          }
-        />
-      </SearchModal>
-      <SearchModal
-        title="Modificar asignatura"
-        searchParams={searchParams}
-        id="modify-subject"
-      >
-        <UpdateForm
-          endpoint={`subjects/${subject?.id}`}
-          id={String(subject?.id)}
-          name={subject?.name}
-          privacity={(Privacity.PRIVATE as Privacity) ?? undefined}
-        />
-      </SearchModal>
     </>
   );
 }

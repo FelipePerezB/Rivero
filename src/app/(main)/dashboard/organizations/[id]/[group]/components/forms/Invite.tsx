@@ -1,22 +1,24 @@
 "use client";
 import Button from "@components/common/buttons/button/button";
 import Loading from "@components/common/loading-spinner/loadding-spinner";
-import StandardInput from "@components/form/StandardInput/StandardInput";
 import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Role } from "@prisma/client";
-import React, { useState } from "react";
+import React from "react";
 import { useFormState, useFormStatus } from "react-dom";
-import toast from "react-hot-toast";
 import inviteUser from "../../../../actions/invite-user";
-// import inviteUser from "src/app/dashboard/organizations/actions/invite-user";
-// import Loading from "../../loading";
-
+import TextAreaInput from "@components/form/TextAreaInput/text-area-input";
+import OptionsInput from "src/app/documents/edit/components/edit-wraper/components/inputs/options";
 
 const SendBtn = () => {
   const { pending } = useFormStatus();
   return (
-    <Button type="submit" className={pending ? "bg-blue-400 scale-95" : ""}>
+    <Button
+      isInactive={pending}
+      color="white"
+      type="submit"
+      className={pending ? "scale-95" : ""}
+    >
       Enviar
       {!pending ? (
         <FontAwesomeIcon className="h-3 w-3" icon={faPaperPlane} />
@@ -30,11 +32,13 @@ const SendBtn = () => {
 export default function InviteForm({
   organization,
   role,
+  label = "emails",
   group,
 }: {
+  label?: string;
   organization: number;
-  role: Role;
-  group: number;
+  role?: Role;
+  group?: number;
 }) {
   const updateUserWithId = inviteUser.bind(null, {
     organization,
@@ -45,11 +49,20 @@ export default function InviteForm({
   return (
     <>
       <form action={formAction} className="flex flex-col gap-2">
-        <StandardInput
-          name="emails"
+        {!role && (
+          <OptionsInput
+            dataKey="role"
+            name={"Rol de las invitaciones"}
+            options={[Role.STUDENT, Role.TEACHER]}
+          />
+        )}
+        <TextAreaInput
+          name={label ?? "emails"}
           attrs={{ placeholder: "juan@gmail.com, manuel@gmail.com..." }}
         />
-        <SendBtn />
+        <div className="flex h-max items-center gap-3">
+          <SendBtn />
+        </div>
       </form>
       {JSON.stringify(state).length > 2 && (
         <>

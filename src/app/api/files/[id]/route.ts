@@ -13,6 +13,7 @@ export async function POST(
   const id = params.id;
   const { content, privacity, name } = res;
   const data = await prisma.file.upsert({
+    include: { Lesson: true },
     where: { externalId: id },
     create: {
       content,
@@ -32,6 +33,14 @@ export async function POST(
     },
   });
   if (data.externalId) revalidateTag(`files/${id}`);
+  const subtopicId = data?.Lesson?.subtopicId;
+  const subjectId = data?.Lesson?.subjectId;
+  const topicId = data?.Lesson?.topicId;
+
+  if (subjectId) revalidateTag(`lessons/${subjectId}`);
+  if (subtopicId) revalidateTag(`lessons/${subtopicId}`);
+  if (topicId) revalidateTag(`files/${topicId}`);
+   
   return NextResponse.json({ data }, { status: 200 });
 }
 
@@ -67,29 +76,31 @@ export async function PATCH(
       id,
     },
     data: updateData,
-    include: { Note: true },
+    include: { Lesson: true },
   });
   if (data?.id) {
     revalidateTag(`files/${data?.id}`);
   }
-
-  if (data?.Note?.subjectId && data?.Note?.type === "EVALUATION") {
-    revalidateTag("evaluations/" + data.Note.subjectId);
-  }
+  const subtopicId = data?.Lesson?.subtopicId;
+  if (subtopicId) revalidateTag(`lessons/${subtopicId}`);
 
   return NextResponse.json({ data }, { status: 200 });
 }
 
 export async function DELETE(
   request: Request,
-  { params }: { params: { id: string } }
+  { params: { id } }: { params: { id: string } }
 ) {
-  const id = Number(params.id);
   const data = await prisma.file.delete({
+    include: { Lesson: true },
     where: {
-      id,
+      externalId: id,
     },
   });
+
+  const topicId = data?.Lesson?.topicId;
+
+  if (topicId) revalidateTag(`files/${topicId}`);
 
   return NextResponse.json(
     { data },

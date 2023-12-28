@@ -1,6 +1,7 @@
 import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 async function main() {
+  return;
   await prisma.organization.upsert({
     where: { id: 1 },
     update: {},
@@ -145,140 +146,6 @@ async function main() {
     },
   });
 
-  // subject: "matemática",
-  // topic: "álgebra",
-  // subtopic: "modelos lineales",
-  // document: {
-  //   id: "qbxoYMthcK7XlTWyt6L8u7ZdXTEMHUXf",
-  //   title: "sistema de ecuaciones",
-  //   privacity: "private" as configAttrs["privacity"],
-  // content:
-  // },
-
-  // await prisma.file.upsert({
-  //   create: {
-  //     noteId: 1,
-  //     authorId: 1,
-  //     content:
-  //       '{"type":"document","options":{"children":[{"type":"page","options":{"number":1,"children":[{"type":"title","options":{"text":"Titulo 1","size":"h1"}}]}},{"type":"page","options":{"number":1,"children":[{"type":"title","options":{"text":"Sistema ecuaciones","size":"h1"}}]}}]}}',
-  //     externalId: 'qbxoYMthcK7XlTWyt6L8u7ZdXTEMHUXf',
-  //     title: 'Documento 1',
-  //     privacity: 'PRIVATE',
-  //   },
-  //   where: { externalId: 'qbxoYMthcK7XlTWyt6L8u7ZdXTEMHUXf' },
-  //   update: {},
-  // });
-  // await prisma.file.upsert({
-  //   create: {
-  //     noteId: 1,
-  //     authorId: 2,
-  //     content:
-  //       '{"type":"document","options":{"children":[{"type":"page","options":{"number":1,"children":[{"type":"title","options":{"text":"Titulo 1","size":"h1"}}]}},{"type":"page","options":{"number":1,"children":[{"type":"title","options":{"text":"Sistema ecuaciones","size":"h1"}}]}}]}}',
-  //     externalId: 'YGYGUGUYQWBygxyugyuqgx',
-  //     title: 'Documento 1',
-  //     privacity: 'PUBLIC',
-  //   },
-  //   where: { externalId: 'YGYGUGUYQWBygxyugyuqgx' },
-  //   update: {},
-  // });
-  // await prisma.file.upsert({
-  //   create: {
-  //     authorId: 1,
-  //     content:
-  //       '{"type":"document","options":{"children":[{"type":"page","options":{"number":1,"children":[{"type":"title","options":{"text":"Titulo 1","size":"h1"}}]}},{"type":"page","options":{"number":1,"children":[{"type":"title","options":{"text":"Sistema ecuaciones","size":"h1"}}]}}]}}',
-  //     externalId: 'njwxqajwxixqwjxuihwyu',
-  //     title: 'Documento 2',
-  //     privacity: 'PUBLIC',
-  //   },
-  //   where: { externalId: 'njwxqajwxixqwjxuihwyu' },
-  //   update: {},
-  // });
-  // await prisma.file.upsert({
-  //   create: {
-  //     authorId: 1,
-  //     content:
-  //       '{"type":"document","options":{"children":[{"type":"page","options":{"number":1,"children":[{"type":"title","options":{"text":"Titulo 1","size":"h1"}}]}},{"type":"page","options":{"number":1,"children":[{"type":"title","options":{"text":"Sistema ecuaciones","size":"h1"}}]}}]}}',
-  //     externalId: 'whquhiudhwiuhiwhdquhudiw',
-  //     title: 'Documento 3',
-  //     privacity: 'PUBLIC',
-  //   },
-  //   where: { externalId: 'whquhiudhwiuhiwhdquhudiw' },
-  //   update: {},
-  // });
-
-  await prisma.note.upsert({
-    create: {
-      subtopicId: 1,
-      File: {
-        create: {
-          authorId: 1,
-          content:
-            '{"type":"document","options":{"children":[{"type":"page","options":{"number":1,"children":[{"type":"title","options":{"text":"Titulo 1","size":"h1"}}]}},{"type":"page","options":{"number":1,"children":[{"type":"title","options":{"text":"Sistema ecuaciones","size":"h1"}}]}}]}}',
-          externalId: 'qbxoYMthcK7XlTWyt6L8u7ZdXTEMHUXf',
-        },
-      },
-    },
-    where: { id: 1 },
-    update: {},
-  });
-
-  await prisma.note.upsert({
-    create: {
-      subtopicId: 1,
-      File: {
-        create: {
-          authorId: 1,
-          content:
-            '{"type":"document","options":{"children":[{"type":"page","options":{"number":1,"children":[{"type":"title","options":{"text":"Titulo 1","size":"h1"}}]}},{"type":"page","options":{"number":1,"children":[{"type":"title","options":{"text":"Sistema ecuaciones","size":"h1"}}]}}]}}',
-          externalId: 'uixhuihxihuiij',
-        },
-      },
-    },
-    where: { id: 2 },
-    update: {},
-  });
-
-  await prisma.note.upsert({
-    create: {
-      subtopicId: 1,
-      File: {
-        create: {
-          authorId: 1,
-          content:
-            '{"type":"document","options":{"children":[{"type":"page","options":{"number":1,"children":[{"type":"title","options":{"text":"Titulo 1","size":"h1"}}]}},{"type":"page","options":{"number":1,"children":[{"type":"title","options":{"text":"Sistema ecuaciones","size":"h1"}}]}}]}}',
-          externalId: 'HIUIUXHWIUHWIUXHWB',
-        },
-      },
-    },
-    where: { id: 3 },
-    update: {},
-  });
-
-  await prisma.note.upsert({
-    update: {},
-    where: { id: 4 },
-    create: {
-      Subject: {
-        connect: {
-          id: 1,
-        },
-      },
-      type: 'EVALUATION',
-      File: {
-        create: {
-          privacity: 'PRIVATE',
-          name: 'ENSAYO N°1',
-          content: 'aaaaaaaaaaaaaaa',
-          externalId: 'NWJQKXKXQJKXNQJKXW',
-          Author: {
-            connect: {
-              id: 1,
-            },
-          },
-        },
-      },
-    },
-  });
 }
 
 main()

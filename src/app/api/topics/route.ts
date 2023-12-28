@@ -26,9 +26,10 @@ export async function POST(request: Request) {
   });
 
   if (data.id) {
+    revalidateTag(`topics/${data?.id}`);
     revalidateTag(`subjects/${data?.subjectId}`);
-    revalidateTag('subjects')
-    revalidateTag('topics')
+    revalidateTag("subjects");
+    revalidateTag("topics");
   }
 
   return NextResponse.json({ data }, { status: 200 });

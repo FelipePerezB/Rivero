@@ -43,9 +43,3 @@ export default function createAlert({
     </div>
   ));
 }
-//   return (
-//     <TableBtn onClick={clickHandler}>
-//       Nuevo {name} <FontAwesomeIcon icon={faPlus} className="h-2.5 w-2.5" />
-//     </TableBtn>
-//   );
-// }

@@ -18,9 +18,9 @@ export default function LinksAccordion({
         {content?.map(({ href, name }) => (
           <li
             key={"accordion-item-" + name}
-            className="p-2 px-3 hover:bg-slate-100 rounded-sm"
+            className="hover:bg-slate-100 rounded-sm"
           >
-            <Link href={href}>{name}</Link>
+            <Link className="inline-block w-full p-2 px-3" href={href}>{name}</Link>
           </li>
         ))}
       </ul>

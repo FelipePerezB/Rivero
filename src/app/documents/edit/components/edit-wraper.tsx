@@ -2,7 +2,7 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
-import { NoteWithComponent } from "../models/component";
+import { LessonWithComponent } from "../models/component";
 import Layout from "./layout";
 import Toolbar from "./toolbar";
 import { hydrateJSON } from "../utils/hydrateJSON";
@@ -12,9 +12,10 @@ import { Types } from "@prisma/client";
 import { getDefaultFile } from "src/hooks/useGetFile";
 import Alert from "@components/common/alert/alert";
 import { removeIdFromObject } from "../utils/removeId";
-import styles from '../styles.module.css'
+import styles from "../styles.module.css";
+import documentTemplate from "src/utils/delta/templates/document";
 
-const hydrate = (document: NoteWithComponent["file"], id: string) => {
+const hydrate = (document: LessonWithComponent["file"], id: string) => {
   const copyDocument = JSON.parse(JSON.stringify(document));
   return {
     ...document,
@@ -26,13 +27,15 @@ const hydrate = (document: NoteWithComponent["file"], id: string) => {
 export default function EditWraper({
   id,
   document,
+  getTemplate = documentTemplate,
 }: {
   id: string;
-  document: NoteWithComponent["file"] | undefined;
+  document: LessonWithComponent["file"] | undefined;
+  getTemplate?: (id: string) => LessonWithComponent["file"];
 }) {
   const [isLocalFile, setIsLocalFile] = useState(false);
   const [settings, setSettings] = useState<
-    NoteWithComponent["file"] | undefined
+    LessonWithComponent["file"] | undefined
   >(undefined);
   const divRef = useRef<HTMLDivElement>(null);
   const { name, externalId, content } = settings ?? {};
@@ -52,9 +55,10 @@ export default function EditWraper({
   // },[] );
 
   useEffect(() => {
+    console.log(settings)
     const storageDocument = JSON.parse(
       localStorage.getItem(`document-${id}`) ?? "{}"
-    ) as NoteWithComponent["file"];
+    ) as LessonWithComponent["file"];
     if (document?.content) {
       if (
         JSON.stringify(storageDocument) !== JSON.stringify(document) &&
@@ -75,10 +79,13 @@ export default function EditWraper({
         ));
         return;
       } else return setSettings(hydrate(document, id));
-    } else if (storageDocument.externalId) {
-      setIsLocalFile(true);
-      return setSettings(hydrate(storageDocument, id));
-    } else return setSettings(getDefaultFile(id));
+    } 
+    // else if (storageDocument.externalId) {
+    //   setIsLocalFile(true);
+    //   return setSettings(hydrate(storageDocument, id));
+    // } 
+    else return setSettings(getTemplate(id));
+
   }, [id]);
 
   useEffect(() => {
@@ -92,20 +99,18 @@ export default function EditWraper({
     );
   }, [settings]);
 
-
-
   return (
     <Layout
       isLocalFile={isLocalFile}
       settings={settings}
       setSettings={
         setSettings as React.Dispatch<
-          React.SetStateAction<NoteWithComponent["file"]>
+          React.SetStateAction<LessonWithComponent["file"]>
         >
       }
     >
       <div
-      id="edit-wraper"
+        id="edit-wraper"
         className={`flex flex-1 p-1 flex-col gap-3 h-full w-full mx-auto max-w-5xl`}
         ref={divRef}
       >
@@ -123,10 +128,10 @@ export default function EditWraper({
           divRef={divRef ?? undefined}
           setSettings={
             setSettings as React.Dispatch<
-              React.SetStateAction<NoteWithComponent["file"]>
+              React.SetStateAction<LessonWithComponent["file"]>
             >
           }
-          settings={settings as NoteWithComponent["file"]}
+          settings={settings as LessonWithComponent["file"]}
         />
       )}
       <Toaster />

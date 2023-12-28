@@ -22,7 +22,7 @@ export default function SelectComponent({
 
   // const newNames = types?.map((type) => specifics[type]);
 
-  // console.log(newNames);
+  //  
   const [category, setCategory] = useState("");
   const names = types?.length
     ? types

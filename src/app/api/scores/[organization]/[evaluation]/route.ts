@@ -16,15 +16,16 @@ export async function GET(
         },
       }
     : {};
-    const data = await prisma.score.findMany({
-      where: {
-        ...groupQuery,
-        Note: {
-          File: {
-            externalId: evaluation,
-          },
-        },
-      },
-    });
+    const data = {}
+    // const data = await prisma.score.findMany({
+    //   where: {
+    //     ...groupQuery,
+    //     Note: {
+    //       File: {
+    //         externalId: evaluation,
+    //       },
+    //     },
+    //   },
+    // });
   return NextResponse.json({ data }, { status: 200 });
 }

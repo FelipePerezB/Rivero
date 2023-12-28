@@ -5,12 +5,14 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faRightLong } from "@fortawesome/free-solid-svg-icons";
 
 export default function Section({
+  metadata,
   documentId,
   options,
   id,
   children,
   number,
 }: {
+  metadata?: { [key: string]: unknown };
   documentId?: string;
   type?: string;
   id?: string;
@@ -24,7 +26,7 @@ export default function Section({
     }[];
   };
 }) {
-  console.log(documentId)
+   
   return (
     <div
       className={`flex justify-center bg-white p-[1em] sm:p-[2em] print:p-0 w-full h-full 
@@ -38,7 +40,7 @@ export default function Section({
         {options?.children?.map((child, i) => (
           <DynamicElement
             key={`page-${number}-${child.type}-${i}`}
-            attrs={{ ...child, number: i + 1, documentId }}
+            attrs={{ ...child, number: i + 1, documentId, metadata }}
             name={child.type}
           />
         ))}

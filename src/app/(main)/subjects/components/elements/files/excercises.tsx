@@ -1,15 +1,46 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 "use client";
-// import GetComponent from "@components/create-components/edit-document/get-component";
 import React, { useEffect, useState } from "react";
 import Title from "./title";
 import DynamicElement from "./dynamic-file";
 import Button from "@components/common/buttons/button/button";
 import toast from "react-hot-toast";
 import Alert from "@components/common/alert/alert";
-import { useParams } from "next/navigation";
+import api from "src/utils/api";
+import getProgress from "src/services/cache/getProgress";
+
+type metadataType = {
+  subtopicId?: number;
+  topicId?: number;
+  subjectId?: number;
+};
+
+const setProgress = async (id: string, metadata?: metadataType) => {
+  const { subtopicId, topicId, subjectId } = metadata ?? {};
+  if (!subtopicId || !topicId || !subjectId) return;
+  const lessonProgress = await getProgress(subjectId);
+  lessonProgress[topicId] = lessonProgress[topicId] ?? {};
+  const topicProgress = lessonProgress[topicId];
+  if (topicProgress[subtopicId]?.includes(id)) return;
+
+  topicProgress[subtopicId] = topicProgress[subtopicId]
+    ? [...topicProgress[subtopicId], id]
+    : [id];
+
+  const { data: res } = (await api(`users/cache/progress/${subjectId}`, {
+    cache: "no-store",
+    method: "POST",
+    body: JSON.stringify({
+      content: lessonProgress,
+    }),
+  })) as {
+    data: string;
+  };
+
+};
 
 export default function Excercises({
+  metadata,
   id,
   documentId,
   options: { children, isAnEvaluation } = {
@@ -23,6 +54,7 @@ export default function Excercises({
     separator: "",
   },
 }: {
+  metadata?: metadataType;
   id: string;
   documentId: string;
   options: {
@@ -34,14 +66,6 @@ export default function Excercises({
     }[];
   };
 }) {
-  console.log(documentId);
-  // const params = useParams<{ id: string}>()
-  // const documentId = params?.id
-
-  // Route -> /shop/[tag]/[item]
-  // URL -> /shop/shoes/nike-air-max-97
-  // `params` -> { tag: 'shoes', item: 'nike-air-max-97' }
-  // console.log(params)
   const [answers, setAnswers] = useState<{ [number: number]: string }>({});
   const [answer, setAnswer] = useState<{ [number: number]: string }>({});
 
@@ -53,7 +77,6 @@ export default function Excercises({
   return (
     <section className="h-full pt-[0.6em]" data-component={id}>
       <Title options={{ size: "h2", text: "PRÁCTICA" }} />
-      {/* <Title options={{ size: "h2", text: "Práctica" }} /> */}
       <div className="flex flex-col gap-[0.8em] pb-[0.6em]">
         {children?.map((child, i) => {
           return (
@@ -88,6 +111,7 @@ export default function Excercises({
                 name="Corregir"
                 callback={() => {
                   setCheck(true);
+                  setProgress(documentId, metadata);
                 }}
               />
             ));

@@ -56,35 +56,30 @@ enum Types {
   EVALUATION
 }
 
-model Note {
+model Lesson {
   id         Int       @id @default(autoincrement())
+  type       Types     @default(DOCUMENT)
   Subject    Subject?  @relation(fields: [subjectId], references: [id])
   subjectId  Int?
   Topic      Topic?    @relation(fields: [topicId], references: [id])
   topicId    Int?
   Subtopic   Subtopic? @relation(fields: [subtopicId], references: [id])
   subtopicId Int?
-  File       File?
-  fileId     Int?
-  type       Types     @default(DOCUMENT)
-  Scores     Score[]
-  createdAt  DateTime? @default(now())
-  updateAt   DateTime? @updatedAt
+  File       File      @relation(fields: [fileId], references: [id], onDelete: Cascade)
+  fileId     Int       @unique
 }
 
 model File {
   id         Int       @id @default(autoincrement())
-  // metadata   String?
   externalId String    @unique
   privacity  Privacity @default(PRIVATE)
   name       String    @default("Nuevo documento")
   content    String
   Author     User      @relation(fields: [authorId], references: [id], onDelete: Cascade)
   authorId   Int
-  Note       Note?     @relation(fields: [noteId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  noteId     Int?      @unique
   createdAt  DateTime? @default(now())
   updateAt   DateTime? @updatedAt
+  Lesson     Lesson?   
 }
 
 model Score {
@@ -93,8 +88,6 @@ model Score {
   userId       Int
   alternatives String
   User         User      @relation(fields: [userId], references: [id], onDelete: Cascade)
-  Note         Note?     @relation(fields: [noteId], references: [id], onDelete: Cascade)
-  noteId       Int?
   createdAt    DateTime? @default(now())
   updateAt     DateTime? @updatedAt
 }
@@ -103,34 +96,37 @@ model Subject {
   id        Int        @id @default(autoincrement())
   name      String     @unique
   color     String
+  privacity Privacity  @default(PRIVATE)
   Topics    Topic[]
   Subtopic  Subtopic[]
-  Notes     Note[]
   createdAt DateTime?  @default(now())
   updateAt  DateTime?  @updatedAt
+  Lesson    Lesson[]
 }
 
 model Topic {
   id        Int        @id @default(autoincrement())
   name      String     @unique
+  privacity Privacity  @default(PRIVATE)
   Subject   Subject?   @relation(fields: [subjectId], references: [id])
   subjectId Int?
   Subtopics Subtopic[]
-  Notes     Note[]
   createdAt DateTime?  @default(now())
   updateAt  DateTime?  @updatedAt
+  Lesson    Lesson[]
 }
 
 model Subtopic {
   id        Int       @id @default(autoincrement())
   name      String    @unique
+  privacity Privacity @default(PRIVATE)
   Subject   Subject?  @relation(fields: [subjectId], references: [id])
   subjectId Int?
   Topic     Topic     @relation(fields: [topicId], references: [id])
   topicId   Int
-  Notes     Note[]
   createdAt DateTime? @default(now())
   updateAt  DateTime? @updatedAt
+  Lesson    Lesson[]
 }
 
 model Organization {

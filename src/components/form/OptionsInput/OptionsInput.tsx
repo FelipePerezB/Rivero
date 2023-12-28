@@ -52,6 +52,8 @@ function LargeOptionsInput(props: props) {
 
 function SmallOptionsInput(props: props) {
   const [currentValue, setCurrentValue] = useState("");
+  console.log(props)
+  console.log(currentValue)
   useEffect(() => {
     if (!props.dontDefaultCheck) {
       props.onChange(props.value ?? props.options[0]);
@@ -78,10 +80,10 @@ function SmallOptionsInput(props: props) {
               }}
               value={option}
               checked={currentValue === option}
-              // defaultChecked={
-              //   (!props.dontDefaultCheck && !props.value && i === 0) ||
-              //   option?.toLowerCase() === props.value?.toLowerCase()
-              // }
+              defaultChecked={
+                (!props.dontDefaultCheck && !props.value && i === 0) ||
+                option?.toLowerCase() === props.value?.toLowerCase()
+              }
               name={props.name}
               type="radio"
             />

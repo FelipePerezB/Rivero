@@ -5,7 +5,7 @@ export default function Header({
   id,
   options: { subtitle, title } = { subtitle: "Subtítulo", title: "Título" },
 }: {
-  id: string;
+  id?: string;
   options: { title: string; subtitle: string };
 }) {
   return (

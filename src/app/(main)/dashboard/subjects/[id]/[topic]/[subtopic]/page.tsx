@@ -1,25 +1,25 @@
-import { File, Privacity, Subtopic, Topic, Types, Note } from "@prisma/client";
+import { File, Subtopic, Topic, Lesson } from "@prisma/client";
 import api from "src/utils/api";
 import CreateFileBtn from "./components/create-file-btn/create-file-btn";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPen } from "@fortawesome/free-solid-svg-icons";
 import DeleteBtn from "@components/admin/delete-btn/delete-btn";
-import SearchModal from "@components/modal/search-modal";
-import UpdateForm from "@components/admin/update-form/update-form";
 import Table from "@components/dashboard/table/Table";
-import TableBtn from "@components/dashboard/table/table-btn/table-btn";
 import Options from "@components/navigation/options/options";
 import capFirst from "src/utils/capFirst";
+import UpdateSearchModal from "@components/admin/update-form/update-search-modal";
 
 interface SubtopicWithFile extends Subtopic {
   File: File[];
 }
-interface NoteWithFile extends Subtopic {
+interface LessonWithFile extends Lesson {
   File: File;
 }
 
+interface SubtopicWithLessons extends Subtopic {
+  Lesson: LessonWithFile[];
+}
+
 export default async function SubtopicPage({
-  params: { topic: topicId, subtopic: subtopicId },
+  params: { topic: topicId, subtopic: subtopicId, id: subjectId },
   searchParams,
 }: {
   params: { id: string; topic: string; subtopic: string };
@@ -34,17 +34,36 @@ export default async function SubtopicPage({
     `subtopics/${subtopicId}`,
   ])) as { data: SubtopicWithFile };
 
-  const { data: subtopics } = (await api(`subtopics?topic=${topicId}`, {}, [
-    `subtopics/${subtopicId}`,
-  ])) as { data: Subtopic[] };
+  const { data: subtopics } = (await api(`topics/${topicId}/subtopics`, {}, [
+    `topics/${topicId}`,
+  ])) as {
+    data: SubtopicWithLessons[];
+  };
 
-  const { data: files } = (await api(
-    `notes?subtopic=${subtopicId}&type=${Types.DOCUMENT}`,
-    { cache: "no-store" }
-  )) as { data: NoteWithFile[] };
+  const { data: lessons } = (await api(`lessons/documents/${subtopicId}`, {}, [
+    `files/${topicId}`,
+  ])) as { data: LessonWithFile[] };
+
   return (
     <>
-      <h2 className="text-2xl text-semibold w-max">{capFirst(topic?.name)}</h2>
+      <div className="flex justify-between items-center">
+        <h2 className="text-2xl text-semibold w-max">
+          {capFirst(topic?.name)}
+        </h2>
+        <div className="flex gap-3">
+          <CreateFileBtn {...{ subjectId, topicId, subtopicId }} />
+          <UpdateSearchModal
+            color="white"
+            data={{ ...subtopic }}
+            endpoint={`subtopics/${searchParams?.id}`}
+            label="subtópico"
+            searchParams={searchParams}
+            secondaryBtn={
+              <DeleteBtn endpoint={`subtopics/${searchParams?.id}`} size="md" />
+            }
+          />
+        </div>
+      </div>
       <Options
         options={subtopics?.map(({ name, id }) => ({
           key: id,
@@ -54,18 +73,12 @@ export default async function SubtopicPage({
       />
       <Table
         onClickHref={`/documents/edit/[id]`}
-        data={files?.map(({ File: {name, externalId} }) => [
+        data={lessons?.map(({ File: { name, externalId, privacity } }) => [
           externalId,
           capFirst(name),
-          "Público",
+          privacity,
         ])}
         head={{
-          icons: [
-            <CreateFileBtn key={"create-file-alert"} subtopicId={subtopicId} />,
-            <TableBtn href={`?modal=modify-subtopic&name=${subtopic?.name}&id=${subtopic?.id}`} key={"edit-btn"}>
-              <FontAwesomeIcon className="h-2.5 w-2.5" icon={faPen} />
-            </TableBtn>,
-          ],
           title: capFirst(subtopic?.name),
           keys: [
             { name: "Id", key: "id" },
@@ -74,21 +87,6 @@ export default async function SubtopicPage({
           ],
         }}
       />
-      <SearchModal
-        id="modify-subtopic"
-        title="Modificar subtópico"
-        searchParams={searchParams}
-      >
-        <UpdateForm
-          endpoint={`subtopics/${searchParams?.id}`}
-          id={String(searchParams?.id)}
-          name={searchParams?.name}
-          privacity={Privacity.PRIVATE}
-          secondaryBtn={
-            <DeleteBtn endpoint={`subtopics/${searchParams?.id}`} size="md" />
-          }
-        />
-      </SearchModal>
     </>
   );
 }

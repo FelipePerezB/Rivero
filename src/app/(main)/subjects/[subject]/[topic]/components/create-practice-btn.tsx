@@ -11,16 +11,16 @@ export default function CreatePracticeBtn({ subject }: { subject: string }) {
   const router = useRouter();
   return (
     <button
-      onClick={() => {
-        toast
-          .promise(
-            api(`notes/practice/${subject}`, { method: "POST" }),
-            createMessages
-          )
-          .then((res) => {
-            if (res?.data?.subjectId) router.push(`/subjects/${subject}/practice/edit`)
-          });
-      }}
+      // onClick={() => {
+      //   toast
+      //     .promise(
+      //       api(`notes/practice/${subject}`, { method: "POST" }),
+      //       createMessages
+      //     )
+      //     .then((res) => {
+      //       if (res?.data?.subjectId) router.push(`/subjects/${subject}/practice/edit`)
+      //     });
+      // }}
       className="w-full h-full"
     >
       <Card interactive>Crear prática</Card>

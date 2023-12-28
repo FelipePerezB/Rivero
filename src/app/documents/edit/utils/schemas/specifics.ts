@@ -1,24 +1,59 @@
 const specifics = {
   document: [
-    // {
-    //   type: "sub-inputs",
-    //   options: {
-    //     key: "metadata",
-    //     label: "Metadata",
-    //     sets: [
-    //       {
-    //         key: "a",
-    //         label: "sets",
-    //       },
-    //     ],
-    //   },
-    // },
     {
       type: "children",
       options: {
         types: ["section"],
         key: "children",
         label: "Hijos",
+      },
+    },
+  ],
+  evaluation: [
+    {
+      type: "children",
+      options: {
+        types: ["question"],
+        key: "children",
+        label: "Preguntas",
+      },
+    },
+    {
+      type: "text",
+      options: {
+        key: "function",
+        label: "Función",
+      },
+    },
+  ],
+  practice: [
+    {
+      type: "children",
+      options: {
+        types: ["question"],
+        key: "children",
+        label: "Hijos",
+      },
+    },
+    {
+      type: "text",
+      options: {
+        key: "maxTime",
+        label: "Tiempo máximo",
+      },
+    },
+    {
+      type: "text",
+      options: {
+        key: "discount",
+        label: "Descuento",
+      },
+    },
+    {
+      type: "text",
+      options: {
+        key: "increase",
+        label: "Aumento",
       },
     },
   ],
@@ -49,7 +84,7 @@ const specifics = {
       options: {
         types: ["question"],
         key: "children",
-        label: "preguntas",
+        label: "Preguntas",
       },
     },
   ],

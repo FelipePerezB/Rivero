@@ -8,7 +8,10 @@ type Props = {
 };
 
 export default async function Layout({ children }: Props) {
-  const user = await currentUser();
+  let user;
+  try {
+    user = await currentUser();
+  } catch (error) {}
   if (user?.publicMetadata?.role === Role.STUDENT) {
     redirect("/");
   }

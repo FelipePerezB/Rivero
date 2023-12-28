@@ -4,9 +4,7 @@ import { auth, currentUser, useUser } from "@clerk/nextjs";
 import Button from "@components/common/buttons/button/button";
 import { File, Privacity, Types } from "@prisma/client";
 import React, { useEffect, useState } from "react";
-import { NoteWithComponent } from "src/app/documents/edit/models/component";
-// import { NoteWithComponent } from "src/app/subjects/edit/models/component";
-import api from "src/utils/api";
+import { LessonWithComponent } from "src/app/documents/edit/models/component";
 import generateRandomId from "src/utils/generateRandomId";
 // import toast from "react-hot-toast";
 import { DocumentJSON, IdLenght } from "src/models/document.model";
@@ -42,7 +40,7 @@ export const getDefaultFile = (id: string) =>
         ],
       },
     }),
-  } as NoteWithComponent["file"]);
+  } as LessonWithComponent["file"]);
 
 // const getToast = (
 //   setFile: React.Dispatch<React.SetStateAction<DocumentJSON>>,

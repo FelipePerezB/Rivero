@@ -3,9 +3,8 @@ import React from "react";
 import DeleteBtn from "@components/admin/delete-btn/delete-btn";
 import UpdateForm from "@components/admin/update-form/update-form";
 import SearchModal from "@components/modal/search-modal";
-import { NoteWithFile } from "src/app/(main)/subjects/models/note";
 import api from "src/utils/api";
-import CreateEvaluationBtn from "./[topic]/components/create-evaluation-btn/create-evaluation-btn";
+// import CreateEvaluationBtn from "./[topic]/components/create-evaluation-btn/create-evaluation-btn";
 import ItemsBox from "@components/containers/items-box/items-box";
 import NavigationCard from "@components/cards/NavigationCard";
 
@@ -16,9 +15,9 @@ export default async function SubjectDashboardPage({
   params: { [key: string]: string };
   searchParams: { [key: string]: string };
 }) {
-  const { data: evaluations } = (await api(
-    `notes/evaluations?subject=${subject}`
-  )) as { data: NoteWithFile[] };
+  // const { data: evaluations } = (await api(
+  //   `notes/evaluations?subject=${subject}`
+  // )) as { data: NoteWithFile[] };
   // const { subjects } = (await api(`subjects`, {}, ["subjects"])) as {
   //   subjects: Subject[];
   // };
@@ -26,9 +25,9 @@ export default async function SubjectDashboardPage({
     <>
       <div className="flex justify-between">
         <h2 className="font-semibold text-xl">Evaluaciones</h2>
-        <CreateEvaluationBtn subject={String(subject)} />
+        {/* <CreateEvaluationBtn subject={String(subject)} /> */}
       </div>
-      <ItemsBox>
+      {/* <ItemsBox>
         {evaluations?.map(({ File: { id, name } }) => (
           <NavigationCard
             key={`evaluation-${id}`}
@@ -37,7 +36,7 @@ export default async function SubjectDashboardPage({
             {name}
           </NavigationCard>
         ))}
-      </ItemsBox>
+      </ItemsBox> */}
       <SearchModal
         title="Modificar evaluación"
         searchParams={searchParams}
@@ -49,7 +48,7 @@ export default async function SubjectDashboardPage({
           name={searchParams?.name}
           privacity={(Privacity.PRIVATE as Privacity) ?? undefined}
           secondaryBtn={
-            <DeleteBtn endpoint={`notes/${searchParams?.id}`} size="md" />
+            <DeleteBtn endpoint={`lessons/${searchParams?.id}`} size="md" />
           }
         />
       </SearchModal>

@@ -8,7 +8,7 @@ import GroupStats from "./components/group-stats";
 import GroupsList from "./components/groups-list";
 import { Suspense } from "react";
 import LargeSkeleton from "@components/layout/loading-skeleton/large-skeleton/large-skeleton";
-import { NoteWithFile } from "src/app/(main)/subjects/models/note";
+import { LessonWithFile } from "src/app/(main)/subjects/models/lesson";
 import ItemsBox from "@components/containers/items-box/items-box";
 import NavigationCard from "@components/cards/NavigationCard";
 import Card from "@components/cards/Card";
@@ -24,7 +24,7 @@ export default async function EvaluationsPage({
     `notes?subject=${subject}&type=${Types.EVALUATION}`,
     {},
     [`evaluations/${subject}`]
-  )) as { data: NoteWithFile[] };
+  )) as { data: LessonWithFile[] };
 
   return (
     <>

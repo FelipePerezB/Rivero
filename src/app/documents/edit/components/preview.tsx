@@ -1,17 +1,28 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 "use client";
-import React from "react";
-// import { Component } from "src/app/subjects/edit/models/component";
+import React, { useState } from "react";
 import DynamicElement from "src/app/(main)/subjects/components/elements/files/dynamic-file";
 import { Component } from "../models/component";
 
 export default function Preview({ attrs }: { attrs: Component }) {
+  const [visibility, setVisibility] = useState(true);
   return attrs.type ? (
-    <section className="text-xs">
-      <span className="text-slate-700">Previsualización</span>
-      <div className="overflow-y-scroll flex justify-center">
-        <DynamicElement attrs={{ ...attrs }} name={attrs.type} />
-      </div>
+    <section>
+      <button
+        onClick={() => {
+          setVisibility(!visibility);
+        }}
+        className="text-slate-700"
+      >
+        {visibility ? "Ocultar previsualización" : "Mostrar previsualización"}
+      </button>
+      {visibility && (
+        <div className="text-xs">
+          <div className="overflow-y-scroll flex justify-center">
+            <DynamicElement attrs={{ ...attrs }} name={attrs.type} />
+          </div>
+        </div>
+      )}
     </section>
   ) : (
     <></>
