@@ -10,7 +10,6 @@ export async function GET(request: Request) {
       Topics: true,
     },
   });
-
   return NextResponse.json({ subjects }, { status: 200 });
 }
 

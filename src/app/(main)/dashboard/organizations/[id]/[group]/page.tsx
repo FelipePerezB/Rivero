@@ -46,15 +46,6 @@ function GroupTable({
     <Table
       onClickHref="?modal=update-user&name=[name]&lastname=[lastname]&email=[email]"
       head={{
-        icons: [
-          <TableBtn
-            href={`?modal=invite&group=${id}&role=${Role[tableRole]}`}
-            key={`invite-btn-${id}`}
-          >
-            <span>Invitar</span>
-            <FontAwesomeIcon className="h-3 w-3" icon={faPlus} />
-          </TableBtn>,
-        ],
         title: capFirst(name),
         keys: [
           { name: "Nombre", key: "name" },
@@ -129,23 +120,7 @@ export default async function OrganizationDashboardPage({
           </Suspense>
         </div>
       </section>
-      <section>
-        <Invitations group={group} organization={organizationId} />
-      </section>
-      {/* ------------------------------ */}
-      {/* <SearchModal
-        title="Invitar usuarios"
-        id="invite"
-        searchParams={searchParams}
-      >
-        {!!searchParams.role && (
-          <InviteForm
-            role={searchParams?.role}
-            organization={Number(organizationId)}
-            group={Number(searchParams?.group)}
-          />
-        )}
-      </SearchModal> */}
+      <Invitations group={group} organization={organizationId} />
       <SearchModal
         title="Actualizar usuario"
         id="update-user"

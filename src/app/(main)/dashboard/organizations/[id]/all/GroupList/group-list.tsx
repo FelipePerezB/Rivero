@@ -9,11 +9,11 @@ interface GroupWithusers extends Group {
 }
 
 export default async function GroupList({
-  organization,
+  organizationId,
 }: {
-  organization: string;
+  organizationId: string;
 }) {
-  const { data: groups } = (await api(`groups/${organization}`, {})) as {
+  const { data: groups } = (await api(`groups/${organizationId}`, {})) as {
     data: GroupWithusers[];
   };
   return !!groups.length ? (
@@ -28,13 +28,13 @@ export default async function GroupList({
               href={`${id}`}
               title={name}
               subtitle={
-                !!teachers.length &&
-                `Docentes: ${teachers.map(({ name }) => name).join(", ")}`
+                !!teachers.length ?
+                `Docentes: ${teachers.map(({ name }) => name).join(", ")}` : "¡Invita a docentes!"
               }
               key={`group-card-${id}`}
             >
               <p className="text-center">
-                {students?.length || "Invita estudiantes"}
+                {`${students?.length} estudiantes`}
               </p>
             </CardWithItem>
           );

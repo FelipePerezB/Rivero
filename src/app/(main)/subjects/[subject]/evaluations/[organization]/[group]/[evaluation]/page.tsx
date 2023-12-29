@@ -33,11 +33,13 @@ export default async function EvaluationPage({
   params: { [key: string]: string };
   searchParams: { [key: string]: string };
 }) {
-  const { data: note } = (await api("notes/" + evaluation, {}, [
+  console.log(evaluation)
+  const { data: lesson } = (await api("lessons/" + evaluation, {}, [
     "evaluations/" + subject,
-  ])) as { data: LessonWithFile[] };
+  ])) as { data: LessonWithFile };
 
-  const { File } = note[0] ?? {};
+  const { File } = lesson ?? {};
+  
 
   return (
     <>
@@ -94,7 +96,7 @@ export default async function EvaluationPage({
         title="Nuevo puntaje"
         searchParams={searchParams}
       >
-        <AddScoreForm token="" id={searchParams?.id} fileId={evaluation} />
+        <AddScoreForm id={searchParams?.id} fileId={evaluation} />
       </SearchModal>
       <Toaster />
     </>

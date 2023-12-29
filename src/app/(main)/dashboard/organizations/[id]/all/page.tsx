@@ -1,18 +1,14 @@
 import React from "react";
 import GroupList from "./GroupList/group-list";
-import CreateGroupBtn from "../[group]/components/create-group-btn";
 import api from "src/utils/api";
 import { Organization, Role } from "@prisma/client";
 import DeleteBtn from "@components/admin/delete-btn/delete-btn";
-import SearchModal from "@components/modal/search-modal";
-import UpdateForm from "@components/admin/update-form/update-form";
 import Button from "@components/common/buttons/button/button";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPen } from "@fortawesome/free-solid-svg-icons";
 import InviteForm from "../[group]/components/forms/Invite";
 import UpdateSearchModal from "@components/admin/update-form/update-search-modal";
 import CreateBtnWithName from "@components/admin/create-btn/create-btn-with-name";
 import getUser from "src/utils/getUser";
+import EvaluationsList from "./evaluations-list";
 
 export default async function AllGroupsOrganizationPage({
   params: { id: organizationId },
@@ -62,7 +58,8 @@ export default async function AllGroupsOrganizationPage({
           )}
         </div>
       </div>
-      <GroupList organization={organizationId} />
+      <GroupList organizationId={organizationId} />
+      <EvaluationsList organizationId={organizationId}/>
     </>
   );
 }

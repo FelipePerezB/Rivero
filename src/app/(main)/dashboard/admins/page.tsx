@@ -1,14 +1,10 @@
 import Table from "@components/dashboard/table/Table";
-import TableBtn from "@components/dashboard/table/table-btn/table-btn";
 import SearchModal from "@components/modal/search-modal";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Role, User } from "@prisma/client";
-import React, { use } from "react";
+import { User } from "@prisma/client";
+import React from "react";
 import api from "src/utils/api";
 import UpdateUserForm from "../organizations/[id]/[group]/components/forms/update-user-form";
 import RemoveAdmin from "./remove-admin";
-import AddAdminBtn from "./add-admin";
 
 export default async function AdminsPage({
   searchParams,
@@ -27,7 +23,6 @@ export default async function AdminsPage({
       <Table
         onClickHref="?modal=update&id=[id]"
         head={{
-          icons: [<AddAdminBtn key={"add-admin-btn"} />],
           title: "Administradores",
           keys: [
             { name: "ID", key: "id" },

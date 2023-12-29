@@ -40,26 +40,6 @@ export default async function GroupsTables({
           { name: "Apellido", key: "lastname" },
           { name: "Correo", key: "email" },
         ],
-        icons: [
-          <TableBtn
-            href={`?modal=invite&group=${id}&role=${Role.STUDENT}`}
-            key={`invite-btn-${id}`}
-          >
-            <span>Invitar</span>
-            <FontAwesomeIcon className="h-3 w-3" icon={faPlus} />
-          </TableBtn>,
-          <UpdateAlert
-            size="sm"
-            key={`edit-btn-${id}`}
-            endpoint={`groups/${organizationId}/${id}`}
-            value={name}
-          />,
-          <DeleteBtn
-            name={name}
-            key={`delete-btn-${id}`}
-            endpoint={`groups/${organizationId}/${id}`}
-          />,
-        ],
       }}
     />
   ));

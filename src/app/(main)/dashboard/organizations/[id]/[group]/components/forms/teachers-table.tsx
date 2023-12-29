@@ -37,15 +37,6 @@ export default async function TeacherTable({
     <Table
       onClickHref="?modal=update-user&name=[name]&lastname=[lastname]&email=[email]"
       head={{
-        icons: [
-          <TableBtn
-            href={`?modal=invite&group=${id}&role=${Role.TEACHER}`}
-            key={`invite-btn-${id}`}
-          >
-            <span>Invitar</span>
-            <FontAwesomeIcon className="h-3 w-3" icon={faPlus} />
-          </TableBtn>,
-        ],
         title: "Docentes",
         keys: [
           { name: "Nombre", key: "name" },

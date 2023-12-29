@@ -1,5 +1,5 @@
 "use client";
-import Button from "@components/common/buttons/button/button";
+import Button, { ButtonAttrs } from "@components/common/buttons/button/button";
 import Loading from "@components/common/loading-spinner/loadding-spinner";
 import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -10,12 +10,12 @@ import inviteUser from "../../../../actions/invite-user";
 import TextAreaInput from "@components/form/TextAreaInput/text-area-input";
 import OptionsInput from "src/app/documents/edit/components/edit-wraper/components/inputs/options";
 
-const SendBtn = () => {
+export const SendBtn = ({color}: {color?: ButtonAttrs['color']}) => {
   const { pending } = useFormStatus();
   return (
     <Button
       isInactive={pending}
-      color="white"
+      color={color}
       type="submit"
       className={pending ? "scale-95" : ""}
     >
@@ -36,7 +36,7 @@ export default function InviteForm({
   group,
 }: {
   label?: string;
-  organization: number;
+  organization?: number;
   role?: Role;
   group?: number;
 }) {
@@ -57,11 +57,11 @@ export default function InviteForm({
           />
         )}
         <TextAreaInput
-          name={label ?? "emails"}
+          name={"emails"}
           attrs={{ placeholder: "juan@gmail.com, manuel@gmail.com..." }}
         />
         <div className="flex h-max items-center gap-3">
-          <SendBtn />
+          <SendBtn color="white" />
         </div>
       </form>
       {JSON.stringify(state).length > 2 && (

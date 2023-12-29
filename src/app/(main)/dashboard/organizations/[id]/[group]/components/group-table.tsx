@@ -33,15 +33,6 @@ export default async function GroupTable({
     <Table
       onClickHref="?modal=update-user&name=[name]&lastname=[lastname]&email=[email]"
       head={{
-        icons: [
-          <TableBtn
-            href={`?modal=invite&group=${id}&role=${Role.STUDENT}`}
-            key={`invite-btn-${id}`}
-          >
-            <span>Invitar</span>
-            <FontAwesomeIcon className="h-3 w-3" icon={faPlus} />
-          </TableBtn>,
-        ],
         title: "Estudiantes",
         keys: [
           { name: "Nombre", key: "name" },

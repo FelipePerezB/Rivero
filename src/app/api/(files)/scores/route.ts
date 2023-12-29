@@ -1,28 +1,43 @@
-import { auth, currentUser } from "@clerk/nextjs";
-import { Role } from "@prisma/client";
 import { revalidateTag } from "next/cache";
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "src/utils/prisma";
 
 export async function POST(request: Request) {
   const res = await request.json();
-  const { userId, fileId, score, alternatives } = res ?? {};
+  const { fileId, score, alternatives, userId } = res ?? {};
+
   const lesson = await prisma.lesson.findFirst({
     where: {
       File: { externalId: fileId },
     },
-    include: { File: true },
+    include: { File: true, Score: true },
   });
 
-  const data = await prisma.score.create({
-    data: {
-      userId: Number(userId),
-      // noteId: lesson?.id,
-      score,
-      alternatives,
-    },
-    include: { User: true },
-  });
+  if (!lesson?.id)
+    return NextResponse.json({ msg: "Invalid file_id" }, { status: 400 });
+
+  const duplicatedId = lesson?.Score?.find(
+    ({ userId: scoreUser }) => scoreUser === userId
+  )?.id;
+
+  const data = duplicatedId
+    ? await prisma.score.update({
+        where: { id: duplicatedId },
+        data: {
+          score,
+          alternatives,
+        },
+        include: { User: true },
+      })
+    : await prisma.score.create({
+        data: {
+          userId: userId,
+          lessonId: lesson.id,
+          score,
+          alternatives,
+        },
+        include: { User: true },
+      });
   if (data.id)
     revalidateTag(`scores/organizations/${data.User.organizationId}`);
   return NextResponse.json({ data }, { status: 200 });
@@ -44,9 +59,7 @@ export async function GET(request: NextRequest) {
   const fileQuery = evaluation
     ? { File: { externalId: { equals: String(evaluation) } } }
     : {};
-  const subjectQuery = subject
-    ? { subjectId: Number(subject), }
-    : {};
+  const subjectQuery = subject ? { subjectId: Number(subject) } : {};
   // const scores = await prisma.score.findMany({
   //   where: {
   //     Note: {

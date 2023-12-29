@@ -27,20 +27,20 @@ export default async function ScoresTable({
   if (user?.publicMetadata?.role === Role.STUDENT) {
     redirect("/");
   }
-  const token = await getToken();
   const groupId = group === "all" ? "" : group;
   const { data: selectedGroup } = (await api(
     `groups/${organization}/${groupId}`,
-    {
-      headers: { Authorization: `Bearer ${token}` },
-    }
+    {}
   )) as { data: GroupWithUsers };
 
-  const { data: scores } = (await api(`scores/${organization}/${evaluation}`, {
-    headers: { Authorization: `Bearer ${token}` },
-  })) as { data: Score[] };
+  const { data: scores } = (await api(
+    `scores/${organization}/${evaluation}`,
+    {cache: "no-store"}
+  )) as { data: Score[] };
 
-  const users = selectedGroup?.Users?.map(({ email, name, id }) => [
+  const users = selectedGroup?.Users?.filter(
+    ({ role }) => role === Role.STUDENT
+  ).map(({ email, name, id }) => [
     id,
     `${name}`,
     email,
@@ -48,7 +48,7 @@ export default async function ScoresTable({
   ]);
   return (
     <Table
-      onClickHref="?modal=new-score&"
+      onClickHref="?modal=new-score&id=[id]"
       head={{
         title: selectedGroup?.name,
         keys: [

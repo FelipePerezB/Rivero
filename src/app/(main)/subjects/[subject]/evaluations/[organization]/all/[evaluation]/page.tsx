@@ -19,10 +19,11 @@ export default async function AllGroupsEvaluationPage({
     evaluation: string;
   };
 }) {
-  const { data: note } = (await api("notes/" + evaluation, {}, [
+  const { data: lesssons } = (await api("lessons/" + evaluation, {}, [
     "evaluations/" + subject,
-  ])) as { data: LessonWithFile[] };
-  const { File } = note[0] ?? {};
+  ])) as { data: LessonWithFile };
+  const { File } = lesssons ?? {};
+  console.log(File)
   return (
     <>
       <div className="flex justify-between items-center mb-2">
@@ -37,7 +38,7 @@ export default async function AllGroupsEvaluationPage({
         subject={subject}
         organization={organization}
       />
-      <ScoresStats organization={organization} evaluation={evaluation} />
+      {/* <ScoresStats organization={organization} evaluation={evaluation} /> */}
       <div className="flex gap-2">
         <Button href={"/documents/download/" + evaluation}>
           Evaluación

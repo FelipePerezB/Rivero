@@ -2,18 +2,15 @@
 
 import Button from "@components/common/buttons/button/button";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
 import toast from "react-hot-toast";
 import api from "src/utils/api";
 
 export default function AddScoreForm({
   fileId,
-  token,
   id,
 }: {
   id: string;
   fileId: string;
-  token: string;
 }) {
   const router = useRouter();
   const addScore = async () => {
@@ -23,7 +20,7 @@ export default function AddScoreForm({
     toast.promise(
       api("scores", {
         body: JSON.stringify({
-          userId: id,
+          userId: Number(id),
           fileId,
           score,
           alternatives: "a,c,b,e,c,a,c,a,c,d,a,a,d,c,a,a",

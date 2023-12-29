@@ -21,13 +21,14 @@ function removeDuplicates<T>(array: T[]): T[] {
 
 export default async function inviteUser(
   metadata: {
-    organization: number;
+    organization?: number;
     group?: number;
   },
   prevState: any,
   formData: FormData
 ) {
   const emails = formData?.get("emails") as string;
+  console.log(emails)
   const role = formData?.get("role") as Role;
   // console.log(emails, metadata, rol)
   let errors: { [email: string]: string } = {};
@@ -38,7 +39,7 @@ export default async function inviteUser(
   };
 
   async function processEmail(email: string) {
-    if (!role || !organizationId || !email) return;
+    if (!role  || !email) return;
     const isValid = regexEmail.test(email);
     if (!isValid) {
       errors[email] = "Correo inválido";

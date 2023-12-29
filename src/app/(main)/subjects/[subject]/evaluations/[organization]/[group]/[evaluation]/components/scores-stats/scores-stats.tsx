@@ -10,16 +10,17 @@ export default async function ScoresStats({
   group,
   organization,
 }: {
-  organization: string
+  organization: string;
   evaluation: string;
   group?: string;
 }) {
   const { getToken } = auth();
   const token = await getToken();
 
-  const { data } = (await api(`scores/${organization}/${evaluation}?group=${group??""}`, {
-    headers: { Authorization: `Bearer ${token}` },
-  })) as { data: Score[] };
+  const { data } = (await api(
+    `scores/${organization}/${evaluation}?group=${group ?? ""}`,
+    {}
+  )) as { data: Score[] };
 
   const scores = data?.map(({ score }) => score);
   const length = data?.length;

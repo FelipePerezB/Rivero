@@ -3,7 +3,7 @@ import { faFileArrowDown } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Toaster } from "react-hot-toast";
 import api from "src/utils/api";
-import { Types } from "@prisma/client";
+import { Privacity, Types } from "@prisma/client";
 import GroupStats from "./components/group-stats";
 import GroupsList from "./components/groups-list";
 import { Suspense } from "react";
@@ -20,19 +20,23 @@ export default async function EvaluationsPage({
   params: { subject: string; group: string; organization: string };
   searchParams: { [key: string]: string };
 }) {
-  const { data: notes } = (await api(
-    `notes?subject=${subject}&type=${Types.EVALUATION}`,
+
+  const { data: evaluations } = (await api(
+    `lessons/evaluations/${subject}`,
     {},
-    [`evaluations/${subject}`]
-  )) as { data: LessonWithFile[] };
+    [`lessons/${subject}`]
+    )) as { data: LessonWithFile[] };
+
+    const publicEvaluations = evaluations?.filter(({File: {privacity}})=>privacity === Privacity?.PUBLIC)
+
 
   return (
     <>
-      {!!notes.length && (
+      {!!publicEvaluations.length && (
         <h2 className="text-xl font-semibold py-2">Evaluaciones</h2>
       )}
       <ItemsBox>
-        {notes.map(({ File: { name, externalId }, id }) => (
+        {publicEvaluations.map(({ File: { name, externalId }, id }) => (
           <NavigationCard key={name} href={`${group}/${externalId}`}>
             {name}
           </NavigationCard>

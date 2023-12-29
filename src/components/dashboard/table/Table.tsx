@@ -6,7 +6,6 @@ interface TableProps {
   handlers?: ReactNode;
   head?: {
     title?: string | ReactNode;
-    icons?: ReactNode[];
     keys: { name: string; key?: string }[];
   };
 
@@ -32,18 +31,13 @@ const Row = ({
   );
 };
 
-const Table: React.FC<TableProps> = ({ data, head, onClickHref, handlers }) => {
+const Table: React.FC<TableProps> = ({ data, head, onClickHref }) => {
   return (
-    <Card className="p-0 rounded-xl overflow-x-auto">
+    <Card className="p-0 rounded-lg overflow-x-auto">
       <table className="w-full">
         {head?.title && (
-          <caption className="p-[0.6em]">
-            <div className="flex w-full justify-between items-center">
-              <h3 className="text-[1.2em] font-bold">{head.title}</h3>
-              <div className="flex items-center gap-2.5 text-sm">
-                {head.icons?.map((icon) => icon)}
-              </div>
-            </div>
+          <caption className="p-[0.6em] text-[1.2em] text-left font-bold">
+            {head.title}
           </caption>
         )}
         {!!data?.length && (
