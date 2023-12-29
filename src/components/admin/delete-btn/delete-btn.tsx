@@ -42,12 +42,10 @@ export default function DeleteBtn({
     ));
   };
 
+
   return (
     <Button
-      onClick={() => {
-        deleteHandler();
-        // router.back();
-      }}
+      onClick={deleteHandler}
       color={isSm ? `transparent` : "red"}
       size={isSm ? "xs" : "sm"}
       title="Eliminar"
@@ -59,7 +57,7 @@ export default function DeleteBtn({
           icon={faXmark}
         />
       ) : (
-        <span>Eliminar</span>
+        "Eliminar"
       )}
     </Button>
   );

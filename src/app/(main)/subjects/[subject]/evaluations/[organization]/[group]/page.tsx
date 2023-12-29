@@ -67,7 +67,6 @@ export default async function EvaluationsPage({
         Generar reporte{" "}
         <FontAwesomeIcon className="w-4 h-4" icon={faFileArrowDown} />
       </Button>
-      <Toaster />
     </>
   );
 }

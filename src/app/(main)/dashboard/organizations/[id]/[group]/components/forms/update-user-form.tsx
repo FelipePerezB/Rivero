@@ -1,4 +1,4 @@
-"use client";
+// "use client";
 import Button from "@components/common/buttons/button/button";
 import StandardInput from "@components/form/StandardInput/StandardInput";
 import { useRouter } from "next/navigation";
@@ -19,11 +19,11 @@ export default function UpdateUserForm({
   lastname?: string;
   name?: string;
 }) {
-  const [newLastname, setNewLastname] = useState(lastname);
-  const [newName, setNewName] = useState(name);
+  // const [newLastname, setNewLastname] = useState(lastname);
+  // const [newName, setNewName] = useState(name);
   return (
     <form className="flex flex-col gap-4">
-      <StandardInput attrs={{ readOnly: true }} value={email} name="Correo" />
+      {/* <StandardInput attrs={{ readOnly: true }} value={email} name="Correo" />
       <StandardInput onBlur={setNewName} value={name} name="Nombre" />
       <StandardInput onBlur={setNewLastname} value={lastname} name="Apellido" />
       <div className="flex gap-3">
@@ -32,7 +32,7 @@ export default function UpdateUserForm({
           values={{ name: newName, lastname: newLastname }}
         />
         <DeleteBtn endpoint={`users/email/${email}`} size="md"/>
-      </div>
+      </div> */}
     </form>
   );
 }

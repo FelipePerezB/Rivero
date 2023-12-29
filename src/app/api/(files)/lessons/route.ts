@@ -1,23 +1,20 @@
-import { auth } from "@clerk/nextjs";
-import { Privacity, Types } from "@prisma/client";
+import { currentUser } from "@clerk/nextjs";
 import { revalidateTag } from "next/cache";
 import { NextRequest, NextResponse } from "next/server";
 import generateRandomId from "src/app/(main)/subjects/utils/generateRandomId";
-import { getDefaultFile } from "src/hooks/useGetFile";
 import prisma from "src/utils/prisma";
 import { IdLenght } from "src/models/document.model";
 
 export async function POST(request: Request) {
   const res = await request.json();
-   
-  const { userId } = auth();
+  const user = await currentUser();
+  const userId = user?.id ?? res?.userId;
   if (!userId) throw new Error("Failed to fetch data");
   const { name, content, type } = res ?? {};
   const topicId = Number(res?.topicId);
   const subjectId = Number(res?.subjectId);
   const subtopicId = Number(res?.subtopicId);
   const newId = generateRandomId(IdLenght.lg);
-   
 
   const newFile = await prisma.file.create({
     data: {
@@ -34,7 +31,7 @@ export async function POST(request: Request) {
 
   if (!newFile)
     NextResponse.json({ msg: "Error creating the file" }, { status: 500 });
-   
+
   const data = await prisma.lesson.create({
     data: {
       type,
@@ -44,7 +41,6 @@ export async function POST(request: Request) {
       topicId,
     },
   });
-   
 
   if (data?.subjectId) {
     revalidateTag("subjects/" + data.subjectId);

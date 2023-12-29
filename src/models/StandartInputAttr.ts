@@ -5,6 +5,7 @@ export type StandartInputAttrs = {
   value?: string;
   name: string;
   className?: string;
+  label?:string;
   dataKey?: string;
   onChange?: (value: { [key: string]: string }) => void;
   onBlur?: (value: string) => void;

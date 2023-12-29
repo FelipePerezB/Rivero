@@ -24,11 +24,10 @@ export default async function SubjectDocumentPage({
     };
 
     const type = Types.DOCUMENT.toLowerCase();
-    console.log(data)
+  
     // const { name } = data ?? {};
     if(typeof file?.content !== "object") return <></>
     const content = file.content as LessonWithComponent['file']['content']
-    console.log(content)
     
   return (
     <DynamicElement

@@ -7,8 +7,8 @@ import DeleteBtn from "@components/admin/delete-btn/delete-btn";
 export default function UpdateSubject({
   subject,
   searchParams,
-  // id,
-}: {
+}: // id,
+{
   subject: {
     name: string;
     privacity?: Privacity;
@@ -18,7 +18,7 @@ export default function UpdateSubject({
   searchParams: { [key: string]: string };
   // id: string;
 }) {
-  const id = subject?.id
+  const id = subject?.id;
   return (
     <UpdateSearchModal
       label="asignatura"
@@ -27,7 +27,11 @@ export default function UpdateSubject({
       searchParams={searchParams}
       secondaryBtn={<DeleteBtn endpoint={`subjects/${id}`} size="md" />}
     >
-      <CreateFileBtn color="transparent" type={Types.PRACTICE} subjectId={String(id)} />
+      <CreateFileBtn
+        color="transparent"
+        type={Types.PRACTICE}
+        subjectId={String(id)}
+      />
     </UpdateSearchModal>
   );
 }

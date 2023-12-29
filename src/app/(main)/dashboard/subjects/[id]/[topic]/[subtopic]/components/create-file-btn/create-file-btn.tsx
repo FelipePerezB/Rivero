@@ -1,11 +1,26 @@
-"use client";
+// "use client";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
-import createAlert from "@components/admin/create-alert/create-alert";
 import Button, { ButtonAttrs } from "@components/common/buttons/button/button";
 import { Types } from "@prisma/client";
-import create from "@components/admin/create-btn/create";
+import api from "src/utils/api";
+import { auth } from "@clerk/nextjs";
+
+const action = async (
+  {
+    endpoint,
+    values,
+  }: { endpoint: string; values: { [key: string]: unknown } },
+  formData: FormData
+) => {
+  "use server";
+  const { userId } = auth();
+  await api(endpoint, {
+    method: "POST",
+    body: JSON.stringify({ ...values, userId }),
+  });
+};
 
 export default function CreateFileBtn({
   type,
@@ -23,15 +38,16 @@ export default function CreateFileBtn({
   subjectId?: string;
 }) {
   const endpoint = "lessons";
-  return (
-    <Button
-      color={color}
-      onClick={
-        () => create(endpoint, { subtopicId, topicId, subjectId, type })
+  const createAction = action.bind(null, {
+    endpoint,
+    values: { type, subtopicId, topicId, subjectId },
+  });
 
-      }
-    >
-      {text} <FontAwesomeIcon icon={faPlus} className="h-3 w-3" />
-    </Button>
+  return (
+    <form action={createAction}>
+      <Button type="submit" color={color}>
+        {text} <FontAwesomeIcon icon={faPlus} className="h-3 w-3" />
+      </Button>
+    </form>
   );
 }

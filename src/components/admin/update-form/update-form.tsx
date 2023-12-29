@@ -1,10 +1,21 @@
-"use client";
 import { Privacity } from "@prisma/client";
-import React, { ReactNode, useState } from "react";
-import UpdateBtn from "../update-btn/update-btn";
+import React, { ReactNode } from "react";
 import StandardInput from "@components/form/StandardInput/StandardInput";
-// import OptionsInput from "src/app/documents/edit/components/edit-wraper/components/inputs/options";
-import OptionsInput from "@components/form/OptionsInput/OptionsInput";
+import RadioInput from "@components/form/radio-input";
+import api from "src/utils/api";
+import Button from "@components/common/buttons/button/button";
+
+const action = async (endpoint: string, formData: FormData) => {
+  "use server";
+  const privacity = formData.get("privacity");
+  const name = formData.get("name");
+  const values = { name, privacity };
+  const res = await api(endpoint, {
+    method: "PATCH",
+    body: JSON.stringify({ ...values }),
+  });
+  console.log(res);
+};
 
 export default function UpdateForm({
   id,
@@ -19,25 +30,23 @@ export default function UpdateForm({
   endpoint: string;
   secondaryBtn?: ReactNode;
 }) {
-  const [values, setValues] = useState({});
-  const addValues = (data: { [key: string]: unknown }) =>
-    setValues({ ...values, ...data });
+  const updateAction = action.bind(null, endpoint);
 
   return (
-    <>
-    {!!privacity && 
-      <OptionsInput options={Object.values(Privacity)} onChange={addValues} dataKey="privacity" name="Privacidad" value={privacity} />
-    }
-      <StandardInput
-        dataKey="name"
-        onChange={addValues}
-        name="Nombre"
-        value={name}
-      />
+    <form className="flex gap-3 flex-col" action={updateAction}>
+      {!!privacity && (
+        <RadioInput
+          name="privacity"
+          label="privacidad"
+          value={privacity}
+          options={Object.values(Privacity)}
+        />
+      )}
+      <StandardInput dataKey="name" name="name" value={name} />
       <div className="flex gap-3">
-        <UpdateBtn endpoint={endpoint} values={values} />
+        <Button type="submit">Guardar</Button>
         {secondaryBtn}
       </div>
-    </>
+    </form>
   );
 }

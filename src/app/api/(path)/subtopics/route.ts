@@ -5,8 +5,7 @@ import prisma from "src/utils/prisma";
 
 export async function POST(request: Request) {
   const res = await request.json();
-  const { userId } = auth();
-  if (!userId) throw new Error("Failed to fetch data");
+  console.log(res)
   const { name, topicId } = res;
   const data = await prisma.subtopic.create({
     data: { name, topicId },
@@ -33,6 +32,5 @@ export async function GET(request: NextRequest) {
       },
     },
   });
-  console.log(data)
   return NextResponse.json({ data }, { status: 200 });
 }

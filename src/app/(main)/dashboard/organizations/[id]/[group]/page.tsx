@@ -1,26 +1,19 @@
 import React, { Suspense } from "react";
 import api from "src/utils/api";
-import { Group, Organization, Role, User } from "@prisma/client";
+import { Group, Role, User } from "@prisma/client";
 import SearchModal from "@components/modal/search-modal";
 import InviteForm from "./components/forms/Invite";
-import { Toaster } from "react-hot-toast";
 import TableSkeleton from "@components/layout/loading-skeleton/table-skeleton/table-skeleton";
-import UpdateAlert from "@components/admin/update-alert/update-alert";
 import UpdateUserForm from "./components/forms/update-user-form";
 import GroupsList from "src/app/(main)/subjects/[subject]/evaluations/[organization]/[group]/components/groups-list";
 import LargeSkeleton from "@components/layout/loading-skeleton/large-skeleton/large-skeleton";
 import Invitations from "./components/invitattions/invitations";
-import { auth } from "@clerk/nextjs";
 import DeleteBtn from "@components/admin/delete-btn/delete-btn";
 import capFirst from "src/utils/capFirst";
 import RemoveGroupBtn from "./components/remove-group-btn";
-// import TeacherTable from "./components/forms/teachers-table";
 import Table from "@components/dashboard/table/Table";
-import TableBtn from "@components/dashboard/table/table-btn/table-btn";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import UpdateSearchModal from "@components/admin/update-form/update-search-modal";
-import Button from "@components/common/buttons/button/button";
+
 interface GroupWithUsers extends Group {
   Users: User[];
 }
@@ -34,7 +27,6 @@ function GroupTable({
   role: Role;
   groupData: GroupWithUsers;
 }) {
-  const { id, organizationId } = groupData;
   const users = groupData?.Users?.filter(({ role }) => role === tableRole).map(
     ({ email, name, lastname }) => [
       capFirst(name),

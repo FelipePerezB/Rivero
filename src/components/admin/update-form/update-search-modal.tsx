@@ -5,8 +5,6 @@ import { Privacity } from "@prisma/client";
 import Button, { ButtonAttrs } from "@components/common/buttons/button/button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPen } from "@fortawesome/free-solid-svg-icons";
-import generateRandomId from "src/utils/generateRandomId";
-import { IdLenght } from "src/models/document.model";
 import capFirst from "src/utils/capFirst";
 
 export default function UpdateSearchModal({

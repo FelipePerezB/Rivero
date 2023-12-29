@@ -7,7 +7,6 @@ export async function GET(
   request: NextRequest,
   { params: { subject } }: { params: { subject: string } }
 ) {
-  console.log(subject)
 
   const data = await prisma.lesson.findMany({
     where: { subjectId: Number(subject), type: Types.EVALUATION },
@@ -24,6 +23,5 @@ export async function GET(
     },
   });
 
-  console.log(data)
   return NextResponse.json({ data }, { status: 200 });
 }

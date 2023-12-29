@@ -1,6 +1,5 @@
 import React from "react";
 import api from "src/utils/api";
-import CreateSubjectBtn from "./components/create-subject-btn";
 import { Toaster } from "react-hot-toast";
 import { SubjectWithTopic } from "src/app/(main)/subjects/models/subject";
 import ItemsBox from "@components/containers/items-box/items-box";
@@ -10,7 +9,7 @@ import SearchModal from "@components/modal/search-modal";
 import UpdateForm from "@components/admin/update-form/update-form";
 import { Privacity } from "@prisma/client";
 import CreateBtnWithName from "@components/admin/create-btn/create-btn-with-name";
-// import CreateTopicBtn from "./[id]/[topic]/components/create-topic-btn/create-topic-btn";
+
 
 export default async function SubjectsPage({
   searchParams,
