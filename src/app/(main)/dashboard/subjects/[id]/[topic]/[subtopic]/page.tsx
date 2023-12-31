@@ -55,11 +55,11 @@ export default async function SubtopicPage({
           <UpdateSearchModal
             color="white"
             data={{ ...subtopic }}
-            endpoint={`subtopics/${searchParams?.id}`}
+            endpoint={`subtopics/${subtopicId}`}
             label="subtópico"
             searchParams={searchParams}
             secondaryBtn={
-              <DeleteBtn endpoint={`subtopics/${searchParams?.id}`} size="md" />
+              <DeleteBtn endpoint={`subtopics/${subtopicId}`} size="md" />
             }
           />
         </div>
