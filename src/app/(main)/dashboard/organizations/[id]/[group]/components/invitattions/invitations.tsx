@@ -13,11 +13,9 @@ export default async function Invitations({
   organization: string;
   group: string;
 }) {
-  const { getToken } = auth();
-  const token = await getToken();
   const { data: invitations } = (await api(
     `auth/invitation/organization/${organization}/${group}`,
-    { headers: { Authorization: `Bearer ${token}` }, cache: "no-store" }
+    {}, []
   )) as { data: Invitation[] };
   return !!invitations.length ? (
     <>
@@ -34,5 +32,7 @@ export default async function Invitations({
         ))}
       </ItemsBox>
     </>
-  ) : <></>;
+  ) : (
+    <></>
+  );
 }

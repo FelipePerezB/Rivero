@@ -52,7 +52,7 @@ export default async function SubjectsPage({
       >
         <UpdateForm
           endpoint={`subjects/${searchParams?.id}`}
-          id={searchParams?.id}
+          // id={searchParams?.id}
           name={searchParams?.name}
           privacity={(searchParams?.privacity as Privacity) ?? undefined}
           // secondaryBtn={<CreateTopicBtn subjectId={Number(searchParams?.id)} />}

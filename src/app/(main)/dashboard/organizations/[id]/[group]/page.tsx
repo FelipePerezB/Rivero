@@ -92,24 +92,18 @@ export default async function OrganizationDashboardPage({
         </UpdateSearchModal>
       </div>
       <section className="flex flex-col gap-1">
-        <Suspense fallback={<LargeSkeleton />}>
-          <GroupsList group={group} organization={organizationId} />
-        </Suspense>
+        <GroupsList group={group} organization={organizationId} />
         <div className="flex flex-col gap-5">
-          <Suspense fallback={<TableSkeleton />}>
-            <GroupTable
-              groupData={groupData}
-              role={Role.STUDENT}
-              name="Estudiantes"
-            />
-          </Suspense>
-          <Suspense fallback={<TableSkeleton />}>
-            <GroupTable
-              groupData={groupData}
-              role={Role.TEACHER}
-              name="Docentes"
-            />
-          </Suspense>
+          <GroupTable
+            groupData={groupData}
+            role={Role.STUDENT}
+            name="Estudiantes"
+          />
+          <GroupTable
+            groupData={groupData}
+            role={Role.TEACHER}
+            name="Docentes"
+          />
         </div>
       </section>
       <Invitations group={group} organization={organizationId} />

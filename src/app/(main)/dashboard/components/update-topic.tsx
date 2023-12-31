@@ -27,7 +27,7 @@ export default function UpdateTopic({
       searchParams={searchParams}
       secondaryBtn={<DeleteBtn endpoint={`topics/${id}`} size="md" />}
     >
-      <CreateBtnWithName color="white" endpoint="subtopics" label="subtópico" values={{ topicId: id }} />
+      <CreateBtnWithName endpoint="subtopics" label="subtópico" values={{ topicId: id }} />
       {/* <hr /> */}
     </UpdateSearchModal>
   );

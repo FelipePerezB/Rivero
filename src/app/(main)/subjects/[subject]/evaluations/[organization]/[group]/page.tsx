@@ -26,6 +26,7 @@ export default async function EvaluationsPage({
     {},
     [`lessons/${subject}`]
     )) as { data: LessonWithFile[] };
+    
 
     const publicEvaluations = evaluations?.filter(({File: {privacity}})=>privacity === Privacity?.PUBLIC)
 

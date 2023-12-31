@@ -35,7 +35,7 @@ export default async function Organizations({
     .map(({ _count: { Users } }) => Users)
     .reduce((a, b) => a + b, 0);
 
-  const { data: admins } = (await api("users/admins", { cache: "no-store" }, [
+  const { data: admins } = (await api("users/admins", {}, [
     "admins",
   ])) as { data: User[] };
 
@@ -44,43 +44,16 @@ export default async function Organizations({
     `${name} ${lastname}`,
     email,
   ]);
-  const user = admins.find(({ externalId }) => searchParams.id === externalId);
+const user = admins?.find(({ externalId }) => searchParams.id === externalId);
   return (
     <>
-      <section>
-        <Table
-          onClickHref="?modal=update&id=[id]"
-          head={{
-            
-            title: "Administradores",
-            keys: [
-              { name: "ID", key: "id" },
-              { name: "Nombre", key: "name" },
-              { name: "Correo", key: "email" },
-            ],
-          }}
-          data={data}
-        />
-        <SearchModal
-          title="Actualizar usuario"
-          id="update"
-          searchParams={searchParams}
-        >
-          <RemoveAdmin id={user?.externalId as string} />
-          <UpdateUserForm
-            email={user?.email}
-            name={user?.name}
-            lastname={user?.lastname ?? ""}
-          />
-        </SearchModal>
-      </section>
       <section className="flex flex-col gap-3">
         <div className="flex justify-between">
           <h2 className="text-xl font-semibold">Organizaciones</h2>
           <div className="flex gap-2.5">
             <CreateBtnWithName endpoint="organizations" />
             <Button href="?modal=new-admin" color="white">
-              Administradores{" "}
+              Administradores
               <FontAwesomeIcon className="h-3 w-3" icon={faPlus} />
             </Button>
           </div>
@@ -110,6 +83,33 @@ export default async function Organizations({
             )
           )}
         </ItemsBox>
+      </section>
+      <section>
+        <Table
+          onClickHref="?modal=update&id=[id]"
+          head={{
+            
+            title: "Administradores",
+            keys: [
+              { name: "ID", key: "id" },
+              { name: "Nombre", key: "name" },
+              { name: "Correo", key: "email" },
+            ],
+          }}
+          data={data}
+        />
+        <SearchModal
+          title="Actualizar usuario"
+          id="update"
+          searchParams={searchParams}
+        >
+          <RemoveAdmin id={user?.externalId as string} />
+          <UpdateUserForm
+            email={user?.email}
+            name={user?.name}
+            lastname={user?.lastname ?? ""}
+          />
+        </SearchModal>
       </section>
       <SearchModal
         id="new-admin"

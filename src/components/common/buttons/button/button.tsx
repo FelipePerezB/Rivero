@@ -53,7 +53,7 @@ export default function Button({
 
   className += ` ${colorVariants[color]} ${
     sizeVariants[size]
-  } shadow-md rounded-md cursor-pointer hover:scale-95 transition-all duration-150 flex justify-center items-center gap-2 ${
+  } shadow-md rounded-md cursor-pointer h-max w-max hover:scale-95 transition-all duration-150 flex justify-center items-center gap-2 ${
     !!isInactive && "scale-95"
   }`;
 

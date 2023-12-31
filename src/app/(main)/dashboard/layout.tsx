@@ -8,12 +8,12 @@ type Props = {
 };
 
 export default async function Layout({ children }: Props) {
-  let user;
-  try {
-    user = await currentUser();
-  } catch (error) {}
-  if (user?.publicMetadata?.role === Role.STUDENT) {
-    redirect("/");
-  }
+  // let user;
+  // try {
+  //   user = await currentUser();
+  // } catch (error) {}
+  // if (user?.publicMetadata?.role === Role.STUDENT) {
+  //   redirect("/");
+  // }
   return <>{children}</>;
 }

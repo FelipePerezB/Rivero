@@ -39,7 +39,7 @@ export default function UpdateSearchModal({
         {children}
         <UpdateForm
           endpoint={endpoint}
-          id={String(data.id)}
+          // id={String(data.id)}
           name={data.name}
           privacity={data?.privacity}
           secondaryBtn={secondaryBtn}

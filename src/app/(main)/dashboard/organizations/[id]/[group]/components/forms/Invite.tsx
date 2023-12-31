@@ -49,6 +49,7 @@ export default function InviteForm({
   return (
     <>
       <form action={formAction} className="flex flex-col gap-2">
+        <span>{label}</span>
         {!role && (
           <OptionsInput
             dataKey="role"

@@ -3,14 +3,21 @@ import React from "react";
 import { ChartComponent } from "@components/dashboard/charts/line/linechart";
 import api from "src/utils/api";
 
-export default async function GroupStats({ group, organization, subject }: { group: string, organization: string, subject: string }) {
-  const { getToken } = auth();
-  const token = await getToken();
+export default async function GroupStats({
+  group,
+  organization,
+  subject,
+}: {
+  group: string;
+  organization: string;
+  subject: string;
+}) {
   const { data: scores } = (await api(
     `scores?group=${group !== "all" ? group : ""}&subject=${subject}`,
     {
-      headers: { Authorization: `Bearer ${token}` }, cache: "no-store"
-    }, [`scores/organizations/${organization}`]
+      cache: "no-store",
+    },
+    [`scores/organizations/${organization}`]
   )) as {
     data: {
       [x: string]: {

@@ -11,13 +11,11 @@ export default async function GroupsList({
 }: {
   group: string;
   organization: string;
-  customPath?: string
+  customPath?: string;
 }) {
-  const { getToken } = auth();
-  const token = await getToken();
-  const { data: groups } = (await api(`groups/${organization}`, {
-    headers: { Authorization: `Bearer ${token}` },
-  })) as { data: Group[] };
+  const { data: groups } = (await api(`groups/${organization}`, {})) as {
+    data: Group[];
+  };
   const groupsData = groups.map(({ name, id }) => ({ name, id }));
   return (
     <Options

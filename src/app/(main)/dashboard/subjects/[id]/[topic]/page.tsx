@@ -36,7 +36,7 @@ export default async function SubjectDashboard({
   ])) as {
     data: Topic[];
   };
-
+  
   const { data: evaluations } = (await api(
     `lessons/evaluations/${subjectId}`,
     {},
