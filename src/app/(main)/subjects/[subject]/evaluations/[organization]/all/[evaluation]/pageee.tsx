@@ -9,6 +9,8 @@ import { LessonWithFile } from "src/app/(main)/subjects/models/lesson";
 import api from "src/utils/api";
 import GroupsLinks from "../components/groups-links";
 import ScoresStats from "../../[group]/[evaluation]/components/scores-stats/scores-stats";
+import Section from "@components/containers/section";
+import SectionTitle from "@components/common/titles/section-title";
 
 export default async function AllGroupsEvaluationPage({
   params: { evaluation, subject, organization },
@@ -26,13 +28,14 @@ export default async function AllGroupsEvaluationPage({
   console.log(File)
   return (
     <>
-      <div className="flex justify-between items-center mb-2">
-        <h1 className="text-xl">{File?.name}</h1>
-        <Button>
+    <Section>
+      <SectionTitle title={File?.name} subTitle="Evalua los conocimientos de la asignatura"/>
+   
+        {/* <Button>
           Generar reporte
           <FontAwesomeIcon className="max-h-4 w-4" icon={faFileArrowDown} />
-        </Button>
-      </div>
+        </Button> */}
+    </Section>
       <GroupsLinks
         evaluation={evaluation}
         subject={subject}

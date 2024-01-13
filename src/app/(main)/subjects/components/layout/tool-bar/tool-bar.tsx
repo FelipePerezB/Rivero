@@ -23,8 +23,6 @@ export default function Navar({
   const [modalState, setModalState] = useState(false);
   const { user } = useUser();
 
-  console.log(settings)
-
   return (
     <div className="print:hidden z-40 sticky top-0 left-0">
       <nav className="w-full h-max border-b shadow-sm bg-white print:hidden">

@@ -3,6 +3,7 @@ import { Privacity, Types } from "@prisma/client";
 import React from "react";
 import CreateFileBtn from "../subjects/[id]/[topic]/[subtopic]/components/create-file-btn/create-file-btn";
 import DeleteBtn from "@components/admin/delete-btn/delete-btn";
+import CreateBtnWithName from "@components/admin/create-btn/create-btn-with-name";
 
 export default function UpdateSubject({
   subject,
@@ -27,11 +28,15 @@ export default function UpdateSubject({
       searchParams={searchParams}
       secondaryBtn={<DeleteBtn endpoint={`subjects/${id}`} size="md" />}
     >
-      <CreateFileBtn
-        color="transparent"
-        type={Types.PRACTICE}
-        subjectId={String(id)}
-      />
+      <div className="flex gap-4">
+        <CreateFileBtn
+          color="white"
+          text="Crear práctica"
+          type={Types.PRACTICE}
+          subjectId={String(id)}
+        />
+          <CreateBtnWithName color="white" endpoint="topics" label="tópico" values={{ subjectId: id }} />
+      </div>
     </UpdateSearchModal>
   );
 }

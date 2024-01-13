@@ -11,8 +11,7 @@ export default function Accordion({
   summary: string | React.ReactNode;
 }) {
   return (
-    <Card className="max-w-lg p-0">
-      <details className="group cursor-pointer">
+      <details className="group cursor-pointer shadow-md border border-border rounded-sm">
         <summary className="flex justify-between items-center list-none h-max px-4 py-2.5">
           {summary}
           <FontAwesomeIcon
@@ -23,6 +22,5 @@ export default function Accordion({
         <hr className="mx-2"/>
         <div className="p-2">{children}</div>
       </details>
-    </Card>
   );
 }

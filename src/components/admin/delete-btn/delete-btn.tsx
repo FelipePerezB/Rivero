@@ -10,11 +10,13 @@ import api from "src/utils/api";
 import Button from "../../common/buttons/button/button";
 
 export default function DeleteBtn({
+  label,
   name,
   endpoint,
   tags,
   size = "sm",
 }: {
+  label?: string
   size?: "sm" | "md" | "lg";
   name?: string;
   endpoint: string;
@@ -51,6 +53,7 @@ export default function DeleteBtn({
       title="Eliminar"
       key={"delete-btn"}
     >
+      {!!label && label}
       {isSm ? (
         <FontAwesomeIcon
           className={`h-3.5 w-3.5 ${isSm && "hover:text-red-500"}`}

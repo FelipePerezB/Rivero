@@ -8,75 +8,60 @@ import { SubjectWithTopic } from "../subjects/models/subject";
 import DocsCards from "@components/containers/docs-cards/docs-cards";
 import CardWithItem from "@components/cards/card-with-item";
 import getProgress from "src/services/cache/getProgress";
-import { Privacity } from "@prisma/client";
+import Section from "../../../components/containers/section";
+import Card from "@components/cards/Card";
+import UserCard from "./components/user-card";
+import OrganizationCard from "./components/organization-card";
+import SmallTitle from "@components/common/titles/small-title";
+import BarsChart from "@components/dashboard/charts/bars";
+import SectionTitle from "@components/common/titles/section-title";
+import SubjectsCards from "./components/subjects-card";
+import LessonProgress from "./components/lessons-progress";
+
+export const Item = ({
+  subtitle,
+  title,
+}: {
+  title?: string | number;
+  subtitle: string;
+}) => (
+  <div className="flex flex-col justify-center w-20">
+    <span className="text-xl font-medium text-center">{title}</span>
+    <span className="text-xs font-extralight text-center">{subtitle}</span>
+  </div>
+);
 
 export default async function HomePage() {
   const { subjects } = (await api("subjects", {}, ["subjects"])) as {
     subjects: SubjectWithTopic[];
   };
-  const subjectsWithProgress = await Promise.all(
-    subjects.map(async (subject) => {
-      const progress = await getProgress(subject?.id);
-       
-      let progressCount;
-
-      if (progress) {
-        const data = Object.values(progress).flatMap((topic) =>
-          Object.values(topic).flatMap((subtopic) =>
-            subtopic.flatMap((id) => id)
-          )
-        );
-
-        const fileCount = subject?._count?.Lesson;
-        progressCount =
-          data.length > 0
-            ? Number(((100 * Number(data.length)) / fileCount).toFixed(1))
-            : 0;
-      }
-
-      return { ...subject, progress: progressCount };
-    })
-  );
-
-   
 
   return (
     <>
-      <Suspense fallback={<LargeSkeleton />}>
-        <HomeTitle />
-      </Suspense>
-      <h2 className="text-2xl font-semibold ">Mis rutas</h2>
-      <ItemsBox>
-        {subjectsWithProgress.map(
-          ({ name, Topics, id, progress, privacity }) => {
-            if (privacity !== Privacity.PUBLIC) return <></>;
+      <Section>
+        <Suspense fallback={<LargeSkeleton />}>
+          <HomeTitle />
+        </Suspense>
+        <article className="flex flex-col sm:flex-row gap-sm sm:gap-md">
+          <section className="flex sm:flex-col flex-row gap-sm sm:gap-md h-full w-full sm:w-max">
+            <UserCard />
+            <OrganizationCard />
+          </section>
+          <section className="w-full">
+            <LessonProgress subjects={subjects} />
+          </section>
+        </article>
+      </Section>
 
-            const topicId = Topics?.at(0)?.id;
-            const href = Topics?.length ? `/subjects/${id}/${topicId}` : "";
-            return (
-              <CardWithItem
-                key={`card-${name}`}
-                href={href}
-                title={name}
-                subtitle={
-                  <Tags
-                    tags={Topics.filter(
-                      ({ privacity }) => privacity === Privacity.PUBLIC
-                    ).map(({ name }) => name)}
-                  />
-                }
-              >
-                <span className="text-xl">{progress ?? 0}%</span>
-                <span className="text-xs text-gray-400">Completado</span>
-              </CardWithItem>
-            );
-          }
-        )}
-      </ItemsBox>
-      <h2 className="text-2xl font-semibold mt-4">Documentos guardados</h2>
-      <ItemsBox size="sm">
-        <DocsCards />
-      </ItemsBox>
+      <Section>
+        <SectionTitle
+          title={"Tus Rutas"}
+          subTitle="Refuerza y expande tus conocimientos"
+        />
+        <article className="flex gap-md overflow-x-auto">
+          <SubjectsCards subjects={subjects} />
+        </article>
+      </Section>
     </>
   );
 }

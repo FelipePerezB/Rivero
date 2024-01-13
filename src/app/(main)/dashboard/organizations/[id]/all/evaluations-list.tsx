@@ -3,6 +3,7 @@ import CardWithItem from "@components/cards/card-with-item";
 import ItemsBox from "@components/containers/items-box/items-box";
 import React from "react";
 import api from "src/utils/api";
+import NavigationCard from "@components/cards/NavigationCard";
 
 export default async function EvaluationsList({
   organizationId,
@@ -14,21 +15,15 @@ export default async function EvaluationsList({
   };
   return !!subjects?.length ? (
     <>
-      <h3 className="text-xl font-semibold">Evaluaciones</h3>
       <ItemsBox>
         {subjects.map(({ name, id }) => {
           return (
-            <CardWithItem
+            <NavigationCard
               href={`/subjects/${id}/evaluations/${organizationId}/all`}
-              title={name}
-              subtitle={"12 ensayos"}
-              key={`evaluation-card-${id}`}
+              key={`nav-card-evaluation-${id}`}
             >
-              <div className="flex flex-col items-center">
-                <span className="text-2xl font-semibold">920</span>
-                <span>Puntos</span>
-              </div>
-            </CardWithItem>
+              {name}
+            </NavigationCard>
           );
         })}
       </ItemsBox>

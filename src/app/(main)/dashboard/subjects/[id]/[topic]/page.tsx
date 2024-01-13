@@ -9,6 +9,10 @@ import ItemsBox from "@components/containers/items-box/items-box";
 import NavigationCard from "@components/cards/NavigationCard";
 import UpdateTopic from "../../../components/update-topic";
 import UpdateSubject from "../../../components/update-subject";
+import Section from "@components/containers/section";
+import SectionTitle from "@components/common/titles/section-title";
+import SubTitle from "@components/common/titles/subtitle";
+import SmallTitle from "@components/common/titles/small-title";
 
 export default async function SubjectDashboard({
   params: { id: subjectId, topic: topicId },
@@ -36,7 +40,7 @@ export default async function SubjectDashboard({
   ])) as {
     data: Topic[];
   };
-  
+
   const { data: evaluations } = (await api(
     `lessons/evaluations/${subjectId}`,
     {},
@@ -45,50 +49,55 @@ export default async function SubjectDashboard({
 
   return (
     <>
-      <div className="flex justify-between items-center">
-        <h2 className="text-2xl text-semibold w-max">
-          {capFirst(subject?.name)}
-        </h2>
-        <div className="flex gap-3">
-          <UpdateSubject searchParams={searchParams} subject={subject} />
-          <UpdateTopic searchParams={searchParams} topic={topic} />
+      <Section>
+        <SectionTitle
+          subTitle="Administra la asignatura"
+          title={capFirst(subject?.name)}
+        />
+        <article className="flex justify-between items-center">
+          <Options
+            options={topics?.map(({ name, id }) => ({
+              key: id,
+              title: capFirst(name),
+            }))}
+            option={topicId}
+          />
+          <div className="flex gap-sm">
+            <UpdateSubject searchParams={searchParams} subject={subject} />
+            <UpdateTopic searchParams={searchParams} topic={topic} />
+          </div>
+        </article>
+        <Table
+          onClickHref={`${topicId}/[id]`}
+          data={subtopics?.map(
+            ({ name, id, privacity }) => [id, capFirst(name), privacity] ?? []
+          )}
+          head={{
+            title: capFirst(topic?.name),
+            keys: [
+              { name: "Id", key: "id" },
+              { name: "Nombre", key: "name" },
+              { name: "Privacidad", key: "privacity" },
+            ],
+          }}
+        />
+      </Section>
+      <Section>
+        <div className="flex justify-between items-center">
+          <SmallTitle>Evaluaciones</SmallTitle>
+          <CreateFileBtn subjectId={subjectId} type={Types.EVALUATION} />
         </div>
-      </div>
-      <Options
-        options={topics?.map(({ name, id }) => ({
-          key: id,
-          title: capFirst(name),
-        }))}
-        option={topicId}
-      />
-      <Table
-        onClickHref={`${topicId}/[id]`}
-        data={subtopics?.map(
-          ({ name, id, privacity }) => [id, capFirst(name), privacity] ?? []
-        )}
-        head={{
-          title: capFirst(topic?.name),
-          keys: [
-            { name: "Id", key: "id" },
-            { name: "Nombre", key: "name" },
-            { name: "Privacidad", key: "privacity" },
-          ],
-        }}
-      />
-      <div className="flex justify-between">
-        <h2 className="font-semibold text-xl">Evaluaciones</h2>
-        <CreateFileBtn subjectId={subjectId} type={Types.EVALUATION} />
-      </div>
-      <ItemsBox>
-        {evaluations?.map(({ File: { id, name, externalId } }) => (
-          <NavigationCard
-            key={`evaluation-${id}`}
-            href={`/documents/evaluation/${externalId}`}
-          >
-            {name}
-          </NavigationCard>
-        ))}
-      </ItemsBox>
+        <div className="flex gap-sm overflow-x-auto pb-sm">
+          {evaluations?.map(({ File: { id, name, externalId } }) => (
+            <NavigationCard
+              key={`evaluation-${id}`}
+              href={`/documents/evaluation/${externalId}`}
+            >
+              {name}
+            </NavigationCard>
+          ))}
+        </div>
+      </Section>
     </>
   );
 }

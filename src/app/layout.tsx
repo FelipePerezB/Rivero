@@ -1,9 +1,6 @@
-import { Nunito } from "next/font/google";
 import "../globals.css";
 import { ReactNode } from "react";
 import { ClerkProvider } from "@clerk/nextjs";
-// import Navar from "../../components/layout/navar/navar";
-// import NavSidebar from "../../components/layout/navar/nav-sidebar";
 import { Toaster } from "react-hot-toast";
 import NavSidebar from "@components/layout/navar/nav-sidebar";
 import { Metadata } from "next";
@@ -14,11 +11,11 @@ export const metadata: Metadata = {
   manifest: "/manifest.json",
 };
 
-const font = Nunito({
-  subsets: ["latin"],
-  weight: ["300", "500", "600", "700"],
-  display: "swap",
-});
+// const font = Nunito({
+//   subsets: ["latin"],
+//   weight: ["300", "500", "600", "700"],
+//   display: "swap",
+// });
 
 type Props = {
   children: ReactNode;
@@ -28,7 +25,7 @@ export default async function RootLayout({ children }: Props) {
   return (
     <ClerkProvider>
       <html lang="es">
-        <body className={`${font.className} min-h-screen`}>
+        <body className={`min-h-screen `}>
           {children}
           <NavSidebar />
           <Toaster />

@@ -7,25 +7,20 @@ export default async function GroupStats({
   group,
   organization,
   subject,
+  scores
 }: {
+  scores: {
+    [x: string]: {
+      value: number;
+      time: string;
+    }[];
+  };
   group: string;
   organization: string;
   subject: string;
 }) {
-  const { data: scores } = (await api(
-    `scores?group=${group !== "all" ? group : ""}&subject=${subject}`,
-    {
-      cache: "no-store",
-    },
-    [`scores/organizations/${organization}`]
-  )) as {
-    data: {
-      [x: string]: {
-        value: number;
-        time: string;
-      }[];
-    };
-  };
+
+
 
   const series =
     group === "all"

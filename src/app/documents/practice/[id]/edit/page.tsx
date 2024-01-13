@@ -1,6 +1,6 @@
 import api from "src/utils/api";
 import { File, Lesson } from "@prisma/client";
-import PracticeEditor from "../practice-editor";
+import PracticeEditor from "../../practice-editor";
 
 interface LessonWithFile extends Lesson {
   File: File;

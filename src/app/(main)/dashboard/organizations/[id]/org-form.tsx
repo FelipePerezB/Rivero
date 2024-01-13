@@ -1,7 +1,7 @@
 import CreateBtnWithName from "@components/admin/create-btn/create-btn-with-name";
 import UpdateSearchModal from "@components/admin/update-form/update-search-modal";
 import React from "react";
-import InviteForm from "../[group]/components/forms/Invite";
+import InviteForm from "./[group]/components/forms/Invite";
 import DeleteBtn from "@components/admin/delete-btn/delete-btn";
 import Button from "@components/common/buttons/button/button";
 import { Organization, Role } from "@prisma/client";
@@ -41,13 +41,6 @@ export default async function OrgForm({
         />
         <hr />
       </UpdateSearchModal>
-      {role === Role.ADMIN ? (
-        <DeleteBtn endpoint="organizations" size="md" />
-      ) : (
-        <Button color="white" href="/subjects/1/evaluations/1">
-          Evaluaciones
-        </Button>
-      )}
     </>
   );
 }

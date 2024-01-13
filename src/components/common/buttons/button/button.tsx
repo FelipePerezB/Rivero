@@ -38,7 +38,7 @@ export default function Button({
     white: `hover:bg-gray-100 text-black border shadow-gray-500/10 ${
       !!isInactive ? "bg-gray-100" : "bg-white"
     }`,
-    black: `hover:bg-gray-900 text-black border shadow-gray-500/10 ${
+    black: `hover:bg-gray-900 text-white border shadow-gray-500/10 ${
       !!isInactive ? "bg-gray-900" : "bg-black"
     }`,
     // black: "bg-black hover:bg-gray-900 text-white border shadow-gray-500/10",

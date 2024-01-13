@@ -31,10 +31,10 @@ export default function Options({
               }
             >
               <li
-                className={`cursor-pointer py-0.5 mb-1 px-2 flex-shrink-0 font-semibold hover:text-slate-800  w-max  ${
+                className={`cursor-pointer py-0.5 mb-1 px-2 flex-shrink-0  hover:text-slate-800  w-max  ${
                   isActive
-                    ? "text-slate-800 border-b-2 border-slate-800"
-                    : "text-slate-500"
+                    ? "text-slate-800 border-b-2 border-slate-800 font-medium"
+                    : "font-light hover:font-normal"
                 }`}
               >
                 {title}

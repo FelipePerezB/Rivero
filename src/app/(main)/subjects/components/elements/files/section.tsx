@@ -26,7 +26,7 @@ export default function Section({
     }[];
   };
 }) {
-   
+
   return (
     <div
       className={`flex justify-center bg-white p-[1em] sm:p-[2em] print:p-0 w-full h-full 

@@ -3,14 +3,31 @@ module.exports = {
   content: ["./src/**/*.{js,ts,jsx,tsx,mdx}"],
   theme: {
     extend: {
-      colors:{
-        black: "hsla( 0,0%,9% ,1)"
+      borderRadius: {
+        sm: "4px",
+      },
+      gap: {
+        xs: "8px",
+        sm: "16px",
+        md: "24px",
+        lg: "40px",
+      },
+      padding: {
+        sm: "8px",
+        md: "16px",
+        lg: "24px",
+        xl: "32px",
+      },
+      colors: {
+        black: "#040E25",
+        muted: "#A0A0A0",
+        border: "#E5E7EB",
       },
       width: {
         screen: "100dvw",
       },
       boxShadow: {
-        md: "1px 1px 3px rgb(232, 232, 232)",
+        md: "2px 2px 6px rgb(229, 231, 235, 0.5)",
       },
       backgroundColor: {
         "blue-500": "#2c73eb",

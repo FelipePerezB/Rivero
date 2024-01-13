@@ -26,6 +26,7 @@ export default function LineChart({ settings, showLegend }: LineChartProps) {
     LineElement,
     Tooltip
   );
+  
 
   return (
     <Line

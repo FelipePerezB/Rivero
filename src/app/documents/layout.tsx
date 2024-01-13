@@ -1,16 +1,16 @@
-import { currentUser } from "@clerk/nextjs";
-import { Role } from "@prisma/client";
-import { redirect } from "next/navigation";
+import { Nunito } from "next/font/google";
 import React, { ReactNode } from "react";
 
 type Props = {
   children: ReactNode;
 };
 
+const font = Nunito({
+  subsets: ["latin"],
+  weight: ["300", "500", "600", "700"],
+  display: "swap",
+});
+
 export default async function Layout({ children }: Props) {
-  // const user = await currentUser();
-  // if (user?.publicMetadata?.role !== Role.ADMIN) {
-  //   redirect("/");
-  // }
-  return <>{children}</>;
+  return <div className={font.className}>{children}</div>;
 }

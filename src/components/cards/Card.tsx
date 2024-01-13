@@ -15,7 +15,7 @@ export default function Card({
   href?: string;
   interactive?: boolean;
 }) {
-  const nodeClassName = `w-full ${className} card ${
+  const nodeClassName = `w-full  ${className} p-md  shadow-md border border-border rounded-sm ${
     interactive
       ? "cursor-pointer hover:scale-[98%] hover:bg-slate-50 transition-all duration-75"
       : "duration-150"

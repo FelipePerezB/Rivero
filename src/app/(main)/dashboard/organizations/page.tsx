@@ -14,6 +14,8 @@ import AddAdminBtn from "../admins/add-admin";
 import SearchModal from "@components/modal/search-modal";
 import RemoveAdmin from "../admins/remove-admin";
 import UpdateUserForm from "./[id]/[group]/components/forms/update-user-form";
+import Section from "@components/containers/section";
+import SectionTitle from "@components/common/titles/section-title";
 
 export default async function Organizations({
   searchParams,
@@ -35,19 +37,23 @@ export default async function Organizations({
     .map(({ _count: { Users } }) => Users)
     .reduce((a, b) => a + b, 0);
 
-  const { data: admins } = (await api("users/admins", {}, [
-    "admins",
-  ])) as { data: User[] };
+  const { data: admins } = (await api("users/admins", {}, ["admins"])) as {
+    data: User[];
+  };
 
   const data = admins?.map(({ email, name, lastname, externalId }) => [
     externalId,
     `${name} ${lastname}`,
     email,
   ]);
-const user = admins?.find(({ externalId }) => searchParams.id === externalId);
+  const user = admins?.find(({ externalId }) => searchParams.id === externalId);
   return (
     <>
-      <section className="flex flex-col gap-3">
+      <Section>
+        <SectionTitle
+          title="Usuarios"
+          subTitle="Administra usuarios, organizaciones y administradores"
+        />
         <div className="flex justify-between">
           <h2 className="text-xl font-semibold">Organizaciones</h2>
           <div className="flex gap-2.5">
@@ -65,7 +71,7 @@ const user = admins?.find(({ externalId }) => searchParams.id === externalId);
           />
           <CardItem title="Usuarios" value={String(totalUsers)} />
         </Card>
-        <ItemsBox>
+        <ItemsBox size="sm">
           {organizations?.map(
             ({ id, name, _count: { Users: users_count }, Groups }) => (
               <NavigationCard
@@ -73,7 +79,7 @@ const user = admins?.find(({ externalId }) => searchParams.id === externalId);
                 href={`organizations/${id}/all`}
               >
                 <div className="flex w-full justify-between pr-2 items-center">
-                  <span>{name}</span>
+                  <span className="text-ellipsis overflow-hidden whitespace-nowrap">{name}</span>
                   <span className="flex items-center gap-1 text-xs py-0.5 px-1 rounded-sm">
                     {users_count}{" "}
                     <FontAwesomeIcon className="h-3 w-3" icon={faUser} />
@@ -83,12 +89,11 @@ const user = admins?.find(({ externalId }) => searchParams.id === externalId);
             )
           )}
         </ItemsBox>
-      </section>
-      <section>
+      </Section>
+      <Section>
         <Table
           onClickHref="?modal=update&id=[id]"
           head={{
-            
             title: "Administradores",
             keys: [
               { name: "ID", key: "id" },
@@ -98,19 +103,21 @@ const user = admins?.find(({ externalId }) => searchParams.id === externalId);
           }}
           data={data}
         />
-        <SearchModal
-          title="Actualizar usuario"
-          id="update"
-          searchParams={searchParams}
-        >
-          <RemoveAdmin id={user?.externalId as string} />
-          <UpdateUserForm
-            email={user?.email}
-            name={user?.name}
-            lastname={user?.lastname ?? ""}
-          />
-        </SearchModal>
-      </section>
+      </Section>
+
+      <SearchModal
+        title="Actualizar usuario"
+        id="update"
+        searchParams={searchParams}
+      >
+        <RemoveAdmin id={user?.externalId as string} />
+        <UpdateUserForm
+          email={user?.email}
+          name={user?.name}
+          lastname={user?.lastname ?? ""}
+        />
+      </SearchModal>
+
       <SearchModal
         id="new-admin"
         searchParams={searchParams}

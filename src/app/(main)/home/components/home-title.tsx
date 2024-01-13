@@ -1,9 +1,11 @@
-import { currentUser } from '@clerk/nextjs'
-import React from 'react'
+import { currentUser } from "@clerk/nextjs";
+import SectionTitle from "@components/common/titles/section-title";
+import React from "react";
 
 export default async function HomeTitle() {
-  const user = await currentUser()
+  const user = await currentUser();
+  const title = `¡Hola, ${user?.firstName}!`;
   return (
-    <h2 className="text-4xl font-semibold ">¡Hola, {user?.firstName}!</h2>
-  )
+    <SectionTitle title={title} subTitle="Revisa tu perfil y progreso" />
+  );
 }

@@ -16,16 +16,22 @@ type metadataType = {
 };
 
 const setProgress = async (id: string, metadata?: metadataType) => {
+  console.log(id, metadata);
   const { subtopicId, topicId, subjectId } = metadata ?? {};
   if (!subtopicId || !topicId || !subjectId) return;
-  const lessonProgress = await getProgress(subjectId);
+  const lessonProgress = (await getProgress(subjectId)) ?? {};
   lessonProgress[topicId] = lessonProgress[topicId] ?? {};
   const topicProgress = lessonProgress[topicId];
-  if (topicProgress[subtopicId]?.includes(id)) return;
+  // if (topicProgress[subtopicId][id]) return;
+
+  const date = new Date();
+  const LocalDate = date.toISOString().split("T")[0];
 
   topicProgress[subtopicId] = topicProgress[subtopicId]
-    ? [...topicProgress[subtopicId], id]
-    : [id];
+    ? { ...topicProgress[subtopicId], [id]: LocalDate }
+    : { [id]: LocalDate };
+  // ? [...topicProgress[subtopicId], id]
+  // [id];
 
   const { data: res } = (await api(`users/cache/progress/${subjectId}`, {
     cache: "no-store",
@@ -36,7 +42,6 @@ const setProgress = async (id: string, metadata?: metadataType) => {
   })) as {
     data: string;
   };
-
 };
 
 export default function Excercises({

@@ -2,13 +2,15 @@
 
 export const ProgressVar = ({
   progress,
+  size = "sm",
   color = "var(--primary-color)",
 }: {
+  size?: "sm" | "md" 
   progress: number;
   color?: string;
 }) => {
   return (
-    <div className="h-2 w-full bg-gray-100 rounded-full overflow-hidden">
+    <div className={`${size === "md" ?  "h-1.5" : "h-1"} w-full bg-gray-100 rounded-full overflow-hidden`}>
       <div
         style={{ width: `${progress}%`}}
         className={"bg-blue-500 h-full rounded-full transition-all duration-900"}
@@ -30,11 +32,11 @@ export const CompletedProgress = ({
   const text = `${progress}% ${size === "lg" ? "completado" : ""}`
   return (
     <div className="w-full">
-      <span className="flex gap-3 items-center">
+      <span className="flex gap-3.5 items-center">
         <ProgressVar color={color} progress={progress} />
-        <span>{text}</span>
+        <span className="text-sm font-light">{text}</span>
       </span>
-      {label && <p className={""}>{label}</p>}
+      {label && <p>{label}</p>}
     </div>
   );
 };

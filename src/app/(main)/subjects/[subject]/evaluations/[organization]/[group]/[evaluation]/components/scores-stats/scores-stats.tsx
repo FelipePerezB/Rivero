@@ -4,6 +4,9 @@ import Card from "@components/cards/Card";
 import CardItem from "@components/cards/card-item";
 import React from "react";
 import api from "src/utils/api";
+import { Item } from "src/app/(main)/home/page";
+import getQuartile from "src/utils/maths/getQuartile";
+import getAvg from "src/utils/maths/getAvg";
 
 export default async function ScoresStats({
   evaluation,
@@ -14,43 +17,29 @@ export default async function ScoresStats({
   evaluation: string;
   group?: string;
 }) {
-  const { getToken } = auth();
-  const token = await getToken();
-
+  const groupId = group === "all" ? "" : group;
   const { data } = (await api(
-    `scores/${organization}/${evaluation}?group=${group ?? ""}`,
+  `scores/${organization}/${evaluation}${group ? `?group=${groupId}` : `` }`,
     {}
   )) as { data: Score[] };
 
   const scores = data?.map(({ score }) => score);
-  const length = data?.length;
   const sortedScore = scores.sort((a, b) => a - b);
   const maxScore = sortedScore.at(-1);
   const minScore = sortedScore.at(0);
-  const avg = Number((scores.reduce((a, b) => a + b, 0) / length).toFixed(0));
-
-  function quartile(k: number) {
-    if (length === 1) return scores[0];
-    const P = (k * (length + 1)) / 4;
-    const difference = P - Math.floor(P);
-    return Number.isInteger(P)
-      ? scores[P - 1]
-      : difference === 0.5
-      ? (scores[Math.floor(P) - 1] + scores[Math.floor(P)]) / 2
-      : scores[Number(P.toFixed(0)) - 1];
-  }
+  const avg = getAvg(scores);
 
   return !!scores?.length ? (
-    <section className="grid md:grid-cols-2 gap-4 my-2">
+    <section className="grid md:grid-cols-2 gap-md my-2">
       <Card className="flex justify-around ">
-        <CardItem title="Puntaje menor" value={String(minScore)} />
-        <CardItem title="Promedio" value={String(avg)} />
-        <CardItem title="Puntaje mayor" value={String(maxScore)} />
+        <Item subtitle="Puntaje menor" title={String(String(minScore))} />
+        <Item subtitle="Promedio" title={String(String(avg))} />
+        <Item subtitle="Puntaje mayor" title={String(String(maxScore))} />
       </Card>
       <Card className="flex justify-around ">
-        <CardItem title="Q1" value={quartile(1)} />
-        <CardItem title="Q2" value={quartile(2)} />
-        <CardItem title="Q3" value={quartile(3)} />
+        <Item subtitle="Cuartil 1" title={String(getQuartile(scores, 1))} />
+        <Item subtitle="Cuartil 2" title={String(getQuartile(scores,2))} />
+        <Item subtitle="Cuartil 3" title={String(getQuartile(scores,3))} />
       </Card>
     </section>
   ) : (

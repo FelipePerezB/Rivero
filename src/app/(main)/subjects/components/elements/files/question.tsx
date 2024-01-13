@@ -48,7 +48,6 @@ export default function Question({
     children: [],
   },
 }: QuestionType) {
-   
   // const check = false
   const radioRef = useRef<HTMLInputElement>(null);
   const [isCorrect, setIsCorrect] = useState<boolean>();
@@ -58,7 +57,7 @@ export default function Question({
 
   // const name =
   //   answer === expectedAns ? "correct-ans" : "incorrect-ans";
-  //  
+  //
   // setClassname(name);
   // }, [className]);
   return (

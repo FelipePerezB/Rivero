@@ -40,16 +40,17 @@ export default function Practice({
   };
   id: string;
 }) {
-   
   const [index, setIndex] = useState(0);
   const [bonus, setBonus] = useState(0);
   const [check, setCheck] = useState(false);
+  console.log(options)
+   
 
   useEffect(() => {
     setCheck(false);
   }, [index]);
 
-  const isLastQuestion = index + 1 === options.children?.length;
+  const isLastQuestion = index + 1 === options?.children?.length;
   const maxTime = isNaN(Number(options?.maxTime))
     ? undefined
     : Number(options?.maxTime);
@@ -62,6 +63,9 @@ export default function Practice({
     });
   };
   const question = options?.children[index] as unknown as QuestionAttrs;
+
+  console.log(question, index)
+  console.log(options)
 
   return (
     <div

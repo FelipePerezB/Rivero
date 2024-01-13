@@ -18,7 +18,7 @@ export async function PATCH(
     where: {
       id,
     },
-    data: updateData,
+    data: {...updateData},
   });
 
   if (data.id) {

@@ -7,7 +7,9 @@ export default async function getProgress(subjectId: string | number) {
   )) as {
     data: {
       [topic: number]: {
-        [subtopic: number]: string[];
+        [subtopic: number]: {
+          [id: string]: string
+        };
       };
     };
   };

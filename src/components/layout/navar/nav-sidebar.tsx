@@ -16,6 +16,7 @@ import { SignOutButton, currentUser } from "@clerk/nextjs";
 import Image from "next/image";
 import { Role } from "@prisma/client";
 import SearchSidebar from "../sidebar/search-sidebar";
+import NavLinks from "./nav-links";
 
 export default async function NavSidebar() {
   let user;
@@ -50,7 +51,7 @@ export default async function NavSidebar() {
             )}
             <div className="flex flex-col">
               <span className="text-lg">{`${firstName} ${lastName}`}</span>
-              <span className="text-xs border w-max p-0.5 rounded font-bold">
+              <span className="text-xs border w-max p-0.5 rounded font-mediun">
                 {role ?? Role.STUDENT}
               </span>
             </div>
@@ -59,23 +60,7 @@ export default async function NavSidebar() {
         </section>
       )}
       <section>
-        <ul className="flex flex-col gap-1 text-slate-800 text-md">
-          <Option icon={faHome} link="home" name="Home" />
-          <Option
-            icon={faChartSimple}
-            link={
-              role === Role.ADMIN
-                ? "dashboard/organizations"
-                : `dashboard/organizations/${organization}`
-            }
-            name="Dashboard"
-          />
-          {role === Role.ADMIN ? (
-            <Option icon={faPlus} link="documents/edit" name="Documentos" />
-          ) : (
-            <></>
-          )}
-        </ul>
+        <NavLinks size="md"/>
         <div className="w-full absolute bottom-8 p-2">
           <span className="flex w-max items-center gap-2 hover:text-red-500">
             <FontAwesomeIcon className="w-4 h-4" icon={faSignOut} />
@@ -86,26 +71,3 @@ export default async function NavSidebar() {
     </SearchSidebar>
   );
 }
-
-const Option = ({
-  name,
-  link,
-  icon,
-}: {
-  name: string;
-  link: string;
-  icon: FontAwesomeIconProps["icon"];
-}) => (
-  <li className="flex items-center justify-between hover:bg-slate-100 hover:text-blue-600 p-2.5 rounded-md cursor-pointe">
-    <Link
-      className="w-full flex justify-between items-center"
-      href={"/" + link}
-    >
-      <span className="flex items-center gap-2">
-        <FontAwesomeIcon className="w-4 h-4" icon={icon} />
-        {name}
-      </span>
-      <FontAwesomeIcon className="w-3 h-3" icon={faChevronRight} />
-    </Link>
-  </li>
-);

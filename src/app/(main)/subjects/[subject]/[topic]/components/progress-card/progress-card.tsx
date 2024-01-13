@@ -41,7 +41,7 @@ export default function ProgressCard({
   };
 
   return topic ? (
-    <Card className="flex flex-col items-start max-w-lg">
+    <Card className="flex flex-col items-start max-w-md">
       {children}
       <div className="w-full flex flex-col gap-3">
         <CompletedProgress color={color} progress={getProgress()} />

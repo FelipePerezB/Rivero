@@ -8,6 +8,8 @@ import FloatingBtn from "@components/common/buttons/floating-btn/floating-btn";
 // import StandardInput from "src/app/components/inputs/standard";
 import api from "src/utils/api";
 import generateRandomId from "src/utils/generateRandomId";
+import Section from "@components/containers/section";
+import SectionTitle from "@components/common/titles/section-title";
 
 export default async function EditFilesPage() {
   const { getToken } = auth();
@@ -19,15 +21,30 @@ export default async function EditFilesPage() {
   };
   return (
     <>
-    {/* <h1 className="text-3xl font-bold">Documentos</h1> */}
-      <StandardInput name="" dataKey="" attrs={{placeholder: "Buscar..."}}  className="sticky z-30 top-16 max-w-sm" />
-      
-      <ItemsBox size="sm">
-        <DocsCards />
-      </ItemsBox>
+      <Section>
+        <div className="flex flex-col md:flex-row gap-md justify-between md:items-center md:justify-start sticky z-30 top-16">
+        <SectionTitle
+          title="Documentos"
+          subTitle="Crea y modifica documentos "
+        />
+        <StandardInput
+          name=""
+          dataKey=""
+          attrs={{ placeholder: "Buscar..." }}
+          className="max-w-sm"
+        />
+
+        </div>
+      </Section>
+      <Section>
+        <ItemsBox size="sm">
+          <DocsCards />
+        </ItemsBox>
+      </Section>
       <FloatingBtn href={`edit/${generateRandomId(32)}`}>
         <FontAwesomeIcon className="h-8 w-8" icon={faPlus} />
       </FloatingBtn>
+      {/* <h1 className="text-3xl font-bold">Documentos</h1> */}
     </>
   );
 }

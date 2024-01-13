@@ -33,10 +33,11 @@ const Row = ({
 
 const Table: React.FC<TableProps> = ({ data, head, onClickHref }) => {
   return (
-    <Card className="p-0 rounded-lg overflow-x-auto">
+    // <Card className="p-0 rounded-lg overflow-x-auto">
+    <div className=" rounded-lg border-border bg-white border shadow-md overflow-x-auto">
       <table className="w-full">
         {head?.title && (
-          <caption className="p-[0.6em] text-[1.2em] text-left font-bold">
+          <caption className="p-[0.6em] text-[1.2em] text-left font-semibold">
             {head.title}
           </caption>
         )}
@@ -44,7 +45,7 @@ const Table: React.FC<TableProps> = ({ data, head, onClickHref }) => {
           <thead className="w-full">
             <Row>
               {head?.keys.map(({ name, key }, i) => (
-                <th className="py-[0.6em]" key={"th-" + i}>
+                <th className="py-[0.6em] px-[0.8em]" key={"th-" + i}>
                   {name}
                 </th>
               ))}
@@ -84,7 +85,8 @@ const Table: React.FC<TableProps> = ({ data, head, onClickHref }) => {
           })}
         </tbody>
       </table>
-    </Card>
+    </div>
+    // </Card>
   );
 };
 

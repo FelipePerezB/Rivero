@@ -31,12 +31,10 @@ export default function LineChartCard({
       };
     }),
   } as ChartData<"line", (number | null)[], string>;
+  
   return (
-    <Card>
-      {title && <h3 className="font-semibold pb-1.5 text-lg">{title}</h3>}
-      <div className="h-64">
+      <div className="h-full">
         <LineChart {...{ settings, showLegend }} />
       </div>
-    </Card>
   );
 }

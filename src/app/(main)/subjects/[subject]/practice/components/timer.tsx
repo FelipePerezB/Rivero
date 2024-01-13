@@ -1,11 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 import { ProgressVar } from "@components/dashboard/progress-bar/ProgressVar";
-import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import toast from "react-hot-toast";
 
-// let start = 60 * 2;
 const format = (time: number) => (`${time}`.length > 1 ? time : `0${time}`);
 
 export default function Timer({
@@ -21,8 +18,6 @@ export default function Timer({
 }) {
   const [count, setCount] = useState(startTime);
   const [maxTime, setMaxTime] = useState(startTime);
-  const router = useRouter();
-
   const time = !(count + bonus < 0) ? count + bonus : 0;
 
   useEffect(() => {
@@ -58,7 +53,7 @@ export default function Timer({
         <span>:</span>
         <span>{format(seconds)}</span>
       </span>
-      <ProgressVar progress={Math.floor((100 * time) / maxTime)} />
+      <ProgressVar size="md" progress={Math.floor((100 * time) / maxTime)} />
     </div>
   );
 }

@@ -21,12 +21,8 @@ export default async function ScoresTable({
   group: string;
   organization: string;
 }) {
-  // if(group)
-  const { getToken } = auth();
-  const user = await currentUser();
-  if (user?.publicMetadata?.role === Role.STUDENT) {
-    redirect("/");
-  }
+
+
   const groupId = group === "all" ? "" : group;
   const { data: selectedGroup } = (await api(
     `groups/${organization}/${groupId}`,
@@ -34,7 +30,7 @@ export default async function ScoresTable({
   )) as { data: GroupWithUsers };
 
   const { data: scores } = (await api(
-    `scores/${organization}/${evaluation}`,
+    `scores/${organization}/${evaluation}?group=${groupId}`,
     {cache: "no-store"}
   )) as { data: Score[] };
 
@@ -46,6 +42,9 @@ export default async function ScoresTable({
     email,
     scores?.find(({ userId }) => userId === id)?.score ?? "---",
   ]);
+
+  console.log(users)
+  console.log(scores)
   return (
     <Table
       onClickHref="?modal=new-score&id=[id]"

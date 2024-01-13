@@ -32,7 +32,7 @@ export const ChartComponent = ({
 
   useEffect(() => {
     if (!chartContainerRef.current) return;
-    const handleResize = () => {
+    const handleResize: any = () => {
       if (!chartContainerRef.current) return;
       chart.applyOptions({ width: chartContainerRef.current.clientWidth });
     };

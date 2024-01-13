@@ -10,9 +10,13 @@ export default function NavigationCard({
   href: string;
 }) {
   return (
-    <Card className="hover:bg-slate-100 max-w-lg" interactive href={href}>
-      <div className={"flex items-center"}>
-        <div className="w-full">{children}</div>
+    <Card
+      className="hover:bg-slate-100 w-full"
+      interactive
+      href={href}
+    >
+      <div className={"flex items-center justify-between gap-2"}>
+        {children}
         <FontAwesomeIcon className="w-3 h-3" icon={faChevronRight} />
       </div>
     </Card>

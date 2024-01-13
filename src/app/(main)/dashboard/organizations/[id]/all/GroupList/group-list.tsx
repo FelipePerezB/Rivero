@@ -18,7 +18,6 @@ export default async function GroupList({
   };
   return !!groups.length ? (
     <>
-      <h3 className="text-xl font-semibold">Grupos</h3>
       <ItemsBox>
         {groups.map(({ name, id, Users }) => {
           const students = Users.filter(({ role }) => role === Role.STUDENT);

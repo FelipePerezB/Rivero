@@ -6,6 +6,8 @@ import Table from "@components/dashboard/table/Table";
 import Options from "@components/navigation/options/options";
 import capFirst from "src/utils/capFirst";
 import UpdateSearchModal from "@components/admin/update-form/update-search-modal";
+import SectionTitle from "@components/common/titles/section-title";
+import Section from "@components/containers/section";
 
 interface SubtopicWithFile extends Subtopic {
   File: File[];
@@ -34,6 +36,8 @@ export default async function SubtopicPage({
     `subtopics/${subtopicId}`,
   ])) as { data: SubtopicWithFile };
 
+  console.log(subtopic)
+
   const { data: subtopics } = (await api(`topics/${topicId}/subtopics`, {}, [
     `topics/${topicId}`,
   ])) as {
@@ -46,11 +50,20 @@ export default async function SubtopicPage({
 
   return (
     <>
-      <div className="flex justify-between items-center">
-        <h2 className="text-2xl text-semibold w-max">
-          {capFirst(topic?.name)}
-        </h2>
-        <div className="flex gap-3">
+      <Section>
+        <SectionTitle
+          subTitle="Administra el tópico"
+          title={capFirst(topic?.name)}
+        />
+        <article className="flex justify-between items-center">
+          <Options
+            options={subtopics?.map(({ name, id }) => ({
+              key: id,
+              title: capFirst(name),
+            }))}
+            option={subtopicId}
+          />
+          <div className="flex gap-2.5">
           <CreateFileBtn {...{ subjectId, topicId, subtopicId }} />
           <UpdateSearchModal
             color="white"
@@ -62,31 +75,25 @@ export default async function SubtopicPage({
               <DeleteBtn endpoint={`subtopics/${subtopicId}`} size="md" />
             }
           />
-        </div>
-      </div>
-      <Options
-        options={subtopics?.map(({ name, id }) => ({
-          key: id,
-          title: capFirst(name),
-        }))}
-        option={subtopicId}
-      />
-      <Table
-        onClickHref={`/documents/edit/[id]`}
-        data={lessons?.map(({ File: { name, externalId, privacity } }) => [
-          externalId,
-          capFirst(name),
-          privacity,
-        ])}
-        head={{
-          title: capFirst(subtopic?.name),
-          keys: [
-            { name: "Id", key: "id" },
-            { name: "Nombre", key: "name" },
-            { name: "Privacidad", key: "privacity" },
-          ],
-        }}
-      />
+            </div>
+        </article>
+        <Table
+          onClickHref={`/documents/edit/[id]`}
+          data={lessons?.map(({ File: { name, externalId, privacity } }) => [
+            externalId,
+            capFirst(name),
+            privacity,
+          ])}
+          head={{
+            title: capFirst(subtopic?.name),
+            keys: [
+              { name: "Id", key: "id" },
+              { name: "Nombre", key: "name" },
+              { name: "Privacidad", key: "privacity" },
+            ],
+          }}
+        />
+      </Section>
     </>
   );
 }
