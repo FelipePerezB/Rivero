@@ -35,7 +35,7 @@ export const Option = ({
     // `}
     >
       <Link
-        className={`flex w-full items-center justify-between hover:font-semibold ${
+        className={`flex w-full items-center justify-between hover:font-medium ${
           active
             ? "bg-slate-100 text-blue-600 hover:bg-slate-200"
             : "hover:bg-gray-100/70"
