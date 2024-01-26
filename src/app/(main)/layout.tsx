@@ -9,11 +9,11 @@ type Props = {
 
 export default async function RootLayout({ children }: Props) {
   return (
-    <>
+    <div className={`${GeistSans.className} text-black`}>
       <Navar />
-      <main className={`${GeistSans.className} flex flex-1 flex-col sm:gap-lg gap-md h-full w-full mx-auto max-w-7xl text-black p-lg`}>
+      <main className={`flex flex-1 flex-col sm:gap-lg gap-md h-full w-full mx-auto max-w-7xl p-lg`}>
         {children}
       </main>
-    </>
+    </div>
   );
 }
