@@ -27,8 +27,6 @@ export default async function RootLayout({ children }: Props) {
       <html lang="es">
         <body className={`min-h-screen `}>
           {children}
-          <NavSidebar />
-          <Toaster />
         </body>
       </html>
     </ClerkProvider>
