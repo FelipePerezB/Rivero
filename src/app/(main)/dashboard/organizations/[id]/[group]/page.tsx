@@ -6,8 +6,7 @@ import SectionTitle from "@components/common/titles/section-title";
 import SmallTitle from "@components/common/titles/small-title";
 import Options from "@components/navigation/options/options";
 import Card from "@components/cards/Card";
-import BarsChart from "@components/dashboard/charts/bars";
-import { Item } from "src/app/(main)/home/page";
+// import { Item } from "src/app/(main)/home/page";
 import ItemsBox from "@components/containers/items-box/items-box";
 import capFirst from "src/utils/capFirst";
 import Table from "@components/dashboard/table/Table";
@@ -19,41 +18,12 @@ import UpdateSearchModal from "@components/admin/update-form/update-search-modal
 import InviteForm from "./components/forms/Invite";
 import Link from "next/link";
 import getAvg from "src/utils/maths/getAvg";
+import BarsChart from "@components/dashboard/charts/bars/bars";
+import { ReactNode, Suspense } from "react";
+import Item from "@components/dashboard/item";
+import ScoresChart from "./components/scores-chart";
+import StatsCard from "@components/cards/stats-card";
 
-
-type TimeObject = {
-  time: string;
-  value: number;
-};
-
-type GroupedObject = {
-  time: string;
-  value: number;
-};
-function groupAndSortByTime(data: TimeObject[]): GroupedObject[] {
-  // Creamos un objeto para almacenar la cantidad de elementos por fecha
-  const groupedData: { [key: string]: number } = {};
-
-  // Iteramos sobre el arreglo de datos y contamos la cantidad de elementos por fecha
-  data.forEach((item) => {
-    if (groupedData[item.time]) {
-      groupedData[item.time]++;
-    } else {
-      groupedData[item.time] = 1;
-    }
-  });
-
-  // Convertimos el objeto en un arreglo de objetos con la estructura deseada
-  const result: GroupedObject[] = Object.keys(groupedData).map((time) => ({
-    time,
-    value: groupedData[time],
-  }));
-
-  // Ordenamos el arreglo por fecha de menor a mayor
-  result.sort((a, b) => (a.time < b.time ? -1 : 1));
-
-  return result;
-}
 interface GroupWithusers extends Group {
   Users: User[];
 }
@@ -121,21 +91,11 @@ export default async function AllGroupsOrganizationPage({
   }));
 
   const flatArray = Object.values(scores).flat(2);
-  // Ejemplo de uso
-  const inputData = [
-    { time: "2023-12-29", value: 980 },
-    { time: "2023-12-29", value: 930 },
-    { time: "2024-01-12", value: 690 },
-    // Puedes agregar más objetos si es necesario
-  ];
 
-  const formatScores = groupAndSortByTime(flatArray);
+  const today = new Date().toISOString().split("T")[0];
 
-    const today = new Date().toISOString().split('T')[0];
-
-    // Filtramos los objetos que tienen la misma fecha que la fecha actual
-    const scoresOfToday = flatArray.filter((item) => item.time === today)?.length;
-
+  // Filtramos los objetos que tienen la misma fecha que la fecha actual
+  const scoresOfToday = flatArray.filter((item) => item.time === today)?.length;
 
   return (
     <>
@@ -187,26 +147,20 @@ export default async function AllGroupsOrganizationPage({
         <div className="flex w-full flex-col sm:flex-row h-max gap-md">
           <Card>
             <div className="flex flex-col min-w-[200px] h-48 sm:h-full">
-              <SmallTitle>Usuarios nuevos</SmallTitle>
-              <BarsChart
-                data={formatScores.map(({ time, value }) => {
-                  const dateSplit =  time.split('-')
-                  const label = `${dateSplit.at(2)}/${dateSplit.at(1)}`
-                  return {
-                    label,
-                    value,
-                  };
-                })}
-              />
+              <SmallTitle>Evaluaciones revisadas</SmallTitle>
+              <Suspense fallback={<p>LOading..</p>}>
+                <ScoresChart scores={flatArray} />
+              </Suspense>
             </div>
           </Card>
           <div className="flex flex-col gap-md h-full w-full md:max-w-[50%]">
-            <Card className="flex justify-between items-center h-full">
+            <StatsCard>
               <Item subtitle="Estudiantes" title={students} />
-              <Item subtitle="Usuarios hoy" title={scoresOfToday} />
+              <Item subtitle="Evaluaciones hoy" title={scoresOfToday} />
               <Item subtitle="Docentes" title={teachers} />
               {!group && <Item subtitle="Grupos" title={groups?.length} />}
-            </Card>
+            </StatsCard>
+
             <Card>
               <ItemsBox size="xs">
                 {subjectsWithScores?.map(({ id, name, scores }) => (
@@ -217,7 +171,11 @@ export default async function AllGroupsOrganizationPage({
                   >
                     <Item
                       subtitle={capFirst(name)}
-                      title={!!scores ? getAvg(scores?.map(({ value }) => value)): "---"}
+                      title={
+                        !!scores
+                          ? getAvg(scores?.map(({ value }) => value))
+                          : "---"
+                      }
                     />
                   </Link>
                 ))}

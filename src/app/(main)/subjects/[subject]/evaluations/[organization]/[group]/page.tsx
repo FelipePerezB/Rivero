@@ -6,7 +6,7 @@ import api from "src/utils/api";
 import { Privacity, Score, Types } from "@prisma/client";
 import GroupStats from "./components/group-stats";
 import GroupsList from "./components/groups-list";
-import { Suspense } from "react";
+import { ReactNode, Suspense } from "react";
 import LargeSkeleton from "@components/layout/loading-skeleton/large-skeleton/large-skeleton";
 import { LessonWithFile } from "src/app/(main)/subjects/models/lesson";
 import ItemsBox from "@components/containers/items-box/items-box";
@@ -15,9 +15,10 @@ import Card from "@components/cards/Card";
 import Section from "@components/containers/section";
 import SectionTitle from "@components/common/titles/section-title";
 import SmallTitle from "@components/common/titles/small-title";
-import { Item } from "src/app/(main)/home/page";
 import getAvg from "src/utils/maths/getAvg";
 import getQuartile from "src/utils/maths/getQuartile";
+import ChartSkeleton from "@components/layout/loading-skeleton/chart-skeleton";
+import Item from "@components/dashboard/item";
 
 export default async function EvaluationsPage({
   params: { subject, group, organization },
@@ -53,9 +54,11 @@ export default async function EvaluationsPage({
     };
   };
 
-  const flatScores = Object.values(scores).flat(2).map(({value})=>value);
-  const sortedScores = flatScores.sort((a,b)=>a-b)
-  console.log(flatScores)
+  const flatScores = Object.values(scores)
+    .flat(2)
+    .map(({ value }) => value);
+  const sortedScores = flatScores.sort((a, b) => a - b);
+  console.log(flatScores);
 
   return (
     <>
@@ -82,22 +85,18 @@ export default async function EvaluationsPage({
         </div>
         <div className="flex flex-col gap-md">
           <Card className="p-6 p-b-3">
-            <Suspense fallback={<LargeSkeleton />}>
-              <GroupsList group={group} organization={organization} />
-            </Suspense>
             <Suspense
               fallback={
-                <div className="flex items-baseline mt-4 space-x-6 animate-pulse">
-                  <div className="w-full bg-gray-200 rounded-t-lg h-56 dark:bg-gray-700"></div>
-                  <div className="w-full h-48 bg-gray-200 rounded-t-lg dark:bg-gray-700"></div>
-                  <div className="w-full bg-gray-200 rounded-t-lg h-64 dark:bg-gray-700"></div>
-                  <div className="w-full h-60 bg-gray-200 rounded-t-lg dark:bg-gray-700"></div>
-                  <div className="w-full bg-gray-200 rounded-t-lg h-64 dark:bg-gray-700"></div>
-                  <div className="w-full bg-gray-200 rounded-t-lg h-72 dark:bg-gray-700"></div>
-                  <div className="w-full bg-gray-200 rounded-t-lg h-56 dark:bg-gray-700"></div>
-                </div>
+                <>
+                  <LargeSkeleton />
+                  <div className="h-[280px]">
+                    <ChartSkeleton />
+                  </div>
+                </>
               }
             >
+              <GroupsList group={group} organization={organization} />
+
               <GroupStats
                 scores={scores}
                 subject={subject}

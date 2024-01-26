@@ -6,9 +6,12 @@ import SectionTitle from "@components/common/titles/section-title";
 import SmallTitle from "@components/common/titles/small-title";
 import Options from "@components/navigation/options/options";
 import Card from "@components/cards/Card";
-import BarsChart from "@components/dashboard/charts/bars";
-import { Item } from "src/app/(main)/home/page";
+// import BarsChart from "@components/dashboard/charts/bars";
+// import { Item } from "src/app/(main)/home/page";
 import ItemsBox from "@components/containers/items-box/items-box";
+import BarsChart from "@components/dashboard/charts/bars/bars";
+import { ReactNode } from "react";
+import Item from "@components/dashboard/item";
 
 interface GroupWithusers extends Group {
   Users: User[];

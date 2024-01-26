@@ -11,7 +11,7 @@ export default async function RootLayout({ children }: Props) {
   return (
     <>
       <Navar />
-      <main className={`${GeistSans.className} flex flex-1 flex-col sm:gap-lg gap-md h-full w-full mx-auto max-w-5xl text-black p-lg`}>
+      <main className={`${GeistSans.className} flex flex-1 flex-col sm:gap-lg gap-md h-full w-full mx-auto max-w-7xl text-black p-lg`}>
         {children}
       </main>
     </>

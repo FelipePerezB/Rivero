@@ -1,10 +1,13 @@
 import { currentUser } from "@clerk/nextjs";
 import Card from "@components/cards/Card";
+import LargeSkeleton from "@components/layout/loading-skeleton/large-skeleton/large-skeleton";
+import RowSkeleton from "@components/layout/loading-skeleton/row-skeleton/row-skeleton";
+import SmallSkeleton from "@components/layout/loading-skeleton/small-skeleton";
 import { Organization } from "@prisma/client";
-import React from "react";
+import React, { Suspense } from "react";
 import api from "src/utils/api";
 
-export default async function OrganizationCard() {
+const OrganizationName = async () => {
   const user = await currentUser();
   const organizationId = user?.publicMetadata?.organizationId;
 
@@ -14,13 +17,20 @@ export default async function OrganizationCard() {
       ])
     : {};
   const organizationName = organization?.name ?? "Sin institución";
-
   return (
-    <Card interactive className="flex flex-col items-center flex-grow">
-      <span className="text-sm w-max sm:text-lg text-center font-medium">{organizationName}</span>
-      <span className="font-thin text-sm ">
-        {organizationName && "Institución"}
-      </span>
+    <h3 className="text-sm w-max sm:text-lg text-center font-medium">
+      {organizationName}
+    </h3>
+  );
+};
+
+export default async function OrganizationCard() {
+  return (
+    <Card interactive className="flex flex-col items-center flex-grow md:w-52">
+      <Suspense fallback={<SmallSkeleton />}>
+        <OrganizationName />
+      </Suspense>
+      <span className="font-thin text-sm ">{"Institución"}</span>
     </Card>
   );
 }

@@ -44,10 +44,8 @@ export default function SubjectsCards({
         className="max-w-[250px] flex flex-col gap-1"
       >
         <h3 className="text-xl font-medium">{capFirst(name)}</h3>
-        <div>
-          <CompletedProgress progress={60} />
-          <Tags tags={tags} />
-        </div>
+
+        <Tags tags={tags} />
       </Card>
     );
   });

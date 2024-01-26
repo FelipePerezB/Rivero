@@ -1,31 +1,55 @@
-import BarsChart from "@components/dashboard/charts/bars";
 import { Subject } from "@prisma/client";
-import React from "react";
+import React, { ReactNode, Suspense } from "react";
 import { SubjectWithTopic } from "../../subjects/models/subject";
 import getProgress from "src/services/cache/getProgress";
 import SmallTitle from "@components/common/titles/small-title";
 import Card from "@components/cards/Card";
-import { Item } from "../page";
+// import { Item } from "../page";
+import AllScores from "./stats/all-scores";
+import PracticeItem from "./stats/practice-item";
+import RowSkeleton from "@components/layout/loading-skeleton/row-skeleton/row-skeleton";
+import XsSkeleton from "@components/layout/loading-skeleton/xs-skeleton";
+import BarsChart from "@components/dashboard/charts/bars/bars";
+import Item from "@components/dashboard/item";
+
 
 type InputObject = Record<string, Record<string, Record<string, string>>>;
-
-function countIdsByDate(input: InputObject): Record<string, number> {
+export function countIdInTopic(topicProgress: {
+  [subtopicId: number]: {
+    [id: string]: string;
+  };
+}) {
+  console.log(topicProgress);
   const result: Record<string, number> = {};
+  for (const subtopicId in topicProgress) {
+    const subtopic = topicProgress[subtopicId];
 
-  for (const outerKey in input) {
-    for (const innerKey in input[outerKey]) {
-      const innerObject = input[outerKey][innerKey];
+    for (const id in subtopic) {
+      const date = subtopic[id];
 
-      for (const id in innerObject) {
-        const date = innerObject[id];
-
-        if (result[date]) {
-          result[date]++;
-        } else {
-          result[date] = 1;
-        }
+      if (result[date]) {
+        result[date]++;
+      } else {
+        result[date] = 1;
       }
     }
+  }
+  return result;
+}
+
+export function countIdInSubject(
+  subjectProgress: InputObject
+): Record<string, number> {
+  const result: Record<string, number> = {};
+
+  for (const topicId in subjectProgress) {
+    const topic = subjectProgress[topicId];
+    Object.entries(countIdInTopic(topic)).map(([date, value]) =>
+      Object.assign(result, {
+        ...result,
+        [date]: typeof result[date] === "number" ? result[date] + value : value,
+      })
+    );
   }
 
   return result;
@@ -62,37 +86,6 @@ function transformArray(input: InputArray): OutputObject[] {
   return outputArray;
 }
 
-function filterObjectsThisWeek(objects: OutputObject[]): OutputObject[] {
-  const currentDate = new Date();
-  const currentYear = currentDate.getFullYear();
-  const currentWeek = getISOWeek(currentDate);
-
-  function getISOWeek(date: Date): number {
-    const januaryFirst = new Date(date.getFullYear(), 0, 1);
-    const daysOffset = januaryFirst.getDay() - 1; // Adjust to Monday-based week
-    const firstMonday = new Date(januaryFirst.getTime());
-    firstMonday.setDate(
-      januaryFirst.getDate() + (daysOffset > 0 ? 7 - daysOffset : daysOffset)
-    );
-
-    const days = Math.floor(
-      (date.getTime() - firstMonday.getTime()) / (24 * 60 * 60 * 1000)
-    );
-    const weekNumber = Math.ceil((days + 1) / 7);
-
-    return weekNumber;
-  }
-
-  const filteredObjects = objects.filter((obj) => {
-    const objDate = new Date(`${currentYear}-${obj.time}`);
-    const objWeek = getISOWeek(objDate);
-
-    return objWeek === currentWeek;
-  });
-
-  return filteredObjects;
-}
-
 export default async function LessonProgress({
   subjects,
 }: {
@@ -101,13 +94,14 @@ export default async function LessonProgress({
   const progressBySubject = await Promise.all(
     subjects.map(async (subject) => {
       const progress = await getProgress(subject?.id);
-      const result = countIdsByDate(progress);
+      const result = countIdInSubject(progress);
       return { [subject?.id]: result };
     })
   );
 
   const date = new Date();
   const currentDate = date.toISOString().split("T")[0];
+  console.log(date.toISOString());
 
   const result = transformArray(progressBySubject);
   const lessonsToday =
@@ -122,7 +116,7 @@ export default async function LessonProgress({
         return weekTime > startDate - endDate;
       })
       ?.map(({ time, value }) => value)
-      ?.reduce((a, b) => a + b) ?? 0;
+      ?.reduce((a, b) => a + b, 0) ?? 0;
 
   const mounthLessons =
     result
@@ -133,14 +127,21 @@ export default async function LessonProgress({
         return weekTime > startDate - endDate;
       })
       ?.map(({ time, value }) => value)
-      ?.reduce((a, b) => a + b) ?? 0;
+      ?.reduce((a, b) => a + b, 0) ?? 0;
+
+  const chartData = [
+    ...result,
+    ...Array(7 - result?.length ?? 0).fill({ time: "---", value: 0 }),
+  ];
+
+  console.log(chartData);
 
   return (
-    <Card className="flex h-full">
+    <>
       <div className="flex flex-col w-full h-40 sm:h-full">
-        <SmallTitle>Resumen</SmallTitle>
+        <SmallTitle>Resumen semanal</SmallTitle>
         <BarsChart
-          data={result.map(({ time, value }) => {
+          data={chartData.map(({ time, value }) => {
             const dateSplit = time.split("-");
             const label = `${dateSplit.at(2)}/${dateSplit.at(1)}`;
             return {
@@ -151,18 +152,29 @@ export default async function LessonProgress({
         />
       </div>
       <div className="hidden md:flex flex-col gap-sm justify-center">
-        <div className="flex gap-sm">
+        <div className="flex gap-sm items-start">
           <Item subtitle="Lecciones hoy" title={lessonsToday} />
-          <Item subtitle="Lecciones esta seman" title={weekLessons} />
+          <Item subtitle="Lecciones esta semana" title={weekLessons} />
           <Item subtitle="Lecciones este mes" title={mounthLessons} />
         </div>
         <div className="flex gap-sm">
-        <Item subtitle="Practicas hoy" title="14" />
-        <Item subtitle="Practicas hoy" title="14" />
-        <Item subtitle="Practicas esta semana" title="11" />
-
+          <Suspense
+            fallback={<Item subtitle="Prácticas" title={<XsSkeleton />} />}
+          >
+            <PracticeItem subjects={subjects} />
+          </Suspense>
+          <Suspense
+            fallback={
+              <>
+                <Item subtitle="Puntajes" title={<XsSkeleton />} />
+                <Item subtitle="'Ultimo puntaje" title={<XsSkeleton />} />
+              </>
+            }
+          >
+            <AllScores />
+          </Suspense>
         </div>
       </div>
-    </Card>
+    </>
   );
 }

@@ -11,7 +11,7 @@ export default function NavigationCard({
 }) {
   return (
     <Card
-      className="hover:bg-slate-100 w-full"
+      className="hover:bg-slate-100 w-full min-w-max"
       interactive
       href={href}
     >

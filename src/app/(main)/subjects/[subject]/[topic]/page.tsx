@@ -1,4 +1,4 @@
-import { Privacity, Role, Subtopic, Topic } from "@prisma/client";
+import { Privacity, Role, Score, Subtopic, Topic } from "@prisma/client";
 import LinksAccordion from "@components/accordion/links-accordion";
 import api from "src/utils/api";
 import { LessonWithFile } from "../../models/lesson";
@@ -19,8 +19,10 @@ import SectionTitle from "@components/common/titles/section-title";
 import Section from "@components/containers/section";
 import LinkCard from "@components/navigation/link-card";
 import SmallTitle from "@components/common/titles/small-title";
-import BarsChart from "@components/dashboard/charts/bars";
 import Card from "@components/cards/Card";
+import { countIdInTopic } from "src/app/(main)/home/components/lessons-progress";
+import BarsChart from "@components/dashboard/charts/bars/bars";
+// import { countIdsByDate } from "src/app/(main)/home/components/lessons-progress";
 
 interface SubtopicWithLessons extends Subtopic {
   Lesson: LessonWithFile[];
@@ -57,32 +59,37 @@ export default async function TopictPage({
     data: LessonWithFile;
   };
 
-  console.log(practice)
-
   const { data: topics } = (await api(`topics?subject=${subjectId}`, {}, [
     `subjects/${subjectId}`,
   ])) as {
     data: Topic[];
   };
+
   const storageProgress = await getProgress(subjectId);
-  let progressFilesCount = 0;
-  if (storageProgress && typeof storageProgress === "object") {
-    const topicProgress = storageProgress[Number(topicId)];
+  const topicProgress = countIdInTopic(storageProgress[Number(topicId)]);
+
+  const progressByDay = Object.entries(topicProgress).map(([time, value]) => ({
+    time,
+    value,
+  }));
+  // let progressFilesCount = 0;
+  // if (storageProgress && typeof storageProgress === "object") {
+    // const topicProgress = storageProgress[Number(topicId)];
 
     // const storageFilesIds = Object.values(topicProgress).flatMap((id) => id);
     // const avalibleIds = storageFilesIds.filter((id) => idsid));
 
     // progressFilesCount =
     //   typeof topicProgress === "object" ? avalibleIds.length : 0;
-  }
+  // }
 
   const havePractice = !!practice?.File?.externalId;
-  const avalibleFiles = subtopics.flatMap(({ Lesson }) =>
-    Lesson?.map(({ File }) => File).filter(
-      ({ privacity }) => privacity === "PUBLIC"
-    )
-  );
-  const ids = avalibleFiles.map(({ externalId }) => externalId);
+  // const avalibleFiles = subtopics.flatMap(({ Lesson }) =>
+  //   Lesson?.map(({ File }) => File).filter(
+  //     ({ privacity }) => privacity === "PUBLIC"
+  //   )
+  // );
+  // const ids = avalibleFiles.map(({ externalId }) => externalId);
   // const user = await getUser();
   // const role = user?.publicMetadata?.role as Role;
 
@@ -107,6 +114,7 @@ export default async function TopictPage({
   //     name: string;
   //   };
   // };
+  const topic = topics.find(({ id }) => id === Number(topicId));
 
   return (
     <>
@@ -119,7 +127,7 @@ export default async function TopictPage({
           <EvaluationsBtn subject={subjectId} topic={topicId} />
           {havePractice && (
             <LinkCard
-              href={`/documents/practice/${practice?.File?.externalId}`}
+              href={`practice`}
               description="Refuerza los contenidos aprendidos"
               title="Práctica"
             />
@@ -141,26 +149,22 @@ export default async function TopictPage({
             />
             <Card className="flex flex-col gap-sm">
               <div className="flex flex-col gap-1 h-40 w-full">
-                <SmallTitle>Resumen semanal</SmallTitle>
-                {/* <div className="> */}
+                <SmallTitle>Resumen {topic?.name}</SmallTitle>
                 <BarsChart
-                  data={[
-                    { label: "Lu", value: 3 },
-                    { label: "Ma", value: 2 },
-                    { label: "Mi", value: 1 },
-                    { label: "Mi", value: 1 },
-                    { label: "Mi", value: 1 },
-                    { label: "Mi", value: 1 },
-                    { label: "Mi", value: 1 },
-                  ]}
+                  data={progressByDay.map(({ time, value }) => {
+                    const dateSplit = time.split("-");
+                    const label = `${dateSplit.at(2)}/${dateSplit.at(1)}`;
+                    return {
+                      label,
+                      value,
+                    };
+                  })}
                 />
-
-                {/* </div> */}
               </div>
             </Card>
           </section>
 
-          <section className="flex flex-col gap-2.5 w-full">
+          <section className="flex flex-col gap-2.5 w-full max-w-lg">
             <SmallTitle>Temas</SmallTitle>
             {subtopics?.map(({ name, Lesson, privacity }, i) => {
               if (privacity !== Privacity.PUBLIC) return <></>;

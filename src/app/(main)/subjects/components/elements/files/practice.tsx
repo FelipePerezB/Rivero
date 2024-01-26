@@ -15,6 +15,7 @@ import { useRouter } from "next/navigation";
 import Timer from "src/app/(main)/subjects/[subject]/practice/components/timer";
 import Button from "@components/common/buttons/button/button";
 import Card from "@components/cards/Card";
+import api from "src/utils/api";
 
 interface QuestionAttrs {
   options: QuestionType["options"];
@@ -22,11 +23,12 @@ interface QuestionAttrs {
 }
 
 export default function Practice({
-  name,
+  metadata,
   options,
   id,
   editMode,
 }: {
+  metadata?: { subject?: string };
   editMode?: boolean;
   name: string;
   type: string;
@@ -43,8 +45,7 @@ export default function Practice({
   const [index, setIndex] = useState(0);
   const [bonus, setBonus] = useState(0);
   const [check, setCheck] = useState(false);
-  console.log(options)
-   
+  console.log(metadata);
 
   useEffect(() => {
     setCheck(false);
@@ -56,16 +57,27 @@ export default function Practice({
     : Number(options?.maxTime);
   const router = useRouter();
 
-  const finishPractice = () => {
+  const finishPractice = async () => {
+    if (!metadata?.subject) return;
+    const date = new Date;
+    (await api(`users/cache/practice/${metadata?.subject}`, {
+      cache: "no-store",
+      method: "POST",
+      body: JSON.stringify({
+        content: {
+          index,
+          time: date.toISOString()
+        },
+      }),
+    })) as {
+      data: string;
+    };
     router.push("/home");
     toast.success(`¡Felicidades! Llegaste hasta la pregunta N°${index + 1}.`, {
       duration: 5 * 1000,
     });
   };
   const question = options?.children[index] as unknown as QuestionAttrs;
-
-  console.log(question, index)
-  console.log(options)
 
   return (
     <div
