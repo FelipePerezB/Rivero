@@ -25,15 +25,7 @@ export const Option = ({
   const showIcons = size === "md";
 
   return (
-    <li
-    // className={`flex items-center justify-between hover:font-semibold ${
-    //   active
-    //     ? "bg-slate-100 text-blue-600 hover:bg-slate-200"
-    //     : "hover:bg-gray-50"
-    // }  px-2  rounded-md cursor-pointe
-    // ${showIcons ? "py-2" : "py-1.5"}
-    // `}
-    >
+    <li>
       <Link
         className={`flex w-full items-center justify-between hover:font-normal ${
           active
@@ -42,7 +34,6 @@ export const Option = ({
         }  px-2  rounded-md cursor-pointe 
         ${showIcons ? "py-2" : "py-1.5"}
         `}
-        // className="w-full flex justify-between items-center text-sm"
         href={"/" + link}
       >
         <span className="flex items-center gap-2">

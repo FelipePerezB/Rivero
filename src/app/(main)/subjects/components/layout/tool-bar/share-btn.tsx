@@ -12,10 +12,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShare } from "@fortawesome/free-solid-svg-icons";
 import Item from "./item";
 import OptionsInput from "src/app/documents/edit/components/edit-wraper/components/inputs/options";
+import RadioInput from "@components/form/radio-input";
 
 const getOptimizedContent = (settings?: LessonWithComponent["file"]) => {
-  console.log(settings)
-  if (!settings?.content || typeof settings?.content !== "object" ) return "Error al cargar el documento";
+  console.log(settings);
+  if (!settings?.content || typeof settings?.content !== "object")
+    return "Error al cargar el documento";
   const fileCopy = JSON.parse(JSON.stringify(settings?.content));
   const optimizedContent = JSON.stringify(removeIdFromObject(fileCopy));
   return optimizedContent;
@@ -26,14 +28,19 @@ export default function ShareBtn({
   setSettings,
 }: {
   settings?: LessonWithComponent["file"];
-  setSettings: React.Dispatch<React.SetStateAction<LessonWithComponent["file"]>>;
+  setSettings: React.Dispatch<
+    React.SetStateAction<LessonWithComponent["file"]>
+  >;
 }) {
   const [state, setState] = useState(false);
   const options = ["Configuración"];
   const [option, setOption] = useState(options[0]);
 
+  console.log(settings);
+
   const id = settings?.externalId;
   const privacity = settings?.privacity;
+  console.log(privacity);
   return (
     <>
       <div
@@ -48,17 +55,17 @@ export default function ShareBtn({
         <Options {...{ setOption, option, options }}></Options>
         {option === "Configuración" && (
           <>
-            <OptionsInput
+            <RadioInput
               value={privacity}
-              dataKey="privacity"
-              onChange={({ privacity }) =>{
-                console.log(privacity)
+              label="Privacidad"
+              onChange={(privacity) => {
+                console.log(privacity);
                 setSettings((settings) => ({
                   ...settings,
                   privacity,
-                }))
+                }));
               }}
-              name="Privacidad"
+              name="privacity"
               options={Object.values(Privacity)}
             />
             <StandardInput

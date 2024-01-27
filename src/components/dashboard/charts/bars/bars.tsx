@@ -1,23 +1,4 @@
-import React from "react";
-
-const Bar = ({
-  height,
-  value,
-}: {
-  height?: number;
-  value: number | string;
-}) => {
-  return (
-    <div
-      style={{ height: `${height || 1}%` }}
-      className="w-full h-full bg-blue-500 hover:scale-105 hover:bg-blue-700 transition-all duration-200 rounded-[2px] cursor-pointer relative flex justify-center group"
-    >
-      <span className="absolute top-0 text-white opacity-0 group-hover:opacity-100 group-hover:-translate-y-6 group-hover:text-black transition-all duration-150">
-        {value}
-      </span>
-    </div>
-  );
-};
+import Bar from "./bar";
 
 export default function BarsChart({
   data,
@@ -38,7 +19,11 @@ export default function BarsChart({
           key={`bar-${i}-${percentage}%`}
           className="flex flex-col w-full h-full items-center max-w-[60px] justify-end"
         >
-          <Bar value={value} height={percentage} />
+          <Bar height={percentage ?? 1} active>
+            <span className="absolute top-0 text-white opacity-0 group-hover:opacity-100 group-hover:-translate-y-6 group-hover:text-black transition-all duration-150">
+              {value}
+            </span>
+          </Bar>
           <span>{label}</span>
         </div>
       ))}

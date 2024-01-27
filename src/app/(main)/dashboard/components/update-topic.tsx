@@ -18,6 +18,7 @@ export default function UpdateTopic({
   searchParams: { [key: string]: string };
 }) {
   const id = topic?.id;
+  console.log(topic)
   return (
     <UpdateSearchModal
       color="white"
@@ -28,7 +29,6 @@ export default function UpdateTopic({
       secondaryBtn={<DeleteBtn endpoint={`topics/${id}`} size="md" />}
     >
       <CreateBtnWithName endpoint="subtopics" label="subtópico" values={{ topicId: id }} />
-      {/* <hr /> */}
     </UpdateSearchModal>
   );
 }
