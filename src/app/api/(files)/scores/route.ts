@@ -49,11 +49,7 @@ export async function GET(request: NextRequest) {
   const evaluation = searchParams.get("evaluation");
   const userQuery = group
     ? {
-        User: {
-          Group: {
-            some: { id: Number(group) },
-          },
-        },
+        User: { groupId: Number(group) },
       }
     : {};
   const fileQuery = evaluation
@@ -64,7 +60,7 @@ export async function GET(request: NextRequest) {
     where: {
       lesson: {
         ...fileQuery,
-        ...subjectQuery
+        ...subjectQuery,
       },
       ...userQuery,
     },
@@ -80,17 +76,17 @@ export async function GET(request: NextRequest) {
       value: score,
       time,
     };
-    Group?.forEach(({ id }) => {
-      const group = scoresByGroup?.find(({ groupId }) => groupId === id);
-      if (!group) {
-        scoresByGroup.push({
-          groupId: id,
-          scores: [newScore],
-        });
-        return;
-      }
-      group?.scores.push(newScore);
-    });
+    // Group?.forEach(({ id }) => {
+    //   const group = scoresByGroup?.find(({ groupId }) => groupId === id);
+    //   if (!group) {
+    //     scoresByGroup.push({
+    //       groupId: id,
+    //       scores: [newScore],
+    //     });
+    //     return;
+    //   }
+    //   group?.scores.push(newScore);
+    // });
   });
 
   const data = {};

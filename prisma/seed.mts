@@ -100,52 +100,6 @@ async function main() {
     },
   });
 
-  await prisma.user.upsert({
-    where: { email: 'felipe@prisma.io' },
-    update: {},
-    create: {
-      externalId: 'hequeqdbqwqd',
-      email: 'felipe@prisma.io',
-      name: 'Felipe',
-      Group: {
-        connect: [{ id: 1 }],
-      },
-      lastname: 'perez',
-      role: 'ADMIN',
-      organizationId: 1,
-    },
-  });
-  await prisma.user.upsert({
-    where: { email: 'martin@prisma.io' },
-    update: {},
-    create: {
-      email: 'martin@prisma.io',
-      name: 'Felipe',
-      externalId: '821uqwunwsqsiw',
-      Group: {
-        connect: [{ id: 1 }],
-      },
-      lastname: 'perez',
-      role: 'ADMIN',
-      organizationId: 1,
-    },
-  });
-  await prisma.user.upsert({
-    where: { email: 'alicia@prisma.io' },
-    update: {},
-    create: {
-      externalId: 'wenjdnkj',
-      email: 'alicia@prisma.io',
-      name: 'Felipe',
-      Group: {
-        connect: [{ id: 1 }],
-      },
-      lastname: 'perez',
-      role: 'ADMIN',
-      organizationId: 1,
-    },
-  });
-
 }
 
 main()
