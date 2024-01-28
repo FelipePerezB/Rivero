@@ -53,13 +53,13 @@ export default async function upsertUser(evt: WebhookEvent) {
       externalId: id,
     },
     create: {
-      groupId: group ? Number(group) : undefined,
+      groupId: group ? Number(group) : null,
       email: email_addresses[0].email_address,
       externalId: id,
       lastname: last_name,
       name: first_name,
       role: role as Role,
-      organizationId: organizationId ? Number(organizationId) : undefined,
+      organizationId: organizationId ? Number(organizationId) : null,
     },
   });
 
