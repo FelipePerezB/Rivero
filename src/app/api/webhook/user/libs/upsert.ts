@@ -39,8 +39,8 @@ export default async function upsertUser(evt: WebhookEvent) {
       email: {
         set: email_addresses[0].email_address,
       },
-      organizationId: { set: Number(organizationId) },
-      groupId: { set: Number(group) },
+      organizationId: { set:organizationId ?  Number(organizationId) : undefined },
+      groupId: { set: group ? Number(group) : undefined },
       // Group: { connect: { id: Number(group) } },
       lastname: { set: last_name },
       name: { set: first_name },
