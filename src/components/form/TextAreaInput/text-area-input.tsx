@@ -10,11 +10,11 @@ export default function TextAreaInput({
   label?: string
   name: string
   value?: string;
-  attrs: TextareaHTMLAttributes<HTMLTextAreaElement>;
+  attrs?: TextareaHTMLAttributes<HTMLTextAreaElement>;
 }) {
   return (
     <Label name={label ?? ""}>
-      <textarea name={name} value={value} {...attrs} className="card text-sm" />
+      <textarea style={{minHeight: "80px"}} name={name} value={value} {...attrs} className="card text-sm" />
     </Label>
   );
 }

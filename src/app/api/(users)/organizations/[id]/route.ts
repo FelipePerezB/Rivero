@@ -11,11 +11,7 @@ export async function GET(
   const data = await prisma.organization.findUnique({
     where: { id },
     include: {
-      Groups: {
-        include: {
-          Users: true,
-        },
-      },
+      Groups: true
     },
   });
 
@@ -46,6 +42,7 @@ export async function PATCH(
 
   if (data.id) {
     revalidateTag(`organizations/${data.id}`);
+    revalidateTag(`organizations`);
   }
 
   return NextResponse.json({ data }, { status: 200 });

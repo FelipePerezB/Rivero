@@ -25,13 +25,14 @@ model User {
   name           String
   lastname       String?
   role           Role          @default(STUDENT)
-  Group          Group[]
+  Group          Group         @relation(fields: [groupId], references: [id])
   Organization   Organization? @relation(fields: [organizationId], references: [id], onDelete: Cascade)
   organizationId Int?
   Score          Score[]
   File           File[]
   createdAt      DateTime?     @default(now())
   updateAt       DateTime?     @updatedAt
+  groupId        Int
 }
 
 model Group {
@@ -148,12 +149,18 @@ enum Status {
   ACCEPTED
 }
 
+enum Messages {
+  DUPLICATED
+  INVALID
+}
+
 model Invitation {
   id             String       @id
   email          String
   role           Role         @default(STUDENT)
   Organization   Organization @relation(fields: [organizationId], references: [id])
   organizationId Int
+  msg            String
   status         Status       @default(PENDING)
   Groups         Group[]
 }

@@ -4,8 +4,8 @@ import { Group, Role, User } from "@prisma/client";
 import { Invitation } from "@clerk/nextjs/dist/types/server";
 import api from "src/utils/api";
 import { revalidateTag } from "next/cache";
+import validateEmail from "src/utils/validation/email";
 
-const regexEmail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 interface UserWithGroup extends User {
   Group: Group[];
 }
@@ -28,7 +28,7 @@ export default async function inviteUser(
   formData: FormData
 ) {
   const emails = formData?.get("emails") as string;
-  console.log(emails)
+  console.log(emails);
   const role = formData?.get("role") as Role;
   // console.log(emails, metadata, rol)
   let errors: { [email: string]: string } = {};
@@ -39,9 +39,8 @@ export default async function inviteUser(
   };
 
   async function processEmail(email: string) {
-    if (!role  || !email) return;
-    const isValid = regexEmail.test(email);
-    if (!isValid) {
+    if (!role || !email) return;
+    if (!validateEmail(email)) {
       errors[email] = "Correo inválido";
       return;
     }

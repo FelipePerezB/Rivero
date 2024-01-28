@@ -20,9 +20,9 @@ export default async function upsertUser(evt: WebhookEvent) {
     last_name,
     first_name,
     email_addresses,
-    public_metadata: { groups, organizationId, role },
+    public_metadata: { group, organizationId, role },
   } = evt.data ?? {};
-  const userGroups = (groups as number[]) ?? [];
+  // const userGroups = (group as number[]) ?? [];
 
   if (!id) return NextResponse.json({ msg: "Missing ID" }, { status: 400 });
   if (!first_name)
@@ -30,26 +30,28 @@ export default async function upsertUser(evt: WebhookEvent) {
   if (!email_addresses[0]?.email_address)
     return NextResponse.json({ msg: "Mssing email" }, { status: 400 });
 
-  const groupsId = userGroups?.map((id) => ({
-    id,
-  }));
+  // const groupsId = userGroups?.map((id) => ({
+  //   id,
+  // }));
 
   const user = await prisma.user.upsert({
     update: {
       email: {
         set: email_addresses[0].email_address,
       },
-      Group: { set: groupsId },
+      organizationId: { set: Number(organizationId) },
+      groupId: { set: Number(group) },
+      // Group: { connect: { id: Number(group) } },
       lastname: { set: last_name },
       name: { set: first_name },
       role: { set: (role as Role) ?? Role.STUDENT },
-      organizationId:{ set: Number(organizationId) }
+      // organizationId: { set: Number(organizationId) },
     },
     where: {
       externalId: id,
     },
     create: {
-      Group: userGroups?.length ? { connect: groupsId } : undefined,
+      groupId: Number(group),
       email: email_addresses[0].email_address,
       externalId: id,
       lastname: last_name,

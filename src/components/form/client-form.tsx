@@ -22,6 +22,8 @@ export default function ClientForm({
     names.forEach((name) =>
       Object.assign(data, { ...data, ...{ [name]: formData.get(name) } })
     );
+
+    console.log(names)
     const values = data;
     endpoint && update(endpoint, values);
     callback && callback(data)

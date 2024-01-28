@@ -72,9 +72,6 @@ export default function RadioInput({
   value,
 }: props) {
   const defaultValue = value ?? options[0];
-  console.log(defaultValue);
-  console.log(value);
-
   return (
     <article className={"flex flex-col gap-1 {props?.className"}>
       <span className={"w-full inline-block text-center"}>
@@ -93,9 +90,7 @@ export default function RadioInput({
                 }
               : undefined,
           };
-          console.log(option === defaultValue, option);
-          // debugger;
-          // console.log(value)
+
           return (
             <label className="relative h-full flex group" key={option}>
               <input

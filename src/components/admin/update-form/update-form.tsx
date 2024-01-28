@@ -16,8 +16,11 @@ export default function UpdateForm({
   endpoint: string;
   secondaryBtn?: ReactNode;
 }) {
+  const names = []
+  privacity && names.push("privacity")
+  name && names.push("name")
   return (
-    <ClientForm endpoint={endpoint} names={["privacity", "name"]}>
+    <ClientForm endpoint={endpoint} names={names}>
       {!!privacity && (
         <RadioInput
           options={Object.values(Privacity)}

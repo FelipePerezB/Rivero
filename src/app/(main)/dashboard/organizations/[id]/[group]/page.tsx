@@ -23,6 +23,7 @@ import { ReactNode, Suspense } from "react";
 import Item from "@components/dashboard/item";
 import ScoresChart from "./components/scores-chart";
 import StatsCard from "@components/cards/stats-card";
+import Button from "@components/common/buttons/button/button";
 
 interface GroupWithusers extends Group {
   Users: User[];
@@ -108,6 +109,7 @@ export default async function AllGroupsOrganizationPage({
       <Section>
         <div className="w-full flex justify-between">
           <SmallTitle>Grupos</SmallTitle>
+          <div className="flex gap-sm">
           {groupData?.id ? (
             <UpdateSearchModal
               data={{ ...groupData }}
@@ -122,11 +124,6 @@ export default async function AllGroupsOrganizationPage({
                 />
               }
             >
-              <InviteForm
-                label="Correos a invitar"
-                organization={Number(organizationId)}
-                group={Number(group)}
-              />
               <hr />
             </UpdateSearchModal>
           ) : (
@@ -136,6 +133,8 @@ export default async function AllGroupsOrganizationPage({
               searchParams={searchParams}
             />
           )}
+          <Button color="white" href={`${group}/invitations`}>Invitaciones</Button>
+          </div>
         </div>
         <Options
           option={group ?? "all"}
