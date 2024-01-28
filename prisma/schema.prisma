@@ -25,14 +25,14 @@ model User {
   name           String
   lastname       String?
   role           Role          @default(STUDENT)
-  Group          Group         @relation(fields: [groupId], references: [id])
+  Group          Group?        @relation(fields: [groupId], references: [id])
   Organization   Organization? @relation(fields: [organizationId], references: [id], onDelete: Cascade)
   organizationId Int?
   Score          Score[]
   File           File[]
   createdAt      DateTime?     @default(now())
   updateAt       DateTime?     @updatedAt
-  groupId        Int
+  groupId        Int?
 }
 
 model Group {
