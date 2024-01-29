@@ -10,6 +10,9 @@ CREATE TYPE "Types" AS ENUM ('PRACTICE', 'DOCUMENT', 'EVALUATION');
 -- CreateEnum
 CREATE TYPE "Status" AS ENUM ('PENDING', 'REVOKED', 'ACCEPTED');
 
+-- CreateEnum
+CREATE TYPE "Messages" AS ENUM ('DUPLICATED_RECORD', 'RESOLVED', 'CANCELLED', 'REJECTED', 'INVALID_EMAIL', 'CONFIRMATION_REQUIRED', 'INVITATION_SENT', 'CHANGED_GROUP');
+
 -- CreateTable
 CREATE TABLE "User" (
     "id" SERIAL NOT NULL,
@@ -21,6 +24,7 @@ CREATE TABLE "User" (
     "organizationId" INTEGER,
     "createdAt" TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP,
     "updateAt" TIMESTAMP(3),
+    "groupId" INTEGER,
 
     CONSTRAINT "User_pkey" PRIMARY KEY ("id")
 );
@@ -67,6 +71,7 @@ CREATE TABLE "Score" (
     "id" SERIAL NOT NULL,
     "score" INTEGER NOT NULL,
     "userId" INTEGER NOT NULL,
+    "lessonId" INTEGER NOT NULL,
     "alternatives" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP,
     "updateAt" TIMESTAMP(3),
@@ -123,25 +128,17 @@ CREATE TABLE "Organization" (
 
 -- CreateTable
 CREATE TABLE "Invitation" (
-    "id" TEXT NOT NULL,
+    "id" SERIAL NOT NULL,
     "email" TEXT NOT NULL,
     "role" "Role" NOT NULL DEFAULT 'STUDENT',
     "organizationId" INTEGER NOT NULL,
+    "msg" "Messages",
     "status" "Status" NOT NULL DEFAULT 'PENDING',
+    "groupId" INTEGER,
+    "createdAt" TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP,
+    "updateAt" TIMESTAMP(3),
 
     CONSTRAINT "Invitation_pkey" PRIMARY KEY ("id")
-);
-
--- CreateTable
-CREATE TABLE "_GroupToUser" (
-    "A" INTEGER NOT NULL,
-    "B" INTEGER NOT NULL
-);
-
--- CreateTable
-CREATE TABLE "_GroupToInvitation" (
-    "A" INTEGER NOT NULL,
-    "B" TEXT NOT NULL
 );
 
 -- CreateIndex
@@ -168,17 +165,8 @@ CREATE UNIQUE INDEX "Subtopic_name_key" ON "Subtopic"("name");
 -- CreateIndex
 CREATE UNIQUE INDEX "Organization_name_key" ON "Organization"("name");
 
--- CreateIndex
-CREATE UNIQUE INDEX "_GroupToUser_AB_unique" ON "_GroupToUser"("A", "B");
-
--- CreateIndex
-CREATE INDEX "_GroupToUser_B_index" ON "_GroupToUser"("B");
-
--- CreateIndex
-CREATE UNIQUE INDEX "_GroupToInvitation_AB_unique" ON "_GroupToInvitation"("A", "B");
-
--- CreateIndex
-CREATE INDEX "_GroupToInvitation_B_index" ON "_GroupToInvitation"("B");
+-- AddForeignKey
+ALTER TABLE "User" ADD CONSTRAINT "User_groupId_fkey" FOREIGN KEY ("groupId") REFERENCES "Group"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "User" ADD CONSTRAINT "User_organizationId_fkey" FOREIGN KEY ("organizationId") REFERENCES "Organization"("id") ON DELETE CASCADE ON UPDATE CASCADE;
@@ -202,6 +190,9 @@ ALTER TABLE "Lesson" ADD CONSTRAINT "Lesson_fileId_fkey" FOREIGN KEY ("fileId") 
 ALTER TABLE "File" ADD CONSTRAINT "File_authorId_fkey" FOREIGN KEY ("authorId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
+ALTER TABLE "Score" ADD CONSTRAINT "Score_lessonId_fkey" FOREIGN KEY ("lessonId") REFERENCES "Lesson"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
 ALTER TABLE "Score" ADD CONSTRAINT "Score_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
@@ -217,13 +208,4 @@ ALTER TABLE "Subtopic" ADD CONSTRAINT "Subtopic_topicId_fkey" FOREIGN KEY ("topi
 ALTER TABLE "Invitation" ADD CONSTRAINT "Invitation_organizationId_fkey" FOREIGN KEY ("organizationId") REFERENCES "Organization"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "_GroupToUser" ADD CONSTRAINT "_GroupToUser_A_fkey" FOREIGN KEY ("A") REFERENCES "Group"("id") ON DELETE CASCADE ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "_GroupToUser" ADD CONSTRAINT "_GroupToUser_B_fkey" FOREIGN KEY ("B") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "_GroupToInvitation" ADD CONSTRAINT "_GroupToInvitation_A_fkey" FOREIGN KEY ("A") REFERENCES "Group"("id") ON DELETE CASCADE ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "_GroupToInvitation" ADD CONSTRAINT "_GroupToInvitation_B_fkey" FOREIGN KEY ("B") REFERENCES "Invitation"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "Invitation" ADD CONSTRAINT "Invitation_groupId_fkey" FOREIGN KEY ("groupId") REFERENCES "Group"("id") ON DELETE SET NULL ON UPDATE CASCADE;

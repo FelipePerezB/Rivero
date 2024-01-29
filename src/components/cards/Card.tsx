@@ -2,12 +2,14 @@ import { CSSProperties, ReactNode } from "react";
 import Link from "next/link";
 
 export default function Card({
+  title,
   children,
   href,
   className,
   interactive = false,
   styles,
 }: {
+  title?: string
   styles?: CSSProperties;
   className?: string;
   styled?: boolean;
@@ -22,11 +24,11 @@ export default function Card({
   }  `;
 
   return href ? (
-    <Link style={styles} className={nodeClassName} href={href}>
+    <Link title={title} style={styles} className={nodeClassName} href={href}>
       {children}
     </Link>
   ) : (
-    <article style={styles} className={nodeClassName}>
+    <article title={title} style={styles} className={nodeClassName}>
       {children}
     </article>
   );

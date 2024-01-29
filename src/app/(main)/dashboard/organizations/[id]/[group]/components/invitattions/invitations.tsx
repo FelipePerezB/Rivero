@@ -27,7 +27,7 @@ export default async function Invitations({
             key={`invitattion-${id}`}
           >
             {email}
-            <RevokeBtn id={id} />
+            {/* <RevokeBtn id={id} /> */}
           </Card>
         ))}
       </ItemsBox>

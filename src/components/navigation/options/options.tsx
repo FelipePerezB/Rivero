@@ -26,7 +26,7 @@ export default function Options({
               key={"option-" + key}
               href={
                 !customPath
-                  ? String(key)
+                  ? String(key)?.toLowerCase()
                   : customPath.replace("[key]", String(key))
               }
             >

@@ -51,21 +51,23 @@ export default async function NavLinks({ size = "sm" }: { size: sizes }) {
         link=""
         name="Evaluaciones"
       />
-      <Option
-        size={size}
-        icon={faChartSimple}
-        link={
-          role === Role.ADMIN
-            ? "dashboard/organizations"
-            : `dashboard/organizations/${organization}`
-        }
-        name="Dashboard"
-      />
+      {!!organization ||
+        (!(role !== Role.ADMIN) && (
+          <Option
+            size={size}
+            icon={faChartSimple}
+            link={
+              role === Role.ADMIN
+                ? "dashboard/organizations"
+                : `dashboard/organizations/${organization}`
+            }
+            name="Dashboard"
+          />
+        ))}
       {role === Role.ADMIN ? (
         <Option
           size={size}
           icon={faPlus}
-
           link="documents/edit"
           name="Documentos"
         />

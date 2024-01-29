@@ -6,7 +6,8 @@ export async function GET(
   { params: { group } }: { params: { [key: string]: string } }
 ) {
   const data = await prisma.invitation.findMany({
-    where: { Groups: {some: {id: Number(group)}} },
+    where: { Group: { id: Number(group) } },
+    orderBy: {updateAt: {sort: "desc"}}
   });
   return NextResponse.json({ data }, { status: 200 });
 }

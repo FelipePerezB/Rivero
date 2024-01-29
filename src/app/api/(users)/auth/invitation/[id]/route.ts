@@ -6,7 +6,7 @@ export async function DELETE(
   { params: { id } }: { params: { [key: string]: string } }
 ) {
   const data = await prisma.invitation.delete({
-    where: { id },
+    where: { id: Number(id) },
   });
   return NextResponse.json({ data }, { status: 200 });
 }

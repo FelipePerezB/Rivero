@@ -10,7 +10,6 @@ import UpdateForm from "@components/admin/update-form/update-form";
 import { Privacity } from "@prisma/client";
 import CreateBtnWithName from "@components/admin/create-btn/create-btn-with-name";
 
-
 export default async function SubjectsPage({
   searchParams,
 }: {
@@ -24,10 +23,10 @@ export default async function SubjectsPage({
     <>
       <div className="w-full flex justify-between items-center">
         <h2 className={"text-2xl font-bold pb-0.5"}>Asignaturas</h2>
-        <CreateBtnWithName endpoint="subjects"/>
+        <CreateBtnWithName endpoint="subjects" />
       </div>
       <ItemsBox>
-        {subjects?.map(({ name, id, Topics , privacity}) => {
+        {subjects?.map(({ name, id, Topics, privacity }) => {
           const firstTopic = Topics?.at(0)?.id;
           return (
             <NavigationCard
@@ -55,7 +54,14 @@ export default async function SubjectsPage({
           // id={searchParams?.id}
           name={searchParams?.name}
           privacity={(searchParams?.privacity as Privacity) ?? undefined}
-          // secondaryBtn={<CreateTopicBtn subjectId={Number(searchParams?.id)} />}
+          secondaryBtn={
+            <CreateBtnWithName
+              endpoint="topics"
+              color="white"
+              label="tópico"
+              values={{ subjectId: Number(searchParams?.id) }}
+            />
+          }
         />
       </SearchModal>
       <Toaster />

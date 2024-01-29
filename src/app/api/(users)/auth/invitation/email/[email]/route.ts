@@ -3,10 +3,11 @@ import prisma from "src/utils/prisma";
 
 export async function GET(
   request: Request,
-  { params: { group } }: { params: { [key: string]: string } }
+  { params: { email } }: { params: { [key: string]: string } }
 ) {
   const data = await prisma.invitation.findMany({
-    where: { Group: {id: Number(group)}, status: "PENDING" },
+    where: { email, status: "PENDING" },
   });
+  console.log(email)
   return NextResponse.json({ data }, { status: 200 });
 }

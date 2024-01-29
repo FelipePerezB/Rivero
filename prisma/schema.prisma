@@ -145,22 +145,32 @@ model Organization {
 
 enum Status {
   PENDING
-  REVOKED
-  ACCEPTED
+  REJECTED
+  RESOLVED
 }
 
 enum Messages {
-  DUPLICATED
-  INVALID
+  DUPLICATED_RECORD
+  RESOLVED
+  CANCELLED
+  REJECTED
+  INVALID_EMAIL
+  CONFIRMATION_REQUIRED
+  INVITATION_SENT
+  CHANGED_GROUP
+  
 }
 
 model Invitation {
-  id             String       @id
+  id             Int          @id @default(autoincrement())
   email          String
   role           Role         @default(STUDENT)
   Organization   Organization @relation(fields: [organizationId], references: [id])
   organizationId Int
-  msg            String
+  msg            Messages?
   status         Status       @default(PENDING)
-  Groups         Group[]
+  Group          Group?       @relation(fields: [groupId], references: [id])
+  groupId        Int?
+  createdAt      DateTime?    @default(now())
+  updateAt       DateTime?    @updatedAt
 }

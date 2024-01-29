@@ -26,7 +26,7 @@ const OrganizationName = async () => {
 
 export default async function OrganizationCard() {
   return (
-    <Card interactive className="flex flex-col items-center flex-grow md:w-52">
+    <Card href="?modal=organization" interactive className="flex flex-col items-center flex-grow md:w-52">
       <Suspense fallback={<SmallSkeleton />}>
         <OrganizationName />
       </Suspense>

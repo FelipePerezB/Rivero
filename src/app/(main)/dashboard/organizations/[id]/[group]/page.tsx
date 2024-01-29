@@ -42,11 +42,12 @@ export default async function AllGroupsOrganizationPage({
   };
 
   const OrgForm = dynamic(() => import("../org-form"));
-  const { data: groups } = (await api(`groups/${organizationId}`, {})) as {
+  const { data: groups } = (await api(`groups/${organizationId}`, {}, [
+    endpoint, `groups/${organizationId}`
+  ])) as {
     data: GroupWithusers[];
   };
 
-  const TAG = `groups/${group}`;
   const ENDPOINT = `groups/${organizationId}/${group}`;
   const groupData = groups.find(({ id }) => id === Number(group));
   // group !== "all"
@@ -110,30 +111,32 @@ export default async function AllGroupsOrganizationPage({
         <div className="w-full flex justify-between">
           <SmallTitle>Grupos</SmallTitle>
           <div className="flex gap-sm">
-          {groupData?.id ? (
-            <UpdateSearchModal
-              data={{ ...groupData }}
-              endpoint={ENDPOINT}
-              label="grupo"
-              searchParams={searchParams}
-              secondaryBtn={
-                <DeleteBtn
-                  size="md"
-                  name={groupData?.name}
-                  endpoint={ENDPOINT}
-                />
-              }
-            >
-              <hr />
-            </UpdateSearchModal>
-          ) : (
-            <OrgForm
-              organization={organization}
-              organizationId={organizationId}
-              searchParams={searchParams}
-            />
-          )}
-          <Button color="white" href={`${group}/invitations`}>Invitaciones</Button>
+            {groupData?.id ? (
+              <UpdateSearchModal
+                data={{ ...groupData }}
+                endpoint={ENDPOINT}
+                label="grupo"
+                searchParams={searchParams}
+                secondaryBtn={
+                  <DeleteBtn
+                    size="md"
+                    name={groupData?.name}
+                    endpoint={ENDPOINT}
+                  />
+                }
+              >
+                <hr />
+              </UpdateSearchModal>
+            ) : (
+              <OrgForm
+                organization={organization}
+                organizationId={organizationId}
+                searchParams={searchParams}
+              />
+            )}
+            <Button color="white" href={`${group}/invitations/pending`}>
+              Invitaciones
+            </Button>
           </div>
         </div>
         <Options

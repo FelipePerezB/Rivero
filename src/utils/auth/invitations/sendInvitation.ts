@@ -6,7 +6,7 @@ export default async function sendClerkInvitation(
   metadata: {
     role: Role;
     organizationId?: number;
-    groups: number[];
+    group: number;
   }
 ) {
   const invitation = await clerkClient.invitations.createInvitation({

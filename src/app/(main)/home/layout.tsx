@@ -8,9 +8,9 @@ type Props = {
 };
 
 export default async function Layout({ children }: Props) {
-  const user = await currentUser();
-  if (!user?.publicMetadata?.role) {
-    redirect("/");
-  }
+  // const user = await currentUser();
+  // if (!user?.publicMetadata?.role) {
+  //   redirect("/");
+  // }
   return <>{children}</>;
 }

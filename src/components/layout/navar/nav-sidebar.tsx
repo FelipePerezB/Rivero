@@ -50,7 +50,7 @@ export default async function NavSidebar() {
               />
             )}
             <div className="flex flex-col">
-              <span className="text-lg">{`${firstName} ${lastName}`}</span>
+              <span className="text-lg">{`${firstName} ${lastName ?? ""}`}</span>
               <span className="text-xs border w-max p-0.5 rounded font-mediun">
                 {role ?? Role.STUDENT}
               </span>

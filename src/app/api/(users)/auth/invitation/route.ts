@@ -9,20 +9,20 @@ export async function POST(request: Request) {
   const { role, organizationId, group, email, invitationId } = res ?? {};
   if (!role || !organizationId || !group || !email) return;
   NextResponse.json({ message: "Failed to invite" }, { status: 500 });
-  const invitation = await prisma.invitation.create({
-    data: {
-      id: invitationId,
-      msg: "",
-      Groups: group,
-      email,
-      role,
-      organizationId,
-    },
-  });
-  clerkClient.invitations.revokeInvitation(invitation.id);
+  // const invitation = await prisma.invitation.create({
+  //   data: {
+  //     id: invitationId,
+  //     msg: "",
+  //     Groups: group,
+  //     email,
+  //     role,
+  //     organizationId,
+  //   },
+  // });
+  // clerkClient.invitations.revokeInvitation(invitation.id);
   // return NextResponse.json({ message: "Failed to save" }, { status: 500 });
   revalidateTag(`groups/${organizationId}`);
-  return NextResponse.json({ invitation }, { status: 200 });
+  // return NextResponse.json({ invitation }, { status: 200 });
 }
 
 export async function GET(request: Request) {

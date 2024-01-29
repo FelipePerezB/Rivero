@@ -1,25 +1,48 @@
 "use server";
 
 import { clerkClient } from "@clerk/nextjs";
-import { Group, Role, User } from "@prisma/client";
-import sendInvitation from "src/utils/auth/sendInvitation";
+import { Group, Messages, Role, Status, User } from "@prisma/client";
+import { revalidateTag } from "next/cache";
+import getStatus from "src/utils/auth/invitations/indicators";
+import sendInvitation from "src/utils/auth/invitations/sendInvitation";
 import removeDuplicates from "src/utils/format/removeDuplicates";
 import prisma from "src/utils/prisma";
 import validateEmail from "src/utils/validation/email";
 
-const createInvitation = async () =>{
-  // const invitation = await prisma.invitation.create({data: {email:""}})
+type InvitationMetadata = {
+  role: Role;
+  organizationId: number;
+  group: number;
+};
 
-}
-
-
+const createInvitation = async ({
+  status,
+  msg,
+  email,
+  metadata: { group, organizationId, role },
+}: {
+  msg: Messages;
+  status: Status;
+  email: string;
+  metadata: InvitationMetadata;
+}) =>
+  await prisma.invitation.create({
+    data: {
+      status,
+      email,
+      role,
+      organizationId,
+      msg,
+      groupId: Number(group),
+    },
+  });
 
 export const sendInvitations = async (
   {
     group,
     organization,
   }: {
-    organization?: number;
+    organization: number;
     group?: number;
   },
 
@@ -29,15 +52,25 @@ export const sendInvitations = async (
   const emails = emailsStr?.split(",");
   emails?.forEach(async (unformatEmail) => {
     const email = unformatEmail.trim().toLowerCase();
-    console.log(email);
-    if (!validateEmail(email)) return console.log("Email invalido");
     const role = formData.get("role") as Role;
-    let invitation;
     const newMetadata = {
       role,
       organizationId: organization,
-      groups: [group as number],
+      group: Number(group),
     };
+
+    const customInvitation = (msg: Messages) =>
+      createInvitation({
+        email,
+        metadata: newMetadata,
+        msg,
+        status: getStatus(msg),
+      });
+
+    if (!validateEmail(email))
+      return await customInvitation(Messages.INVALID_EMAIL);
+    // console.log("Email invalido");
+    let invitation;
     try {
       invitation = await sendInvitation(email, newMetadata);
     } catch (error: any) {
@@ -49,7 +82,7 @@ export const sendInvitations = async (
             where: { email },
             include: { Group: true },
           });
-          if (!user) return console.log("Error al añadir");
+          if (!user) return customInvitation(Messages.INVALID_EMAIL);
           let updatedUser;
           // Si no tiene organización se añade
           if (!user.organizationId) {
@@ -57,6 +90,7 @@ export const sendInvitations = async (
               user.externalId,
               { publicMetadata: newMetadata }
             );
+            if (updatedUser?.id) customInvitation(Messages.RESOLVED);
             // Si ya es miembro de la organización se añade al grupo
           } else if (user.organizationId === organization) {
             updatedUser = await clerkClient.users.updateUserMetadata(
@@ -64,18 +98,20 @@ export const sendInvitations = async (
               {
                 publicMetadata: {
                   ...newMetadata,
-                  group
+                  group,
                 },
               }
             );
+            if (updatedUser?.id) customInvitation(Messages.CHANGED_GROUP);
+            revalidateTag(`groups/${organization}`);
             // Si no es miembro de la organización se espera a que la abandone
           } else if (user.organizationId !== organization)
-            return console.log("El usuario ya esta en otra organización");
-          if (!updatedUser?.id) return console.log("Error al añadir");
+            return customInvitation(Messages.CONFIRMATION_REQUIRED);
+          if (!updatedUser?.id) return customInvitation(Messages.INVALID_EMAIL);
           break;
 
         case "duplicate_record":
-          console.log("El usuario ya tiene una invitación");
+          customInvitation(Messages.DUPLICATED_RECORD);
           break;
       }
     }
