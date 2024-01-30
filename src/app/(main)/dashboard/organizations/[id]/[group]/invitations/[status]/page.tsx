@@ -89,7 +89,7 @@ export default async function InvitationsPage({
     [Messages.DUPLICATED_RECORD]:
       "Invitación dúplicada, pidale al usuario crearse una cuenta para poder invitarlo",
     [Messages.INVITATION_SENT]: "Invitación ya enviada anteriormente",
-    [Messages.REJECTED]: "El email es invalido",
+    [Messages.REJECTED]: "El usuario ha rechazado la invitación",
     [Messages.RESOLVED]: "Usuario agregado correctamente al curso",
     "": "",
   };
@@ -132,7 +132,9 @@ export default async function InvitationsPage({
       </Section>
       <Section>
         <ItemsBox size="lg">
-          {invitations?.map(({ id, email, role, status }, i) => {
+          {invitations?.map(({ id, email, role, status, updateAt }, i) => {
+            const date = updateAt as unknown as string
+            const formatDate = date.split('T')[0]
             const data = indicators[status];
             return (
               <Card
@@ -144,10 +146,11 @@ export default async function InvitationsPage({
               >
                 <div className="flex flex-col text-ellipsis overflow-hidden whitespace-nowrap">
                   <span className="text-xl font-medium">{email}</span>
-                  <div className="flex gap-sm">
-                    <span className="text-xs border border-border p-0.5 rounded-sm font-light">
+                  <div className="flex gap-2 text-xs font-light items-center">
+                    <span className=" border border-border p-0.5 rounded-sm ">
                       {role}
                     </span>
+                    <span>{formatDate}</span>
                   </div>
                 </div>
                 {data?.icon}

@@ -9,6 +9,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Invitation, Messages, Organization } from "@prisma/client";
 import React, { Suspense } from "react";
 import api from "src/utils/api";
+import RejectInvitationBtn from "./reject-invitation-btn";
+import AcceptInvitationBtn from "./accept-invitation-btn";
 
 async function InvitationOrg({
   organizationId,
@@ -65,12 +67,8 @@ export default async function OrganizationModal() {
             <span className="text-xs font-light">{role}</span>
           </div>
           <div className="flex gap-sm">
-            <Button>
-              <FontAwesomeIcon icon={faCheck} className="h-4 w-4" />
-            </Button>
-            <Button color="red">
-              <FontAwesomeIcon icon={faClose} className="h-4 w-4" />
-            </Button>
+            <AcceptInvitationBtn organizationId={organizationId} id={id} />
+            <RejectInvitationBtn id={id} />
           </div>
         </Card>
       ))}

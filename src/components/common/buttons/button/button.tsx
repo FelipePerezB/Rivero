@@ -7,7 +7,7 @@ export type ButtonAttrs = {
   color?: "blue" | "white" | "red" | "black" | "transparent";
   children?: ReactNode;
   onClick?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
-  size?: "sm" | "lg" | "xs";
+  size?: "sm" | "lg" | "xs" | "square";
   href?: string;
   className?: string;
   style?: CSSProperties;
@@ -49,6 +49,7 @@ export default function Button({
     xs: "shadow-none text-black text-xs",
     sm: "w-max px-2.5 py-1 text-sm",
     lg: "w-5/6 py-1.5 my-0 mx-auto max-w-sm text-md",
+    square: "p-2 w-max aspect-square",
   };
 
   className += ` ${colorVariants[color]} ${
