@@ -5,6 +5,7 @@ import prisma from "src/utils/prisma";
 export async function POST(request: Request) {
   const res = await request.json();
   const { fileId, score, alternatives, userId } = res ?? {};
+  console.log(res)
 
   const lesson = await prisma.lesson.findFirst({
     where: {

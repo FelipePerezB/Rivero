@@ -4,6 +4,7 @@ import {
   faChevronRight,
   faCompass,
   faDraftingCompass,
+  faSignOut,
 } from "@fortawesome/free-solid-svg-icons";
 import {
   FontAwesomeIcon,
@@ -14,6 +15,8 @@ import Image from "next/image";
 import Link from "next/link";
 import NavLinks from "./nav-links";
 import { User } from "@clerk/nextjs/dist/types/server";
+import Dropdown from "../dropdown";
+import React, { ReactNode } from "react";
 
 export default async function Navar() {
   let user: User | null | undefined;
@@ -38,32 +41,48 @@ export default async function Navar() {
       )}
     </>
   );
+
+  const SmProfileWrapper = ({
+    children,
+    className,
+  }: {
+    children: ReactNode;
+    className?: string;
+  }) =>
+    role === Role.STUDENT ? (
+      <Dropdown className={className}>{children}</Dropdown>
+    ) : (
+      <Link className={className} href={"?sidebar=nav"}>
+        {children}
+      </Link>
+    );
+  const SmProfile = () => (
+    <SmProfileWrapper className="gap-3 items-center md:hidden flex">
+      <Profile />
+    </SmProfileWrapper>
+  );
   return (
     <header className="print:hidden z-40 sticky top-0 left-0">
       <nav className="flex items-center justify-between py-3 px-5 bg-white text-black border-b gap-8 font-light">
-        <div className="flex text-lg text-blue-500 items-center gap-1.5 font-medium">
+        <Link
+          href={"/home"}
+          className="flex text-lg text-blue-500 items-center gap-1.5 font-medium"
+        >
           <FontAwesomeIcon className="h-4 w-4" icon={faDraftingCompass} />
           RIVERO
-        </div>
+        </Link>
         <menu className="md:flex hidden gap-4 overflow-x-auto">
           <NavLinks size="sm" />
         </menu>
         <div>
-          {role === Role.STUDENT && (
-            <span className="text-red-500">
-              <SignOutButton />
-            </span>
-          )}
-
-          <Link className="gap-3 items-center md:flex hidden" href={"/profile"}>
-            <Profile />
-          </Link>
-          <Link
-            className="gap-3 items-center md:hidden flex"
-            href={role !== Role.STUDENT ? "?sidebar=nav" : "/profile"}
-          >
-            <Profile />
-          </Link>
+          <div className="md:block hidden">
+            <Dropdown>
+              <div className="gap-3 items-center flex ">
+                <Profile />
+              </div>
+            </Dropdown>
+          </div>
+          <SmProfile />
         </div>
       </nav>
     </header>

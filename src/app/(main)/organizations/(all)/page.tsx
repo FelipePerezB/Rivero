@@ -2,20 +2,21 @@ import Button from "@components/common/buttons/button/button";
 import { faPlus, faUser } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Group, Organization, User } from "@prisma/client";
-import React from "react";
+import React, { ReactNode } from "react";
 import api from "src/utils/api";
 import ItemsBox from "@components/containers/items-box/items-box";
 import CardItem from "@components/cards/card-item";
 import NavigationCard from "@components/cards/NavigationCard";
 import Card from "@components/cards/Card";
 import CreateBtnWithName from "@components/admin/create-btn/create-btn-with-name";
-import Table from "@components/dashboard/table/Table";
-import AddAdminBtn from "../admins/add-admin";
+import Table, { Row } from "@components/dashboard/table/Table";
+import AddAdminBtn from "../../dashboard/admins/add-admin";
 import SearchModal from "@components/modal/search-modal";
-import RemoveAdmin from "../admins/remove-admin";
-import UpdateUserForm from "./[id]/[group]/components/forms/update-user-form";
+import RemoveAdmin from "../../dashboard/admins/remove-admin";
+import UpdateUserForm from "../[id]/[group]/components/forms/update-user-form";
 import Section from "@components/containers/section";
 import SectionTitle from "@components/common/titles/section-title";
+import RemoveAdminWrapper from "../components/remove-admin-wrapper";
 
 export default async function Organizations({
   searchParams,
@@ -79,7 +80,9 @@ export default async function Organizations({
                 href={`organizations/${id}/all`}
               >
                 <div className="flex w-full justify-between pr-2 items-center">
-                  <span className="text-ellipsis overflow-hidden whitespace-nowrap">{name}</span>
+                  <span className="text-ellipsis overflow-hidden whitespace-nowrap">
+                    {name}
+                  </span>
                   <span className="flex items-center gap-1 text-xs py-0.5 px-1 rounded-sm">
                     {users_count}{" "}
                     <FontAwesomeIcon className="h-3 w-3" icon={faUser} />
@@ -92,7 +95,8 @@ export default async function Organizations({
       </Section>
       <Section>
         <Table
-          onClickHref="?modal=update&id=[id]"
+          OnClickWrapper={RemoveAdminWrapper}
+          // onClickHref="?modal=update&id=[id]"
           head={{
             title: "Administradores",
             keys: [
@@ -105,7 +109,7 @@ export default async function Organizations({
         />
       </Section>
 
-      <SearchModal
+      {/* <SearchModal
         title="Actualizar usuario"
         id="update"
         searchParams={searchParams}
@@ -116,7 +120,7 @@ export default async function Organizations({
           name={user?.name}
           lastname={user?.lastname ?? ""}
         />
-      </SearchModal>
+      </SearchModal> */}
 
       <SearchModal
         id="new-admin"

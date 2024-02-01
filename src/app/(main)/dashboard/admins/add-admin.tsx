@@ -1,6 +1,6 @@
 import React from "react";
 import addAdmin from "./actions/add-admin";
-import { SendBtn } from "../organizations/[id]/[group]/components/forms/Invite";
+import { SendBtn } from "../../organizations/[id]/[group]/components/forms/Invite";
 import StandardInput from "@components/form/StandardInput/StandardInput";
 
 export default function AddAdminBtn() {

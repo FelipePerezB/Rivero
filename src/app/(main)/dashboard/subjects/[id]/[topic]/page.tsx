@@ -85,7 +85,7 @@ export default async function SubjectDashboard({
       <Section>
         <div className="flex justify-between items-center">
           <SmallTitle>Evaluaciones</SmallTitle>
-          <CreateFileBtn subjectId={subjectId} type={Types.EVALUATION} />
+          <CreateFileBtn subjectId={subjectId} type={Types.EVALUATION} text="Nueva evaluación" />
         </div>
         <div className="flex gap-sm overflow-x-auto pb-sm">
           {evaluations?.map(({ File: { id, name, externalId } }) => (

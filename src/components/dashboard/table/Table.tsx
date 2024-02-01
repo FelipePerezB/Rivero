@@ -1,39 +1,40 @@
-import { ReactNode } from "react";
 import Link from "next/link";
-import Card from "@components/cards/Card";
+import { ReactNode } from "react";
+
+export type Row = { [key: string]: ReactNode };
 
 interface TableProps {
   handlers?: ReactNode;
   head?: {
     title?: string | ReactNode;
-    keys: { name: string; key?: string }[];
+    keys: { name: string; key?: string; hidden?: boolean }[];
   };
 
   data?: (ReactNode | string | number)[][];
   onClickHref?: string;
+  OnClickWrapper?: React.FC<{
+    children: ReactNode;
+    row: Row;
+    className: string;
+  }>;
 }
 
 const Row = ({
   children,
-  onClickHref,
+  className,
 }: {
-  children: ReactNode | string;
-  onClickHref?: string;
+  children: ReactNode;
+  row?: Row;
+  className: string;
+}) => <tr className={className}>{children}</tr>;
+
+const Table: React.FC<TableProps> = ({
+  data,
+  head,
+  OnClickWrapper = Row,
+  onClickHref,
 }) => {
   return (
-    <tr
-      className={`w-full border-t ${
-        onClickHref ? "cursor-pointer hover:bg-slate-50" : ""
-      }`}
-    >
-      {children}
-    </tr>
-  );
-};
-
-const Table: React.FC<TableProps> = ({ data, head, onClickHref }) => {
-  return (
-    // <Card className="p-0 rounded-lg overflow-x-auto">
     <div className=" rounded-lg border-border bg-white border shadow-md overflow-x-auto">
       <table className="w-full">
         {head?.title && (
@@ -43,50 +44,77 @@ const Table: React.FC<TableProps> = ({ data, head, onClickHref }) => {
         )}
         {!!data?.length && (
           <thead className="w-full">
-            <Row>
-              {head?.keys.map(({ name, key }, i) => (
-                <th className="py-[0.6em] px-[0.8em]" key={"th-" + i}>
-                  {name}
-                </th>
-              ))}
-            </Row>
+            <tr className="w-full border-t">
+              {head?.keys.map(({ name, key, hidden }, i) =>
+                hidden ? (
+                  <></>
+                ) : (
+                  <th className="py-[0.6em] px-[0.8em]" key={"th-" + i}>
+                    {name}
+                  </th>
+                )
+              )}
+            </tr>
           </thead>
         )}
         <tbody className=" w-full max-h-52 overflow-y-auto">
           {data?.map((row, rowIndex) => {
+            const hiddenIndex: number[] = [];
+            if (!head?.keys) return <></>;
+            const data = {} as any;
+
             const obj = {} as any;
             head?.keys.forEach(
               ({ key, name }, i) => (obj[key ?? name] = row[i])
             );
+
             const regex = /\[(\w+)]/g;
             const url =
               onClickHref?.replace(regex, (match, key) => obj[key] ?? match) ??
               "";
 
+            head?.keys.forEach(({ key, name, hidden }, i) => {
+              if (hidden) hiddenIndex.push(i);
+              return (data[key ?? name] = row[i]);
+            });
+
             return (
-              <Row onClickHref={onClickHref} key={"row-" + rowIndex}>
-                {row.map((cell, cellIndex) => {
-                  return (
+              <OnClickWrapper
+                className={`w-full border-t ${
+                  true ? "cursor-pointer hover:bg-slate-50" : ""
+                }`}
+                row={data}
+                key={`row-${rowIndex}-${head.title}`}
+              >
+                {row.map((cell, cellIndex) =>
+                  hiddenIndex.includes(cellIndex) ? (
+                    <></>
+                  ) : (
                     <td
                       className=" overflow-hidden text-center text-ellipsis whitespace-nowrap"
-                      key={`column-${cellIndex}-r${rowIndex} `}
+                      key={`column-${cellIndex}-${rowIndex}-${head.title} `}
                     >
-                      <Link
-                        className="inline-block w-full p-[0.6em]"
-                        href={url}
-                      >
-                        {cell}
-                      </Link>
+                      {url ? (
+                        <Link
+                          className="inline-block w-full p-[0.6em]"
+                          href={url}
+                        >
+                          {cell}
+                        </Link>
+                      ) : (
+                        <span className="inline-block w-full p-[0.6em]">
+                          {cell}
+                        </span>
+                      )}
                     </td>
-                  );
-                })}
-              </Row>
+                  )
+                )}
+              </OnClickWrapper>
             );
           })}
         </tbody>
       </table>
     </div>
-    // </Card>
   );
 };
 

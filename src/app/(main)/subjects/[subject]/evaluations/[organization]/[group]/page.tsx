@@ -19,6 +19,8 @@ import getAvg from "src/utils/maths/getAvg";
 import getQuartile from "src/utils/maths/getQuartile";
 import ChartSkeleton from "@components/layout/loading-skeleton/chart-skeleton";
 import Item from "@components/dashboard/item";
+import { ScoresWithGroup } from "src/utils/format/formatScores";
+import OrganizationProtect from "@components/admin/protect/organization-protect";
 
 export default async function EvaluationsPage({
   params: { subject, group, organization },
@@ -38,30 +40,19 @@ export default async function EvaluationsPage({
   );
 
   const { data: scores } = (await api(
-    `scores/${organization}?group=${
-      group !== "all" ? group : ""
-    }&subject=${subject}`,
+    `scores/subject/${subject}/${organization}/${group !== "all" ? group : ""}`,
     {
       cache: "no-store",
     },
-    [`scores/organizations/${organization}`]
+    [`scores/${organization}`]
   )) as {
-    data: {
-      [x: string]: {
-        value: number;
-        time: string;
-      }[];
-    };
+    data: ScoresWithGroup[];
   };
-
-  const flatScores = Object.values(scores)
-    .flat(2)
-    .map(({ value }) => value);
+  const flatScores = scores.map(({ score }) => score);
   const sortedScores = flatScores.sort((a, b) => a - b);
-  console.log(flatScores);
 
   return (
-    <>
+    <OrganizationProtect organizationId={organization} >
       <Section>
         <SectionTitle
           title="Evaluaciones"
@@ -105,20 +96,22 @@ export default async function EvaluationsPage({
               />
             </Suspense>
           </Card>
-          <div className="flex flex-col sm:flex-row  w-full gap-md">
-            <Card className="flex gap-sm justify-between">
-              <Item title={sortedScores.at(-1)} subtitle="Puntaje mayor" />
-              <Item title={getAvg(flatScores)} subtitle="Promedio" />
-              <Item title={sortedScores.at(0)} subtitle="Puntaje menor" />
-            </Card>
-            <Card className="flex gap-sm justify-between">
-              <Item title={getQuartile(flatScores, 1)} subtitle="Cuartil 1" />
-              <Item title={getQuartile(flatScores, 2)} subtitle="Cuartil 2" />
-              <Item title={getQuartile(flatScores, 3)} subtitle="Cuartil 3" />
-            </Card>
-          </div>
+          {!!scores?.length && (
+            <div className="flex flex-col sm:flex-row  w-full gap-md">
+              <Card className="flex gap-sm justify-between">
+                <Item title={sortedScores.at(-1)} subtitle="Puntaje mayor" />
+                <Item title={getAvg(flatScores)} subtitle="Promedio" />
+                <Item title={sortedScores.at(0)} subtitle="Puntaje menor" />
+              </Card>
+              <Card className="flex gap-sm justify-between">
+                <Item title={getQuartile(flatScores, 1)} subtitle="Cuartil 1" />
+                <Item title={getQuartile(flatScores, 2)} subtitle="Cuartil 2" />
+                <Item title={getQuartile(flatScores, 3)} subtitle="Cuartil 3" />
+              </Card>
+            </div>
+          )}
         </div>
       </Section>
-    </>
+    </OrganizationProtect>
   );
 }

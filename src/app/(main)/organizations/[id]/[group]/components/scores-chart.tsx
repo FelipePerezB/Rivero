@@ -1,4 +1,5 @@
 import BarsChart from "@components/dashboard/charts/bars/bars";
+import { Score } from "@prisma/client";
 import React from "react";
 
 type TimeObject = {
@@ -14,11 +15,10 @@ type GroupedObject = {
 function groupAndSortByTime(data: TimeObject[]): GroupedObject[] {
   // Creamos un objeto para almacenar la cantidad de elementos por fecha
   const groupedData: { [key: string]: number } = {};
-
   // Iteramos sobre el arreglo de datos y contamos la cantidad de elementos por fecha
   data.forEach((item) => {
     if (groupedData[item.time]) {
-      groupedData[item.time]++;
+      groupedData[item.time] = groupedData[item.time] + 1;
     } else {
       groupedData[item.time] = 1;
     }
@@ -36,19 +36,18 @@ function groupAndSortByTime(data: TimeObject[]): GroupedObject[] {
   return result;
 }
 
-export default function ScoresChart({
-  scores,
-}: {
-  scores: {
-    value: number;
-    time: string;
-  }[];
-}) {
-  const flatArray = Object.values(scores).flat(2);
-  const formatScores = groupAndSortByTime(flatArray);
+export default function ScoresChart({ scores }: { scores: Score[] }) {
+  const array = scores.map(({ score, updateAt }) => ({
+    time: (updateAt as unknown as string).split("T")[0],
+    value: score,
+  }));
+
+  // const flatArray = Object.values(scores).flat(2);
+  const formatScores = groupAndSortByTime(array);
 
   return (
     <BarsChart
+      minSize={5}
       data={formatScores.map(({ time, value }) => {
         const dateSplit = time.split("-");
         const label = `${dateSplit.at(2)}/${dateSplit.at(1)}`;

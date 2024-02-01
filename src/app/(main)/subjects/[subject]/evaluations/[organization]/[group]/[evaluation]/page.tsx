@@ -27,6 +27,7 @@ import TableSkeleton from "@components/layout/loading-skeleton/table-skeleton/ta
 import AddScoreForm from "../components/form";
 import SectionTitle from "@components/common/titles/section-title";
 import Section from "@components/containers/section";
+import OrganizationProtect from "@components/admin/protect/organization-protect";
 
 export default async function EvaluationPage({
   searchParams,
@@ -43,7 +44,7 @@ export default async function EvaluationPage({
   const { File } = lesson ?? {};
 
   return (
-    <>
+    <OrganizationProtect organizationId={organization}>
       <Section>
         <div className="flex flex-col md:flex-row  gap-sm  md:justify-between md:items-center mb-2">
           <SectionTitle
@@ -104,6 +105,6 @@ export default async function EvaluationPage({
       >
         <AddScoreForm id={searchParams?.id} fileId={evaluation} />
       </SearchModal>
-    </>
+    </OrganizationProtect>
   );
 }

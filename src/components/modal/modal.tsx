@@ -3,7 +3,7 @@ import { faClose } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
 import { ReactNode } from "react";
-import Blur from "../common/blur";
+import Blur from "../blur/blur";
 
 export default function Modal({
   title,

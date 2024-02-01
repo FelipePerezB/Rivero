@@ -20,7 +20,7 @@ export default async function ScoresStats({
   const groupId = group === "all" ? "" : group;
   const { data } = (await api(
   `scores/${organization}/${evaluation}${group ? `?group=${groupId}` : `` }`,
-    {}
+    {cache: "no-store"}
   )) as { data: Score[] };
 
   const scores = data?.map(({ score }) => score);

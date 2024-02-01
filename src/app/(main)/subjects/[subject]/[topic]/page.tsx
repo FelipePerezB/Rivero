@@ -1,34 +1,23 @@
-import { Privacity, Role, Score, Subtopic, Topic } from "@prisma/client";
+import { Privacity, Subtopic, Topic } from "@prisma/client";
 import LinksAccordion from "@components/accordion/links-accordion";
 import api from "src/utils/api";
 import { LessonWithFile } from "../../models/lesson";
 import EvaluationsBtn from "./components/evaluations-btn";
-import { Suspense } from "react";
-import ProgressCard from "./components/progress-card/progress-card";
 import Options from "@components/navigation/options/options";
 import { SubjectWithTopic } from "../../models/subject";
-import NavigationCard from "@components/cards/NavigationCard";
 import capFirst from "src/utils/capFirst";
-import Button from "@components/common/buttons/button/button";
 import { documentsLink } from "src/app/constants/urls/documents";
-import getProgress from "src/services/cache/getProgress";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faStar } from "@fortawesome/free-solid-svg-icons";
-import getUser from "src/utils/getUser";
 import SectionTitle from "@components/common/titles/section-title";
 import Section from "@components/containers/section";
 import LinkCard from "@components/navigation/link-card";
 import SmallTitle from "@components/common/titles/small-title";
 import Card from "@components/cards/Card";
-import { countIdInTopic } from "src/app/(main)/home/components/lessons-progress";
-import BarsChart from "@components/dashboard/charts/bars/bars";
-// import { countIdsByDate } from "src/app/(main)/home/components/lessons-progress";
+import SubjectStats from "./components/stats/subject-stats";
+import { Suspense } from "react";
+import ChartSkeleton from "@components/layout/loading-skeleton/chart-skeleton";
 
 interface SubtopicWithLessons extends Subtopic {
   Lesson: LessonWithFile[];
-}
-interface TopicWithSubtopic extends Topic {
-  Subtopics: SubtopicWithLessons[];
 }
 
 export default async function TopictPage({
@@ -65,56 +54,7 @@ export default async function TopictPage({
     data: Topic[];
   };
 
-  const storageProgress = await getProgress(subjectId);
-  const topicProgress = countIdInTopic(storageProgress[Number(topicId)]);
-
-  const progressByDay = Object.entries(topicProgress).map(([time, value]) => ({
-    time,
-    value,
-  }));
-  // let progressFilesCount = 0;
-  // if (storageProgress && typeof storageProgress === "object") {
-    // const topicProgress = storageProgress[Number(topicId)];
-
-    // const storageFilesIds = Object.values(topicProgress).flatMap((id) => id);
-    // const avalibleIds = storageFilesIds.filter((id) => idsid));
-
-    // progressFilesCount =
-    //   typeof topicProgress === "object" ? avalibleIds.length : 0;
-  // }
-
   const havePractice = !!practice?.File?.externalId;
-  // const avalibleFiles = subtopics.flatMap(({ Lesson }) =>
-  //   Lesson?.map(({ File }) => File).filter(
-  //     ({ privacity }) => privacity === "PUBLIC"
-  //   )
-  // );
-  // const ids = avalibleFiles.map(({ externalId }) => externalId);
-  // const user = await getUser();
-  // const role = user?.publicMetadata?.role as Role;
-
-  // const organization = user?.publicMetadata?.organizationId;
-
-  // const firstBtn = {
-  //   [Role.ADMIN]: {
-  //     href: `/dashboard/subjects/${subjectId}/${topicId}`,
-  //     name: "Modificar asignatura",
-  //   },
-  //   [Role.TEACHER]: {
-  //     href: `evaluations/${organization}/all`,
-  //     name: "Evaluaciones",
-  //   },
-  //   [Role.STUDENT]: {
-  //     href: `/dashboard/subjects/${subjectId}/${topicId}`,
-  //     name: "Evaluaciones",
-  //   },
-  // } as {
-  //   [role: string]: {
-  //     href: string;
-  //     name: string;
-  //   };
-  // };
-  const topic = topics.find(({ id }) => id === Number(topicId));
 
   return (
     <>
@@ -123,7 +63,7 @@ export default async function TopictPage({
           title={capFirst(subject?.name)}
           subTitle="Refuerza y expande tus conocimientos"
         />
-        <div className="flex gap-md overflow-x-auto">
+        <div className="flex gap-md  md:gap-lg overflow-x-auto">
           <EvaluationsBtn subject={subjectId} topic={topicId} />
           {havePractice && (
             <LinkCard
@@ -149,22 +89,15 @@ export default async function TopictPage({
             />
             <Card className="flex flex-col gap-sm">
               <div className="flex flex-col gap-1 h-40 w-full">
-                <SmallTitle>Resumen {topic?.name}</SmallTitle>
-                <BarsChart
-                  data={progressByDay.map(({ time, value }) => {
-                    const dateSplit = time.split("-");
-                    const label = `${dateSplit.at(2)}/${dateSplit.at(1)}`;
-                    return {
-                      label,
-                      value,
-                    };
-                  })}
-                />
+                <SmallTitle>Puntajes</SmallTitle>
+                <Suspense fallback={<ChartSkeleton />}>
+                  <SubjectStats subject={subjectId} />
+                </Suspense>
               </div>
             </Card>
           </section>
 
-          <section className="flex flex-col gap-2.5 w-full max-w-lg">
+          <section className="flex flex-col gap-2.5 w-full">
             <SmallTitle>Temas</SmallTitle>
             {subtopics?.map(({ name, Lesson, privacity }, i) => {
               if (privacity !== Privacity.PUBLIC) return <></>;
@@ -185,7 +118,6 @@ export default async function TopictPage({
           </section>
         </article>
       </Section>
-      {/* <section className="grid sm:grid-rows-[3rem,1fr] sm:grid-cols-2 md:gap-x-8 lg:gap-x-16 gap-x-4 gap-y-2"></section> */}
     </>
   );
 }

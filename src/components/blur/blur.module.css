@@ -1,0 +1,6 @@
+.blur-close{
+  transition: opacity 300ms, transform 1ms 300ms
+}
+.blur-open{
+ transition: transform 1ms 1ms
+}

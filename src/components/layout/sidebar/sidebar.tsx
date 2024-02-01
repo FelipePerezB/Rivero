@@ -1,5 +1,7 @@
-"use client";
-import Blur from "@components/common/blur";
+// "use client";
+import styles from "../../blur/blur.module.css";
+import Blur from "@components/blur/blur";
+// import Blur from "@components/common/blur";
 import { ReactNode } from "react";
 // import Blur from "../common/blur";
 
@@ -13,7 +15,11 @@ export default function Sidebar({
   CloseWrapper: React.FC<{ children: ReactNode }>;
 }) {
   return (
-    <div className="top-0 left-0 h-full fixed flex justify-start items-start z-40 p-6">
+    <div
+      className={`top-0 left-0 h-full fixed flex justify-start items-start z-40 p-6 ${
+        show ? `${styles["blur-open"]} scale-100` : `${styles["blur-close"]} scale-0`
+      }`}
+    >
       <Blur CloseWrapper={CloseWrapper} show={show} />
       <article
         className={`fixed z-40 h-full w-80 bg-white rounded-md transition-all duration-[400ms] p-4 ${

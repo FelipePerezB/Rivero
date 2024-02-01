@@ -1,5 +1,12 @@
 import api from "src/utils/api";
-import { Group, Organization, Role, Subject, User } from "@prisma/client";
+import {
+  Group,
+  Organization,
+  Role,
+  Score,
+  Subject,
+  User,
+} from "@prisma/client";
 import dynamic from "next/dynamic";
 import Section from "@components/containers/section";
 import SectionTitle from "@components/common/titles/section-title";
@@ -9,7 +16,7 @@ import Card from "@components/cards/Card";
 // import { Item } from "src/app/(main)/home/page";
 import ItemsBox from "@components/containers/items-box/items-box";
 import capFirst from "src/utils/capFirst";
-import Table from "@components/dashboard/table/Table";
+import Table, { Row } from "@components/dashboard/table/Table";
 import DeleteBtn from "@components/admin/delete-btn/delete-btn";
 import SearchModal from "@components/modal/search-modal";
 import RemoveGroupBtn from "./components/remove-group-btn";
@@ -18,12 +25,16 @@ import UpdateSearchModal from "@components/admin/update-form/update-search-modal
 import InviteForm from "./components/forms/Invite";
 import Link from "next/link";
 import getAvg from "src/utils/maths/getAvg";
-import BarsChart from "@components/dashboard/charts/bars/bars";
 import { ReactNode, Suspense } from "react";
 import Item from "@components/dashboard/item";
 import ScoresChart from "./components/scores-chart";
 import StatsCard from "@components/cards/stats-card";
 import Button from "@components/common/buttons/button/button";
+import RemoveUserWrapper from "../../components/remove-user-wrapper";
+import formatScores, { ScoresWithGroup } from "src/utils/format/formatScores";
+import Protect from "@components/admin/protect/protect";
+import OrganizationProtect from "@components/admin/protect/organization-protect";
+import { auth } from "@clerk/nextjs";
 
 interface GroupWithusers extends Group {
   Users: User[];
@@ -43,7 +54,8 @@ export default async function AllGroupsOrganizationPage({
 
   const OrgForm = dynamic(() => import("../org-form"));
   const { data: groups } = (await api(`groups/${organizationId}`, {}, [
-    endpoint, `groups/${organizationId}`
+    endpoint,
+    `groups/${organizationId}`,
   ])) as {
     data: GroupWithusers[];
   };
@@ -72,35 +84,29 @@ export default async function AllGroupsOrganizationPage({
     subjects: Subject[];
   };
 
-  const { data: scores } = (await api(
-    `scores/${organization}?group=${group !== "all" ? group : ""}`,
+  const {getToken} = auth()
+  const token = await getToken()
+
+  const { data: unFormatedScores } = (await api(
+    `scores/${organizationId}/${group !== "all" ? `group/${group}` : ""}`,
     {
+      headers: {Authorization: `Bearer ${token}`},
       cache: "no-store",
     },
     [`scores/organizations/${organization}`]
   )) as {
-    data: {
-      [subjectId: string]: {
-        value: number;
-        time: string;
-      }[];
-    };
+    data: ScoresWithGroup[];
   };
-
-  const subjectsWithScores = subjects.map((subject) => ({
-    ...subject,
-    scores: scores[subject?.id],
-  }));
-
-  const flatArray = Object.values(scores).flat(2);
-
-  const today = new Date().toISOString().split("T")[0];
-
-  // Filtramos los objetos que tienen la misma fecha que la fecha actual
-  const scoresOfToday = flatArray.filter((item) => item.time === today)?.length;
+  const scores = formatScores(unFormatedScores);
+  const subjectsWithScores = scores
+    ? subjects.map((subject) => ({
+        ...subject,
+        scores: scores[subject?.id],
+      }))
+    : [];
 
   return (
-    <>
+    <OrganizationProtect organizationId={organizationId}>
       <Section>
         <SectionTitle
           subTitle="Educación de calidad al sur de Chile"
@@ -110,8 +116,8 @@ export default async function AllGroupsOrganizationPage({
       <Section>
         <div className="w-full flex justify-between">
           <SmallTitle>Grupos</SmallTitle>
-          <div className="flex gap-sm">
-            {groupData?.id ? (
+          {groupData?.id ? (
+            <div className="flex gap-sm">
               <UpdateSearchModal
                 data={{ ...groupData }}
                 endpoint={ENDPOINT}
@@ -127,17 +133,17 @@ export default async function AllGroupsOrganizationPage({
               >
                 <hr />
               </UpdateSearchModal>
-            ) : (
-              <OrgForm
-                organization={organization}
-                organizationId={organizationId}
-                searchParams={searchParams}
-              />
-            )}
-            <Button color="white" href={`${group}/invitations/pending`}>
-              Invitaciones
-            </Button>
-          </div>
+              <Button color="white" href={`${group}/invitations/all`}>
+                Invitaciones
+              </Button>
+            </div>
+          ) : (
+            <OrgForm
+              organization={organization}
+              organizationId={organizationId}
+              searchParams={searchParams}
+            />
+          )}
         </div>
         <Options
           option={group ?? "all"}
@@ -151,14 +157,14 @@ export default async function AllGroupsOrganizationPage({
             <div className="flex flex-col min-w-[200px] h-48 sm:h-full">
               <SmallTitle>Evaluaciones revisadas</SmallTitle>
               <Suspense fallback={<p>LOading..</p>}>
-                <ScoresChart scores={flatArray} />
+                <ScoresChart scores={unFormatedScores} />
               </Suspense>
             </div>
           </Card>
           <div className="flex flex-col gap-md h-full w-full md:max-w-[50%]">
             <StatsCard>
               <Item subtitle="Estudiantes" title={students} />
-              <Item subtitle="Evaluaciones hoy" title={scoresOfToday} />
+              <Item subtitle="Puntajes" title={unFormatedScores?.length} />
               <Item subtitle="Docentes" title={teachers} />
               {!group && <Item subtitle="Grupos" title={groups?.length} />}
             </StatsCard>
@@ -200,21 +206,7 @@ export default async function AllGroupsOrganizationPage({
           />
         </>
       )}
-      <SearchModal
-        title="Actualizar usuario"
-        id="update-user"
-        searchParams={searchParams}
-      >
-        {searchParams?.email && (
-          <RemoveGroupBtn group={group} email={searchParams?.email} />
-        )}
-        <UpdateUserForm
-          email={searchParams?.email}
-          name={searchParams?.name}
-          lastname={searchParams?.lastname}
-        />
-      </SearchModal>
-    </>
+    </OrganizationProtect>
   );
 }
 
@@ -232,18 +224,35 @@ function GroupTable({
   groupData: GroupWithUsers;
 }) {
   const users = groupData?.Users?.filter(({ role }) => role === tableRole).map(
-    ({ email, name, lastname }) => [
+    ({ email, name, lastname, externalId }) => [
+      externalId,
       capFirst(name),
       capFirst(lastname ?? ""),
       email,
     ]
   );
+  const RemoveUserWrapperWithGroup = ({
+    children,
+    row,
+    className,
+  }: {
+    className: string;
+    row: Row;
+    children: ReactNode;
+  }) => (
+    <RemoveUserWrapper row={row} group={groupData?.id} className={className}>
+      {children}
+    </RemoveUserWrapper>
+  );
+
   return (
     <Table
+      OnClickWrapper={RemoveUserWrapperWithGroup}
       onClickHref="?modal=update-user&name=[name]&lastname=[lastname]&email=[email]"
       head={{
         title: capFirst(name),
         keys: [
+          { name: "ID", key: "id", hidden: true },
           { name: "Nombre", key: "name" },
           { name: "Apellido", key: "lastname" },
           { name: "Correo", key: "email" },

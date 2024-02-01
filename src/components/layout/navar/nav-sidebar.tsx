@@ -36,9 +36,8 @@ export default async function NavSidebar() {
     <SearchSidebar id="nav">
       {firstName && (
         <section>
-          <Link
-            className="flex items-center gap-3  p-2 hover:bg-slate-100 rounded-md"
-            href={"/profile"}
+          <div
+            className="flex items-center gap-3 p-2"
           >
             {imageUrl && (
               <Image
@@ -55,7 +54,7 @@ export default async function NavSidebar() {
                 {role ?? Role.STUDENT}
               </span>
             </div>
-          </Link>
+          </div>
           <hr className="my-2" />
         </section>
       )}

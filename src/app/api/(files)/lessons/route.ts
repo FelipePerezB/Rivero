@@ -4,12 +4,20 @@ import { NextRequest, NextResponse } from "next/server";
 import generateRandomId from "src/app/(main)/subjects/utils/generateRandomId";
 import prisma from "src/utils/prisma";
 import { IdLenght } from "src/models/document.model";
+import { Role } from "@prisma/client";
 
 export async function POST(request: Request) {
   const res = await request.json();
   const user = await currentUser();
+  if (!user?.id)
+    return NextResponse.json({ message: "user not found" }, { status: 400 });
+  const role = user?.publicMetadata?.role as Role;
+  if (role !== Role.ADMIN)
+    return NextResponse.json(
+      { message: "Only admins have permission to update" },
+      { status: 403 }
+    );
   const userId = user?.id ?? res?.userId;
-  if (!userId) throw new Error("Failed to fetch data");
   const { name, content, type } = res ?? {};
   const topicId = Number(res?.topicId);
   const subjectId = Number(res?.subjectId);

@@ -24,6 +24,7 @@ import InvitationsForm from "../components/invitations-form";
 import Card from "@components/cards/Card";
 import ItemsBox from "@components/containers/items-box/items-box";
 import Options from "@components/navigation/options/options";
+import OrganizationProtect from "@components/admin/protect/organization-protect";
 
 interface OrganizationWithGroups extends Organization {
   Groups: Group[];
@@ -97,7 +98,7 @@ export default async function InvitationsPage({
   const options = Object.values(Status);
   console.log(options);
   return (
-    <>
+    <OrganizationProtect organizationId={organizationId}>
       <Section>
         <div className="flex flex-col gap-sm sm:flex-row sm:justify-between sm:items-center">
           <SectionTitle
@@ -133,8 +134,8 @@ export default async function InvitationsPage({
       <Section>
         <ItemsBox size="lg">
           {invitations?.map(({ id, email, role, status, updateAt }, i) => {
-            const date = updateAt as unknown as string
-            const formatDate = date.split('T')[0]
+            const date = updateAt as unknown as string;
+            const formatDate = date.split("T")[0];
             const data = indicators[status];
             return (
               <Card
@@ -168,6 +169,6 @@ export default async function InvitationsPage({
           <p>{message}.</p>
         </SearchModal>
       )}
-    </>
+    </OrganizationProtect>
   );
 }

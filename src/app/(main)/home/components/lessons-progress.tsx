@@ -129,19 +129,13 @@ export default async function LessonProgress({
       ?.map(({ time, value }) => value)
       ?.reduce((a, b) => a + b, 0) ?? 0;
 
-  const chartData = [
-    ...result,
-    ...Array(7 - result?.length ?? 0).fill({ time: "---", value: 0 }),
-  ];
-
-  console.log(chartData);
-
   return (
     <>
       <div className="flex flex-col w-full h-40 sm:h-full">
         <SmallTitle>Resumen semanal</SmallTitle>
         <BarsChart
-          data={chartData.map(({ time, value }) => {
+        minSize={7}
+          data={result.map(({ time, value }) => {
             const dateSplit = time.split("-");
             const label = `${dateSplit.at(2)}/${dateSplit.at(1)}`;
             return {

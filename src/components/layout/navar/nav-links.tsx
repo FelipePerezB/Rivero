@@ -30,6 +30,9 @@ export default async function NavLinks({ size = "sm" }: { size: sizes }) {
   const organization = user?.publicMetadata?.organizationId as
     | string
     | undefined;
+  const showOrganization =
+    (organization && role !== Role.STUDENT) || role === Role.ADMIN;
+
   return (
     <menu
       className={` ${
@@ -38,36 +41,33 @@ export default async function NavLinks({ size = "sm" }: { size: sizes }) {
           : "md:flex hidden gap-4 overflow-x-auto"
       }`}
     >
-      <Option
-        size={size}
-        icon={faHome}
-        link="home"
-        name="Asignaturas"
-        paths={["/home", "/subjects", "/practice"]}
-      />
-      <Option
-        size={size}
-        icon={faFireFlameCurved}
-        link=""
-        name="Evaluaciones"
-      />
-      {!!organization ||
-        (!(role !== Role.ADMIN) && (
-          <Option
-            size={size}
-            icon={faChartSimple}
-            link={
-              role === Role.ADMIN
-                ? "dashboard/organizations"
-                : `dashboard/organizations/${organization}`
-            }
-            name="Dashboard"
-          />
-        ))}
+      {role !== Role.STUDENT && (
+        <Option
+          size={size}
+          icon={faHome}
+          link="home"
+          name="Asignaturas"
+          paths={["/home", "/subjects", "/practice"]}
+        />
+      )}
+      {!!showOrganization && (
+        <Option
+          size={size}
+          icon={faChartSimple}
+          paths={["organizations"]}
+          link={
+            role === Role.ADMIN
+              ? "organizations"
+              : `organizations/${organization}`
+          }
+          name="Institución"
+        />
+      )}
       {role === Role.ADMIN ? (
         <Option
           size={size}
           icon={faPlus}
+          paths={["/documents"]}
           link="documents/edit"
           name="Documentos"
         />

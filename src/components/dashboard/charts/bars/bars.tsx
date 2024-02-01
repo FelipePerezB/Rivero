@@ -2,14 +2,24 @@ import Bar from "./bar";
 
 export default function BarsChart({
   data,
+  minSize,
 }: {
   data: { label?: string; value: number | string }[];
+  minSize?: number;
 }) {
-  const values = data.map((item) => Number(item.value));
+  const chartData = minSize
+    ? [
+        ...data,
+        ...Array(minSize - data?.length ?? 0).fill({ time: "---", value: 0 }),
+      ]
+    : data;
+
+  console.log(chartData);
+  const values = chartData.map((item) => Number(item.value));
   const maxValue = Math.max(...values);
-  const dataWithPersentage = data.map((data) => ({
-    ...data,
-    percentage: (Number(data?.value) * 100) / maxValue,
+  const dataWithPersentage = chartData.map((bar) => ({
+    ...bar,
+    percentage: (Number(bar?.value) * 100) / maxValue,
   }));
 
   return (
@@ -24,7 +34,7 @@ export default function BarsChart({
               {value}
             </span>
           </Bar>
-          <span>{label}</span>
+          <span className="min-w-max">{label ?? "/"}</span>
         </div>
       ))}
     </div>

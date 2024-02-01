@@ -8,6 +8,7 @@ import capFirst from "src/utils/capFirst";
 import UpdateSearchModal from "@components/admin/update-form/update-search-modal";
 import SectionTitle from "@components/common/titles/section-title";
 import Section from "@components/containers/section";
+import SubjectStats from "src/app/(main)/subjects/[subject]/[topic]/components/stats/subject-stats";
 
 interface SubtopicWithFile extends Subtopic {
   File: File[];
@@ -36,7 +37,6 @@ export default async function SubtopicPage({
     `subtopics/${subtopicId}`,
   ])) as { data: SubtopicWithFile };
 
-  console.log(subtopic)
 
   const { data: subtopics } = (await api(`topics/${topicId}/subtopics`, {}, [
     `topics/${topicId}`,
@@ -47,6 +47,7 @@ export default async function SubtopicPage({
   const { data: lessons } = (await api(`lessons/documents/${subtopicId}`, {}, [
     `files/${topicId}`,
   ])) as { data: LessonWithFile[] };
+
 
   return (
     <>
@@ -64,7 +65,7 @@ export default async function SubtopicPage({
             option={subtopicId}
           />
           <div className="flex gap-2.5">
-          <CreateFileBtn {...{ subjectId, topicId, subtopicId }} />
+          <CreateFileBtn text="Nuevo documento" {...{ subjectId, topicId, subtopicId }} />
           <UpdateSearchModal
             color="white"
             data={{ ...subtopic }}

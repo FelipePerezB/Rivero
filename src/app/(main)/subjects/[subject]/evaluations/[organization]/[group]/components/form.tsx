@@ -12,6 +12,7 @@ export default function AddScoreForm({
   id: string;
   fileId: string;
 }) {
+  console.log({id, fileId})
   const router = useRouter();
   const addScore = async () => {
     const min = 500;

@@ -48,11 +48,11 @@ export default async function OrganizationModal() {
   return (
     <Section>
       <div className="flex flex-col gap-1">
-        <SmallTitle>{organization?.name ?? "Sin organización"}</SmallTitle>
+        <SmallTitle>{organization?.name ?? "Sin institución"}</SmallTitle>
         <p className="text-sm font-light">
           {organization?.name
             ? "Gestiona tus invitaciones"
-            : "¡Unete a una organización para acceder a evaluaciones y más cosas!"}
+            : "¡Unete a una institución para acceder a evaluaciones y más cosas!"}
         </p>
       </div>
       {pendingInvitations?.map(({ id, organizationId, role, updateAt }) => (
