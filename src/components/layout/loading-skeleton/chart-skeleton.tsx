@@ -3,7 +3,7 @@ import React, { ReactNode } from "react";
 
 export default function ChartSkeleton() {
   return (
-    <div className="flex items-baseline mt-4 gap-2 animate-pulse h-full w-full">
+    <div className="flex items-baseline gap-2 animate-pulse h-full w-full">
       <Bar height={80} />
       <Bar height={50} />
       <Bar height={90} />

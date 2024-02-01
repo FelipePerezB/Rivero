@@ -52,7 +52,7 @@ export default async function EvaluationsPage({
   const sortedScores = flatScores.sort((a, b) => a - b);
 
   return (
-    <OrganizationProtect organizationId={organization} >
+    <OrganizationProtect organizationId={organization}>
       <Section>
         <SectionTitle
           title="Evaluaciones"
@@ -75,19 +75,12 @@ export default async function EvaluationsPage({
           </Button>
         </div>
         <div className="flex flex-col gap-md">
-          <Card className="p-6 p-b-3">
-            <Suspense
-              fallback={
-                <>
-                  <LargeSkeleton />
-                  <div className="h-[280px]">
-                    <ChartSkeleton />
-                  </div>
-                </>
-              }
-            >
+          <Card className="flex flex-col justify-between gap-2 h-[390px]">
+            <Suspense fallback={<LargeSkeleton />}>
               <GroupsList group={group} organization={organization} />
-
+            </Suspense>
+            <Suspense fallback={<ChartSkeleton />}>
+            {/* <ChartSkeleton /> */}
               <GroupStats
                 scores={scores}
                 subject={subject}
