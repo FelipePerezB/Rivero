@@ -12,14 +12,17 @@ import formatScores, {
 export default async function SubjectStats({ subject }: { subject: string }) {
   const { userId, getToken } = auth();
   const token = await getToken();
-  const { data: scores } = (await api(`scores/user/${userId}`, {
-    cache: "no-store",
-    headers: {
-      Authorization: `Bearer ${token}`,
+  const user = await currentUser();
+  const group = user?.publicMetadata.group;
+  const { data: scores } = (await api(
+    `scores/user/${userId}`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     },
-  })) as { data: Score[] };
-  // const data = formatWithoutGroupScores(scores) ?? []
-  // console.log(data)
+    [`scores/group/${group}`]
+  )) as { data: Score[] };
   const data =
     formatWithoutGroupScores(scores)?.map(({ time, value }) => ({
       label: time.substring(5),

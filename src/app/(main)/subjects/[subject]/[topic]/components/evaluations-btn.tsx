@@ -1,5 +1,3 @@
-import { currentUser } from "@clerk/nextjs";
-import NavigationCard from "@components/cards/NavigationCard";
 import LinkCard from "@components/navigation/link-card";
 import { Role } from "@prisma/client";
 import React from "react";
@@ -13,7 +11,6 @@ export default async function EvaluationsBtn({
   topic: string;
 }) {
   const user = await getUser();
-
   const organization = user?.publicMetadata?.organizationId;
   const isAdmin = user?.publicMetadata.role === Role.ADMIN;
   return (

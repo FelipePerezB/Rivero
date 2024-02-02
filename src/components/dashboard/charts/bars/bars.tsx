@@ -23,7 +23,7 @@ export default function BarsChart({
   }));
 
   return (
-    <div className="flex w-full gap-xs p-sm justify-center pt-sm items-end h-full">
+    <div className="flex w-full gap-xs p-sm justify-center pt-md items-end h-full">
       {dataWithPersentage.map(({ percentage, value, label }, i) => (
         <div
           key={`bar-${i}-${percentage}%`}
