@@ -29,15 +29,23 @@ export default async function HomePage({
 
   return (
     <>
-      <SearchModal
-        searchParams={searchParams}
-        id="organization"
-        title="Organización"
-      >
-        <OrganizationModal />
-      </SearchModal>
+      <Suspense>
+        <SearchModal
+          searchParams={searchParams}
+          id="organization"
+          title="Organización"
+        >
+          <OrganizationModal />
+        </SearchModal>
+      </Suspense>
       <Section>
-        <Suspense fallback={<LargeSkeleton />}>
+        <Suspense
+          fallback={
+            <div className="h-14">
+              <LargeSkeleton />
+            </div>
+          }
+        >
           <HomeTitle />
         </Suspense>
         <article className="flex flex-col sm:flex-row gap-sm sm:gap-md">
@@ -45,10 +53,10 @@ export default async function HomePage({
             <Suspense
               fallback={
                 <>
-                  <Card>
+                  <Card className="sm:w-52 h-20">
                     <LargeSkeleton />
                   </Card>
-                  <Card>
+                  <Card className="sm:w-52 h-20">
                     <LargeSkeleton />
                   </Card>
                 </>
