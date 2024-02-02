@@ -27,13 +27,17 @@ export default async function ScoresTable({
   const groupId = group === "all" ? "" : group;
   const { data: selectedGroup } = (await api(
     `groups/${organization}/${groupId}`,
-    {headers: { Authorization: `Bearer ${token}` }, cache: "no-store"}
+    { headers: { Authorization: `Bearer ${token}` }, cache: "no-store" }
   )) as { data: GroupWithUsers };
 
-  const { data: scores } = (await api(
-    `scores/${organization}/${evaluation}?group=${groupId}`,
-    { cache: "no-store", headers: { Authorization: `Bearer ${token}` } }
-  )) as { data: Score[] };
+  const groupQuery = group !== "all" ? `group=${group}&` : ``;
+  const evaluationQuery = evaluation ? `evaluation=${evaluation}&` : ``;
+  const endpoint = `scores/${organization}?${evaluationQuery}${groupQuery}`;
+
+  const { data: scores } = (await api(endpoint, {
+    cache: "no-store",
+    headers: { Authorization: `Bearer ${token}` },
+  })) as { data: Score[] };
 
   const users = selectedGroup?.Users?.filter(
     ({ role }) => role === Role.STUDENT
@@ -44,8 +48,6 @@ export default async function ScoresTable({
     scores?.find(({ userId }) => userId === id)?.score ?? "---",
   ]);
 
-
-  console.log(scores, selectedGroup)
   return (
     <Table
       onClickHref="?modal=new-score&id=[id]"

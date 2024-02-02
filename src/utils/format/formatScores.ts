@@ -10,35 +10,31 @@ export interface ScoresWithGroup extends Score {
 }
 
 export default function formatScores(scores: ScoresWithGroup[]) {
-  const unFormatedData = {} as {
-    [groupId: string]: { [time: string]: number[] };
-  };
+  const unformattedData: { [groupId: string]: { [time: string]: number[] } } = {};
 
   scores?.forEach(({ score, updateAt, User: { Group } }) => {
-    const unFormatedTime = updateAt as unknown as string;
-    const time = unFormatedTime.split("T")[0];
+    const unformattedTime = updateAt as unknown as string;
+    const time = unformattedTime.split("T")[0];
     const groupId = Group?.id;
-    if (!groupId) return;
-    const group = unFormatedData[groupId];
-    const date = group ? group[time] : [];
 
-    unFormatedData[groupId] = group
-      ? { [time]: date ? [...date, score] : [] }
-      : { [time]: [score] };
+    if (!groupId) return;
+
+    const group = unformattedData[groupId] || {};
+    const date = group[time] || [];
+    group[time] = [...date, score];
+    unformattedData[groupId] = group;
   });
 
-  const data: {
-    [group: string]: {
-      value: number;
-      time: string;
-    }[];
-  } = Object.entries(unFormatedData).map(([group, dates]) => ({
-    [group]: Object.entries(dates).map(([time, values]) => ({
+  const formattedData: { [group: string]: { value: number; time: string }[] } = {};
+
+  Object.entries(unformattedData).forEach(([group, dates]) => {
+    formattedData[group] = Object.entries(dates).map(([time, values]) => ({
       time,
       value: getAvg(values),
-    })),
-  }))[0];
-  return data;
+    }));
+  });
+
+  return formattedData;
 }
 export function formatWithoutGroupScores(scores: Score[]) {
   const unFormatedData = {} as { [time: string]: number[] };

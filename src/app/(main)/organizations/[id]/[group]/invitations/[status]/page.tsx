@@ -27,6 +27,7 @@ import Options from "@components/navigation/options/options";
 import OrganizationProtect from "@components/admin/protect/organization-protect";
 import LargeSkeleton from "@components/layout/loading-skeleton/large-skeleton/large-skeleton";
 import { auth } from "@clerk/nextjs";
+import SectionTitleSkeleton from "@components/common/titles/section-title/section-title-skeleton";
 
 interface OrganizationWithGroups extends Organization {
   Groups: Group[];
@@ -47,25 +48,13 @@ export default async function InvitationsPage({
   params: { group: string; id: string; status: StatusType };
   searchParams: { [key: string]: string; status: string };
 }) {
-  const endpoint = `organizations/${organizationId}`;
-  const { data: organization } = (await api(endpoint, {}, [endpoint])) as {
-    data: OrganizationWithGroups;
-  };
-
-  const groupName = organization?.Groups?.find(
-    ({ id }) => id === Number(group)
-  )?.name;
-
-  const options = Object.values(Status);
-  console.log(options);
   return (
     <OrganizationProtect organizationId={organizationId}>
       <Section>
         <div className="flex flex-col gap-sm sm:flex-row sm:justify-between sm:items-center">
-          <SectionTitle
-            title={"Invitaciones"}
-            subTitle={`Invitar estudiantes y profesores a ${groupName}.`}
-          />
+          <Suspense fallback={<SectionTitleSkeleton />}>
+            <GroupTitle {...{ organizationId, group }} />
+          </Suspense>
           <Button href="?modal=invitate">
             Invitar{" "}
             <FontAwesomeIcon className="h-2.5 w-2.5" icon={faPaperPlane} />{" "}
@@ -96,14 +85,14 @@ export default async function InvitationsPage({
         fallback={
           <Section>
             <ItemsBox size="lg">
-              <InvitationSkeleton/>
-              <InvitationSkeleton/>
-              <InvitationSkeleton/>
-              <InvitationSkeleton/>
-              <InvitationSkeleton/>
-              <InvitationSkeleton/>
-              <InvitationSkeleton/>
-              <InvitationSkeleton/>
+              <InvitationSkeleton />
+              <InvitationSkeleton />
+              <InvitationSkeleton />
+              <InvitationSkeleton />
+              <InvitationSkeleton />
+              <InvitationSkeleton />
+              <InvitationSkeleton />
+              <InvitationSkeleton />
             </ItemsBox>
           </Section>
         }
@@ -115,6 +104,29 @@ export default async function InvitationsPage({
         />
       </Suspense>
     </OrganizationProtect>
+  );
+}
+
+async function GroupTitle({
+  organizationId,
+  group,
+}: {
+  organizationId: string;
+  group?: string;
+}) {
+  const endpoint = `organizations/${organizationId}`;
+  const { data: organization } = (await api(endpoint, {}, [endpoint])) as {
+    data: OrganizationWithGroups;
+  };
+
+  const groupName = organization?.Groups?.find(
+    ({ id }) => id === Number(group)
+  )?.name;
+  return (
+    <SectionTitle
+      title={"Invitaciones"}
+      subTitle={`Invitar estudiantes y profesores a ${groupName}.`}
+    />
   );
 }
 

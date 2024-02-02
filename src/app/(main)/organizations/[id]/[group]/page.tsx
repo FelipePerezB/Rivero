@@ -90,6 +90,8 @@ export default async function AllGroupsOrganizationPage({
       }))
     : [];
 
+  console.log({scores: subjectsWithScores.map(({scores})=>scores)})
+
   return (
     <OrganizationProtect organizationId={organizationId}>
       <Section>

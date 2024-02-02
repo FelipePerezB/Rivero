@@ -1,6 +1,5 @@
-import { Subject, Subtopic, Topic, Types } from "@prisma/client";
+import { Subtopic, Topic, Types } from "@prisma/client";
 import api from "src/utils/api";
-import Options from "@components/navigation/options/options";
 import Table from "@components/dashboard/table/Table";
 import capFirst from "src/utils/capFirst";
 import CreateFileBtn from "./[subtopic]/components/create-file-btn/create-file-btn";
@@ -10,19 +9,13 @@ import NavigationCard from "@components/cards/NavigationCard";
 import UpdateTopic from "../../../components/update-topic";
 import UpdateSubject from "../../../components/update-subject";
 import Section from "@components/containers/section";
-import SectionTitle from "@components/common/titles/section-title/section-title";
-import SubTitle from "@components/common/titles/subtitle";
 import SmallTitle from "@components/common/titles/small-title";
 import { TopicsList } from "@components/navigation/options/topics-list";
 import { Suspense } from "react";
-import Card from "@components/cards/Card";
 import LargeSkeleton from "@components/layout/loading-skeleton/large-skeleton/large-skeleton";
 import { SubjectTitleWithSkeleton } from "src/app/(main)/components/common/subject-title";
-import Button from "@components/common/buttons/button/button";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPen, faPlus } from "@fortawesome/free-solid-svg-icons";
 import TableSkeleton from "@components/layout/loading-skeleton/table-skeleton/table-skeleton";
-// import TopicsList from "@components/navigation/options/topics-list";
+import CardSkeleton from "@components/cards/card-skeleton";
 
 export default async function SubjectDashboard({
   params: { id: subjectId, topic: topicId },
@@ -38,7 +31,7 @@ export default async function SubjectDashboard({
           subjectId={subjectId}
           subtitle="Administra la asignatura"
         />
-        <article className="flex justify-between items-center">
+        <article className="flex h-10 md:h-8 flex-col gap-md md:flex-row md:justify-between md:items-center">
           <TopicsList subjectId={subjectId} topicId={topicId} />
           <div className="flex gap-sm">
             <Suspense fallback={<LargeSkeleton />}>
@@ -50,9 +43,8 @@ export default async function SubjectDashboard({
             </Suspense>
           </div>
         </article>
-        <Suspense fallback={<TableSkeleton/>}>
-        <TopicTable topicId={topicId} />
-
+        <Suspense fallback={<TableSkeleton />}>
+          <TopicTable topicId={topicId} />
         </Suspense>
       </Section>
       <Section>
@@ -68,18 +60,10 @@ export default async function SubjectDashboard({
           <Suspense
             fallback={
               <>
-                <Card>
-                  <LargeSkeleton />
-                </Card>
-                <Card>
-                  <LargeSkeleton />
-                </Card>
-                <Card>
-                  <LargeSkeleton />
-                </Card>
-                <Card>
-                  <LargeSkeleton />
-                </Card>
+                <CardSkeleton />
+                <CardSkeleton />
+                <CardSkeleton />
+                <CardSkeleton />
               </>
             }
           >

@@ -34,6 +34,7 @@ export default async function findManyScores({
       lesson: { ...subjectIdQuery, ...evaluationQuery },
     },
     select: {
+      lessonId: true,
       userId: true,
       id: true,
       score: true,

@@ -1,7 +1,5 @@
 import { auth } from "@clerk/nextjs";
 import { Score } from "@prisma/client";
-import Card from "@components/cards/Card";
-import CardItem from "@components/cards/card-item";
 import React, { ReactNode } from "react";
 import api from "src/utils/api";
 import getQuartile from "src/utils/maths/getQuartile";
@@ -12,19 +10,28 @@ import StatsCard from "@components/cards/stats-card/stats-card";
 
 export default async function ScoresStats({
   evaluation,
+  subject,
   group,
   organization,
 }: {
   organization: string;
-  evaluation: string;
+  evaluation?: string;
+  subject?: string;
   group?: string;
 }) {
   const groupId = group === "all" ? "" : group;
   const { getToken } = auth();
   const token = await getToken();
+
+  const groupQuery = group ? `group=${groupId}&` : ``;
+  const evaluationQuery = evaluation ? `evaluation=${evaluation}&` : ``;
+  const subjectQuery = subject ? `subject=${subject}&` : ``;
+  const endpoint = `scores/${organization}?${subjectQuery}${groupQuery}${evaluationQuery}`;
+
   const { data } = (await api(
-    `scores/${organization}/${evaluation}${group ? `?group=${groupId}` : ``}`,
-    { cache: "no-store", headers: { Authorization: `Bearer ${token}` } }
+    endpoint,
+    { headers: { Authorization: `Bearer ${token}` }, cache: "no-store" },
+    [!group ? `scores/${organization}` : `scores/group/${group}`]
   )) as { data: Score[] };
 
   const scores = data?.map(({ score }) => score);

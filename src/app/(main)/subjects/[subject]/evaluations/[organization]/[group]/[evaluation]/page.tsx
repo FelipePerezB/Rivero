@@ -28,6 +28,7 @@ import OrganizationProtect from "@components/admin/protect/organization-protect"
 import StatsCard from "@components/cards/stats-card/stats-card";
 import StatsCardsGroup from "@components/cards/stats-card/stats-cards-group";
 import StatsCardSkeleton from "@components/cards/stats-card/stats-card-skeleton";
+import SectionTitleSkeleton from "@components/common/titles/section-title/section-title-skeleton";
 
 export default async function EvaluationPage({
   searchParams,
@@ -36,20 +37,13 @@ export default async function EvaluationPage({
   params: { [key: string]: string };
   searchParams: { [key: string]: string };
 }) {
-  const { data: lesson } = (await api("lessons/" + evaluation, {}, [
-    "evaluations/" + subject,
-  ])) as { data: LessonWithFile };
-
-  const { File } = lesson ?? {};
-
   return (
     <OrganizationProtect organizationId={organization}>
       <Section>
         <div className="flex flex-col md:flex-row  gap-sm  md:justify-between md:items-center mb-2">
-          <SectionTitle
-            title={File?.name}
-            subTitle="Evalua los conocimientos de la asignatura"
-          />
+          <Suspense fallback={<SectionTitleSkeleton />}>
+            <EvaluationTitle {...{ evaluation, subject }} />
+          </Suspense>
           <div className="flex gap-2">
             <Button href={"/documents/download/" + evaluation}>
               Descargar
@@ -97,13 +91,35 @@ export default async function EvaluationPage({
           />
         </Suspense>
       </Section>
-      <SearchModal
-        id="new-score"
-        title="Nuevo puntaje"
-        searchParams={searchParams}
-      >
-        <AddScoreForm id={searchParams?.id} fileId={evaluation} />
-      </SearchModal>
+      <Suspense>
+        <SearchModal
+          id="new-score"
+          title="Nuevo puntaje"
+          searchParams={searchParams}
+        >
+          <AddScoreForm id={searchParams?.id} fileId={evaluation} />
+        </SearchModal>
+      </Suspense>
     </OrganizationProtect>
+  );
+}
+
+async function EvaluationTitle({
+  evaluation,
+  subject,
+}: {
+  subject: string;
+  evaluation: string;
+}) {
+  const { data: lesson } = (await api("lessons/" + evaluation, {}, [
+    "evaluations/" + subject,
+  ])) as { data: LessonWithFile };
+
+  const { File } = lesson ?? {};
+  return (
+    <SectionTitle
+      title={File?.name}
+      subTitle="Evalua los conocimientos de la asignatura"
+    />
   );
 }
