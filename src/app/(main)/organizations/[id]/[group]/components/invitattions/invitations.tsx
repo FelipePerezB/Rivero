@@ -1,8 +1,6 @@
-import { auth } from "@clerk/nextjs";
 import { Invitation } from "@prisma/client";
 import React from "react";
 import api from "src/utils/api";
-import RevokeBtn from "./revoke-btn";
 import ItemsBox from "@components/containers/items-box/items-box";
 import Card from "@components/cards/Card";
 
@@ -27,7 +25,6 @@ export default async function Invitations({
             key={`invitattion-${id}`}
           >
             {email}
-            {/* <RevokeBtn id={id} /> */}
           </Card>
         ))}
       </ItemsBox>

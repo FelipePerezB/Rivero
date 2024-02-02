@@ -15,13 +15,14 @@ import Link from "next/link";
 import getAvg from "src/utils/maths/getAvg";
 import { ReactNode, Suspense } from "react";
 import Item from "@components/dashboard/item";
-import ScoresChart from "./components/scores-chart";
+import ScoresChart from "../components/scores-chart";
 import StatsCard from "@components/cards/stats-card/stats-card";
 import Button from "@components/common/buttons/button/button";
-import RemoveUserWrapper from "../../components/remove-user-wrapper";
+import RemoveUserWrapper from "../../../components/remove-user-wrapper";
 import formatScores, { ScoresWithGroup } from "src/utils/format/formatScores";
 import OrganizationProtect from "@components/admin/protect/organization-protect";
 import { auth } from "@clerk/nextjs";
+import UsersTable from "../../components/users-table";
 
 interface GroupWithusers extends Group {
   Users: User[];
@@ -39,7 +40,7 @@ export default async function AllGroupsOrganizationPage({
     data: Organization;
   };
 
-  const OrgForm = dynamic(() => import("../org-form"));
+  const OrgForm = dynamic(() => import("../../org-form"));
 
   const { getToken } = auth();
   const token = await getToken();
@@ -89,8 +90,6 @@ export default async function AllGroupsOrganizationPage({
         scores: scores[subject?.id],
       }))
     : [];
-
-  console.log({scores: subjectsWithScores.map(({scores})=>scores)})
 
   return (
     <OrganizationProtect organizationId={organizationId}>
@@ -181,12 +180,12 @@ export default async function AllGroupsOrganizationPage({
       </Section>
       {groupData?.id && (
         <>
-          <GroupTable
+          <UsersTable
             groupData={groupData}
             role={Role.STUDENT}
             name="Estudiantes"
           />
-          <GroupTable
+          <UsersTable
             groupData={groupData}
             role={Role.TEACHER}
             name="Docentes"
@@ -194,58 +193,5 @@ export default async function AllGroupsOrganizationPage({
         </>
       )}
     </OrganizationProtect>
-  );
-}
-
-interface GroupWithUsers extends Group {
-  Users: User[];
-}
-
-function GroupTable({
-  name,
-  role: tableRole,
-  groupData,
-}: {
-  name: string;
-  role: Role;
-  groupData: GroupWithUsers;
-}) {
-  const users = groupData?.Users?.filter(({ role }) => role === tableRole).map(
-    ({ email, name, lastname, externalId }) => [
-      externalId,
-      capFirst(name),
-      capFirst(lastname ?? ""),
-      email,
-    ]
-  );
-  const RemoveUserWrapperWithGroup = ({
-    children,
-    row,
-    className,
-  }: {
-    className: string;
-    row: Row;
-    children: ReactNode;
-  }) => (
-    <RemoveUserWrapper row={row} group={groupData?.id} className={className}>
-      {children}
-    </RemoveUserWrapper>
-  );
-
-  return (
-    <Table
-      OnClickWrapper={RemoveUserWrapperWithGroup}
-      onClickHref="?modal=update-user&name=[name]&lastname=[lastname]&email=[email]"
-      head={{
-        title: capFirst(name),
-        keys: [
-          { name: "ID", key: "id", hidden: true },
-          { name: "Nombre", key: "name" },
-          { name: "Apellido", key: "lastname" },
-          { name: "Correo", key: "email" },
-        ],
-      }}
-      data={users}
-    />
   );
 }

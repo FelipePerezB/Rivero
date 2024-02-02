@@ -14,7 +14,6 @@ import {
   Invitation,
   Messages,
   Organization,
-  Role,
   Status,
 } from "@prisma/client";
 import React, { Suspense } from "react";
@@ -71,7 +70,6 @@ export default async function InvitationsPage({
           </SearchModal>
         </div>
         <Options
-          // customPath="?status=[key]"
           option={status}
           options={[
             { title: "Todas", key: "all" },
