@@ -5,20 +5,23 @@ import React, { ReactNode } from "react";
 import api from "src/utils/api";
 
 export default async function AllScores() {
-  const { userId, getToken } = await auth();
+  const { userId, getToken } = auth();
   const token = await getToken();
-  const { data: scores } = (await api(
-    `scores/user/${userId}`,
-    {
-      cache: "no-store",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    },
-    [`scores`]
-  )) as {
-    data: Score[];
-  };
+  const user = await currentUser();
+  const group = user?.publicMetadata?.group;
+  const { data: scores } = group
+    ? await api(
+        `scores/user/${userId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+        [`scores/group/${group}`]
+      )
+    : ({ data: [] } as {
+        data?: Score[];
+      });
   return (
     <>
       <Item subtitle="Puntajes" title={scores?.length} />

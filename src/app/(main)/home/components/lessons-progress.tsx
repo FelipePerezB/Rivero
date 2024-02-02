@@ -11,7 +11,7 @@ import RowSkeleton from "@components/layout/loading-skeleton/row-skeleton/row-sk
 import XsSkeleton from "@components/layout/loading-skeleton/xs-skeleton";
 import BarsChart from "@components/dashboard/charts/bars/bars";
 import Item from "@components/dashboard/item";
-
+import api from "src/utils/api";
 
 type InputObject = Record<string, Record<string, Record<string, string>>>;
 export function countIdInTopic(topicProgress: {
@@ -86,11 +86,10 @@ function transformArray(input: InputArray): OutputObject[] {
   return outputArray;
 }
 
-export default async function LessonProgress({
-  subjects,
-}: {
-  subjects: SubjectWithTopic[];
-}) {
+export default async function LessonProgress() {
+  const { subjects } = (await api("subjects", {}, ["subjects"])) as {
+    subjects: SubjectWithTopic[];
+  };
   const progressBySubject = await Promise.all(
     subjects.map(async (subject) => {
       const progress = await getProgress(subject?.id);
@@ -101,8 +100,6 @@ export default async function LessonProgress({
 
   const date = new Date();
   const currentDate = date.toISOString().split("T")[0];
-  console.log(date.toISOString());
-
   const result = transformArray(progressBySubject);
   const lessonsToday =
     result.find(({ time }) => time === currentDate)?.value ?? 0;
@@ -134,7 +131,7 @@ export default async function LessonProgress({
       <div className="flex flex-col w-full h-40 sm:h-full">
         <SmallTitle>Resumen semanal</SmallTitle>
         <BarsChart
-        minSize={7}
+          minSize={7}
           data={result.map(({ time, value }) => {
             const dateSplit = time.split("-");
             const label = `${dateSplit.at(2)}/${dateSplit.at(1)}`;

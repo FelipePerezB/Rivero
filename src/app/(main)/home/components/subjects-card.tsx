@@ -1,23 +1,10 @@
-// import Card from "@components/Card";
 import capFirst from "src/utils/capFirst";
-// import Tags from "@components/tags/Tags";
-import { Subject, Topic } from "@prisma/client";
-import { LessonWithFile } from "../../subjects/models/lesson";
 import Card from "@components/cards/Card";
 import Tags from "@components/common/tags/Tags";
 import { SubjectWithTopic } from "../../subjects/models/subject";
-import {
-  CompletedProgress,
-  ProgressVar,
-} from "@components/dashboard/progress-bar/ProgressVar";
-// import { NoteWithFile } from "src/app/subjects/models/note";
+import api from "src/utils/api";
 
-// export interface SubjectWithTopic extends Subject {
-//   Topics: Topic[];
-//   lesson: LessonWithFile[];
-// }
-export default function SubjectsCards({
-  subjects,
+export default async function SubjectsCards({
   redirect = true,
   editMode = false,
 }: {
@@ -26,8 +13,10 @@ export default function SubjectsCards({
   stats?: {
     [subject: string]: { [topic: string]: string };
   };
-  subjects: SubjectWithTopic[];
 }) {
+  const { subjects } = (await api("subjects", {}, ["subjects"])) as {
+    subjects: SubjectWithTopic[];
+  };
   return subjects?.map(({ name, Topics, id }) => {
     const tags = Topics?.map((topic) => topic.name);
     const topicId = Topics?.at(0)?.id;
@@ -41,10 +30,9 @@ export default function SubjectsCards({
         interactive
         key={key}
         href={href}
-        className="flex flex-col gap-1"
+        className="max-w-[250px] flex flex-col gap-1"
       >
         <h3 className="text-xl font-medium">{capFirst(name)}</h3>
-
         <Tags tags={tags} />
       </Card>
     );

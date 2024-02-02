@@ -1,11 +1,8 @@
 import { currentUser } from "@clerk/nextjs";
 import Card from "@components/cards/Card";
-import Button from "@components/common/buttons/button/button";
 import SmallTitle from "@components/common/titles/small-title";
 import Section from "@components/containers/section";
 import XsSkeleton from "@components/layout/loading-skeleton/xs-skeleton";
-import { faCheck, faClose } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Invitation, Messages, Organization } from "@prisma/client";
 import React, { Suspense } from "react";
 import api from "src/utils/api";
@@ -29,6 +26,7 @@ async function InvitationOrg({
 export default async function OrganizationModal() {
   const user = await currentUser();
   const organizationId = user?.publicMetadata?.organizationId;
+  const group = user?.publicMetadata?.group;
   const email = user?.emailAddresses[0]?.emailAddress;
 
   const { data: organization }: { data: Organization } = organizationId
@@ -37,9 +35,11 @@ export default async function OrganizationModal() {
       ])
     : {};
 
-  const { data: invitations } = (await api(`auth/invitation/email/${email}`, {
-    cache: "no-store",
-  })) as { data?: Invitation[] };
+  const { data: invitations } = (await api(
+    `auth/invitation/email/${email}`,
+    {},
+    [`invitations/group/${group}`]
+  )) as { data?: Invitation[] };
 
   const pendingInvitations = invitations?.filter(
     ({ msg }) => msg === Messages.CONFIRMATION_REQUIRED
