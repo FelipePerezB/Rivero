@@ -4,7 +4,7 @@ export default function ItemsBox({
   children,
   size = "md",
 }: {
-  children: React.ReactNode;
+  children?: React.ReactNode;
   size?: "md" | "sm" | "xs" | "lg";
 }) {
 

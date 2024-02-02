@@ -10,7 +10,7 @@ import api from "src/utils/api";
 import GroupsLinks from "../components/groups-links";
 import ScoresStats from "../../[group]/[evaluation]/components/scores-stats/scores-stats";
 import Section from "@components/containers/section";
-import SectionTitle from "@components/common/titles/section-title";
+import SectionTitle from "@components/common/titles/section-title/section-title";
 
 export default async function AllGroupsEvaluationPage({
   params: { evaluation, subject, organization },

@@ -22,7 +22,7 @@ import ScoresStats from "./components/scores-stats/scores-stats";
 import RowSkeleton from "@components/layout/loading-skeleton/row-skeleton/row-skeleton";
 import TableSkeleton from "@components/layout/loading-skeleton/table-skeleton/table-skeleton";
 import AddScoreForm from "../components/form";
-import SectionTitle from "@components/common/titles/section-title";
+import SectionTitle from "@components/common/titles/section-title/section-title";
 import Section from "@components/containers/section";
 import OrganizationProtect from "@components/admin/protect/organization-protect";
 import StatsCard from "@components/cards/stats-card/stats-card";

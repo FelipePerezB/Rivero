@@ -9,7 +9,7 @@ import FloatingBtn from "@components/common/buttons/floating-btn/floating-btn";
 import api from "src/utils/api";
 import generateRandomId from "src/utils/generateRandomId";
 import Section from "@components/containers/section";
-import SectionTitle from "@components/common/titles/section-title";
+import SectionTitle from "@components/common/titles/section-title/section-title";
 
 export default async function EditFilesPage() {
   const { getToken } = auth();

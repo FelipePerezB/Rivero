@@ -2,7 +2,7 @@ import api from "src/utils/api";
 import { Group, Organization, User } from "@prisma/client";
 import dynamic from "next/dynamic";
 import Section from "@components/containers/section";
-import SectionTitle from "@components/common/titles/section-title";
+import SectionTitle from "@components/common/titles/section-title/section-title";
 import SmallTitle from "@components/common/titles/small-title";
 import Options from "@components/navigation/options/options";
 import Card from "@components/cards/Card";

@@ -12,7 +12,7 @@ import ItemsBox from "@components/containers/items-box/items-box";
 import NavigationCard from "@components/cards/NavigationCard";
 import Card from "@components/cards/Card";
 import Section from "@components/containers/section";
-import SectionTitle from "@components/common/titles/section-title";
+import SectionTitle from "@components/common/titles/section-title/section-title";
 import SmallTitle from "@components/common/titles/small-title";
 import getAvg from "src/utils/maths/getAvg";
 import getQuartile from "src/utils/maths/getQuartile";

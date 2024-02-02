@@ -1,7 +1,7 @@
 import { currentUser } from "@clerk/nextjs";
 import { User } from "@clerk/nextjs/dist/types/server";
 import Button from "@components/common/buttons/button/button";
-import SectionTitle from "@components/common/titles/section-title";
+import SectionTitle from "@components/common/titles/section-title/section-title";
 import Title from "@components/common/titles/title";
 import Section from "@components/containers/section";
 import BackBtn from "@components/navigation/back-btn";

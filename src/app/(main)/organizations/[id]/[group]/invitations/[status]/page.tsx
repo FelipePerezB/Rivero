@@ -1,5 +1,5 @@
 import Button from "@components/common/buttons/button/button";
-import SectionTitle from "@components/common/titles/section-title";
+import SectionTitle from "@components/common/titles/section-title/section-title";
 import Section from "@components/containers/section";
 import SearchModal from "@components/modal/search-modal";
 import {

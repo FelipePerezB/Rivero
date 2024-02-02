@@ -1,5 +1,5 @@
 import { currentUser } from "@clerk/nextjs";
-import SectionTitle from "@components/common/titles/section-title";
+import SectionTitle from "@components/common/titles/section-title/section-title";
 import React from "react";
 
 export default async function HomeTitle() {

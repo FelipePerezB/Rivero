@@ -6,7 +6,7 @@ import Table from "@components/dashboard/table/Table";
 import Options from "@components/navigation/options/options";
 import capFirst from "src/utils/capFirst";
 import UpdateSearchModal from "@components/admin/update-form/update-search-modal";
-import SectionTitle from "@components/common/titles/section-title";
+import SectionTitle from "@components/common/titles/section-title/section-title";
 import Section from "@components/containers/section";
 
 interface SubtopicWithFile extends Subtopic {

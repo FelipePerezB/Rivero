@@ -1,13 +1,9 @@
 import { auth, currentUser } from "@clerk/nextjs";
 import BarsChart from "@components/dashboard/charts/bars/bars";
-import { ChartComponent } from "@components/dashboard/charts/line/linechart";
 import { Score } from "@prisma/client";
 import React from "react";
 import api from "src/utils/api";
-import formatScores, {
-  ScoresWithGroup,
-  formatWithoutGroupScores,
-} from "src/utils/format/formatScores";
+import { formatWithoutGroupScores } from "src/utils/format/formatScores";
 
 export default async function SubjectStats({ subject }: { subject: string }) {
   const { userId, getToken } = auth();

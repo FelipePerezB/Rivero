@@ -3,11 +3,8 @@ import LinksAccordion from "@components/accordion/links-accordion";
 import api from "src/utils/api";
 import { LessonWithFile } from "../../models/lesson";
 import EvaluationsBtn from "./components/evaluations-btn";
-import Options from "@components/navigation/options/options";
-import { SubjectWithTopic } from "../../models/subject";
 import capFirst from "src/utils/capFirst";
 import { documentsLink } from "src/app/constants/urls/documents";
-import SectionTitle from "@components/common/titles/section-title";
 import Section from "@components/containers/section";
 import LinkCard from "@components/navigation/link-card";
 import SmallTitle from "@components/common/titles/small-title";
@@ -16,65 +13,13 @@ import SubjectStats from "./components/stats/subject-stats";
 import { Suspense } from "react";
 import ChartSkeleton from "@components/layout/loading-skeleton/chart-skeleton";
 import LargeSkeleton from "@components/layout/loading-skeleton/large-skeleton/large-skeleton";
+import { SubjectTitle } from "src/app/(main)/components/common/subject-title";
+// import SubjectTitle from "src/app/(main)/components/common/subject-title";
+// import TopicsList from "@components/navigation/options/topics-list";
 
 interface SubtopicWithLessons extends Subtopic {
   Lesson: LessonWithFile[];
 }
-
-const PracticeLink = async ({ subjectId }: { subjectId: string }) => {
-  const { data: practice } = (await api(`lessons/practice/${subjectId}`, {}, [
-    `practice/${subjectId}`,
-  ])) as {
-    data: LessonWithFile;
-  };
-  const havePractice = !!practice?.File?.externalId;
-  return havePractice ? (
-    <LinkCard
-      href={`practice`}
-      description="Refuerza los contenidos aprendidos"
-      title="Práctica"
-    />
-  ) : (
-    <></>
-  );
-};
-
-const TopicsList = async ({
-  subjectId,
-  topicId,
-}: {
-  subjectId: string;
-  topicId: string;
-}) => {
-  const { data: topics } = (await api(`topics?subject=${subjectId}`, {}, [
-    `subjects/${subjectId}`,
-  ])) as {
-    data: Topic[];
-  };
-  return (
-    <Options
-      option={topicId}
-      options={topics?.map(({ name, id }) => ({
-        title: capFirst(name),
-        key: id,
-      }))}
-    />
-  );
-};
-
-const SubjectName = async ({ subjectId }: { subjectId: string }) => {
-  const { data: subject } = (await api(`subjects/${subjectId}`, {}, [
-    "subjects",
-  ])) as {
-    data: SubjectWithTopic;
-  };
-  return (
-    <SectionTitle
-      title={capFirst(subject?.name)}
-      subTitle="Refuerza y expande tus conocimientos"
-    />
-  );
-};
 
 export default async function TopictPage({
   params: { subject: subjectId, topic: topicId },
@@ -87,7 +32,11 @@ export default async function TopictPage({
   return (
     <>
       <Section>
-        <SubjectName subjectId={subjectId} />
+        {/* <SubjectName subjectId={subjectId} /> */}
+        <SubjectTitle
+          subjectId={subjectId}
+          subtitle="Administra la asignatura"
+        />
         <div className="flex gap-md  md:gap-lg overflow-x-auto">
           <EvaluationsBtn subject={subjectId} topic={topicId} />
           <PracticeLink subjectId={subjectId} />
@@ -99,9 +48,6 @@ export default async function TopictPage({
         </div>
         <article className="flex flex-col sm:flex-row-reverse justify-between w-full gap-lg">
           <section className="flex flex-col gap-sm w-full">
-            <Suspense fallback={<LargeSkeleton />}>
-              <TopicsList subjectId={subjectId} topicId={topicId} />
-            </Suspense>
             <Card className="flex flex-col gap-sm">
               <div className="flex flex-col gap-1 h-40 w-full">
                 <SmallTitle>Puntajes</SmallTitle>
@@ -121,7 +67,7 @@ export default async function TopictPage({
                     <LargeSkeleton className="p-0 m-0" />
                   </Card>
                   <Card>
-                  <LargeSkeleton className="p-0 m-0" />
+                    <LargeSkeleton className="p-0 m-0" />
                   </Card>
                 </>
               }
@@ -134,6 +80,24 @@ export default async function TopictPage({
     </>
   );
 }
+
+const PracticeLink = async ({ subjectId }: { subjectId: string }) => {
+  const { data: practice } = (await api(`lessons/practice/${subjectId}`, {}, [
+    `practice/${subjectId}`,
+  ])) as {
+    data: LessonWithFile;
+  };
+  const havePractice = !!practice?.File?.externalId;
+  return havePractice ? (
+    <LinkCard
+      href={`practice`}
+      description="Refuerza los contenidos aprendidos"
+      title="Práctica"
+    />
+  ) : (
+    <></>
+  );
+};
 
 const SubtopicsAccordion = async ({ topicId }: { topicId: string }) => {
   const { data: subtopics } = (await api(`topics/${topicId}/subtopics`, {}, [

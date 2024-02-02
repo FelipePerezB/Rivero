@@ -1,24 +1,23 @@
 import UpdateSearchModal from "@components/admin/update-form/update-search-modal";
-import { Privacity, Types } from "@prisma/client";
+import { Privacity, Subject, Types } from "@prisma/client";
 import React from "react";
 import CreateFileBtn from "../subjects/[id]/[topic]/[subtopic]/components/create-file-btn/create-file-btn";
 import DeleteBtn from "@components/admin/delete-btn/delete-btn";
 import CreateBtnWithName from "@components/admin/create-btn/create-btn-with-name";
+import api from "src/utils/api";
 
-export default function UpdateSubject({
-  subject,
+export default async function UpdateSubject({
+  subjectId,
   searchParams,
 }: // id,
 {
-  subject: {
-    name: string;
-    privacity?: Privacity;
-    id: string | number;
-    [key: string]: unknown;
-  };
+  subjectId: string;
   searchParams: { [key: string]: string };
   // id: string;
 }) {
+    const { data: subject } = (await api(`subjects/${subjectId}`, {}, [
+    `subjects/${subjectId}`,
+  ])) as { data: Subject };
   const id = subject?.id;
   return (
     <UpdateSearchModal

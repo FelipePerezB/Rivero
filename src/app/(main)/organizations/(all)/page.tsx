@@ -15,7 +15,7 @@ import SearchModal from "@components/modal/search-modal";
 import RemoveAdmin from "../../dashboard/admins/remove-admin";
 import UpdateUserForm from "../[id]/[group]/components/forms/update-user-form";
 import Section from "@components/containers/section";
-import SectionTitle from "@components/common/titles/section-title";
+import SectionTitle from "@components/common/titles/section-title/section-title";
 import RemoveAdminWrapper from "../components/remove-admin-wrapper";
 
 export default async function Organizations({

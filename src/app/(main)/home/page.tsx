@@ -1,12 +1,10 @@
 import React, { Suspense } from "react";
-import api from "../../../utils/api";
 import HomeTitle from "./components/home-title";
-import { SubjectWithTopic } from "../subjects/models/subject";
 import Section from "../../../components/containers/section";
 import Card from "@components/cards/Card";
 import UserCard from "./components/user-card";
 import OrganizationCard from "./components/organization/organization-card";
-import SectionTitle from "@components/common/titles/section-title";
+import SectionTitle from "@components/common/titles/section-title/section-title";
 import SubjectsCards from "./components/subjects-card";
 import LessonProgress from "./components/lessons-progress";
 import SearchModal from "@components/modal/search-modal";
