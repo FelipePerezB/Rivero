@@ -8,7 +8,6 @@ import capFirst from "src/utils/capFirst";
 import UpdateSearchModal from "@components/admin/update-form/update-search-modal";
 import SectionTitle from "@components/common/titles/section-title";
 import Section from "@components/containers/section";
-import SubjectStats from "src/app/(main)/subjects/[subject]/[topic]/components/stats/subject-stats";
 
 interface SubtopicWithFile extends Subtopic {
   File: File[];

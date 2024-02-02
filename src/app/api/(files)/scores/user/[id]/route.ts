@@ -1,3 +1,4 @@
+import { auth } from "@clerk/nextjs";
 import { NextResponse } from "next/server";
 import prisma from "src/utils/prisma";
 
@@ -5,7 +6,8 @@ export async function GET(
   request: Request,
   { params: { id } }: { params: { id: string } }
 ) {
-  console.log(id);
+  const { userId } = auth();
+  if (userId !== id) return [];
   const data = await prisma.score.findMany({
     orderBy: {
       updateAt: "asc",

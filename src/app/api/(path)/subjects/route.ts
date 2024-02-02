@@ -2,6 +2,7 @@ import { auth } from "@clerk/nextjs";
 import { revalidateTag } from "next/cache";
 import { NextResponse } from "next/server";
 import prisma from "src/utils/prisma";
+import adminProtect from "../../utils/adminProtect";
 
 export async function GET(request: Request) {
   const subjects = await prisma.subject.findMany({
@@ -14,6 +15,8 @@ export async function GET(request: Request) {
 }
 
 export async function POST(request: Request) {
+  const resolved = await adminProtect();
+  if (!resolved) return NextResponse.json({ data: {} }, { status: 403 });
   const res = await request.json();
   const { userId } = auth();
   if (!userId) throw new Error("Failed to fetch data");

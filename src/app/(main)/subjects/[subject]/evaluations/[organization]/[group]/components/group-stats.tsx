@@ -17,11 +17,11 @@ export default async function GroupStats({
   organization: string;
   subject: string;
 }) {
-  const data = formatScores(scores);
+  const data = formatScores(scores) ?? {};
 
   const series =
     group === "all"
-      ? Object.values(data).map((data) => ({ data }))
+      ? Object.values(data)?.map((data) => ({ data }))
       : [{ data: data[Number(group)] }];
 
   return series[0]?.data?.length ? (

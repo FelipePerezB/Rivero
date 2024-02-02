@@ -2,11 +2,15 @@ import { clerkClient } from "@clerk/nextjs";
 import { Invitation } from "@clerk/nextjs/dist/types/server";
 import { revalidateTag } from "next/cache";
 import { NextResponse } from "next/server";
+import adminProtect from "src/app/api/utils/adminProtect";
+import organizationProtect from "src/app/api/utils/organizationProtect";
 import prisma from "src/utils/prisma";
 
 export async function POST(request: Request) {
   const res = await request.json();
   const { role, organizationId, group, email, invitationId } = res ?? {};
+  const resolved = await organizationProtect({organization: organizationId});
+  if (!resolved) return NextResponse.json({ data: {} }, { status: 403 });
   if (!role || !organizationId || !group || !email) return;
   NextResponse.json({ message: "Failed to invite" }, { status: 500 });
   // const invitation = await prisma.invitation.create({
@@ -29,16 +33,5 @@ export async function GET(request: Request) {
   const data = await clerkClient.invitations.getInvitationList({
     status: "pending",
   });
-  //  await clerkClient.invitations.createInvitation({
-  //   emailAddress: "felipe.perez3712@gmail.com",
-  //   publicMetadata: {
-  //     organizationId: 1,
-  //     group: [3],
-  //     role: "STUDENT",
-  //   },
-  // });
-  // const res = data.map(
-  //   async ({ id }) => await clerkClient.invitations.revokeInvitation(id)
-  // );
   return NextResponse.json({ data }, { status: 200 });
 }

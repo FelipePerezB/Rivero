@@ -1,8 +1,7 @@
 import "../globals.css";
 import { ReactNode } from "react";
 import { ClerkProvider } from "@clerk/nextjs";
-import { Toaster } from "react-hot-toast";
-import NavSidebar from "@components/layout/navar/nav-sidebar";
+import { SpeedInsights } from "@vercel/speed-insights/next"
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -27,6 +26,7 @@ export default async function RootLayout({ children }: Props) {
       <html lang="es">
         <body className={`min-h-screen `}>
           {children}
+          <SpeedInsights/>
         </body>
       </html>
     </ClerkProvider>

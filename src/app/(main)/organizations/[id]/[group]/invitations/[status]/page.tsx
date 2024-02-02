@@ -17,7 +17,7 @@ import {
   Role,
   Status,
 } from "@prisma/client";
-import React from "react";
+import React, { Suspense } from "react";
 import api from "src/utils/api";
 
 import InvitationsForm from "../components/invitations-form";
@@ -25,12 +25,20 @@ import Card from "@components/cards/Card";
 import ItemsBox from "@components/containers/items-box/items-box";
 import Options from "@components/navigation/options/options";
 import OrganizationProtect from "@components/admin/protect/organization-protect";
+import LargeSkeleton from "@components/layout/loading-skeleton/large-skeleton/large-skeleton";
+import { auth } from "@clerk/nextjs";
 
 interface OrganizationWithGroups extends Organization {
   Groups: Group[];
 }
 
 type StatusType = Status | "all";
+
+const InvitationSkeleton = () => (
+  <Card>
+    <LargeSkeleton />
+  </Card>
+);
 
 export default async function InvitationsPage({
   params: { group, id: organizationId, status },
@@ -44,57 +52,10 @@ export default async function InvitationsPage({
     data: OrganizationWithGroups;
   };
 
-  const { data: invitations } = (await api(
-    `auth/invitation/group/${group}/${status === "all" ? "" : status}`,
-    { cache: "no-store" }
-  )) as {
-    data: Invitation[];
-  };
-
   const groupName = organization?.Groups?.find(
     ({ id }) => id === Number(group)
   )?.name;
 
-  const indicators = {
-    [Status.RESOLVED]: {
-      icon: <FontAwesomeIcon className="w-6 h-6" icon={faThumbsUp} />,
-      title: "Invitación aceptada",
-    },
-    [Status.PENDING]: {
-      icon: (
-        <FontAwesomeIcon
-          className="w-6 h-6 animate-pulse"
-          icon={faHourglassStart}
-        />
-      ),
-      title: "Invitación pendiente",
-    },
-    [Status.REJECTED]: {
-      icon: (
-        <FontAwesomeIcon className="w-6 h-6" icon={faExclamationTriangle} />
-      ),
-      title: "Invitación fallida",
-    },
-  };
-
-  const invitation = searchParams?.id
-    ? invitations.find(({ id }) => id === Number(searchParams?.id))
-    : undefined;
-
-  const messageCode = invitation?.msg;
-  const messages = {
-    [Messages.INVALID_EMAIL]: "El email es invalido",
-    [Messages.CANCELLED]: "La invitación ha sido cancelada",
-    [Messages.CHANGED_GROUP]: "Se ha logrado cambiar el grupo del usuario",
-    [Messages.CONFIRMATION_REQUIRED]: "Es necesaria confirmación del usuario",
-    [Messages.DUPLICATED_RECORD]:
-      "Invitación dúplicada, pidale al usuario crearse una cuenta para poder invitarlo",
-    [Messages.INVITATION_SENT]: "Invitación ya enviada anteriormente",
-    [Messages.REJECTED]: "El usuario ha rechazado la invitación",
-    [Messages.RESOLVED]: "Usuario agregado correctamente al curso",
-    "": "",
-  };
-  const message = messages[messageCode ?? ""];
   const options = Object.values(Status);
   console.log(options);
   return (
@@ -131,6 +92,92 @@ export default async function InvitationsPage({
           ]}
         />
       </Section>
+      <Suspense
+        fallback={
+          <Section>
+            <ItemsBox size="lg">
+              <InvitationSkeleton/>
+              <InvitationSkeleton/>
+              <InvitationSkeleton/>
+              <InvitationSkeleton/>
+              <InvitationSkeleton/>
+              <InvitationSkeleton/>
+              <InvitationSkeleton/>
+              <InvitationSkeleton/>
+            </ItemsBox>
+          </Section>
+        }
+      >
+        <Invitations
+          status={status}
+          group={group}
+          searchParams={searchParams}
+        />
+      </Suspense>
+    </OrganizationProtect>
+  );
+}
+
+const Invitations = async ({
+  searchParams,
+  group,
+  status,
+}: {
+  group: string;
+  status: StatusType;
+  searchParams: { [key: string]: string; status: string };
+}) => {
+  const { getToken } = auth();
+  const token = await getToken();
+  const { data: invitations } = (await api(
+    `auth/invitation/group/${group}/${status === "all" ? "" : status}`,
+    { cache: "no-store", headers: { Authorization: `Bearer ${token}` } }
+  )) as {
+    data: Invitation[];
+  };
+  const invitation = searchParams?.id
+    ? invitations.find(({ id }) => id === Number(searchParams?.id))
+    : undefined;
+
+  const messageCode = invitation?.msg;
+  const messages = {
+    [Messages.INVALID_EMAIL]: "El email es invalido",
+    [Messages.CANCELLED]: "La invitación ha sido cancelada",
+    [Messages.CHANGED_GROUP]: "Se ha logrado cambiar el grupo del usuario",
+    [Messages.CONFIRMATION_REQUIRED]: "Es necesaria confirmación del usuario",
+    [Messages.DUPLICATED_RECORD]:
+      "Invitación dúplicada, pidale al usuario crearse una cuenta para poder invitarlo",
+    [Messages.INVITATION_SENT]: "Invitación ya enviada anteriormente",
+    [Messages.REJECTED]: "El usuario ha rechazado la invitación",
+    [Messages.RESOLVED]: "Usuario agregado correctamente al curso",
+    "": "",
+  };
+
+  const indicators = {
+    [Status.RESOLVED]: {
+      icon: <FontAwesomeIcon className="w-6 h-6" icon={faThumbsUp} />,
+      title: "Invitación aceptada",
+    },
+    [Status.PENDING]: {
+      icon: (
+        <FontAwesomeIcon
+          className="w-6 h-6 animate-pulse"
+          icon={faHourglassStart}
+        />
+      ),
+      title: "Invitación pendiente",
+    },
+    [Status.REJECTED]: {
+      icon: (
+        <FontAwesomeIcon className="w-6 h-6" icon={faExclamationTriangle} />
+      ),
+      title: "Invitación fallida",
+    },
+  };
+
+  const message = messages[messageCode ?? ""];
+  return (
+    <>
       <Section>
         <ItemsBox size="lg">
           {invitations?.map(({ id, email, role, status, updateAt }, i) => {
@@ -169,6 +216,6 @@ export default async function InvitationsPage({
           <p>{message}.</p>
         </SearchModal>
       )}
-    </OrganizationProtect>
+    </>
   );
-}
+};

@@ -1,13 +1,15 @@
-import { auth } from "@clerk/nextjs";
 import { Topic } from "@prisma/client";
 import { revalidateTag } from "next/cache";
 import { NextRequest, NextResponse } from "next/server";
+import adminProtect from "src/app/api/utils/adminProtect";
 import prisma from "src/utils/prisma";
 
 export async function PATCH(
   request: Request,
   { params }: { params: { id: string } }
 ) {
+  const resolved = await adminProtect();
+  if (!resolved) return NextResponse.json({ data: {} }, { status: 403 });
   const res = (await request.json()) as Partial<Topic>;
   const updateData = Object.fromEntries(
     Object.entries(res).map(([key, value]) => [key, { set: value }])
@@ -18,7 +20,7 @@ export async function PATCH(
     where: {
       id,
     },
-    data: {...updateData},
+    data: { ...updateData },
   });
 
   if (data.id) {
@@ -55,6 +57,8 @@ export async function DELETE(
   request: Request,
   { params }: { params: { id: string } }
 ) {
+  const resolved = await adminProtect();
+  if (!resolved) return NextResponse.json({ data: {} }, { status: 403 });
   const id = Number(params.id);
   const data = await prisma.subtopic.delete({
     where: {
@@ -67,10 +71,5 @@ export async function DELETE(
     revalidateTag(`subtopics/${data.id}`);
   }
 
-  return NextResponse.json(
-    { data },
-    {
-      status: 200,
-    }
-  );
+  return NextResponse.json({ data }, { status: 200 });
 }

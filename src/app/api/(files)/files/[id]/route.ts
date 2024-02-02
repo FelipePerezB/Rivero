@@ -15,7 +15,7 @@ export async function POST(
   const role = user?.publicMetadata?.role as Role;
   if (role !== Role.ADMIN)
     return NextResponse.json(
-      { message: "Only admins have permission to update" },
+      { message: "Only administrators have permission to update" },
       { status: 403 }
     );
 

@@ -2,10 +2,12 @@ import { auth } from "@clerk/nextjs";
 import { revalidateTag } from "next/cache";
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "src/utils/prisma";
+import adminProtect from "../../utils/adminProtect";
 
 export async function POST(request: Request) {
+  const resolved = await adminProtect();
+  if (!resolved) return NextResponse.json({ data: {} }, { status: 403 });
   const res = await request.json();
-  console.log(res)
   const { name, topicId } = res;
   const data = await prisma.subtopic.create({
     data: { name, topicId },

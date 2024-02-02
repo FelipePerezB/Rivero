@@ -1,15 +1,20 @@
-import { currentUser } from "@clerk/nextjs";
+import { auth, currentUser } from "@clerk/nextjs";
 import Item from "@components/dashboard/item";
 import { Score } from "@prisma/client";
 import React, { ReactNode } from "react";
 import api from "src/utils/api";
 
 export default async function AllScores() {
-  const user = await currentUser();
-  console.log(user?.id);
+  const { userId, getToken } = await auth();
+  const token = await getToken();
   const { data: scores } = (await api(
-    `scores/user/${user?.id}`,
-    { cache: "no-store" },
+    `scores/user/${userId}`,
+    {
+      cache: "no-store",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    },
     [`scores`]
   )) as {
     data: Score[];

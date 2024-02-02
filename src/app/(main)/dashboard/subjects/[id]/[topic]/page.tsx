@@ -87,7 +87,7 @@ export default async function SubjectDashboard({
           <SmallTitle>Evaluaciones</SmallTitle>
           <CreateFileBtn subjectId={subjectId} type={Types.EVALUATION} text="Nueva evaluación" />
         </div>
-        <div className="flex gap-sm overflow-x-auto pb-sm">
+        <ItemsBox size="lg">
           {evaluations?.map(({ File: { id, name, externalId } }) => (
             <NavigationCard
               key={`evaluation-${id}`}
@@ -96,7 +96,7 @@ export default async function SubjectDashboard({
               {name}
             </NavigationCard>
           ))}
-        </div>
+        </ItemsBox>
       </Section>
     </>
   );

@@ -1,38 +1,25 @@
 import api from "src/utils/api";
-import {
-  Group,
-  Organization,
-  Role,
-  Score,
-  Subject,
-  User,
-} from "@prisma/client";
+import { Group, Organization, Role, Subject, User } from "@prisma/client";
 import dynamic from "next/dynamic";
 import Section from "@components/containers/section";
 import SectionTitle from "@components/common/titles/section-title";
 import SmallTitle from "@components/common/titles/small-title";
 import Options from "@components/navigation/options/options";
 import Card from "@components/cards/Card";
-// import { Item } from "src/app/(main)/home/page";
 import ItemsBox from "@components/containers/items-box/items-box";
 import capFirst from "src/utils/capFirst";
 import Table, { Row } from "@components/dashboard/table/Table";
 import DeleteBtn from "@components/admin/delete-btn/delete-btn";
-import SearchModal from "@components/modal/search-modal";
-import RemoveGroupBtn from "./components/remove-group-btn";
-import UpdateUserForm from "./components/forms/update-user-form";
 import UpdateSearchModal from "@components/admin/update-form/update-search-modal";
-import InviteForm from "./components/forms/Invite";
 import Link from "next/link";
 import getAvg from "src/utils/maths/getAvg";
 import { ReactNode, Suspense } from "react";
 import Item from "@components/dashboard/item";
 import ScoresChart from "./components/scores-chart";
-import StatsCard from "@components/cards/stats-card";
+import StatsCard from "@components/cards/stats-card/stats-card";
 import Button from "@components/common/buttons/button/button";
 import RemoveUserWrapper from "../../components/remove-user-wrapper";
 import formatScores, { ScoresWithGroup } from "src/utils/format/formatScores";
-import Protect from "@components/admin/protect/protect";
 import OrganizationProtect from "@components/admin/protect/organization-protect";
 import { auth } from "@clerk/nextjs";
 
@@ -53,29 +40,30 @@ export default async function AllGroupsOrganizationPage({
   };
 
   const OrgForm = dynamic(() => import("../org-form"));
-  const { data: groups } = (await api(`groups/${organizationId}`, {}, [
-    endpoint,
+
+  const { getToken } = auth();
+  const token = await getToken();
+  const { data: groups } = (await api(
     `groups/${organizationId}`,
-  ])) as {
+    { cache: "no-store", 
+    headers: { Authorization: `Bearer ${token}` } 
+  },
+    [endpoint, `groups/${organizationId}`]
+  )) as {
     data: GroupWithusers[];
   };
 
   const ENDPOINT = `groups/${organizationId}/${group}`;
   const groupData = groups.find(({ id }) => id === Number(group));
-  // group !== "all"
-  //   ? ((await api(ENDPOINT, {}, [TAG])) as {
-  //       data?: GroupWithUsers;
-  //     })
-  //   : { data: undefined };
 
   const students = groupData
-    ? groupData?.Users.filter(({ role }) => role === Role.STUDENT).length
+    ? groupData?.Users?.filter(({ role }) => role === Role.STUDENT).length
     : groups
         .flatMap(({ Users }) => Users)
         .filter(({ role }) => role === Role.STUDENT)?.length;
 
   const teachers = groupData
-    ? groupData?.Users.filter(({ role }) => role === Role.TEACHER).length
+    ? groupData?.Users?.filter(({ role }) => role === Role.TEACHER).length
     : groups
         .flatMap(({ Users }) => Users)
         .filter(({ role }) => role === Role.TEACHER)?.length;
@@ -84,13 +72,10 @@ export default async function AllGroupsOrganizationPage({
     subjects: Subject[];
   };
 
-  const {getToken} = auth()
-  const token = await getToken()
-
   const { data: unFormatedScores } = (await api(
     `scores/${organizationId}/${group !== "all" ? `group/${group}` : ""}`,
     {
-      headers: {Authorization: `Bearer ${token}`},
+      headers: { Authorization: `Bearer ${token}` },
       cache: "no-store",
     },
     [`scores/organizations/${organization}`]

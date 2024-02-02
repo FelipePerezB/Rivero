@@ -1,25 +1,22 @@
 import { auth, currentUser } from "@clerk/nextjs";
 import { Role } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
+import organizationProtect from "src/app/api/utils/organizationProtect";
 import prisma from "src/utils/prisma";
 
 export async function GET(
   request: NextRequest,
-  {params}: { params:{organization: string} }
+  {params: {organization}}: { params:{organization: string} }
 ) {
-  // const user = await currentUser();
-  // const userGroups = user?.publicMetadata?.groups as number[];
-  // const role = user?.publicMetadata?.role as Role;
-  
-  // if (!userGroups.length) throw new Error("Failed to fetch data");
+  const resolve = await organizationProtect({organization});
 
   const data = await prisma.group.findMany({
     where: {
-      organizationId: Number(params?.organization),
+      organizationId: Number(organization),
     },
     orderBy: { name: "desc" },
     include: {
-      Users: true,
+      Users: resolve,
     },
   });
   return NextResponse.json({ data }, { status: 200 });

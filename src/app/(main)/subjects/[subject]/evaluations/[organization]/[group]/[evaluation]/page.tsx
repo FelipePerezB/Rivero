@@ -15,9 +15,6 @@ import OptionsInput from "src/app/documents/edit/components/edit-wraper/componen
 import SearchModal from "@components/modal/search-modal";
 import { LessonWithFile } from "src/app/(main)/subjects/models/lesson";
 import api from "src/utils/api";
-import { Toaster } from "react-hot-toast";
-import { Score } from "@prisma/client";
-// import GroupsList from "./[group]/components/groups-list";
 import LargeSkeleton from "@components/layout/loading-skeleton/large-skeleton/large-skeleton";
 import ScoresTable from "./components/scores-table/scores-table";
 import GroupsList from "../components/groups-list";
@@ -28,6 +25,9 @@ import AddScoreForm from "../components/form";
 import SectionTitle from "@components/common/titles/section-title";
 import Section from "@components/containers/section";
 import OrganizationProtect from "@components/admin/protect/organization-protect";
+import StatsCard from "@components/cards/stats-card/stats-card";
+import StatsCardsGroup from "@components/cards/stats-card/stats-cards-group";
+import StatsCardSkeleton from "@components/cards/stats-card/stats-card-skeleton";
 
 export default async function EvaluationPage({
   searchParams,
@@ -36,7 +36,6 @@ export default async function EvaluationPage({
   params: { [key: string]: string };
   searchParams: { [key: string]: string };
 }) {
-  console.log(evaluation);
   const { data: lesson } = (await api("lessons/" + evaluation, {}, [
     "evaluations/" + subject,
   ])) as { data: LessonWithFile };
@@ -85,10 +84,10 @@ export default async function EvaluationPage({
         )}
         <Suspense
           fallback={
-            <section className="grid md:grid-cols-2 gap-4 p-6">
-              <RowSkeleton />
-              <RowSkeleton />
-            </section>
+            <StatsCardsGroup>
+              <StatsCardSkeleton />
+              <StatsCardSkeleton />
+            </StatsCardsGroup>
           }
         >
           <ScoresStats

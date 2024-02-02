@@ -7,6 +7,8 @@ import api from "src/utils/api";
 import getQuartile from "src/utils/maths/getQuartile";
 import getAvg from "src/utils/maths/getAvg";
 import Item from "@components/dashboard/item";
+import StatsCardsGroup from "@components/cards/stats-card/stats-cards-group";
+import StatsCard from "@components/cards/stats-card/stats-card";
 
 export default async function ScoresStats({
   evaluation,
@@ -18,9 +20,11 @@ export default async function ScoresStats({
   group?: string;
 }) {
   const groupId = group === "all" ? "" : group;
+  const { getToken } = auth();
+  const token = await getToken();
   const { data } = (await api(
-  `scores/${organization}/${evaluation}${group ? `?group=${groupId}` : `` }`,
-    {cache: "no-store"}
+    `scores/${organization}/${evaluation}${group ? `?group=${groupId}` : ``}`,
+    { cache: "no-store", headers: { Authorization: `Bearer ${token}` } }
   )) as { data: Score[] };
 
   const scores = data?.map(({ score }) => score);
@@ -30,18 +34,18 @@ export default async function ScoresStats({
   const avg = getAvg(scores);
 
   return !!scores?.length ? (
-    <section className="grid md:grid-cols-2 gap-md my-2">
-      <Card className="flex justify-around ">
+    <StatsCardsGroup>
+      <StatsCard>
         <Item subtitle="Puntaje menor" title={String(String(minScore))} />
         <Item subtitle="Promedio" title={String(String(avg))} />
         <Item subtitle="Puntaje mayor" title={String(String(maxScore))} />
-      </Card>
-      <Card className="flex justify-around ">
+      </StatsCard>
+      <StatsCard>
         <Item subtitle="Cuartil 1" title={String(getQuartile(scores, 1))} />
-        <Item subtitle="Cuartil 2" title={String(getQuartile(scores,2))} />
-        <Item subtitle="Cuartil 3" title={String(getQuartile(scores,3))} />
-      </Card>
-    </section>
+        <Item subtitle="Cuartil 2" title={String(getQuartile(scores, 2))} />
+        <Item subtitle="Cuartil 3" title={String(getQuartile(scores, 3))} />
+      </StatsCard>
+    </StatsCardsGroup>
   ) : (
     <></>
   );

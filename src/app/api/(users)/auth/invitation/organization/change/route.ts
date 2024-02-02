@@ -1,10 +1,13 @@
 import { auth, clerkClient } from "@clerk/nextjs";
 import { Invitation, Messages, Status } from "@prisma/client";
 import { NextResponse } from "next/server";
+import organizationProtect from "src/app/api/utils/organizationProtect";
 import prisma from "src/utils/prisma";
 
 export async function PATCH(request: Request) {
   const { id, organizationId } = (await request.json()) as Partial<Invitation>;
+  const resolved = await organizationProtect({organization: organizationId});
+  if (!resolved) return NextResponse.json({ data: {} }, { status: 403 });
 
   const { userId } = auth();
   if (!userId)
