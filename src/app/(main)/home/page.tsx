@@ -17,6 +17,8 @@ import SearchModal from "@components/modal/search-modal";
 import OrganizationModal from "./components/organization/organization-modal";
 import ItemsBox from "@components/containers/items-box/items-box";
 import LargeSkeleton from "@components/layout/loading-skeleton/large-skeleton/large-skeleton";
+import HomeStatsSkeleton from "./components/home-stats-skeleton";
+import HomeCardSkeleton from "./components/home-card-skeleton";
 
 export default async function HomePage({
   searchParams,
@@ -39,26 +41,14 @@ export default async function HomePage({
         </SearchModal>
       </Suspense>
       <Section>
-        <Suspense
-          fallback={
-            <div className="h-14">
-              <LargeSkeleton />
-            </div>
-          }
-        >
-          <HomeTitle />
-        </Suspense>
+        <HomeTitle />
         <article className="flex flex-col sm:flex-row gap-sm sm:gap-md">
           <section className="flex sm:flex-col flex-row gap-sm sm:gap-md h-full w-full sm:w-max">
             <Suspense
               fallback={
                 <>
-                  <Card className="sm:w-52 h-20">
-                    <LargeSkeleton />
-                  </Card>
-                  <Card className="sm:w-52 h-20">
-                    <LargeSkeleton />
-                  </Card>
+                  <HomeCardSkeleton />
+                  <HomeCardSkeleton />
                 </>
               }
             >
@@ -68,37 +58,7 @@ export default async function HomePage({
           </section>
           <section className="w-full">
             <Card className="flex h-[184px]">
-              <Suspense
-                fallback={
-                  <>
-                    <div className="flex flex-col md:w-1/2 w-full">
-                      <SmallTitle>Resumen semanal</SmallTitle>
-                      <ChartSkeleton />
-                    </div>
-                    <div className="hidden md:flex flex-col gap-sm justify-center mx-auto">
-                      <div className="w-full flex gap-2 justify-between items-start">
-                        <Item subtitle="Lecciones hoy" title={<XsSkeleton />} />
-                        <Item
-                          subtitle="Lecciones esta semana"
-                          title={<XsSkeleton />}
-                        />
-                        <Item
-                          subtitle="Lecciones este mes"
-                          title={<XsSkeleton />}
-                        />
-                      </div>
-                      <div className="w-full flex gap-2 justify-between">
-                        <Item subtitle="Prácticas" title={<XsSkeleton />} />
-                        <Item subtitle="Puntajes" title={<XsSkeleton />} />
-                        <Item
-                          subtitle="Último puntaje"
-                          title={<XsSkeleton />}
-                        />
-                      </div>
-                    </div>
-                  </>
-                }
-              >
+              <Suspense fallback={<HomeStatsSkeleton />}>
                 <LessonProgress subjects={subjects} />
               </Suspense>
             </Card>

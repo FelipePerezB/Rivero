@@ -41,7 +41,7 @@ export default function SubjectsCards({
         interactive
         key={key}
         href={href}
-        className="max-w-[250px] flex flex-col gap-1"
+        className="flex flex-col gap-1"
       >
         <h3 className="text-xl font-medium">{capFirst(name)}</h3>
 
