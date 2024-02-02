@@ -15,6 +15,8 @@ import XsSkeleton from "@components/layout/loading-skeleton/xs-skeleton";
 import Item from "@components/dashboard/item";
 import SearchModal from "@components/modal/search-modal";
 import OrganizationModal from "./components/organization/organization-modal";
+import ItemsBox from "@components/containers/items-box/items-box";
+import LargeSkeleton from "@components/layout/loading-skeleton/large-skeleton/large-skeleton";
 
 export default async function HomePage({
   searchParams,
@@ -35,18 +37,33 @@ export default async function HomePage({
         <OrganizationModal />
       </SearchModal>
       <Section>
-        <HomeTitle />
+        <Suspense fallback={<LargeSkeleton />}>
+          <HomeTitle />
+        </Suspense>
         <article className="flex flex-col sm:flex-row gap-sm sm:gap-md">
           <section className="flex sm:flex-col flex-row gap-sm sm:gap-md h-full w-full sm:w-max">
-            <UserCard />
-            <OrganizationCard />
+            <Suspense
+              fallback={
+                <>
+                  <Card>
+                    <LargeSkeleton />
+                  </Card>
+                  <Card>
+                    <LargeSkeleton />
+                  </Card>
+                </>
+              }
+            >
+              <UserCard />
+              <OrganizationCard />
+            </Suspense>
           </section>
           <section className="w-full">
-            <Card className="flex h-full">
+            <Card className="flex h-[184px]">
               <Suspense
                 fallback={
                   <>
-                    <div className="flex flex-col h-40 md:w-1/2 w-full">
+                    <div className="flex flex-col md:w-1/2 w-full">
                       <SmallTitle>Resumen semanal</SmallTitle>
                       <ChartSkeleton />
                     </div>
@@ -86,9 +103,9 @@ export default async function HomePage({
           title={"Tus Rutas"}
           subTitle="Refuerza y expande tus conocimientos"
         />
-        <article className="flex gap-md overflow-x-auto">
+        <ItemsBox>
           <SubjectsCards subjects={subjects} />
-        </article>
+        </ItemsBox>
       </Section>
     </>
   );

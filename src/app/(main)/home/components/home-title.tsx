@@ -5,7 +5,5 @@ import React from "react";
 export default async function HomeTitle() {
   const user = await currentUser();
   const title = `¡Hola, ${user?.firstName}!`;
-  return (
-    <SectionTitle title={title} subTitle="Revisa tu perfil y progreso" />
-  );
+  return <SectionTitle title={title} subTitle="Revisa tu perfil y progreso" />;
 }
