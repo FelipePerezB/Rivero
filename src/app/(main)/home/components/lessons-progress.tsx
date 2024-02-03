@@ -19,7 +19,6 @@ export function countIdInTopic(topicProgress: {
     [id: string]: string;
   };
 }) {
-  console.log(topicProgress);
   const result: Record<string, number> = {};
   for (const subtopicId in topicProgress) {
     const subtopic = topicProgress[subtopicId];
@@ -158,7 +157,7 @@ export default async function LessonProgress() {
             fallback={
               <>
                 <Item subtitle="Puntajes" title={<XsSkeleton />} />
-                <Item subtitle="'Ultimo puntaje" title={<XsSkeleton />} />
+                <Item subtitle="Ultimo puntaje" title={<XsSkeleton />} />
               </>
             }
           >

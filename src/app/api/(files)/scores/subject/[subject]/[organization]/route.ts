@@ -19,6 +19,5 @@ export async function GET(
     group,
     subject,
   });
-  console.log(data)
   return NextResponse.json({ data }, { status: 200 });
 }

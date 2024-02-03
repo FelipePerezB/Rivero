@@ -43,9 +43,8 @@ export default async function SubtopicPage({
           title={capFirst(topic?.name)}
         />
         <article className="flex justify-between items-center">
-          <Suspense fallback={<LargeSkeleton/>}>
-          <SubtopicsList {...{ subtopicId, topicId }} />
-
+          <Suspense fallback={<LargeSkeleton />}>
+            <SubtopicsList {...{ subtopicId, topicId }} />
           </Suspense>
           <div className="flex gap-2.5">
             <CreateFileBtn

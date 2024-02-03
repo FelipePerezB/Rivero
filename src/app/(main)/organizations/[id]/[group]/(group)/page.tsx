@@ -23,6 +23,7 @@ import formatScores, { ScoresWithGroup } from "src/utils/format/formatScores";
 import OrganizationProtect from "@components/admin/protect/organization-protect";
 import { auth } from "@clerk/nextjs";
 import UsersTable from "../../components/users-table";
+import CreateBtnWithName from "@components/admin/create-btn/create-btn-with-name";
 
 interface GroupWithusers extends Group {
   Users: User[];
@@ -36,19 +37,19 @@ export default async function AllGroupsOrganizationPage({
   params: { [key: string]: string };
 }) {
   const endpoint = `organizations/${organizationId}`;
-  const { data: organization } = (await api(endpoint, {}, [endpoint])) as {
+  const { data: organization } = (await api(endpoint, {}, [
+    endpoint,
+    "organizations",
+  ])) as {
     data: Organization;
   };
-
-  const OrgForm = dynamic(() => import("../../org-form"));
+  // const OrgForm = dynamic(() => import("../../org-form"));
 
   const { getToken } = auth();
   const token = await getToken();
   const { data: groups } = (await api(
     `groups/${organizationId}`,
-    { cache: "no-store", 
-    headers: { Authorization: `Bearer ${token}` } 
-  },
+    { headers: { Authorization: `Bearer ${token}` } },
     [endpoint, `groups/${organizationId}`]
   )) as {
     data: GroupWithusers[];
@@ -77,7 +78,6 @@ export default async function AllGroupsOrganizationPage({
     `scores/${organizationId}/${group !== "all" ? `group/${group}` : ""}`,
     {
       headers: { Authorization: `Bearer ${token}` },
-      cache: "no-store",
     },
     [`scores/organizations/${organization}`]
   )) as {
@@ -116,18 +116,17 @@ export default async function AllGroupsOrganizationPage({
                     endpoint={ENDPOINT}
                   />
                 }
-              >
-                <hr />
-              </UpdateSearchModal>
+              />
+
               <Button color="white" href={`${group}/invitations/all`}>
                 Invitaciones
               </Button>
             </div>
           ) : (
-            <OrgForm
-              organization={organization}
-              organizationId={organizationId}
-              searchParams={searchParams}
+            <CreateBtnWithName
+              label="grupo"
+              endpoint="groups"
+              values={{ organizationId }}
             />
           )}
         </div>

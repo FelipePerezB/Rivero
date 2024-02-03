@@ -15,7 +15,6 @@ import OptionsInput from "src/app/documents/edit/components/edit-wraper/componen
 import RadioInput from "@components/form/radio-input";
 
 const getOptimizedContent = (settings?: LessonWithComponent["file"]) => {
-  console.log(settings);
   if (!settings?.content || typeof settings?.content !== "object")
     return "Error al cargar el documento";
   const fileCopy = JSON.parse(JSON.stringify(settings?.content));
@@ -36,11 +35,8 @@ export default function ShareBtn({
   const options = ["Configuración"];
   const [option, setOption] = useState(options[0]);
 
-  console.log(settings);
-
   const id = settings?.externalId;
   const privacity = settings?.privacity;
-  console.log(privacity);
   return (
     <>
       <div
@@ -59,7 +55,6 @@ export default function ShareBtn({
               value={privacity}
               label="Privacidad"
               onChange={(privacity) => {
-                console.log(privacity);
                 setSettings((settings) => ({
                   ...settings,
                   privacity,

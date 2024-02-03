@@ -16,7 +16,6 @@ export default function CreateBtnWithName({
   endpoint: string;
   values?: { [key: string]: unknown };
 }) {
-  console.log(values)
   return (
     <Button color={color} onClick={() => createAlert(endpoint,values ?? {})}>
       Nuevo {label} <FontAwesomeIcon className="h-2.5 w-2.5" icon={faPlus} />

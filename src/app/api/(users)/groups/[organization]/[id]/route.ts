@@ -8,10 +8,10 @@ import prisma from "src/utils/prisma";
 
 export async function PATCH(
   request: Request,
-  { params }: { params: { id: string, organization: string } }
+  { params }: { params: { id: string; organization: string } }
 ) {
-  const organizationId = params?.organization
-  const resolve = organizationProtect({organization:organizationId});
+  const organizationId = params?.organization;
+  const resolve = organizationProtect({ organization: organizationId });
   if (!resolve) return NextResponse.json({ data: {} }, { status: 403 });
   const res = (await request.json()) as Partial<Group>;
   const updateData = Object.fromEntries(
@@ -25,6 +25,9 @@ export async function PATCH(
     },
     data: updateData,
   });
+
+  revalidateTag(`groups/organization/${organizationId}`);
+  revalidateTag(`groups/${id}`);
 
   return NextResponse.json(
     { data },
@@ -53,8 +56,8 @@ export async function POST(
   request: Request,
   { params: { organization } }: { params: { organization: string } }
 ) {
-  const organizationId = organization
-  const resolve = organizationProtect({organization:organizationId});
+  const organizationId = organization;
+  const resolve = organizationProtect({ organization: organizationId });
   if (!resolve) return NextResponse.json({ data: {} }, { status: 403 });
   const res = await request.json();
   const { name } = res;
@@ -66,10 +69,10 @@ export async function POST(
 
 export async function DELETE(
   request: Request,
-  { params }: { params: { id: string, organization: string } }
+  { params }: { params: { id: string; organization: string } }
 ) {
-  const organizationId = params?.organization
-  const resolve = organizationProtect({organization:organizationId});
+  const organizationId = params?.organization;
+  const resolve = organizationProtect({ organization: organizationId });
   if (!resolve) return NextResponse.json({ data: {} }, { status: 403 });
   const id = Number(params.id);
   const data = await prisma.group.delete({

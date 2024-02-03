@@ -17,7 +17,7 @@ export default async function SubjectStats({ subject }: { subject: string }) {
         Authorization: `Bearer ${token}`,
       },
     },
-    [`scores/group/${group}`]
+    [`scores/groups/${group}`]
   )) as { data: Score[] };
   const data =
     formatWithoutGroupScores(scores)?.map(({ time, value }) => ({

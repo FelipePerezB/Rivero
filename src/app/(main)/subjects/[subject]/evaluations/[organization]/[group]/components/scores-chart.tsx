@@ -21,13 +21,12 @@ export default async function ScoresChart({
   const { data: scores } = (await api(
     endpoint,
     {
-      cache: "no-store",
       headers: { Authorization: `Bearer ${token}` },
     },
     [
       !group
-        ? `scores/subject/${subject}/organization/${organization}`
-        : `scores/subject/${subject}/group/${group}`,
+        ? `scores/subject/${subject}/organizations/${organization}`
+        : `scores/subject/${subject}/groups/${group}`,
     ]
   )) as {
     data: ScoresWithGroup[];

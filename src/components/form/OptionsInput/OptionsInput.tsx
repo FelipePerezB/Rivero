@@ -52,8 +52,6 @@ function LargeOptionsInput(props: props) {
 
 function SmallOptionsInput(props: props) {
   const [currentValue, setCurrentValue] = useState("");
-  console.log(props)
-  console.log(currentValue)
   useEffect(() => {
     if (!props.dontDefaultCheck) {
       props.onChange(props.value ?? props.options[0]);

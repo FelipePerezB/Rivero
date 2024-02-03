@@ -14,6 +14,10 @@ import { Suspense } from "react";
 import ChartSkeleton from "@components/layout/loading-skeleton/chart-skeleton";
 import LargeSkeleton from "@components/layout/loading-skeleton/large-skeleton/large-skeleton";
 import { SubjectTitle } from "src/app/(main)/components/common/subject-title";
+import {
+  TopicsList,
+  TopicsListWithSuspense,
+} from "@components/navigation/options/topics-list";
 // import SubjectTitle from "src/app/(main)/components/common/subject-title";
 // import TopicsList from "@components/navigation/options/topics-list";
 
@@ -32,14 +36,17 @@ export default async function TopictPage({
   return (
     <>
       <Section>
-        {/* <SubjectName subjectId={subjectId} /> */}
         <SubjectTitle
           subjectId={subjectId}
           subtitle="Administra la asignatura"
         />
         <div className="flex gap-md  md:gap-lg overflow-x-auto">
           <EvaluationsBtn subject={subjectId} topic={topicId} />
-          <PracticeLink subjectId={subjectId} />
+          <LinkCard
+            href={`practice`}
+            description="Refuerza los contenidos aprendidos"
+            title="Práctica"
+          />
           <LinkCard
             href=""
             description="Mira un resumen de la asignatura"
@@ -48,6 +55,7 @@ export default async function TopictPage({
         </div>
         <article className="flex flex-col sm:flex-row-reverse justify-between w-full gap-lg">
           <section className="flex flex-col gap-sm w-full">
+            <TopicsListWithSuspense {...{ subjectId, topicId }} />
             <Card className="flex flex-col gap-sm">
               <div className="flex flex-col gap-1 h-40 w-full">
                 <SmallTitle>Puntajes</SmallTitle>
@@ -58,7 +66,7 @@ export default async function TopictPage({
             </Card>
           </section>
 
-          <section className="flex flex-col gap-2.5 w-full">
+          <section className="flex flex-col gap-sm md:gap-md w-full">
             <SmallTitle>Temas</SmallTitle>
             <Suspense
               fallback={
@@ -80,24 +88,6 @@ export default async function TopictPage({
     </>
   );
 }
-
-const PracticeLink = async ({ subjectId }: { subjectId: string }) => {
-  const { data: practice } = (await api(`lessons/practice/${subjectId}`, {}, [
-    `practice/${subjectId}`,
-  ])) as {
-    data: LessonWithFile;
-  };
-  const havePractice = !!practice?.File?.externalId;
-  return havePractice ? (
-    <LinkCard
-      href={`practice`}
-      description="Refuerza los contenidos aprendidos"
-      title="Práctica"
-    />
-  ) : (
-    <></>
-  );
-};
 
 const SubtopicsAccordion = async ({ topicId }: { topicId: string }) => {
   const { data: subtopics } = (await api(`topics/${topicId}/subtopics`, {}, [

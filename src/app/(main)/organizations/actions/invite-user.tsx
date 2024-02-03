@@ -5,6 +5,7 @@ import { Invitation } from "@clerk/nextjs/dist/types/server";
 import api from "src/utils/api";
 import { revalidateTag } from "next/cache";
 import validateEmail from "src/utils/validation/email";
+import prisma from "src/utils/prisma";
 
 interface UserWithGroup extends User {
   Group: Group[];
@@ -28,7 +29,6 @@ export default async function inviteUser(
   formData: FormData
 ) {
   const emails = formData?.get("emails") as string;
-  console.log(emails);
   const role = formData?.get("role") as Role;
   // console.log(emails, metadata, rol)
   let errors: { [email: string]: string } = {};
@@ -62,28 +62,31 @@ export default async function inviteUser(
       const errorCode = error.errors[0].code;
       switch (errorCode) {
         case "form_identifier_exists":
-          const { data: user } = (await api(`users/email/${email}`, {
-            cache: "no-store",
-          })) as { data: UserWithGroup };
+          if (!email) return;
+          const user = await prisma.user.findFirst({
+            where: { email },
+            include: { Group: true },
+          });
+          if(!user?.id) return;
           let newUser;
           if (!user.organizationId) {
             newUser = await clerkClient.users.updateUserMetadata(
               user.externalId,
               { publicMetadata: newMetadata }
             );
-          } else if (user.organizationId === organizationId) {
-            newUser = await clerkClient.users.updateUserMetadata(
-              user.externalId,
-              {
-                publicMetadata: {
-                  ...newMetadata,
-                  groups: removeDuplicates([
-                    ...user.Group.map(({ id }) => id),
-                    ...newMetadata.groups,
-                  ]),
-                },
-              }
-            );
+          // } else if (user.organizationId === organizationId) {
+          //   newUser = await clerkClient.users.updateUserMetadata(
+          //     user.externalId,
+          //     {
+          //       publicMetadata: {
+          //         ...newMetadata,
+          //         group: removeDuplicates([
+          //           ...user?.Group.map(({ id }) => id),
+          //           ...newMetadata.groups,
+          //         ]),
+          //       },
+          //     }
+          //   );
           } else if (user.organizationId !== organizationId) {
             errors = {
               ...errors,

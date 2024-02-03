@@ -33,9 +33,6 @@ export default async function AllGroupsOrganizationPage({
   const { data: groups } = (await api(`groups/${organizationId}`, {})) as {
     data: GroupWithusers[];
   };
-
-  console.log(group)
-
   return (
     <>
       <Section>

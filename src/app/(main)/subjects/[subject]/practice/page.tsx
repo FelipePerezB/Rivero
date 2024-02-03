@@ -22,7 +22,6 @@ export default async function PracticePage({
       ...data,
       content: { ...JSON.parse(lessonFile.content) },
     };
-  console.log(file);
 
   return (
     <ScreenLayout>

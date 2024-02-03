@@ -24,8 +24,5 @@ export default async function PracticeItem({
 
   const totalPractices = practices.reduce((a,b)=>a+b,0)
 
-
-
-  // console.log(data);
   return <Item subtitle="Practicas" title={totalPractices} />;
 }

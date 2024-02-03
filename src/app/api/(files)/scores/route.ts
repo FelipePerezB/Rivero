@@ -5,7 +5,6 @@ import prisma from "src/utils/prisma";
 export async function POST(request: Request) {
   const res = await request.json();
   const { fileId, score, alternatives, userId } = res ?? {};
-  console.log(res)
 
   const lesson = await prisma.lesson.findFirst({
     where: {
@@ -28,7 +27,7 @@ export async function POST(request: Request) {
           score,
           alternatives,
         },
-        include: { User: true },
+        include: { User: true, lesson: { include: { File: true } } },
       })
     : await prisma.score.create({
         data: {
@@ -37,10 +36,22 @@ export async function POST(request: Request) {
           score,
           alternatives,
         },
-        include: { User: true },
+        include: { User: true, lesson: { include: { File: true } } },
       });
-  if (data.id)
+  if (data?.id) {
     revalidateTag(`scores/organizations/${data.User.organizationId}`);
+    revalidateTag(
+      `scores/evaluation/${data.lesson.File.externalId}/organizations/${data.User.organizationId}`
+    );
+    revalidateTag(
+      `scores/subject/${data.lesson.subjectId}/organizations/${data.User.organizationId}`
+    );
+    revalidateTag(
+      `scores/subject/${data.lesson.subjectId}/groups/${data.User.groupId}`
+    );
+    revalidateTag(`scores/groups/${data.User.groupId}`);
+    // revalidateTag(`scores/user/${data.User.externalId}`);
+  }
   return NextResponse.json({ data }, { status: 200 });
 }
 export async function GET(request: NextRequest) {

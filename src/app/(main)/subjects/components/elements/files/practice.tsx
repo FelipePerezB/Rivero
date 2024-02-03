@@ -45,7 +45,6 @@ export default function Practice({
   const [index, setIndex] = useState(0);
   const [bonus, setBonus] = useState(0);
   const [check, setCheck] = useState(false);
-  console.log(metadata);
 
   useEffect(() => {
     setCheck(false);

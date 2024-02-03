@@ -27,18 +27,13 @@ import OrganizationProtect from "@components/admin/protect/organization-protect"
 import LargeSkeleton from "@components/layout/loading-skeleton/large-skeleton/large-skeleton";
 import { auth } from "@clerk/nextjs";
 import SectionTitleSkeleton from "@components/common/titles/section-title/section-title-skeleton";
+import CardSkeleton from "@components/cards/card-skeleton";
 
 interface OrganizationWithGroups extends Organization {
   Groups: Group[];
 }
 
 type StatusType = Status | "all";
-
-const InvitationSkeleton = () => (
-  <Card>
-    <LargeSkeleton />
-  </Card>
-);
 
 export default async function InvitationsPage({
   params: { group, id: organizationId, status },
@@ -83,14 +78,14 @@ export default async function InvitationsPage({
         fallback={
           <Section>
             <ItemsBox size="lg">
-              <InvitationSkeleton />
-              <InvitationSkeleton />
-              <InvitationSkeleton />
-              <InvitationSkeleton />
-              <InvitationSkeleton />
-              <InvitationSkeleton />
-              <InvitationSkeleton />
-              <InvitationSkeleton />
+              <CardSkeleton />
+              <CardSkeleton />
+              <CardSkeleton />
+              <CardSkeleton />
+              <CardSkeleton />
+              <CardSkeleton />
+              <CardSkeleton />
+              <CardSkeleton />
             </ItemsBox>
           </Section>
         }
@@ -141,7 +136,8 @@ const Invitations = async ({
   const token = await getToken();
   const { data: invitations } = (await api(
     `auth/invitation/group/${group}/${status === "all" ? "" : status}`,
-    { cache: "no-store", headers: { Authorization: `Bearer ${token}` } }
+    { headers: { Authorization: `Bearer ${token}` } },
+    [`invitations/group/${group}`]
   )) as {
     data: Invitation[];
   };

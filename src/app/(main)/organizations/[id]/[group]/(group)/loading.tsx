@@ -1,12 +1,10 @@
 import Card from "@components/cards/Card";
-import StatsCard from "@components/cards/stats-card/stats-card";
 import SectionTitleSkeleton from "@components/common/titles/section-title/section-title-skeleton";
 import SmallTitle from "@components/common/titles/small-title";
 import Section from "@components/containers/section";
 import ChartSkeleton from "@components/layout/loading-skeleton/chart-skeleton";
 import LargeSkeleton from "@components/layout/loading-skeleton/large-skeleton/large-skeleton";
 import RowSkeleton from "@components/layout/loading-skeleton/row-skeleton/row-skeleton";
-import SmallSkeleton from "@components/layout/loading-skeleton/small-skeleton";
 import React from "react";
 
 export default function OrganizationLoading() {

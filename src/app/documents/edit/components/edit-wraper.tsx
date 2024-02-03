@@ -55,7 +55,6 @@ export default function EditWraper({
   // },[] );
 
   useEffect(() => {
-    console.log(settings)
     const storageDocument = JSON.parse(
       localStorage.getItem(`document-${id}`) ?? "{}"
     ) as LessonWithComponent["file"];

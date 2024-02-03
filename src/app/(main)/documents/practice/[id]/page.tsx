@@ -9,7 +9,6 @@ export default async function PracticePage({
 }: {
   params: { id: string };
 }) {
-  console.log(id);
   const { data } = (await api("files/" + id, {}, [`files/${id}`])) as {
     data: File;
   };
@@ -19,8 +18,6 @@ export default async function PracticePage({
       ...data,
       content: { ...JSON.parse(data.content) },
     };
-  console.log(file);
-
   return (
     <ScreenLayout>
       <DynamicElement

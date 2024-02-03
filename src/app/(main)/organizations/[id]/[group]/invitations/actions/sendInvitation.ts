@@ -69,7 +69,6 @@ export const sendInvitations = async (
 
     if (!validateEmail(email))
       return await customInvitation(Messages.INVALID_EMAIL);
-    // console.log("Email invalido");
     let invitation;
     try {
       invitation = await sendInvitation(email, newMetadata);
@@ -104,9 +103,16 @@ export const sendInvitations = async (
             );
             if (updatedUser?.id) customInvitation(Messages.CHANGED_GROUP);
             revalidateTag(`groups/${organization}`);
+            revalidateTag(`organizations/${organization}`);
             // Si no es miembro de la organización se espera a que la abandone
-          } else if (user.organizationId !== organization)
-            return customInvitation(Messages.CONFIRMATION_REQUIRED);
+          } else if (user.organizationId !== organization) {
+            return customInvitation(Messages.CONFIRMATION_REQUIRED).then(
+              async ({ email }) => {
+                const user = await prisma.user.findFirst({ where: { email } });
+                revalidateTag(`invitations/group/${user?.groupId}`);
+              }
+            );
+          }
           if (!updatedUser?.id) return customInvitation(Messages.INVALID_EMAIL);
           break;
 
@@ -116,4 +122,5 @@ export const sendInvitations = async (
       }
     }
   });
+  revalidateTag(`invitations/group/${group}`);
 };

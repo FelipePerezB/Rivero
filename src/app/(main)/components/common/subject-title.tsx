@@ -13,7 +13,7 @@ export async function SubjectTitle({
   subtitle?: string;
 }) {
   const { data: subject } = (await api(`subjects/${subjectId}`, {}, [
-    "subjects",
+    `subjects/${subjectId}`,
   ])) as {
     data: Subject;
   };

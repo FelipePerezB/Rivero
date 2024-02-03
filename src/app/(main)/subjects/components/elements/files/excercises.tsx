@@ -16,7 +16,6 @@ type metadataType = {
 };
 
 const setProgress = async (id: string, metadata?: metadataType) => {
-  console.log(id, metadata);
   const { subtopicId, topicId, subjectId } = metadata ?? {};
   if (!subtopicId || !topicId || !subjectId) return;
   const lessonProgress = (await getProgress(subjectId)) ?? {};
@@ -33,8 +32,7 @@ const setProgress = async (id: string, metadata?: metadataType) => {
   // ? [...topicProgress[subtopicId], id]
   // [id];
 
-  const { data: res } = (await api(`users/cache/progress/${subjectId}`, {
-    cache: "no-store",
+  (await api(`users/cache/progress/${subjectId}`, {
     method: "POST",
     body: JSON.stringify({
       content: lessonProgress,

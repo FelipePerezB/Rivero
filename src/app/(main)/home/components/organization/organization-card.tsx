@@ -1,7 +1,5 @@
 import { currentUser } from "@clerk/nextjs";
 import Card from "@components/cards/Card";
-import LargeSkeleton from "@components/layout/loading-skeleton/large-skeleton/large-skeleton";
-import RowSkeleton from "@components/layout/loading-skeleton/row-skeleton/row-skeleton";
 import SmallSkeleton from "@components/layout/loading-skeleton/small-skeleton";
 import { Organization } from "@prisma/client";
 import React, { Suspense } from "react";

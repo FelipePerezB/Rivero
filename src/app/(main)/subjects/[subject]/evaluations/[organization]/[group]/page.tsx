@@ -52,13 +52,13 @@ export default async function EvaluationsPage({
         </ItemsBox>
       </Section>
       <Section>
-        <div className="w-full flex justify-between items-center">
+        {/* <div className="w-full flex justify-between items-center"> */}
           <SmallTitle>Estadísticas</SmallTitle>
-          <Button>
+          {/* <Button>
             Generar reporte
             <FontAwesomeIcon className="w-4 h-4" icon={faFileArrowDown} />
-          </Button>
-        </div>
+          </Button> */}
+        {/* </div> */}
         <div className="flex flex-col gap-md">
           <Card className="flex flex-col justify-between gap-md h-[400px]">
             <Suspense fallback={<LargeSkeleton />}>

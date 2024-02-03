@@ -27,7 +27,6 @@ export async function PATCH(request: Request) {
       where: { id },
       data: { status: Status.RESOLVED, msg: Messages.RESOLVED },
     });
-    console.log(id, data);
 
   return NextResponse.json({ data }, { status: 200 });
 }

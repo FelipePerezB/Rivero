@@ -24,7 +24,6 @@ export default async function GroupsLinks({
     `scores?subject=${subject}&evaluation=${evaluation}`,
     {
       headers: { Authorization: `Bearer ${token}` },
-      cache: "no-store",
     },
     [`scores/organizations/${organization}`]
   )) as {

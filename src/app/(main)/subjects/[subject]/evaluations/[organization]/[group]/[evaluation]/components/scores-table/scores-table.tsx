@@ -27,17 +27,21 @@ export default async function ScoresTable({
   const groupId = group === "all" ? "" : group;
   const { data: selectedGroup } = (await api(
     `groups/${organization}/${groupId}`,
-    { headers: { Authorization: `Bearer ${token}` }, cache: "no-store" }
+    { headers: { Authorization: `Bearer ${token}` } },
+    [groupId ? `groups/${groupId}` : `groups/organization/${organization}`]
   )) as { data: GroupWithUsers };
 
   const groupQuery = group !== "all" ? `group=${group}&` : ``;
   const evaluationQuery = evaluation ? `evaluation=${evaluation}&` : ``;
   const endpoint = `scores/${organization}?${evaluationQuery}${groupQuery}`;
 
-  const { data: scores } = (await api(endpoint, {
-    cache: "no-store",
-    headers: { Authorization: `Bearer ${token}` },
-  })) as { data: Score[] };
+  const { data: scores } = (await api(
+    endpoint,
+    {
+      headers: { Authorization: `Bearer ${token}` },
+    },
+    [`scores/evaluation/${evaluation}/organizations/${organization}`]
+  )) as { data: Score[] };
 
   const users = selectedGroup?.Users?.filter(
     ({ role }) => role === Role.STUDENT

@@ -85,8 +85,6 @@ export default function Form({
       } else {
         setOption("Configuración");
       }
-      console.log(options)
-
       setInputs(
         schemas?.map(({ options: data, type }, i) => {
           const value = defaultValues[data?.key];

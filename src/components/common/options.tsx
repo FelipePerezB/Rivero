@@ -8,7 +8,6 @@ export default function Options({
   option?: string;
   setOption: any;
 }) {
-  console.log(options)
   return options && options?.length > 1 ? (
     <div className="w-full mx-auto overflow-x-scroll sm:overflow-x-hidden pb-3 pt-0.5">
       <ul className="flex gap-4 w-1/2">

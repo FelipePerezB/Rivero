@@ -8,6 +8,6 @@ export async function GET(
   const data = await prisma.invitation.findMany({
     where: { email, status: "PENDING" },
   });
-  console.log(email)
+
   return NextResponse.json({ data }, { status: 200 });
 }

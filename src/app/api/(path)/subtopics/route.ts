@@ -10,7 +10,7 @@ export async function POST(request: Request) {
   const res = await request.json();
   const { name, topicId } = res;
   const data = await prisma.subtopic.create({
-    data: { name, topicId },
+    data: { name, topicId: Number(topicId) },
   });
 
   if (data.id) {

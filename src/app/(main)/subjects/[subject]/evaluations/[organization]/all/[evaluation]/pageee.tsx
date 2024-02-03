@@ -25,7 +25,6 @@ export default async function AllGroupsEvaluationPage({
     "evaluations/" + subject,
   ])) as { data: LessonWithFile };
   const { File } = lesssons ?? {};
-  console.log(File)
   return (
     <>
     <Section>

@@ -30,8 +30,8 @@ export default async function ScoresStats({
 
   const { data } = (await api(
     endpoint,
-    { headers: { Authorization: `Bearer ${token}` }, cache: "no-store" },
-    [!group ? `scores/${organization}` : `scores/group/${group}`]
+    { headers: { Authorization: `Bearer ${token}` }},
+    [!group ? `scores/organizations/${organization}` : `scores/groups/${group}`]
   )) as { data: Score[] };
 
   const scores = data?.map(({ score }) => score);

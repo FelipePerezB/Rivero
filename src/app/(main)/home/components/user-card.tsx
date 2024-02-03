@@ -11,7 +11,7 @@ export default async function UserCard() {
   const role = (user?.publicMetadata?.role ?? Role.STUDENT) as Role
   const image = user?.imageUrl
   return (
-    <Card href='profile' interactive className='flex gap-2.5 items-center justify-center sm:w-52 h-full'>
+    <Card className='flex gap-2.5 items-center justify-center sm:w-52 h-full'>
       <img alt='Profile'src={image} className='w-8 h-8 rounded-full'/>
       <div className='flex flex-col'>
         <div className='flex gap-1 text-md font-medium sm:text-lg'>

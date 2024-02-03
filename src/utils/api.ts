@@ -5,7 +5,6 @@ export default async function api(
 ) {
   const url = process.env.NEXT_PUBLIC_BASE_URL;
   const res = await fetch(`${url}/api/${endpoint}`, {
-    // cache: "no-store",
     ...init,
     next: {
       tags,

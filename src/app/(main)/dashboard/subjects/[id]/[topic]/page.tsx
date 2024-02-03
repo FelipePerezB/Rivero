@@ -31,7 +31,7 @@ export default async function SubjectDashboard({
           subjectId={subjectId}
           subtitle="Administra la asignatura"
         />
-        <article className="flex h-10 md:h-8 flex-col gap-md md:flex-row md:justify-between md:items-center">
+        <article className="flex md:h-8 flex-col-reverse gap-md md:flex-row md:justify-between md:items-center">
           <TopicsList subjectId={subjectId} topicId={topicId} />
           <div className="flex gap-sm">
             <Suspense fallback={<LargeSkeleton />}>

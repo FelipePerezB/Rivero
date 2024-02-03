@@ -8,7 +8,6 @@ export default function EditableTitle({
   settings: LessonWithComponent["file"];
   setSettings: React.Dispatch<React.SetStateAction<LessonWithComponent["file"]>>;
 }) {
-  console.log(settings)
   return (
     <div
       contentEditable

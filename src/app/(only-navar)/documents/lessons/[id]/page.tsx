@@ -18,12 +18,10 @@ export default async function LessonPage({
   searchParams: { [key: string]: string };
 }) {
   let file;
-  const { data } = (await api(`lessons/${id}`, { cache: "no-store" }, [
-    `files/${id}`,
-  ])) as {
+  const { data } = (await api(`lessons/${id}`, {}, [`files/${id}`])) as {
     data: LessonWithFile;
   };
-   
+
   if (data?.File?.content)
     file = {
       ...data,
@@ -31,7 +29,7 @@ export default async function LessonPage({
     };
 
   const type = Types.DOCUMENT.toLowerCase();
-   
+
   if (typeof file?.content !== "object") return <></>;
   const content = file.content as LessonWithComponent["file"]["content"];
   const metadata = {

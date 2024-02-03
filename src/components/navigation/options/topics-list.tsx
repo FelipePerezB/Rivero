@@ -1,18 +1,18 @@
-import { Topic } from '@prisma/client';
-import React, { Suspense } from 'react'
-import Options from './options';
-import capFirst from 'src/utils/capFirst';
-import api from 'src/utils/api';
-import LargeSkeleton from '@components/layout/loading-skeleton/large-skeleton/large-skeleton';
+import { Topic } from "@prisma/client";
+import React, { Suspense } from "react";
+import Options from "./options";
+import capFirst from "src/utils/capFirst";
+import api from "src/utils/api";
+import LargeSkeleton from "@components/layout/loading-skeleton/large-skeleton/large-skeleton";
 
-export async function TopicsList ({
+export async function TopicsList({
   subjectId,
   topicId,
 }: {
   subjectId: string;
   topicId: string;
 }) {
-  const { data: topics } = (await api(`topics?subject=${subjectId}`, {}, [
+  const { data: topics } = (await api(`subjects/${subjectId}/topics`, {}, [
     `subjects/${subjectId}`,
   ])) as {
     data: Topic[];
@@ -26,9 +26,8 @@ export async function TopicsList ({
       }))}
     />
   );
-
-};
-export async function TopicsListWithSuspense ({
+}
+export async function TopicsListWithSuspense({
   subjectId,
   topicId,
 }: {
@@ -37,7 +36,7 @@ export async function TopicsListWithSuspense ({
 }) {
   return (
     <Suspense fallback={<LargeSkeleton />}>
-    <TopicsList subjectId={subjectId} topicId={topicId} />
-  </Suspense>
+      <TopicsList subjectId={subjectId} topicId={topicId} />
+    </Suspense>
   );
-};
+}

@@ -15,7 +15,6 @@ export async function POST(
   { params: { subject } }: { params: { [key: string]: string } }
 ) {
   const res = (await req.json()) as { content: string };
-  console.log(STORAGE_KEY(subject));
   if (!res?.content)
     return NextResponse.json({ msg: "missing content" }, { status: 400 });
   const data = await kv.set(STORAGE_KEY(subject), res?.content);

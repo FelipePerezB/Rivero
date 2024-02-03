@@ -17,7 +17,7 @@ export default async function AllScores() {
             Authorization: `Bearer ${token}`,
           },
         },
-        [`scores/group/${group}`]
+        [`scores/groups/${group}`]
       )
     : ({ data: [] } as {
         data?: Score[];
@@ -25,7 +25,7 @@ export default async function AllScores() {
   return (
     <>
       <Item subtitle="Puntajes" title={scores?.length} />
-      <Item subtitle="Último puntaje" title={scores[0]?.score ?? "---"} />
+      <Item subtitle="Último puntaje" title={scores?.at(-1)?.score ?? "---"} />
     </>
   );
 }

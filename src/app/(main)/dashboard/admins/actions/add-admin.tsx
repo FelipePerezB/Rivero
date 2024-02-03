@@ -6,14 +6,13 @@ import { revalidateTag } from "next/cache";
 import { IdLenght } from "src/models/document.model";
 import api from "src/utils/api";
 import generateRandomId from "src/utils/generateRandomId";
+import prisma from "src/utils/prisma";
 
 export default async function addAdmin(formData: FormData) {
-  const email = formData.get("email");
-  const {
-    data: { externalId },
-  } = (await api(`users/email/${email}`, { cache: "no-store" })) as {
-    data: User;
-  };
+  const email = formData.get("email") as string | null;
+  if (!email) return;
+  const user = await prisma.user.findFirst({ where: { email } });
+  const externalId = user?.externalId;
   if (!externalId) return;
   try {
     const user = await clerkClient.users.updateUserMetadata(externalId, {

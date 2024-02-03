@@ -16,8 +16,6 @@ export default function OrganizationProtect({
           condition: (user) => {
             const organization = user?.publicMetadata?.organizationId;
             const role = user?.publicMetadata?.role as Role;
-            console.log({organization, organizationId})
-            console.log(Number(organization) === Number(organizationId))
             return (
               Number(organization) === Number(organizationId) ||
               role === Role.ADMIN
