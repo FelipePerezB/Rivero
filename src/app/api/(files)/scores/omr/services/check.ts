@@ -26,7 +26,7 @@ export default async function check(
       Images: [base64Image],
       omrFile: omzFile,
       outputFormat: "JSON",
-      recognitionThreshold: 35,
+      recognitionThreshold: 50,
     }),
   }).then((data) => data.text());
 
