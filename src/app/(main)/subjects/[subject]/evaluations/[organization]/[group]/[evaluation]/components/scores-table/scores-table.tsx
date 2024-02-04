@@ -54,11 +54,11 @@ export default async function ScoresTable({
 
   return (
     <Table
-      onClickHref="?modal=new-score&id=[id]"
+      onClickHref={`${evaluation}/[ID]`}
       head={{
         title: selectedGroup?.name,
         keys: [
-          { name: "id", key: "id" },
+          { name: "id", key: "ID", hidden: true },
           { name: "Nombre", key: "name" },
           { name: "Correo", key: "email" },
           { name: "Puntaje", key: "score" },
