@@ -6,6 +6,7 @@ import React, { FormEvent, useRef, useState } from "react";
 import { readImage } from "./actions/r";
 import api from "src/utils/api";
 import { atob } from "buffer";
+import toast from "react-hot-toast";
 
 export default function UserScore({
   params: { evaluation, group, organization, subject },
@@ -23,22 +24,53 @@ export default function UserScore({
     if (img) {
       console.log(img);
       const reader = new FileReader();
-
-      reader.onload = async (event) => {
-        // console.time()
+      reader.onload = (event) => {
         if (event.target && typeof event.target.result === "string") {
-          console.log(event.target.result);
-          const base64String = event.target.result.split(",")[1];
-          console.log(base64String);
-          const { data } = await api("scores/omr", {
-            method: "POST",
-            body: JSON.stringify({ image: base64String }),
-          });
+          const imgElement = new Image();
+          imgElement.src = event.target.result;
 
-          setAnswers(JSON.stringify(data));
-          // Aquí puedes hacer lo que quieras con la cadena base64, como enviarla a un servidor, mostrarla en una imagen, etc.
+          imgElement.onload = () => {
+            const canvas = document.createElement("canvas");
+            const context = canvas.getContext("2d");
+
+            if (context) {
+              canvas.width = imgElement.width;
+              canvas.height = imgElement.height;
+              context.drawImage(
+                imgElement,
+                0,
+                0,
+                imgElement.width,
+                imgElement.height
+              );
+
+              // Convierte la imagen a formato PNG
+              const base64String = canvas.toDataURL("image/png").split(",")[1];
+              console.log(base64String);
+              toast.promise(
+                api("scores/omr", {
+                  method: "POST",
+                  cache: "no-store",
+                  body: JSON.stringify({ image: base64String }),
+                }).then(({ data }) => setAnswers(JSON.stringify(data))),
+                { error: "Error", loading: "Subiendo...", success: "A" }
+              );
+              // Ahora base64String contiene la representación de la imagen en formato PNG
+            }
+          };
         }
       };
+
+      // reader.onload = async (event) => {
+      //   // console.time()
+      //   if (event.target && typeof event.target.result === "string") {
+      //     console.log(event.target.result);
+      //     const base64String = event.target.result.split(",")[1];
+      //     console.log(base64String);
+
+      //     // Aquí puedes hacer lo que quieras con la cadena base64, como enviarla a un servidor, mostrarla en una imagen, etc.
+      //   }
+      // };
       reader.readAsDataURL(img);
     }
   };
@@ -53,7 +85,7 @@ export default function UserScore({
         >
           <p>
             Sube un archivo:
-            <input type="file" name="image" accept=".png" />
+            <input type="file" name="image" accept="png" />
             <input type="submit" value="Enviar datos" />
           </p>
         </form>
