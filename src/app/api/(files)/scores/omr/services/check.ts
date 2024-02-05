@@ -15,7 +15,7 @@ export default async function check(
 ) {
   const endpoint = `https://api.aspose.cloud/v5.0/omr/RecognizeTemplate/PostRecognizeTemplate`;
   const checkId = await fetch(endpoint, {
-    cache: "no-store",
+    // cache: "no-store",
     method: "POST",
     headers: {
       Accept: "text/plain",

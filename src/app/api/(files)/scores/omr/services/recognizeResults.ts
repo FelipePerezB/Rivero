@@ -9,7 +9,7 @@ export default async function recognizeResults(
 ) {
   const endpoint = `https://api.aspose.cloud/v5.0/omr/RecognizeTemplate/GetRecognizeTemplate?id=${id}`;
   const res = await fetch(endpoint, {
-    cache: "no-store",
+    // cache: "no-store",
     headers: {
       Accept: "text/plain",
       Authorization: `Bearer ${access_token}`,

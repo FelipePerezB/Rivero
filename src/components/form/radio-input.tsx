@@ -57,26 +57,38 @@ const OnChangeRadioInput = ({
 
 type props = {
   name: string;
-  label: string;
+  label?: string;
   options: string[];
   onChange?: (data: any) => void;
   value?: string;
+  defaultCheck?: boolean;
   className?: string;
+  labelPosition?: "top" | "left";
 };
 
 export default function RadioInput({
+  labelPosition = "top",
   name,
   onChange,
+  defaultCheck,
   options,
   label,
   value,
 }: props) {
-  const defaultValue = value ?? options[0];
+  const defaultValue = value ?? (defaultCheck ? options[0] : undefined);
   return (
-    <article className={"flex flex-col gap-1 {props?.className"}>
-      <span className={"w-full inline-block text-center"}>
-        {capFirst(label ?? name)}
-      </span>
+    <article
+      className={`flex ${
+        labelPosition === "top"
+          ? "flex-col gap-1  w-max"
+          : "flex-row justify-between  gap-sm"
+      }`}
+    >
+      {label && (
+        <span className={"w-full min-w-max inline-block text-center"}>
+          {capFirst(label)} {labelPosition === "left" ? ".-" : ""}
+        </span>
+      )}
       <fieldset className="w-max bg-white rounded flex justify-around my-0 mx-auto overflow-hidden relative border">
         {options.map((option, i) => {
           const inputOptions = {
@@ -103,7 +115,7 @@ export default function RadioInput({
               />
               <span
                 className={
-                  "w-full h-ful py-1 px-3 transition-all duration-100 peer-checked:bg-blue-500 peer-checked:text-white group-hover:bg-gray-200/60 "
+                  "w-full h-ful py-1 px-3 transition-all duration-100 peer-checked:bg-blue-500/70 peer-checked:text-white group-hover:bg-gray-200/60 "
                 }
               >
                 {capFirst(option)}

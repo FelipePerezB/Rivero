@@ -6,15 +6,13 @@ export default async function getTemplate(
   const endpoint = `https://api.aspose.cloud/v5.0/omr/GenerateTemplate/GetGenerateTemplate?id=${templateId}`;
 
   const data = await fetch(endpoint, {
-    // next: { revalidate: 1800 },
+    // cache: "force-cache"
+    next: { revalidate: 1800 },
     headers: {
       Authorization: `Bearer ${access_token}`,
       "Content-Type": "application/json",
     },
-  }).then((data) => {
-    console.log(data);
-    return data.json();
-  });
+  }).then((data) => data.json());
 
   console.log(data);
   return { data };

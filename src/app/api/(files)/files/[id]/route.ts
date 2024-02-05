@@ -10,6 +10,7 @@ export async function POST(
 ) {
   const res = await request.json();
   const user = await currentUser();
+  console.log(res)
   if (!user?.id)
     return NextResponse.json({ message: "user not found" }, { status: 400 });
   const role = user?.publicMetadata?.role as Role;
@@ -41,7 +42,9 @@ export async function POST(
       privacity,
     },
   });
-  if (data.externalId) revalidateTag(`files/${id}`);
+
+  console.log(data)
+  if (data.externalId) revalidateTag(`files/${data.externalId}`);
   const subtopicId = data?.Lesson?.subtopicId;
   const subjectId = data?.Lesson?.subjectId;
   const topicId = data?.Lesson?.topicId;
@@ -74,7 +77,9 @@ export async function PATCH(
   request: Request,
   { params }: { params: { id: string } }
 ) {
+  console.log(params)
   const res = (await request.json()) as Partial<File>;
+  console.log(res)
   const updateData = Object.fromEntries(
     Object.entries(res).map(([key, value]) => [key, { set: value }])
   );
@@ -88,7 +93,7 @@ export async function PATCH(
     include: { Lesson: true },
   });
   if (data?.id) {
-    revalidateTag(`files/${data?.id}`);
+    revalidateTag(`files/${data?.externalId}`);
   }
   const subtopicId = data?.Lesson?.subtopicId;
   if (subtopicId) revalidateTag(`lessons/${subtopicId}`);
