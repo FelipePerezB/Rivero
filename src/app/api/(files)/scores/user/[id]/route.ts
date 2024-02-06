@@ -15,6 +15,7 @@ export async function GET(
     where: {
       User: { externalId: id },
     },
+    include: { lesson: { select: { File: { select: { externalId: true } } } } },
   });
 
   return NextResponse.json({ data }, { status: 200 });

@@ -1,4 +1,5 @@
 import { auth, currentUser } from "@clerk/nextjs";
+import { Role } from "@prisma/client";
 import { NextResponse } from "next/server";
 import prisma from "src/utils/prisma";
 
@@ -6,7 +7,18 @@ export async function GET(
   request: Request,
   { params: { id, evaluation } }: { params: { id: string; evaluation: string } }
 ) {
-  const data = await prisma.score.findMany({
+  const user = await currentUser();
+  const { externalId } =
+    (await prisma.user.findUnique({
+      where: { id: Number(id) },
+      select: { externalId: true },
+    })) ?? {};
+  const role = user?.publicMetadata?.role;
+  if (!user?.id) return [];
+  const resolved = (role && role !== Role.STUDENT) || externalId === user?.id;
+  if (!resolved) return [];
+
+  const data = await prisma.score.findFirst({
     where: {
       lesson: { File: { externalId: evaluation } },
       User: { id: Number(id) },
@@ -15,5 +27,5 @@ export async function GET(
 
   console.log(data);
 
-  return NextResponse.json({ data: data.at(-1) }, { status: 200 });
+  return NextResponse.json({ data }, { status: 200 });
 }

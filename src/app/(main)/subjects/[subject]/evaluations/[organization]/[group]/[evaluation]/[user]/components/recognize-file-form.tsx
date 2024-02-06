@@ -1,20 +1,18 @@
 "use client";
 import { FormEvent, ReactNode, useRef } from "react";
-import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import api from "src/utils/api";
 
 export default function RecognizeFileForm({
   children,
   evaluationId,
-  userId
+  userId,
 }: {
   children: ReactNode;
-  evaluationId: string
-  userId: string
+  evaluationId: string;
+  userId: string;
 }) {
   const formRef = useRef(null);
-  const router = useRouter();
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault();
     if (!formRef.current) return;
@@ -43,22 +41,24 @@ export default function RecognizeFileForm({
                 imgElement.height
               );
 
-              // Convierte la imagen a formato PNG
               const base64String = canvas.toDataURL("image/png").split(",")[1];
-              
+
               console.log(base64String);
               toast.promise(
                 api("scores/omr", {
                   method: "POST",
-                  body: JSON.stringify({ image: base64String, evaluationId, userId }),
-                }).then(() => router.refresh()),
+                  body: JSON.stringify({
+                    image: base64String,
+                    evaluationId,
+                    userId,
+                  }),
+                }),
                 {
                   error: "Error, suba otra foto",
                   loading: "Publicando...",
                   success: "¡Publicado correctamente!",
                 }
               );
-              // Ahora base64String contiene la representación de la imagen en formato PNG
             }
           };
         }

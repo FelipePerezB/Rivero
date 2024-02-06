@@ -21,7 +21,7 @@ export default async function GroupsLinks({
   })) as { data: Group[] };
 
   const { data: scores } = (await api(
-    `scores?subject=${subject}&evaluation=${evaluation}`,
+    `scores/${organization}?subject=${subject}&evaluation=${evaluation}`,
     {
       headers: { Authorization: `Bearer ${token}` },
     },

@@ -75,11 +75,11 @@ export default async function AllGroupsOrganizationPage({
   };
 
   const { data: unFormatedScores } = (await api(
-    `scores/${organizationId}/${group !== "all" ? `group/${group}` : ""}`,
+    `scores/${organizationId}/${group !== "all" ? `?group=${group}` : ""}`,
     {
       headers: { Authorization: `Bearer ${token}` },
     },
-    [`scores/organizations/${organization}`]
+    [group ?`scores/groups/${group}` :`scores/organizations/${organization}`]
   )) as {
     data: ScoresWithGroup[];
   };

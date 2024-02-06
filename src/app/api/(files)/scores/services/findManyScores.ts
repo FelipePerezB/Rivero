@@ -7,22 +7,34 @@ import prisma from "src/utils/prisma";
 
 export default async function findManyScores({
   subject,
+  user,
   organization,
   evaluation,
   group,
 }: {
+  user?: string | number;
   subject?: string | number;
   organization?: string | number;
   evaluation?: string;
   group?: string | number;
 }) {
-  const resolved = await organizationProtect({ organization });
+  const { externalId } =
+    (await prisma.user.findUnique({
+      where: { id: Number(user) },
+      select: { externalId: true },
+    })) ?? {};
+  const userData = await currentUser();
+  const role = userData?.publicMetadata?.role;
+  if (!userData?.id) return [];
+  const resolved =
+    (role && role !== Role.STUDENT) || externalId === userData?.id;
   if (!resolved) return [];
 
   const organizationIdQuery = organization
     ? { organizationId: Number(organization) }
     : {};
   const subjectIdQuery = subject ? { subjectId: Number(subject) } : {};
+  const userQuery = user ? { id: Number(user) } : {};
   const groupIdQuery = group ? { groupId: Number(group) } : {};
   const evaluationQuery = evaluation
     ? { File: { externalId: evaluation } }
@@ -30,7 +42,7 @@ export default async function findManyScores({
 
   return await prisma.score.findMany({
     where: {
-      User: { ...organizationIdQuery, ...groupIdQuery },
+      User: { ...userQuery, ...organizationIdQuery, ...groupIdQuery },
       lesson: { ...subjectIdQuery, ...evaluationQuery },
     },
     select: {

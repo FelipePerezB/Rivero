@@ -8,16 +8,19 @@ export default async function ScoresChart({
   group,
   organization,
   subject,
+  user,
 }: {
   group: string;
   organization: string;
   subject: string;
+  user?: string;
 }) {
   const { getToken } = auth();
   const token = await getToken();
   const groupQuery = group !== "all" ? `group=${group}&` : ``;
   const subjectQuery = subject ? `subject=${subject}&` : ``;
-  const endpoint = `scores/${organization}?${subjectQuery}${groupQuery}`;
+  const userQuery = user ? `user=${user}&` : ``;
+  const endpoint = `scores/${organization}?${subjectQuery}${groupQuery}${userQuery}`;
   const { data: scores } = (await api(
     endpoint,
     {
@@ -32,10 +35,17 @@ export default async function ScoresChart({
     data: ScoresWithGroup[];
   };
   const data = formatScores(scores) ?? {};
-  const series =
-    group === "all"
+  const date = new Date();
+  const defaultTime = date.toISOString().split("T")[0];
+  const series = scores?.length
+    ? group === "all"
       ? Object.values(data)?.map((data) => ({ data }))
-      : [{ data: data[Number(group)] }];
+      : [{ data: data[Number(group)] }]
+    : [
+        {
+          data: [{ time: defaultTime, value: 0 }],
+        },
+      ];
 
   return <ChartComponent series={series} />;
 }

@@ -39,7 +39,7 @@ export default function formatScores(scores: ScoresWithGroup[]) {
 export function formatWithoutGroupScores(scores: Score[]) {
   const unFormatedData = {} as { [time: string]: number[] };
 
-  scores?.forEach(({ score, updateAt }) => {
+  scores?.forEach(({ score, updateAt, }) => {
     const unFormatedTime = updateAt as unknown as string;
     const time = unFormatedTime.split("T")[0];
     const dateData = unFormatedData[time];
@@ -48,6 +48,7 @@ export function formatWithoutGroupScores(scores: Score[]) {
   const data = Object.entries(unFormatedData).map(([time, scores]) => ({
     time,
     value: getAvg(scores),
+
   }));
   return data;
 }

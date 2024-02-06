@@ -84,5 +84,5 @@ export async function GET(request: NextRequest) {
     },
     include: { User: { select: { Group: { select: { id: true } } } } },
   });
-  return NextResponse.json({ data: data }, { status: 200 });
+  return NextResponse.json({ data: scores }, { status: 200 });
 }

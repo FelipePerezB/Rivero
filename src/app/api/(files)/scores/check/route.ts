@@ -62,14 +62,14 @@ const transformationTable = {
   57: 939,
   58: 963,
   59: 990,
-  60: 1000
-} as {[n: number]: number};
+  60: 1000,
+} as { [n: number]: number };
 
 export async function POST(request: NextRequest) {
   const req = await request.json();
   const evaluationId = req?.evaluationId;
   const answers = req?.answers;
-  console.log(answers)
+  console.log(answers);
   if (!evaluationId)
     return NextResponse.json(
       { data: "Evaluation ID is required" },
@@ -78,19 +78,27 @@ export async function POST(request: NextRequest) {
   if (!answers)
     return NextResponse.json({ data: "Answers are required" }, { status: 400 });
 
-
-  const { data: {answers:expectedAnswers, id} } = await api(`lessons/evaluations/questions/${evaluationId}`, {}, [
+  const {
+    data: { answers: expectedAnswers, id },
+  } = (await api(`lessons/evaluations/questions/${evaluationId}`, {}, [
     `files/${evaluationId}`,
-  ]) as {data: {answers: string[], id: number}};
-
+  ])) as {
+    data: { answers: { expectedAns: string; isPilot?: boolean }[]; id: number };
+  };
 
   let correctAlternatives = 0;
   expectedAnswers.forEach((answer, i) => {
     console.log(answers[i], answer);
-    if (answers[i]?.toUpperCase() === answer?.toUpperCase())
+    if (
+      !answer?.isPilot &&
+      answers[i]?.toUpperCase() === answer?.expectedAns?.toUpperCase()
+    )
       correctAlternatives += 1;
   });
 
   console.log(expectedAnswers);
-  return NextResponse.json({ score: transformationTable[correctAlternatives] }, { status: 200 });
+  return NextResponse.json(
+    { score: transformationTable[correctAlternatives] },
+    { status: 200 }
+  );
 }

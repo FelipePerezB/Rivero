@@ -1,7 +1,7 @@
 import React, { ReactNode } from 'react'
 
-export default function Section({children}:{children: ReactNode}) {
+export default function Section({children, id}:{children: ReactNode, id?:string}) {
   return (
-    <section className='flex flex-col gap-sm sm:gap-md'>{children}</section>
+    <section id={id} className='flex flex-col gap-sm sm:gap-md'>{children}</section>
   )
 }

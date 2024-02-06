@@ -80,6 +80,13 @@ const specifics = {
       },
     },
     {
+      type: "boolean",
+      options: {
+        key: "isPilot",
+        label: "Piloto",
+      },
+    },
+    {
       type: "children",
       options: {
         types: ["question"],

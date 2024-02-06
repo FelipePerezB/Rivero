@@ -7,9 +7,11 @@ export async function GET(
 ) {
   const searchParams = request.nextUrl.searchParams;
   const evaluation = searchParams.get("evaluation") ?? undefined;
+  const user = searchParams.get("user") ?? undefined;
   const subject = searchParams.get("subject") ?? undefined;
   const group = searchParams.get("group") ?? undefined;
   const data = await findManyScores({
+    user,
     organization,
     evaluation,
     group,
