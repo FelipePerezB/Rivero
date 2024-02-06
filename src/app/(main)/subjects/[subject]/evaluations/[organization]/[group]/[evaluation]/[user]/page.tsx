@@ -25,7 +25,7 @@ export default async function UserScore({
         <SendFileForm evaluation={evaluation} user={user} />
       </Section>
       <Section>
-        <UpdateAnswersForm {...{ evaluation, user }} />
+        <UpdateAnswersForm {...{ evaluation, user, group }} />
       </Section>
       <Section id="stats">
         <Card className="mt-4 h-80">

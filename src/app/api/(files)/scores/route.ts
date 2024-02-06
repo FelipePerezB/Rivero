@@ -43,6 +43,9 @@ export async function POST(request: Request) {
       `scores/evaluation/${data.lesson.File.externalId}/organizations/${data.User.organizationId}`
     );
     revalidateTag(
+      `scores/evaluation/${data.lesson.File.externalId}/groups/${data.User.groupId}`
+    );
+    revalidateTag(
       `scores/subject/${data.lesson.subjectId}/organizations/${data.User.organizationId}`
     );
     revalidateTag(

@@ -48,8 +48,10 @@ const updateAnswers = async (
 
 async function UpdateAnswersForm({
   evaluation,
+  group,
   user: userId,
 }: {
+  group: string,
   evaluation: string;
   user: string;
 }) {
@@ -66,7 +68,7 @@ async function UpdateAnswersForm({
 
   const { data: score } = (await api(
     `scores/user/${userId}/${evaluation}`,
-    {}
+    {}, [`scores/groups/${group}`]
   )) as { data: Score };
 
   const answersStr = score?.alternatives ?? "";
@@ -162,9 +164,11 @@ async function UpdateAnswersForm({
 
 export default async function UpdateAnswersFormWithSuspense({
   evaluation,
+  group,
   user,
 }: {
   evaluation: string;
+  group: string;
   user: string;
 }) {
   return (
@@ -181,7 +185,7 @@ export default async function UpdateAnswersFormWithSuspense({
         </div>
       }
     >
-      <UpdateAnswersForm {...{ evaluation, user }} />
+      <UpdateAnswersForm {...{ evaluation, user, group }} />
     </Suspense>
   );
 }
