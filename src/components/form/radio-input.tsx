@@ -62,7 +62,7 @@ type props = {
   onChange?: (data: any) => void;
   value?: string;
   defaultCheck?: boolean;
-  className?: string;
+  checkedColor?: string;
   labelPosition?: "top" | "left";
 };
 
@@ -70,6 +70,7 @@ export default function RadioInput({
   labelPosition = "top",
   name,
   onChange,
+  checkedColor,
   defaultCheck,
   options,
   label,
@@ -80,7 +81,7 @@ export default function RadioInput({
     <article
       className={`flex ${
         labelPosition === "top"
-          ? "flex-col gap-1  w-max"
+          ? "flex-col gap-1  w-full"
           : "flex-row justify-between  gap-sm"
       }`}
     >
@@ -115,7 +116,7 @@ export default function RadioInput({
               />
               <span
                 className={
-                  "w-full h-ful py-1 px-3 transition-all duration-100 peer-checked:bg-blue-500/70 peer-checked:text-white group-hover:bg-gray-200/60 "
+                 `w-full h-ful py-1 px-3 transition-all duration-100 ${checkedColor ? checkedColor :"peer-checked:bg-blue-500"} peer-checked:text-white group-hover:bg-gray-200/60`
                 }
               >
                 {capFirst(option)}

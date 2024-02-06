@@ -8,15 +8,16 @@ export async function GET(
   { params: { id, evaluation } }: { params: { id: string; evaluation: string } }
 ) {
   const user = await currentUser();
-  const { externalId } =
-    (await prisma.user.findUnique({
-      where: { id: Number(id) },
-      select: { externalId: true },
-    })) ?? {};
+  const { externalId } = id
+    ? (await prisma.user.findUnique({
+        where: { id: Number(id) },
+        select: { externalId: true },
+      })) ?? {}
+    : { externalId: "" };
   const role = user?.publicMetadata?.role;
-  if (!user?.id) return [];
+  if (!user?.id) NextResponse.json({ data: {} }, { status: 401 });
   const resolved = (role && role !== Role.STUDENT) || externalId === user?.id;
-  if (!resolved) return [];
+  if (!resolved) NextResponse.json({ data: {} }, { status: 401 });
 
   const data = await prisma.score.findFirst({
     where: {

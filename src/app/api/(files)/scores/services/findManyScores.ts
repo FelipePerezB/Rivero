@@ -18,11 +18,12 @@ export default async function findManyScores({
   evaluation?: string;
   group?: string | number;
 }) {
-  const { externalId } =
-    (await prisma.user.findUnique({
-      where: { id: Number(user) },
-      select: { externalId: true },
-    })) ?? {};
+  const { externalId } = user
+    ? (await prisma.user.findUnique({
+        where: { id: Number(user) },
+        select: { externalId: true },
+      })) ?? {}
+    : { externalId: "" };
   const userData = await currentUser();
   const role = userData?.publicMetadata?.role;
   if (!userData?.id) return [];

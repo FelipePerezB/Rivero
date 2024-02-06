@@ -5,8 +5,8 @@ import adminProtect from "src/app/api/utils/adminProtect";
 import prisma from "src/utils/prisma";
 
 export async function GET(request: Request) {
-  const resolved = adminProtect()
-  if (!resolved) return NextResponse.json({ data: {} }, { status: 403 });
+  const resolved = adminProtect();
+  if (!resolved) return NextResponse.json({ data: [] }, { status: 401 });
   const data = await prisma.user.findMany({
     where: {
       role: Role.ADMIN,
