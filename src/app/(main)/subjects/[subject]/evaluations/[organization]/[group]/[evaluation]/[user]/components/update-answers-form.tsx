@@ -131,7 +131,7 @@ async function UpdateAnswersForm({
                     className="grid gap-3 grid-cols-[1fr,1rem] justify-center items-center"
                   >
                     <RadioInput
-                      disabled={!role || role !== Role.STUDENT}
+                      disabled={!role || role === Role.STUDENT}
                       checkedColor="peer-checked:bg-blue-500/70"
                       defaultCheck={false}
                       labelPosition="left"

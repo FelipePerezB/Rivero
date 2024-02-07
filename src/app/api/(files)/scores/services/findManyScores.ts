@@ -53,6 +53,7 @@ export default async function findManyScores({
       id: true,
       score: true,
       updateAt: true,
+      createdAt: true,
       User: { select: { Group: { select: { id: true } } } },
     },
   });

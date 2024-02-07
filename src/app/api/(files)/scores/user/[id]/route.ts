@@ -10,7 +10,7 @@ export async function GET(
   if (userId !== id) NextResponse.json({ data: [] }, { status: 200 });
   const data = await prisma.score.findMany({
     orderBy: {
-      updateAt: "asc",
+      createdAt: "asc",
     },
     where: {
       User: { externalId: id },

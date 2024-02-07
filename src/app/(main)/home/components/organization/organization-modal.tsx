@@ -40,7 +40,7 @@ export default async function OrganizationModal() {
             : "¡Unete a una institución para acceder a evaluaciones y más cosas!"}
         </p>
       </div>
-      {pendingInvitations?.map(({ id, organizationId, role, updateAt }) => (
+      {pendingInvitations?.map(({ id, organizationId, role }) => (
         <Card
           className="flex justify-between items-center"
           key={`invitation-pending-${id}`}
