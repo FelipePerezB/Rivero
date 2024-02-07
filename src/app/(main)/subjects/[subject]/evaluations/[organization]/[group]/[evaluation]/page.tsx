@@ -1,6 +1,7 @@
 import { auth } from "@clerk/nextjs";
 import Button from "@components/common/buttons/button/button";
 import {
+  faChartSimple,
   faFileArrowDown,
   faFileExcel,
   faKey,
@@ -90,16 +91,10 @@ export default async function EvaluationPage({
             group={group}
           />
         </Suspense>
+        <Button href={`${evaluation}/report`}>
+          Resumen <FontAwesomeIcon icon={faChartSimple} className="h-3 w-3" />
+        </Button>
       </Section>
-      <Suspense>
-        <SearchModal
-          id="new-score"
-          title="Nuevo puntaje"
-          searchParams={searchParams}
-        >
-          <AddScoreForm id={searchParams?.id} fileId={evaluation} />
-        </SearchModal>
-      </Suspense>
     </OrganizationProtect>
   );
 }
