@@ -51,7 +51,7 @@ async function UpdateAnswersForm({
   group,
   user: userId,
 }: {
-  group: string,
+  group: string;
   evaluation: string;
   user: string;
 }) {
@@ -68,7 +68,8 @@ async function UpdateAnswersForm({
 
   const { data: score } = (await api(
     `scores/user/${userId}/${evaluation}`,
-    {}, [`scores/groups/${group}`]
+    {},
+    [`scores/groups/${group}`]
   )) as { data: Score };
 
   const answersStr = score?.alternatives ?? "";
@@ -130,7 +131,8 @@ async function UpdateAnswersForm({
                     className="grid gap-3 grid-cols-[1fr,1rem] justify-center items-center"
                   >
                     <RadioInput
-                    checkedColor="peer-checked:bg-blue-500/70"
+                      disabled={!role || role !== Role.STUDENT}
+                      checkedColor="peer-checked:bg-blue-500/70"
                       defaultCheck={false}
                       labelPosition="left"
                       value={value}

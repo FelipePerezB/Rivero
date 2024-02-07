@@ -56,6 +56,7 @@ const OnChangeRadioInput = ({
 };
 
 type props = {
+  disabled?: boolean,
   name: string;
   label?: string;
   options: string[];
@@ -67,11 +68,12 @@ type props = {
 };
 
 export default function RadioInput({
+  disabled,
   labelPosition = "top",
   name,
   onChange,
   checkedColor,
-  defaultCheck,
+  defaultCheck = true,
   options,
   label,
   value,
@@ -107,6 +109,7 @@ export default function RadioInput({
           return (
             <label className="relative h-full flex group" key={option}>
               <input
+              disabled={disabled}
                 {...inputOptions}
                 className="cursor-pointer absolute top-0 left-0 h-full w-full opacity-0 peer"
                 id={option}
