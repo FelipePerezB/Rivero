@@ -10,6 +10,7 @@ import toast from "react-hot-toast";
 import Alert from "@components/common/alert/alert";
 import api from "src/utils/api";
 import { deleteMessages } from "@components/common/alert/alert-message";
+import specifics from "src/app/documents/edit/utils/schemas/specifics";
 
 export default function SettingsModal({
   modalState,
@@ -30,6 +31,17 @@ export default function SettingsModal({
     setModalState(false);
   };
   const { content } = settings;
+
+
+  let types;
+  try {
+    types = specifics[content?.type as "document"]?.at(0)?.options?.types;
+    
+  } catch (error) {
+    
+  }
+
+  console.log(types)
 
   return modalState ? (
     <ClientModal
@@ -54,6 +66,7 @@ export default function SettingsModal({
             />
           ));
         }}
+        types={['section']}
         id={content?.id}
         modalState={modalState}
         setModalState={setModalState}

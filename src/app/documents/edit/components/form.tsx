@@ -44,8 +44,8 @@ export default function Form({
   onSave?: (props: Component) => void;
   onDelete?: (props: Component) => void;
 }) {
+  console.log(types)
   const [inputs, setInputs] = useState<ReactNode[] | undefined>([]);
-  const [childrenTypes, setChildrenTypes] = useState([]);
   const [options, setOptions] = useState<string[]>([]);
   const [option, setOption] = useState<options | undefined>("Configuración");
 
@@ -124,7 +124,7 @@ export default function Form({
         <div>
           <FormChildren onChange={addFormData} {...{ children }} />
           <Children
-            types={childrenTypes}
+            types={types}
             value={children}
             onChange={addFormData}
             parentId={id as string}

@@ -79,10 +79,10 @@ export default function EditWraper({
         return;
       } else return setSettings(hydrate(document, id));
     } 
-    // else if (storageDocument.externalId) {
-    //   setIsLocalFile(true);
-    //   return setSettings(hydrate(storageDocument, id));
-    // } 
+    else if (storageDocument.externalId) {
+      setIsLocalFile(true);
+      return setSettings(hydrate(storageDocument, id));
+    } 
     else return setSettings(getTemplate(id));
 
   }, [id]);

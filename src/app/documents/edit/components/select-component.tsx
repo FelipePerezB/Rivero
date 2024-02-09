@@ -17,6 +17,8 @@ export default function SelectComponent({
     }>
   >;
 }) {
+
+  console.log(types)
   const globalsSchemas = schemas as any; // Perdoname Dios
   const categories = Object.keys(globalsSchemas);
 

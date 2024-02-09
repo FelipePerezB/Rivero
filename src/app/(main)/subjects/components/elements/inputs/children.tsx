@@ -19,6 +19,7 @@ export default function Children({
   parentId: string;
   onChange: (value: { [key: string]: Component[] }) => void;
 }) {
+  console.log(types)
   const [modalState, setModalState] = useState(false);
   const [id, setId] = useState(`${parentId}-${generateRandomId(IdLenght.sm)}`);
 
