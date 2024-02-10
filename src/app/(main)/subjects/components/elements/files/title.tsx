@@ -17,7 +17,7 @@ export default function Title({
         {text}
       </h1>
     ),
-    h2: <h2 className="text-[1.25em] sm:text-[1.4em]">{text}</h2>,
+    h2: <h2 className="text-[1.25em] sm:text-[1.4em] font-semibold">{text}</h2>,
     h3: <h3 className="text-[1.1em]/[1em] font-bold">{text}</h3>,
   };
   return <div className="w-full" data-component={id}>{sizes[size]}</div>;

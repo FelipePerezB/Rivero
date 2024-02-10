@@ -3,6 +3,7 @@ import { ReactNode } from "react";
 import { ClerkProvider } from "@clerk/nextjs";
 import { SpeedInsights } from "@vercel/speed-insights/next"
 import { Metadata } from "next";
+import { GeistSans } from "geist/font";
 
 export const metadata: Metadata = {
   title: "Nextjs",
@@ -23,7 +24,7 @@ type Props = {
 export default async function RootLayout({ children }: Props) {
   return (
     <ClerkProvider>
-      <html lang="es">
+      <html lang="es" className={`${GeistSans.className}`}>
         <body className={`min-h-screen `}>
           {children}
           <SpeedInsights/>

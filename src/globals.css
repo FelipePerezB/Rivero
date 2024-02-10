@@ -12,9 +12,9 @@
   }
 }
 
-body {
+/* body {
   font-family: "nunito";
-}
+} */
 
 #edit-wraper [data-component]:hover {
   outline: blue 2px solid;
