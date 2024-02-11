@@ -13,7 +13,7 @@ export default function Venn({
 }) {
   const divRef = useRef<HTMLDivElement>(null);
   const data = options?.data?.map(({ sets, value }) => ({
-    sets: sets?.split(","),
+    sets: sets?.split(",").map((set)=>set.trim()),
     size: Number(value),
   }));
 
