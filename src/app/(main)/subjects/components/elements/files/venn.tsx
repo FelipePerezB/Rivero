@@ -29,7 +29,7 @@ export default function Venn({
       const d3Venn = venn as any;
       var chart = d3Venn
         .VennDiagram()
-        // .wrap(false)
+        .wrap(false)
         .fontSize("1em")
         .width(divRef.current?.clientWidth)
         .height(divRef.current?.clientHeight);
@@ -38,6 +38,6 @@ export default function Venn({
   }, [options]);
 
   return (
-    <div className="aspect-video rounded-[0.2em] border-[0.1em] border-slate-300 w-1/2" data-component={id} ref={divRef}></div>
+    <div className="mx-auto aspect-video rounded-[0.2em] border-[0.1em] border-slate-300 w-1/2" data-component={id} ref={divRef}></div>
   );
 }

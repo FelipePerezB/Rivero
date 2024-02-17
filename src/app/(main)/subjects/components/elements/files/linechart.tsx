@@ -22,7 +22,7 @@ export default function LineChart({
   },
 }: {
   options: {
-    size: "xs" | "s" | "m" | "l";
+    size: "xs" | "sm" | "m" | "l";
     rangeX: string;
     rangeY: string;
     equations: string[];
@@ -35,7 +35,7 @@ export default function LineChart({
 
   const heights = {
     xs: "6em",
-    s: "10em",
+    sm: "10em",
     m: "12em",
     l: "20em",
   };

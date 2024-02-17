@@ -220,7 +220,7 @@ const math = {
       options: {
         key: "size",
         label: "tamaño",
-        options: ["xs", "m", "l"],
+        options: ["xs", "sm","m", "l"],
       },
     },
     {
