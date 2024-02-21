@@ -44,7 +44,7 @@ export default function Form({
   onSave?: (props: Component) => void;
   onDelete?: (props: Component) => void;
 }) {
-  console.log(types)
+  
   const [inputs, setInputs] = useState<ReactNode[] | undefined>([]);
   const [options, setOptions] = useState<string[]>([]);
   const [option, setOption] = useState<options | undefined>("Configuración");

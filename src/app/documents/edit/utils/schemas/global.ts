@@ -162,6 +162,24 @@ const math = {
       },
     },
   ],
+  shape: [
+    {
+      type: "options",
+      options: {
+        key: "size",
+        label: "Tamaño del lienzo",
+        options: ["xs",  "sm",  "md",  "lg"],
+      },
+    },
+    {
+      type: "children",
+      options: {
+        types: ["regular-shape", "irregular-shape", "circle"],
+        key: "children",
+        label: "Figuras",
+      },
+    },
+  ],
   set: [
     {
       type: "text",

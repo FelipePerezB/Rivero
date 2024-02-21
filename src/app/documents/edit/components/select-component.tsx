@@ -51,7 +51,7 @@ export default function SelectComponent({
             value: name,
             node: (
               <div className="text-[0.5em]">
-                <DynamicElement attrs={{}} name={name} />
+                <DynamicElement attrs={{isPreview:true}} name={name} />
               </div>
             ),
           }))}

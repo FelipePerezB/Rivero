@@ -20,6 +20,10 @@ const imports = {
   plot: dynamic(() => import(`./box-plot`)),
   venn: dynamic(() => import(`./venn`)),
   table: dynamic(() => import(`./table`)),
+  shape: dynamic(() => import(`./math/shapes/shape-canva`)),
+  "regular-shape": dynamic(() => import(`./math/shapes/regular-shape`)),
+  "irregular-shape": dynamic(() => import(`./math/shapes/irregular-shape`)),
+  circle: dynamic(() => import(`./math/shapes/circle`)),
 } as any;
 
 export default function DynamicElement({

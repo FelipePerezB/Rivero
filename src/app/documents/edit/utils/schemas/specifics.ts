@@ -105,6 +105,68 @@ const specifics = {
       },
     },
   ],
+  "irregular-shape": [
+    {
+      type: "array",
+      options: {
+        key: "coords",
+        label: "Coordenadas",
+      },
+    },
+  ],
+  "regular-shape": [
+    {
+      type: "text",
+      options: {
+        key: "sides",
+        label: "Lados",
+      },
+    },
+    {
+      type: "text",
+      options: {
+        key: "x",
+        label: "Coordenada X",
+      },
+    },
+    {
+      type: "text",
+      options: {
+        key: "y",
+        label: "Coordenada Y",
+      },
+    },
+    {
+      type: "text",
+      options: {
+        key: "radius",
+        label: "Radio",
+      },
+    },
+  ],
+  "circle": [
+    {
+      type: "text",
+      options: {
+        key: "x",
+        label: "Coordenada X",
+      },
+    },
+    {
+      type: "text",
+      options: {
+        key: "y",
+        label: "Coordenada Y",
+      },
+    },
+    {
+      type: "text",
+      options: {
+        key: "radius",
+        label: "Radio",
+      },
+    },
+  ],
 };
 
 export default specifics;

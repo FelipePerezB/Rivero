@@ -103,7 +103,7 @@ const FormChildren = ({
                     setModalState(true);
                   }}
                 >
-                  <DynamicElement attrs={{ options, type, id }} name={type} />
+                  <DynamicElement attrs={{ options, type, id, isPreview: true }} name={type} />
                 </div>
               </div>
             </article>

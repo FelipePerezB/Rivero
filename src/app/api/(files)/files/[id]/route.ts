@@ -61,9 +61,10 @@ export async function GET(
   { params }: { params: { id: string } }
 ) {
   const id = params.id;
-  const data = await prisma.file.findUnique({
-    where: { externalId: id },
-  });
+  const data = {}
+  // const data = await prisma.file.findUnique({
+  //   where: { externalId: id },
+  // });
 
   return NextResponse.json(
     { data },

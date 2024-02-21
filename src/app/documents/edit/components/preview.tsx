@@ -19,7 +19,7 @@ export default function Preview({ attrs }: { attrs: Component }) {
       {visibility && (
         <div className="text-xs">
           <div className="overflow-y-scroll flex justify-center">
-            <DynamicElement attrs={{ ...attrs }} name={attrs.type} />
+            <DynamicElement attrs={{ ...attrs, isPreview: true }} name={attrs.type} />
           </div>
         </div>
       )}
