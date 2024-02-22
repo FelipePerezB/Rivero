@@ -39,7 +39,7 @@ export default function IrregularShape({
   return (
     <Container>
       <text
-        transform={degrees ? `transform="rotate(${degrees}, 48, 112)"`: undefined}
+        transform={degrees ? `rotate(${degrees}, 48, 112)`: undefined}
         x={scaledX}
         y={scaledY}
         textAnchor="middle"
