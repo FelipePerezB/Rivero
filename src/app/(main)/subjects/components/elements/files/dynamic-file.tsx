@@ -24,6 +24,7 @@ const imports = {
   "regular-shape": dynamic(() => import(`./math/shapes/regular-shape`)),
   "irregular-shape": dynamic(() => import(`./math/shapes/irregular-shape`)),
   "shape-text": dynamic(() => import(`./math/shapes/text-shape`)),
+  "circular-segment": dynamic(() => import(`./math/shapes/circular-segment`)),
   circle: dynamic(() => import(`./math/shapes/circle`)),
   "cartesian-plane": dynamic(() => import(`./math/cartesian/cartesian-plane`)),
   "cartesian-plot": dynamic(() => import(`./math/cartesian/cartesian-plot`)),

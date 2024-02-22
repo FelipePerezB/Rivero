@@ -2,10 +2,11 @@
 
 import { ReactNode } from "react";
 import Shape from "./shape";
+import ShapeContainer from "./shape-container";
 
 export default function Circle({
   isPreview,
-  distanceUnit = 1.5,
+  distanceUnit = 1,
   options: { radius: strRadius, x, y } = {
     radius: "50",
     x: "50",
@@ -22,20 +23,20 @@ export default function Circle({
   };
   id: string;
 }) {
-  const Container = ({ children }: { children: ReactNode }) =>
-    isPreview ? (
-      <svg overflow={"visible"}>{children}</svg>
-    ) : (
-      <g data-component={id}>{children}</g>
-    );
-
   const cx = Number(x) * distanceUnit;
   const cy = Number(y) * distanceUnit;
   const radius = Number(strRadius) * distanceUnit;
   console.log(distanceUnit);
   return (
-    <Container>
-      <circle fill="none" stroke="black" strokeWidth={2} cx={cx} cy={cy} r={radius} />
-    </Container>
+    <ShapeContainer {...{ id, isPreview }}>
+      <circle
+        fill="none"
+        stroke="black"
+        strokeWidth={2}
+        cx={cx}
+        cy={cy}
+        r={radius}
+      />
+    </ShapeContainer>
   );
 }

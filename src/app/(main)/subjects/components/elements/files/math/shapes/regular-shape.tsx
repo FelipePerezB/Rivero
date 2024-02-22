@@ -2,10 +2,11 @@
 
 import { ReactNode } from "react";
 import Shape from "./shape";
+import ShapeContainer from "./shape-container";
 
 export default function RegularShape({
   isPreview,
-  distanceUnit = 1.5,
+  distanceUnit = 1,
   options: { sides: strSides, x, y, radius: strRadius } = {
     sides: "5",
     radius: "50",
@@ -25,14 +26,6 @@ export default function RegularShape({
   id: string;
 }) {
   const sides = Number(strSides);
-
-  const Container = ({ children }: { children: ReactNode }) =>
-    isPreview ? (
-      <svg overflow={"visible"}>{children}</svg>
-    ) : (
-      <g data-component={id}>{children}</g>
-    );
-
   const centerX = Number(x); // Coordenada x del centro del pentágono
   const centerY = Number(y); // Coordenada y del centro del pentágono
   const radius = Number(strRadius); // Radio del pentágono
@@ -52,8 +45,8 @@ export default function RegularShape({
 
   console.log(distanceUnit);
   return (
-    <Container>
+    <ShapeContainer {...{id,isPreview}}>
       <Shape coords={coords} distanceUnit={distanceUnit} />
-    </Container>
+    </ShapeContainer>
   );
 }

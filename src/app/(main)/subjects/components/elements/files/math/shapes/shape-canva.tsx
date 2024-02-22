@@ -7,7 +7,7 @@ import DynamicElement from "../../dynamic-file";
 export default function ShapeCanva({
   options: { children, size } = {
     size: "md",
-    children: [{ type: "regular-shape", options: {} }],
+    children: [{ type: "regular-shape", options: {sides:5, radius: 50} }],
   },
   id,
 }: {

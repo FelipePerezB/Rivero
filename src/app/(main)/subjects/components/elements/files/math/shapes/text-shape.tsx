@@ -1,11 +1,12 @@
 import { ReactNode } from "react";
 import Shape from "./shape";
+import ShapeContainer from "./shape-container";
 
 export default function IrregularShape({
   isPreview,
-  distanceUnit = 1.5,
+  distanceUnit = 1,
   options: { coords: strData, text, degrees } = {
-    coords: "50, 0",
+    coords: "50, 50",
     text: "Texto",
     degrees: "0",
   },
@@ -27,25 +28,16 @@ export default function IrregularShape({
   const scaledX = Number(x) * distanceUnit;
   const scaledY = Number(y) * distanceUnit;
 
-  const Container = ({ children }: { children: ReactNode }) =>
-    isPreview ? (
-      <svg className="w-max" overflow={"visible"}>
-        {children}
-      </svg>
-    ) : (
-      <g data-component={id}>{children}</g>
-    );
-
   return (
-    <Container>
+    <ShapeContainer {...{ id, isPreview }}>
       <text
-        transform={degrees ? `rotate(${degrees}, 48, 112)`: undefined}
+        transform={degrees ? `rotate(${degrees}, 48, 112)` : undefined}
         x={scaledX}
         y={scaledY}
         textAnchor="middle"
       >
         {text}
       </text>
-    </Container>
+    </ShapeContainer>
   );
 }

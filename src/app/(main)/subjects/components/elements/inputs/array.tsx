@@ -15,7 +15,7 @@ export default function Array({
   // sets: { key: string; label: string }[];
   dataKey: string;
   label: string;
-  value: string[];
+  value?: string[];
   onChange: (value: { [key: string]: unknown }) => void;
 }) {
   const [data, setData] = useState<string[]>(value?.length ? value : []);
@@ -34,7 +34,7 @@ export default function Array({
         />
       </div>
       <div className="flex gap-2.5 overflow-x-auto text-sm">
-        {data.map((value, i) => (
+        {data?.map((value, i) => (
           <div
             className="flex flex-col border shadow-sm rounded p-1 relative group"
             key={"item-" + i}

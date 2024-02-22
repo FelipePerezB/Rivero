@@ -174,7 +174,7 @@ const math = {
     {
       type: "children",
       options: {
-        types: ["regular-shape", "irregular-shape", "circle", "shape-text"],
+        types: ["regular-shape", "irregular-shape", "circle", "shape-text", "circular-segment"],
         key: "children",
         label: "Figuras",
       },

@@ -197,6 +197,29 @@ const specifics = {
       },
     },
   ],
+  'circular-segment': [
+    {
+      type: "text",
+      options: {
+        key: "coords",
+        label: "Coordenadas",
+      },
+    },
+    {
+      type: "text",
+      options: {
+        key: "radius",
+        label: "Radio",
+      },
+    },
+    {
+      type: "text",
+      options: {
+        key: "angles",
+        label: "Angulos",
+      },
+    },
+  ],
   "cartesian-plot": [
     {
       type: "text",
