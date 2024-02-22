@@ -6,7 +6,8 @@ import Shape from "./shape";
 export default function IrregularShape({
   isPreview,
   distanceUnit = 1.5,
-  options: { coords: strData } = {
+  options: { coords: strData, sizes } = {
+    sizes: false,
     coords: [
       "50, 0",
       "100, 40",
@@ -23,6 +24,7 @@ export default function IrregularShape({
   distanceUnit: number;
   options: {
     coords: string[];
+    sizes: boolean
   };
   id: string;
 }) {
@@ -46,7 +48,7 @@ export default function IrregularShape({
 
   return (
     <Container>
-      <Shape coords={coords} distanceUnit={distanceUnit} />
+      <Shape sizes={sizes} coords={coords} distanceUnit={distanceUnit} />
     </Container>
   );
 }
