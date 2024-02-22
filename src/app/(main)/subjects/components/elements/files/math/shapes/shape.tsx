@@ -1,11 +1,12 @@
 export default function Shape({
+  sizes,
   distanceUnit,
   coords,
 }: {
+  sizes?: boolean;
   coords: { x1: number; x2: number; y1: number; y2: number }[];
-  distanceUnit: number
+  distanceUnit: number;
 }) {
-
   return coords.map(({ x1, x2, y1, y2 }, i) => {
     const scaledX1 = x1 * distanceUnit;
     const scaledX2 = x2 * distanceUnit;
@@ -28,7 +29,7 @@ export default function Shape({
           stroke="black"
           strokeWidth="2"
         />
-        {coords.length <= 15 && size > 30 && (
+        {sizes && coords.length <= 15 && size > 30 && (
           <>
             <rect
               x={`calc(${textX}px - 1.4em)`}

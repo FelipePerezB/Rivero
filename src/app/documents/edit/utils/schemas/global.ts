@@ -168,13 +168,45 @@ const math = {
       options: {
         key: "size",
         label: "Tamaño del lienzo",
-        options: ["xs",  "sm",  "md",  "lg"],
+        options: ["xs", "sm", "md", "lg"],
       },
     },
     {
       type: "children",
       options: {
-        types: ["regular-shape", "irregular-shape", "circle"],
+        types: ["regular-shape", "irregular-shape", "circle", "shape-text"],
+        key: "children",
+        label: "Figuras",
+      },
+    },
+  ],
+  "cartesian-plane": [
+    {
+      type: "options",
+      options: {
+        key: "size",
+        label: "tamaño",
+        options: ["xs", "sm", "m", "l"],
+      },
+    },
+    {
+      type: "text",
+      options: {
+        key: "rangeX",
+        label: "Rango en X",
+      },
+    },
+    {
+      type: "text",
+      options: {
+        key: "rangeY",
+        label: "Rango en Y",
+      },
+    },
+    {
+      type: "children",
+      options: {
+        types: ["cartesian-plot", "cartesian-polygon", "cartesian-vector", "cartesian-text"],
         key: "children",
         label: "Figuras",
       },
@@ -238,7 +270,7 @@ const math = {
       options: {
         key: "size",
         label: "tamaño",
-        options: ["xs", "sm","m", "l"],
+        options: ["xs", "sm", "m", "l"],
       },
     },
     {

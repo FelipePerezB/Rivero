@@ -113,6 +113,13 @@ const specifics = {
         label: "Coordenadas",
       },
     },
+    {
+      type: "boolean",
+      options: {
+        key: "sizes",
+        label: "Tamaño de lineas",
+      },
+    },
   ],
   "regular-shape": [
     {
@@ -144,7 +151,7 @@ const specifics = {
       },
     },
   ],
-  "circle": [
+  circle: [
     {
       type: "text",
       options: {
@@ -164,6 +171,79 @@ const specifics = {
       options: {
         key: "radius",
         label: "Radio",
+      },
+    },
+  ],
+  'shape-text': [
+    {
+      type: "text",
+      options: {
+        key: "coords",
+        label: "Coordenadas",
+      },
+    },
+    {
+      type: "text",
+      options: {
+        key: "text",
+        label: "Texto",
+      },
+    },
+  ],
+  "cartesian-plot": [
+    {
+      type: "text",
+      options: {
+        key: "equation",
+        label: "Ecuación",
+      },
+    },
+  ],
+  "cartesian-vector": [
+    {
+      type: "text",
+      options: {
+        key: "tail",
+        label: "Inicio",
+      },
+    },
+    {
+      type: "text",
+      options: {
+        key: "tip",
+        label: "Final",
+      },
+    },
+  ],
+  "cartesian-text": [
+    {
+      type: "text",
+      options: {
+        key: "text",
+        label: "Texto",
+      },
+    },
+    {
+      type: "text",
+      options: {
+        key: "coords",
+        label: "Coordenadas",
+      },
+    },
+  ],
+  "cartesian-polygon": [
+    {
+      type: "array",
+      options: {
+        key: "coords",
+        label: "Coordenadas",
+      },
+    },
+    {
+      type: "boolean",
+      options: {
+        key: "isPrime",
+        label: "Figura prima",
       },
     },
   ],

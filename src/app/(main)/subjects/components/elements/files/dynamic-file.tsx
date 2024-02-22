@@ -23,7 +23,13 @@ const imports = {
   shape: dynamic(() => import(`./math/shapes/shape-canva`)),
   "regular-shape": dynamic(() => import(`./math/shapes/regular-shape`)),
   "irregular-shape": dynamic(() => import(`./math/shapes/irregular-shape`)),
+  "shape-text": dynamic(() => import(`./math/shapes/text-shape`)),
   circle: dynamic(() => import(`./math/shapes/circle`)),
+  "cartesian-plane": dynamic(() => import(`./math/cartesian/cartesian-plane`)),
+  "cartesian-plot": dynamic(() => import(`./math/cartesian/cartesian-plot`)),
+  "cartesian-vector": dynamic(() => import(`./math/cartesian/cartesian-vector`)),
+  "cartesian-polygon": dynamic(() => import(`./math/cartesian/cartesian-polygon`)),
+  "cartesian-text": dynamic(() => import(`./math/cartesian/cartesian-text`)),
 } as any;
 
 export default function DynamicElement({

@@ -12,13 +12,8 @@ import Section from "@components/containers/section";
 import SectionTitle from "@components/common/titles/section-title/section-title";
 
 export default async function EditFilesPage() {
-  const { getToken } = auth();
-  const token = await getToken();
-  const { data: files } = (await api("users/notes", {
-    headers: { Authorization: `Bearer ${token}` },
-  })) as {
-    data: any;
-  };
+  // const { getToken } = auth();
+  // const token = await getToken();
   return (
     <>
       <Section>

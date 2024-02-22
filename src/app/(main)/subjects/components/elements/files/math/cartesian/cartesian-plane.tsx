@@ -1,8 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 "use client";
-import styles from "../../styles/linechart.module.css";
-import { Mafs, Coordinates, Plot, Theme } from "mafs";
+import styles from "../../../../styles/linechart.module.css";
+import { Mafs, Coordinates, Plot } from "mafs";
 import { useEffect, useRef, useState } from "react";
+import DynamicElement from "../../dynamic-file";
+import { Component } from "src/app/documents/edit/models/component";
 
 const getLarge = (ranges: string = "-10/10") => {
   const rangeArray = ranges?.split("/").map((range) => Number(range));
@@ -12,24 +14,24 @@ const getLarge = (ranges: string = "-10/10") => {
 const getViewBox = (range: string = "-10/10") =>
   range.split("/").map((range) => Number(range)) as [number, number];
 
-export default function LineChart({
+export default function CartesianPlane({
   id,
-  options: { equations, rangeX, rangeY, size } = {
+  options: { children, rangeX, rangeY, size } = {
     size: "xs",
     rangeX: "-10/10",
     rangeY: "-10/40",
-    equations: ["2 * x"],
+    children: [{type: "cartesian-plot", options: {}}],
   },
 }: {
   options: {
     size: "xs" | "sm" | "m" | "l";
     rangeX: string;
     rangeY: string;
-    equations: string[];
+    children: Component[];
   };
   id: string;
 }) {
-  const regex = /^([-+/().]?[0-9]*\*?x?[\s]*)*$/;
+
   const divRef = useRef<HTMLDivElement>(null);
   const [height, setHeight] = useState<number>(100);
 
@@ -40,26 +42,6 @@ export default function LineChart({
     l: "20em",
   };
 
-  const defaultequation = (x: number) => x * 0;
-  const [purifyEquations, setPurifyEquations] = useState<
-    ((num: number) => number)[]
-  >([]);
-  useEffect(() => {
-    try {
-      equations.forEach((equation) => {
-        if (!regex.test(equation)) throw new Error("Invalid equation");
-        if (typeof eval(`(x) => ${equation}`)(0) !== "number")
-          throw new Error("Invalid equation");
-        purifyEquations.push(eval(`(x) => ${equation}`));
-        setPurifyEquations([...purifyEquations]);
-      });
-    } catch (error) {
-      purifyEquations.push(defaultequation);
-      setPurifyEquations([...purifyEquations]);
-    }
-    // return () => setPurifyEquations([]);
-  }, []);
-  
   useEffect(() => {
     const reSize = () => setHeight(divRef?.current?.clientHeight ?? 0);
     reSize();
@@ -95,12 +77,11 @@ export default function LineChart({
               yAxis={{ lines: Number((range / linesNum).toFixed(0)) }}
               subdivisions={1.0005}
             />
-            {purifyEquations?.map((equation, i) => (
-              <Plot.OfX
-                key={`equation-${id}-${i}`}
-                weight={size === "xs" ? 1.5 : 2.5}
-                color={Theme.indigo}
-                y={equation}
+            {children?.map((child, i) => (
+              <DynamicElement
+                key={`shape-${i}-${child.type}-${child?.id}`}
+                attrs={{ ...child, number: i + 1 }}
+                name={child.type}
               />
             ))}
           </Mafs>

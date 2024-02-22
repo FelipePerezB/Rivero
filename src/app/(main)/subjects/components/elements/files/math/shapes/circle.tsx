@@ -35,7 +35,7 @@ export default function Circle({
   console.log(distanceUnit);
   return (
     <Container>
-      <circle fill="white" stroke="black" strokeWidth={2} cx={cx} cy={cy} r={radius} />
+      <circle fill="none" stroke="black" strokeWidth={2} cx={cx} cy={cy} r={radius} />
     </Container>
   );
 }
