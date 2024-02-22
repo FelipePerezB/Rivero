@@ -189,6 +189,13 @@ const specifics = {
         label: "Texto",
       },
     },
+    {
+      type: "text",
+      options: {
+        key: "degrees",
+        label: "Rotación",
+      },
+    },
   ],
   "cartesian-plot": [
     {
