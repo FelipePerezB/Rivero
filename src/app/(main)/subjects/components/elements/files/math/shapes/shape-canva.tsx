@@ -42,6 +42,7 @@ export default function ShapeCanva({
       width={sizes[size]}
       height={sizes[size]}
       overflow={"visible"}
+      className="mx-auto"
     >
       {children?.map((child, i) => (
         <DynamicElement
