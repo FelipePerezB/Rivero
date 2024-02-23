@@ -23,9 +23,9 @@ export default function CartesianPlot({
   const textY = (tip[1] - tip[0]) / 2;
   return (
     <MafsContainer id={id} isPreview={isPreview}>
-      <Text size={20} x={textX} y={textY} attach="nw" attachDistance={15}>
+      {/* <Text size={20} x={textX} y={textY} attach="nw" attachDistance={15}>
         A
-      </Text>
+      </Text> */}
       <Vector weight={1.4} {...{ tip, tail }} />;
     </MafsContainer>
   );
