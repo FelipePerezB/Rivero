@@ -61,7 +61,7 @@ export default function CartesianPlane({
   const range = largeX > largeY ? largeX : largeY;
 
   return (
-    <div ref={divRef} data-component={id} className={`w-max`}>
+    <div ref={divRef} data-component={id} className={`w-max mx-auto`}>
       <div
         className={styles.linechart}
         style={{ width: heights[size], height: heights[size] }}
