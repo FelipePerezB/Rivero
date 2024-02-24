@@ -7,8 +7,9 @@ import ShapeContainer from "./shape-container";
 export default function IrregularShape({
   isPreview,
   distanceUnit = 1,
-  options: { coords: strData, sizes } = {
+  options: { coords: strData, sizes, strokeDash } = {
     sizes: false,
+    strokeDash: "0",
     coords: [
       "50, 0",
       "100, 40",
@@ -24,6 +25,7 @@ export default function IrregularShape({
   isPreview?: boolean;
   distanceUnit: number;
   options: {
+    strokeDash: string
     coords: string[];
     sizes: boolean;
   };
@@ -41,7 +43,7 @@ export default function IrregularShape({
 
   return (
     <ShapeContainer {...{ id, isPreview }}>
-      <Shape sizes={sizes} coords={coords} distanceUnit={distanceUnit} />
+      <Shape strokeDash={strokeDash} sizes={sizes} coords={coords} distanceUnit={distanceUnit} />
     </ShapeContainer>
   );
 }

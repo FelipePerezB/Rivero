@@ -13,7 +13,7 @@ export default function SelectComponent({
     React.SetStateAction<{
       type: string;
       options: ComponentOptions;
-      id: string;
+      id?: string;
     }>
   >;
 }) {

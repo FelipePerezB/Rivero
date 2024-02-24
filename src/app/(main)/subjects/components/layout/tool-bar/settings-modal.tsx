@@ -40,9 +40,6 @@ export default function SettingsModal({
   } catch (error) {
     
   }
-
-  console.log(types)
-
   return modalState ? (
     <ClientModal
       setState={setModalState}

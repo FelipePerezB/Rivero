@@ -13,10 +13,13 @@ import { faShare } from "@fortawesome/free-solid-svg-icons";
 import Item from "./item";
 import OptionsInput from "src/app/documents/edit/components/edit-wraper/components/inputs/options";
 import RadioInput from "@components/form/radio-input";
+import TextAreaInput from "@components/form/TextAreaInput/text-area-input";
 
 const getOptimizedContent = (settings?: LessonWithComponent["file"]) => {
+  console.log(typeof settings?.content)
   if (!settings?.content || typeof settings?.content !== "object")
-    return "Error al cargar el documento";
+  return "Error al cargar el documento";
+  console.log(typeof settings?.content)
   const fileCopy = JSON.parse(JSON.stringify(settings?.content));
   const optimizedContent = JSON.stringify(removeIdFromObject(fileCopy));
   return optimizedContent;
@@ -37,6 +40,7 @@ export default function ShareBtn({
 
   const id = settings?.externalId;
   const privacity = settings?.privacity;
+  console.log(settings)
   return (
     <>
       <div
@@ -68,16 +72,18 @@ export default function ShareBtn({
               attrs={{ readOnly: true }}
               name="Link del documento"
             />
-            <StandardInput
-              value={getOptimizedContent(settings)}
-              name="Código del documento"
-              dataKey="content"
+            <TextAreaInput
+              value={settings && getOptimizedContent(settings)}
+              label="Código del documento"
               onBlur={(content) =>
                 setSettings((settings) => ({
                   ...settings,
                   content: hydrateJSON(JSON.parse(content)),
                 }))
               }
+              name="content"
+              // onBlur={
+              // }
             />
             <Button onClick={() => print()}>Descargar</Button>
           </>

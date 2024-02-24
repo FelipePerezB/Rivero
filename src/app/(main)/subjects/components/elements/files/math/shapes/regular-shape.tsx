@@ -7,17 +7,19 @@ import ShapeContainer from "./shape-container";
 export default function RegularShape({
   isPreview,
   distanceUnit = 1,
-  options: { sides: strSides, x, y, radius: strRadius } = {
+  options: { sides: strSides, x, y, radius: strRadius, strokeDash } = {
     sides: "5",
     radius: "50",
     x: "50",
     y: "50",
+    strokeDash: "0",
   },
   id,
 }: {
   isPreview?: boolean;
   distanceUnit: number;
   options: {
+    strokeDash: string;
     sides?: string;
     x: string;
     y: string;
@@ -45,8 +47,8 @@ export default function RegularShape({
 
   console.log(distanceUnit);
   return (
-    <ShapeContainer {...{id,isPreview}}>
-      <Shape coords={coords} distanceUnit={distanceUnit} />
+    <ShapeContainer {...{ id, isPreview }}>
+      <Shape strokeDash="" coords={coords} distanceUnit={distanceUnit} />
     </ShapeContainer>
   );
 }

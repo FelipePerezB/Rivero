@@ -120,6 +120,13 @@ const specifics = {
         label: "Tamaño de lineas",
       },
     },
+    {
+      type: "text",
+      options: {
+        key: "strokeDash",
+        label: "Espaciado del trazo",
+      },
+    },
   ],
   "regular-shape": [
     {
@@ -150,6 +157,13 @@ const specifics = {
         label: "Radio",
       },
     },
+    {
+      type: "text",
+      options: {
+        key: "strokeDash",
+        label: "Espaciado del trazo",
+      },
+    },
   ],
   circle: [
     {
@@ -171,6 +185,13 @@ const specifics = {
       options: {
         key: "radius",
         label: "Radio",
+      },
+    },
+    {
+      type: "text",
+      options: {
+        key: "strokeDash",
+        label: "Espaciado del trazo",
       },
     },
   ],

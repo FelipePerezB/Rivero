@@ -2,18 +2,16 @@
 import Button from "@components/common/buttons/button/button";
 import Buttons from "@components/common/buttons/buttons/Buttons";
 import React, { ReactNode, SetStateAction, useEffect, useState } from "react";
-// import Children from "../../components/elements/inputs/children";
-// import {
-//   Component,
-//   ComponentOptions,
-// } from "src/app/subjects/edit/models/component";
-// import { componentsNames } from "src/app/subjects/edit/utils/schemas";
 import getSchema from "../utils/getSchema";
 import FormChildren from "./children-form";
 // import DynamicInput from "../../components/elements/inputs/dynamic-input";
 import { IdLenght } from "src/models/document.model";
 import Preview from "./preview";
-import { Component, ComponentOptions } from "../models/component";
+import {
+  Component,
+  ComponentOptions,
+  LessonWithComponent,
+} from "../models/component";
 import Children from "src/app/(main)/subjects/components/elements/inputs/children";
 import DynamicInput from "src/app/(main)/subjects/components/elements/inputs/dynamic-input";
 // import { componentsNames } from "../utils/schemas";
@@ -22,8 +20,19 @@ import SelectComponent from "./select-component";
 import specifics from "../utils/schemas/specifics";
 import Options from "@components/common/options";
 import generateRandomId from "src/utils/generateRandomId";
+import TextAreaInput from "@components/form/TextAreaInput/text-area-input";
+import { removeIdFromObject } from "../utils/removeId";
+import { hydrateJSON } from "../utils/hydrateJSON";
 
-type options = "Configuración" | "Hijos";
+const getOptimizedContent = (settings?: LessonWithComponent["file"]) => {
+  if (!settings?.content || typeof settings?.content !== "object")
+    return "Error al cargar el documento";
+  const fileCopy = JSON.parse(JSON.stringify(settings?.content));
+  const optimizedContent = JSON.stringify(removeIdFromObject(fileCopy));
+  return optimizedContent;
+};
+
+type options = "Configuración" | "Hijos" | "Contenido";
 
 export default function Form({
   type,
@@ -32,10 +41,8 @@ export default function Form({
   types,
   onDelete,
   onSave,
-}: // onChange,
-{
+}: {
   types?: string[];
-  // onChange?: (data: { [key: string]: unknown }) => void;
   type?: string;
   defaultValues: ComponentOptions;
   id?: string;
@@ -44,12 +51,11 @@ export default function Form({
   onSave?: (props: Component) => void;
   onDelete?: (props: Component) => void;
 }) {
-  
   const [inputs, setInputs] = useState<ReactNode[] | undefined>([]);
   const [options, setOptions] = useState<string[]>([]);
   const [option, setOption] = useState<options | undefined>("Configuración");
 
-  const [component, setComponent] = useState({
+  const [component, setComponent] = useState<Component>({
     type: type ?? "",
     options: defaultValues,
     id: id ?? generateRandomId(IdLenght.sm),
@@ -75,7 +81,7 @@ export default function Form({
     if (!component.type) return;
     const schemas = getSchema(component.type);
     if (schemas?.length) {
-      setOptions(["Configuración"]);
+      setOptions(["Configuración", "Contenido"]);
       if (
         schemas.map(({ type }) => type).includes("children") &&
         !options.includes("Hijos")
@@ -130,6 +136,30 @@ export default function Form({
             parentId={id as string}
           />
         </div>
+      )}
+      {option === "Contenido" && onSave && (
+        <TextAreaInput
+          name="code"
+          label="Contenido"
+          value={getOptimizedContent({ content: component })}
+          onBlur={(content) => {
+            console.log(content);
+            console.log(
+              hydrateJSON(
+                JSON.parse(content),
+                id?.substring(0, id.length - IdLenght.sm - 1)
+              )
+            );
+            console.log(component);
+            // setComponent(hydrateJSON(JSON.parse(content)));
+            setComponent(
+              hydrateJSON(
+                JSON.parse(content),
+                id?.substring(0, id.length - IdLenght.sm - 1)
+              )
+            );
+          }}
+        />
       )}
       <div className="mt-2">
         <Buttons>

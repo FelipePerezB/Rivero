@@ -6,15 +6,26 @@ export default function TextAreaInput({
   name,
   value,
   attrs,
+  onBlur
 }: {
-  label?: string
-  name: string
+  label?: string;
+  name: string;
   value?: string;
   attrs?: TextareaHTMLAttributes<HTMLTextAreaElement>;
+  onBlur?:(value: string) => void
 }) {
   return (
     <Label name={label ?? ""}>
-      <textarea style={{minHeight: "80px"}} name={name} value={value} {...attrs} className="card text-sm" />
+      <textarea
+        onBlur={({ target }) => {
+          onBlur && onBlur(target.value);
+        }}
+        style={{ minHeight: "80px" }}
+        name={name}
+        defaultValue={value}
+        {...attrs}
+        className="card text-sm"
+      />
     </Label>
   );
 }
