@@ -89,9 +89,8 @@ const specifics = {
     {
       type: "children",
       options: {
-        types: ["question"],
         key: "children",
-        label: "Preguntas",
+        label: "Hijo",
       },
     },
   ],
