@@ -1,5 +1,6 @@
 import StandardInput from "@components/form/StandardInput/StandardInput";
 import TextAreaInput from "@components/form/TextAreaInput/text-area-input";
+import createFormData from "@components/form/utils/create-form-data";
 import React from "react";
 
 export default function TextArea({
@@ -15,9 +16,21 @@ export default function TextArea({
   value: string;
   onChange: (value: { [key: string]: string }) => void;
 }) {
+  const createFormData = (data: string) => {
+    const obj = {} as any;
+    if (dataKey) obj[dataKey] = data;
+    else if (label) obj[label] = data;
+    onChange && onChange(obj);
+  };
   return (
     <TextAreaInput
-      {...{ onChange, name: label, dataKey, value, placeholder }}
+      {...{
+        name: label,
+        dataKey,
+        value,
+        placeholder,
+        attrs: { onChange: ({ target }) => createFormData(target.value) },
+      }}
     />
   );
 }
