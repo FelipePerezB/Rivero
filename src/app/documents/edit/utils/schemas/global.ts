@@ -174,7 +174,13 @@ const math = {
     {
       type: "children",
       options: {
-        types: ["regular-shape", "irregular-shape", "circle", "shape-text", "circular-segment"],
+        types: [
+          "regular-shape",
+          "irregular-shape",
+          "circle",
+          "shape-text",
+          "circular-segment",
+        ],
         key: "children",
         label: "Figuras",
       },
@@ -206,7 +212,12 @@ const math = {
     {
       type: "children",
       options: {
-        types: ["cartesian-plot", "cartesian-polygon", "cartesian-vector", "cartesian-text"],
+        types: [
+          "cartesian-plot",
+          "cartesian-polygon",
+          "cartesian-vector",
+          "cartesian-text",
+        ],
         key: "children",
         label: "Figuras",
       },
@@ -316,7 +327,7 @@ const excercises = {
     {
       type: "children",
       options: {
-        types: ["question"],
+        types: ["question", "rich-text-question"],
         key: "children",
         label: "preguntas",
       },

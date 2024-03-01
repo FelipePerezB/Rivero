@@ -1,4 +1,55 @@
+const questionParams = [
+  {
+    type: "rich-text",
+    options: {
+      key: "question",
+      label: "Pregunta",
+    },
+  },
+  {
+    type: "text",
+    options: {
+      key: "expectedAns",
+      label: "Alternativa correcta",
+    },
+  },
+  {
+    type: "boolean",
+    options: {
+      key: "isPilot",
+      label: "Piloto",
+    },
+  },
+  {
+    type: "children",
+    options: {
+      key: "children",
+      label: "Hijo",
+    },
+  },
+];
+
 const specifics = {
+  question: [
+    ...questionParams,
+    {
+      type: "text-area",
+      options: {
+        key: "alternatives",
+        label: "alternativas",
+      },
+    },
+  ],
+  "rich-text-question": [
+    ...questionParams,
+    {
+      type: "rich-text",
+      options: {
+        key: "alternatives",
+        label: "alternativas",
+      },
+    },
+  ],
   document: [
     {
       type: "children",
@@ -54,43 +105,6 @@ const specifics = {
       options: {
         key: "increase",
         label: "Aumento",
-      },
-    },
-  ],
-  question: [
-    {
-      type: "rich-text",
-      options: {
-        key: "question",
-        label: "Pregunta",
-      },
-    },
-    {
-      type: "text",
-      options: {
-        key: "alternatives",
-        label: "alternativas",
-      },
-    },
-    {
-      type: "text",
-      options: {
-        key: "expectedAns",
-        label: "Alternativa correcta",
-      },
-    },
-    {
-      type: "boolean",
-      options: {
-        key: "isPilot",
-        label: "Piloto",
-      },
-    },
-    {
-      type: "children",
-      options: {
-        key: "children",
-        label: "Hijo",
       },
     },
   ],
@@ -194,7 +208,7 @@ const specifics = {
       },
     },
   ],
-  'shape-text': [
+  "shape-text": [
     {
       type: "text",
       options: {
@@ -217,7 +231,7 @@ const specifics = {
       },
     },
   ],
-  'circular-segment': [
+  "circular-segment": [
     {
       type: "text",
       options: {

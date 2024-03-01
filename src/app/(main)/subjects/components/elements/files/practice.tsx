@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
 // import Timer from "src/app/practice/timer";
-import Question, { QuestionType } from "./question";
+import Question, { QuestionType } from "./questions/question";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCheck,

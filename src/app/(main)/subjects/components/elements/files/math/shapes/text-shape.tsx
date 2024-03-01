@@ -23,7 +23,7 @@ export default function IrregularShape({
 }) {
   const [x, y] = strData
     ?.split(",")
-    .map((coord) => coord?.trim()) as unknown as number[][];
+    ?.map((coord) => coord?.trim()) as unknown as number[][];
 
   const scaledX = Number(x) * distanceUnit;
   const scaledY = Number(y) * distanceUnit;

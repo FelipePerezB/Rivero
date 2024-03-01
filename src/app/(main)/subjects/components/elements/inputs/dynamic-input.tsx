@@ -9,6 +9,7 @@ const imports = {
   boolean: dynamic(() => import(`./boolean`)),
   array: dynamic(() => import(`./array`)),
   "sub-inputs": dynamic(() => import(`./sub-inputs`)),
+  "text-area": dynamic(() => import(`./text-area`)),
   "rich-text": dynamic(() => import(`./rich-text`)),
 } as any;
 

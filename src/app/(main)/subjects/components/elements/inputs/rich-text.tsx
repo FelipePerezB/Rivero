@@ -12,6 +12,7 @@ import EquationsPlugin from "src/app/(main)/subjects/utils/lexical/katex/equatio
 import { PLAYGROUND_TRANSFORMERS } from "src/app/(main)/subjects/utils/lexical/markdown-transformer";
 import compressJSON from "src/app/(main)/subjects/utils/lexical/compress-JSON";
 import Label from "./label";
+import capFirst from "src/utils/capFirst";
 
 function onError(error: unknown) {
   console.error(error);
@@ -50,7 +51,7 @@ export default function Editor({
 
   return (
     <div translate="no" className="relative">
-      <span>Texto</span>
+      <span>{capFirst(label) ?? "Texto"}</span>
       <LexicalComposer initialConfig={initialConfig}>
         <RichTextPlugin
           placeholder={<></>}
