@@ -53,7 +53,7 @@ export default function Question({
   },
 }: QuestionType) {
   const [isCorrect, setIsCorrect] = useState<boolean>();
-  const alternativesArray = alternatives.includes(";")
+  const alternativesArray = alternatives?.includes(";")
     ? alternatives.split(';')
     : alternatives.split(separator);
 
