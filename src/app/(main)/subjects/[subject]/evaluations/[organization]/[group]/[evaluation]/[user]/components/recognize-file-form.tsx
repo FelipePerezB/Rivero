@@ -43,7 +43,6 @@ export default function RecognizeFileForm({
 
               const base64String = canvas.toDataURL("image/png").split(",")[1];
 
-              console.log(base64String);
               toast.promise(
                 api("scores/omr", {
                   method: "POST",

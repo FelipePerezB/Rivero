@@ -14,25 +14,25 @@ export default async function OrganizationModal() {
   const group = user?.publicMetadata?.group;
   const email = user?.emailAddresses[0]?.emailAddress;
 
-  const { data: organization }: { data: Organization } = organizationId
-    ? await api(`organizations/${organizationId}`, {}, [
-        `organization/${organizationId}`,
-      ])
-    : {};
+  // const { data: organization }: { data: Organization } = organizationId
+  //   ? await api(`organizations/${organizationId}`, {}, [
+  //       `organization/${organizationId}`,
+  //     ])
+  //   : {};
 
-  const { data: invitations } = (await api(
-    `auth/invitation/email/${email}`,
-    {},
-    [`invitations/group/${group}`]
-  )) as { data?: Invitation[] };
+  // const { data: invitations } = (await api(
+  //   `auth/invitation/email/${email}`,
+  //   {},
+  //   [`invitations/group/${group}`]
+  // )) as { data?: Invitation[] };
 
-  const pendingInvitations = invitations?.filter(
-    ({ msg }) => msg === Messages.CONFIRMATION_REQUIRED
-  );
+  // const pendingInvitations = invitations?.filter(
+  //   ({ msg }) => msg === Messages.CONFIRMATION_REQUIRED
+  // );
 
   return (
     <Section>
-      <div className="flex flex-col gap-1">
+      {/* <div className="flex flex-col gap-1">
         <SmallTitle>{organization?.name ?? "Sin institución"}</SmallTitle>
         <p className="text-sm font-light">
           {organization?.name
@@ -54,7 +54,7 @@ export default async function OrganizationModal() {
             <RejectInvitationBtn id={id} />
           </div>
         </Card>
-      ))}
+      ))} */}
     </Section>
   );
 }

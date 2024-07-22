@@ -17,6 +17,7 @@ export default async function SubjectsCards({
   const { subjects } = (await api("subjects", {}, ["subjects"])) as {
     subjects: SubjectWithTopic[];
   };
+
   return subjects?.map(({ name, Topics, id }) => {
     const tags = Topics?.map((topic) => topic.name);
     const topicId = Topics?.at(0)?.id;
